@@ -49,5 +49,6 @@ module.exports = {
         alphabetize: { order: "asc", caseInsensitive: true },
       },
     ],
+    "prettier/prettier": ["error", { endOfLine: "auto" }],
   },
 };
