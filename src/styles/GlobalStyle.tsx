@@ -1,5 +1,20 @@
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
 * {
   box-sizing: border-box;
+}
+
+* {
+  font-family: "Pretendard", "sans-serif", "system-ui";
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 html,
@@ -138,3 +153,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+`;
+
+export default GlobalStyle;
