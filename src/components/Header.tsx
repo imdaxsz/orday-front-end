@@ -1,14 +1,17 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import Menu from "./Menu";
 
-const Container = styled.div`
+const Container = styled.div<{ $isHome: boolean }>`
   width: 100%;
   height: 70px;
   background-color: white;
   padding: 15px 30px;
-  border-bottom: solid 1px ${({ theme }) => theme.colors["primary"]["60"]};
+  border-bottom: solid 1px
+    ${({ $isHome, theme }) =>
+      $isHome ? "white" : theme.colors["primary"]["60"]};
   position: relative;
 `;
 
@@ -33,8 +36,10 @@ const Item = styled.li`
 
 export default function Header() {
   const [menuIsVisible, setMenuIsVisible] = useState(false);
+  const pathname = useLocation().pathname.split("/")[1];
+  const isHome = pathname === "";
   return (
-    <Container>
+    <Container $isHome={isHome}>
       <Content>
         <Group>
           <Item onClick={() => setMenuIsVisible((prev) => !prev)}>SHOP</Item>
