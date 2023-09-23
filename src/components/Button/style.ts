@@ -60,12 +60,12 @@ const getButtonStyle = (
 };
 
 export const Container = styled.button<
-  Pick<ButtonProps, "variant" | "color" | "size">
+  Pick<ButtonProps, "color" | "size"> & { $variant?: Variant }
 >`
   ${baseStyle};
   ${({ size = "md" }) => buttonSizes[size]};
-  ${({ variant = "solid", color = "primary", theme }) =>
-    getButtonStyle(variant, color, theme)};
+  ${({ $variant = "solid", color = "primary", theme }) =>
+    getButtonStyle($variant, color, theme)};
   ${({ theme }) => css`
     &:disabled {
       color: ${theme.colors["neutral"]["40"]};
