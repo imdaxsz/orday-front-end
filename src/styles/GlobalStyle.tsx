@@ -21,6 +21,7 @@ html,
 body,
 #root {
   height: 100%;
+  color: ${({ theme }) => theme.colors["neutral"]["100"]}
 }
 
 html,
