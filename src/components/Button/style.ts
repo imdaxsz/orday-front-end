@@ -39,11 +39,11 @@ const getButtonStyle = (
   const styles = {
     solid: css`
       background-color: ${color === "primary"
-        ? theme.colors["primary"]["100"]
+        ? theme.colors["primary"]["80"]
         : theme.colors["neutral"]["10"]};
       border: solid 1px
         ${color === "primary"
-          ? theme.colors["primary"]["100"]
+          ? theme.colors["primary"]["80"]
           : theme.colors["neutral"]["40"]};
       color: ${color === "primary" ? "white" : theme.colors["neutral"]["70"]};
     `,
@@ -51,9 +51,9 @@ const getButtonStyle = (
       background-color: white;
       border: solid 1px
         ${color === "primary"
-          ? theme.colors["primary"]["100"]
+          ? theme.colors["primary"]["80"]
           : theme.colors["neutral"]["40"]};
-      color: ${theme.colors[color]["100"]};
+      color: ${theme.colors[color]["80"]};
     `,
   };
   return styles[variant];
