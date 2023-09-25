@@ -14,7 +14,7 @@ export function CheckBox({ text, onChange, type }: CheckBoxProps) {
         id={text}
         name={text}
         onChange={onChange}
-        isCircle={type === "circle"}
+        $isCircle={type === "circle"}
       />
       <CheckboxText htmlFor={text}>{text}</CheckboxText>
     </CheckboxContainer>
