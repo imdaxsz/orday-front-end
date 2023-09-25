@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import Menu from "./Menu";
@@ -21,6 +21,9 @@ const Content = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  img {
+    display: block;
+  }
 `;
 
 const Group = styled.ul`
@@ -47,7 +50,9 @@ export default function Header() {
           <Item onClick={() => setMenuIsVisible((prev) => !prev)}>SHOP</Item>
           <Item>COMMUNITY</Item>
         </Group>
-        <img src="/logo.svg" alt="Logo" />
+        <Link to="/">
+          <img src="/logo.svg" alt="Logo" />
+        </Link>
         <Group>
           <Item>SEARCH</Item>
           <Item>BAG</Item>
