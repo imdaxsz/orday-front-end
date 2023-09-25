@@ -12,7 +12,7 @@ const colors = {
     "40": "#46f2aa",
     "20": "#e0ffdd",
   },
-  secondary: "#4681f2",
+  secondary: "#0057ff",
   neutral: {
     "100": "#1d1d1d",
     "90": "#303030",
