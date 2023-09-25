@@ -126,5 +126,6 @@ export const Price = styled.h4<Pick<ProductCardProps, "size">>`
       position: absolute;
       bottom: 0;
       right: 0;
+      line-height: normal;
     `}
 `;
