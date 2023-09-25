@@ -10,8 +10,8 @@ import GlobalStyle from "./styles/GlobalStyle";
 export default function App() {
   return (
     <>
-      <GlobalStyle />
       <ThemeProvider theme={theme}>
+        <GlobalStyle />
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="" element={<Home />} />
