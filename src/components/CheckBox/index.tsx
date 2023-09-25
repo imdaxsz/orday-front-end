@@ -3,9 +3,10 @@ import { CheckboxContainer, CheckboxInput, CheckboxText } from "./style";
 interface CheckBoxProps {
   text?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type?: string;
 }
 
-export function CheckBox({ text, onChange }: CheckBoxProps) {
+export function CheckBox({ text, onChange, type }: CheckBoxProps) {
   return (
     <CheckboxContainer>
       <CheckboxInput
@@ -13,6 +14,7 @@ export function CheckBox({ text, onChange }: CheckBoxProps) {
         id={text}
         name={text}
         onChange={onChange}
+        isCircle={type === "circle"}
       />
       <CheckboxText htmlFor={text}>{text}</CheckboxText>
     </CheckboxContainer>
