@@ -10,7 +10,7 @@ export const CheckboxText = styled.label`
   margin-left: 0.5rem;
 `;
 
-export const CheckboxInput = styled.input<{ isCircle: boolean }>`
+export const CheckboxInput = styled.input<{ $isCircle: boolean }>`
   cursor: pointer;
   appearance: none;
   margin: 0;
@@ -18,11 +18,11 @@ export const CheckboxInput = styled.input<{ isCircle: boolean }>`
   width: 1rem;
   height: 1rem;
   border: 1px solid gainsboro;
-  border-radius: ${(props) => (props.isCircle ? "50%" : "5px")};
+  border-radius: ${({ $isCircle }) => ($isCircle ? "50%" : "5px")};
 
   &:checked {
     border-color: transparent;
-    background: center url("src/components/Icon/CheckIcon.svg") no-repeat;
+    background: center url("src/assets/check_icon.svg") no-repeat;
     background-size: 100% 100%;
     background-position: 50%;
     background-repeat: no-repeat;
