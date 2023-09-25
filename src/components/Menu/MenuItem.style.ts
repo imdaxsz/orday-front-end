@@ -19,9 +19,8 @@ export const Item = styled.div`
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  color: #444;
-  font-size: 16px;
-  font-weight: 400;
+  color: ${({ theme }) => theme.colors["neutral"]["80"]};
+  ${({ theme }) => theme.typo["body-2-r"]};
 `;
 
 export const SubMenu = styled.div<MenuProps>`
@@ -37,8 +36,8 @@ export const SubMenu = styled.div<MenuProps>`
 
   & > a {
     width: fit-content;
-    color: #6c6c6c;
-    font-size: 14px;
+    color: ${({ theme }) => theme.colors["neutral"][70]};
+    ${({ theme }) => theme.typo["body-3-r"]};
     font-weight: 300;
     line-height: 120%;
   }

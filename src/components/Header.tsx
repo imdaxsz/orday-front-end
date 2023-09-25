@@ -32,6 +32,8 @@ const Group = styled.ul`
 const Item = styled.li`
   float: left;
   cursor: pointer;
+  ${({ theme }) => theme.typo["body-2-r"]};
+  letter-spacing: -0.16px;
 `;
 
 export default function Header() {

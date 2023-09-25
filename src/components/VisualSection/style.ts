@@ -35,6 +35,7 @@ export const Image = styled.img<{ $current?: boolean }>`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
   z-index: ${({ $current = false }) => ($current ? "10" : "5")};
   opacity: ${({ $current = false }) => ($current ? "100%" : "0%")};
   transition: opacity 0.5s;

@@ -26,10 +26,7 @@ export const Auth = styled.div`
 
   a {
     color: #888;
-    font-family: Pretendard;
-    font-size: 12px;
-    font-style: normal;
+    ${({ theme }) => theme.typo["body-4-r"]};
     font-weight: 300;
-    line-height: normal;
   }
 `;
