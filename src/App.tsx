@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 import theme from "@/styles/theme";
 
 import Layout from "./components/Layout";
+import Category from "./routes/Category";
 import Home from "./routes/Home";
 import GlobalStyle from "./styles/GlobalStyle";
 
@@ -15,6 +16,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="" element={<Home />} />
+            <Route path="category" element={<Category />} />
           </Route>
         </Routes>
       </ThemeProvider>
