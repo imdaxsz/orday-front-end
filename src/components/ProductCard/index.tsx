@@ -41,7 +41,7 @@ export default function ProductCard({
         ) : (
           <RemoveButton />
         )}
-        <Image src="" alt="1" size={size} />
+        <Image src={info.image} alt="1" size={size} />
       </ImageContainer>
       <Info>
         <Brand>{info.brand}</Brand>
