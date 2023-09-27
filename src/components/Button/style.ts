@@ -75,3 +75,12 @@ export const Container = styled.button<
     }
   `}
 `;
+
+export const IconButton = styled.button`
+  all: initial;
+  width: fit-content;
+  height: fit-content;
+  svg {
+    display: block;
+  }
+`;
