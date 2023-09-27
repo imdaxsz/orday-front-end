@@ -5,20 +5,22 @@ import DropupIcon from "@/assets/arrow_drop_up.svg?react";
 
 import { DropdownBox, Label, DropdownOptions, Option } from "./style";
 
-interface DropdownProps {
-  type: "product" | "brand";
-}
-
 interface OptionType {
   name: string;
   value: string;
 }
 
-export default function Dropdown({ type }: DropdownProps) {
-  const [selectedOption, setSelectedOption] = useState<OptionType>({
-    name: "정렬방식",
-    value: "",
-  });
+interface DropdownProps {
+  type: "product" | "brand";
+  selectedOption: OptionType;
+  setSelectedOption: React.Dispatch<React.SetStateAction<OptionType>>;
+}
+
+export default function Dropdown({
+  type,
+  selectedOption,
+  setSelectedOption,
+}: DropdownProps) {
   const [showOptions, setShowOptions] = useState(false);
 
   const handleSelectChange = (
@@ -59,7 +61,7 @@ export default function Dropdown({ type }: DropdownProps) {
         {selectedOption.name}
         {showOptions ? <DropupIcon /> : <DropdownIcon />}
       </Label>
-      <DropdownOptions show={showOptions}>
+      <DropdownOptions $show={showOptions}>
         {type === "product" &&
           productOptions.map((option) => (
             <Option
