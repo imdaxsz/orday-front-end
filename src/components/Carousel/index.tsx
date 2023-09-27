@@ -36,6 +36,9 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? 2 : prevIndex - 1));
     setTransition(0.5);
     setTranslateX((prev) => prev + 430);
+    setTimeout(() => {
+      setInfo({ ...carouselItems[currentIndex - 1].info });
+    }, CHANGE_INFO_DELAY);
   };
 
   const handleNextClick = () => {
@@ -43,7 +46,7 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
     setTransition(0.5);
     setTranslateX((prev) => prev - 430);
     setTimeout(() => {
-      setInfo({ ...carouselItems[currentIndex].info });
+      setInfo({ ...carouselItems[currentIndex + 1].info });
     }, CHANGE_INFO_DELAY);
   };
 
