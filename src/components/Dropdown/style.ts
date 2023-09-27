@@ -12,6 +12,7 @@ export const Label = styled.label`
   align-items: center;
   justify-content: space-between;
   font-size: 14px;
+  color: #5d5d5d;
   cursor: pointer;
 `;
 export const DropdownOptions = styled.ul<{ show: boolean }>`
