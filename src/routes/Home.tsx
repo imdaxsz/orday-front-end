@@ -2,7 +2,11 @@ import { IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import Carousel from "@/components/Carousel";
+import ProductCard from "@/components/ProductCard";
+import Tabs, { Tab, TabProps } from "@/components/Tabs";
 import VisualSection, { Item } from "@/components/VisualSection";
+import { ProductInfo } from "@/types";
 
 export default function Home() {
   const items: Item[] = [
@@ -28,24 +32,129 @@ export default function Home() {
     },
   ];
 
+  const tabItem: TabProps[] = [
+    {
+      value: 1,
+      label: "전체",
+    },
+    {
+      value: 2,
+      label: "의류",
+    },
+    {
+      value: 3,
+      label: "소품",
+    },
+    {
+      value: 4,
+      label: "악세사리",
+    },
+  ];
+
+  const productMockData: ProductInfo = {
+    image:
+      "https://image.msscdn.net/images/goods_img/20230323/3174776/3174776_16795542598248_big.png",
+    url: "",
+    brand: "플라스틱 아크",
+    name: "팻볼 [FB-F1-05]",
+    price: 74000,
+  };
+  const productsMockData: ProductInfo[] = Array(4).fill(productMockData);
+
+  const carouselMockdata1 = {
+    image:
+      "https://image.msscdn.net/images/goods_img/20220203/2338457/2338457_1_500.jpg",
+    url: "/test1",
+    info: {
+      title: "2023 BEST OUTER COLLECTION",
+      content: "아우터 기획전",
+    },
+  };
+
+  const carouselMockdata2 = {
+    image:
+      "https://image.msscdn.net/images/goods_img/20230913/3555856/3555856_16945764091440_big.jpg",
+    url: "/test2",
+    info: {
+      title: "F/W T-SHIRTS COLLECTION",
+      content: "[23 F/W] 가을맞이 신상 기획전",
+    },
+  };
+
+  const carouselMockdata3 = {
+    image:
+      "https://image.msscdn.net/images/goods_img/20211020/2190371/2190371_1_500.jpg",
+    url: "/test3",
+    info: {
+      title: "STEADY SELLER COLLECTION",
+      content: "Orday 스테디셀러",
+    },
+  };
+
+  const carouselMockData = [
+    carouselMockdata1,
+    carouselMockdata2,
+    carouselMockdata3,
+  ];
+
   return (
     <Container>
       <VisualSection items={items} />
+      <ItemsContainer>
+        <Title>Orday BEST</Title>
+        <Tabs>
+          {tabItem.map((item, i) => (
+            <Tab key={i} value={item.value} label={item.label} />
+          ))}
+        </Tabs>
+        <Items>
+          {productsMockData.map((product, i) => (
+            <ProductCard key={i} $tag="BEST" info={product} />
+          ))}
+        </Items>
+      </ItemsContainer>
       <EventSection>
-        <h3>Orday EVENT</h3>
-        <Link to="/event">
-          더보기
-          <IoIosArrowForward />
-        </Link>
+        <Title>Orday EVENT</Title>
         <EventContent>
           <img src="" alt="1" />
           <img src="" alt="2" />
         </EventContent>
       </EventSection>
+      <ItemsContainer>
+        <Title>Orday NEW</Title>
+        <MoreLink to="/event">
+          더보기
+          <IoIosArrowForward />
+        </MoreLink>
+        <Items>
+          {productsMockData.map((product, i) => (
+            <ProductCard key={i} $tag="NEW" info={product} />
+          ))}
+        </Items>
+      </ItemsContainer>
       <Magazine>매거진/이야기 등</Magazine>
+      <SaleSection>
+        <Title>Orday SALE</Title>
+        <Carousel items={carouselMockData} />
+      </SaleSection>
     </Container>
   );
 }
+
+const Title = styled.h3`
+  width: 100%;
+  text-align: center;
+  color: #1d1d1d;
+  font-size: 33px;
+  font-weight: 600;
+  line-height: normal;
+`;
+
+const SaleSection = styled.section`
+  & > h3 {
+    margin-bottom: 40px;
+  }
+`;
 
 const Container = styled.div`
   display: flex;
@@ -63,9 +172,17 @@ const Magazine = styled.div`
   justify-content: center;
 `;
 
+const EventSection = styled.div`
+  padding: 0 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
 const EventContent = styled.div`
   display: flex;
   gap: 20px;
+  margin-top: 40px;
   img {
     width: 600px;
     height: 350px;
@@ -74,33 +191,36 @@ const EventContent = styled.div`
   }
 `;
 
-const EventSection = styled.div`
-  padding: 0 30px;
+const ItemsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 
-  h3 {
-    width: 100%;
-    text-align: center;
-    color: #1d1d1d;
-    font-size: 33px;
-    font-weight: 600;
-    line-height: normal;
+  ul {
+    width: 360px;
+    margin: 30px auto;
   }
-  & > a {
-    width: fit-content;
-    margin: 10px 0;
-    display: flex;
-    align-items: center;
-    color: #8a8a8a;
-    text-align: right;
-    font-size: 14px;
-    font-weight: 300;
-    gap: 2px;
-    & > svg {
-      width: 12px;
-      height: 12px;
-    }
+`;
+
+const Items = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin: 0 auto;
+`;
+
+const MoreLink = styled(Link)`
+  width: fit-content;
+  margin: 14px 30px 10px 0;
+  display: flex;
+  align-items: center;
+  color: #8a8a8a;
+  text-align: right;
+  font-size: 14px;
+  font-weight: 300;
+  gap: 2px;
+  & > svg {
+    width: 12px;
+    height: 12px;
   }
 `;

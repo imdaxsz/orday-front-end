@@ -3,7 +3,7 @@ import styled from "styled-components";
 import RemoveIcon from "@/assets/remove.svg?react";
 
 export default function RemoveButton() {
-  const handlerClick = () => {
+  const handleClick = () => {
     const ok = window.confirm("관심 상품을 삭제하시겠습니까?");
     if (ok) {
       // TODO
@@ -12,7 +12,7 @@ export default function RemoveButton() {
   };
 
   return (
-    <Container onClick={handlerClick}>
+    <Container onClick={handleClick}>
       <RemoveIcon />
     </Container>
   );

@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export default function LikeButton() {
   const [like, setLike] = useState(false);
-  const handlerClick = () => {
+  const handleClick = () => {
     setLike((prev) => !prev);
   };
 
@@ -12,7 +12,7 @@ export default function LikeButton() {
   // 서버에서 사용자가 좋아요 한 상품인지 확인
 
   return (
-    <Container onClick={handlerClick}>
+    <Container onClick={handleClick}>
       {like ? <PiHeartFill /> : <PiHeartBold />}
     </Container>
   );

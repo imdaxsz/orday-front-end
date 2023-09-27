@@ -25,15 +25,15 @@ export default function VisualSection({ items }: Props) {
 
   const CHANGE_AUTO_INTERVAL = 4000; // 이미지 자동 전환 주기
 
-  const handlerPrevClick = () => {
+  const handlePrevClick = () => {
     setCurrent((prev) => (prev === 0 ? items.length - 1 : prev - 1));
   };
 
-  const handlerNextClick = () => {
+  const handleNextClick = () => {
     setCurrent((prev) => (prev === items.length - 1 ? 0 : prev + 1));
   };
 
-  const handlerIndicatorClick = (i: number) => {
+  const handleIndicatorClick = (i: number) => {
     setCurrent(i);
   };
 
@@ -47,10 +47,10 @@ export default function VisualSection({ items }: Props) {
 
   return (
     <Container>
-      <ArrowIconButton onClick={handlerPrevClick}>
+      <ArrowIconButton onClick={handlePrevClick}>
         <IoIosArrowBack />
       </ArrowIconButton>
-      <ArrowIconButton onClick={handlerNextClick} style={{ right: 0 }}>
+      <ArrowIconButton onClick={handleNextClick} style={{ right: 0 }}>
         <IoIosArrowForward />
       </ArrowIconButton>
       <Gradient />
@@ -64,7 +64,7 @@ export default function VisualSection({ items }: Props) {
           <Indicator
             $active={current === i}
             key={i}
-            onClick={() => handlerIndicatorClick(i)}
+            onClick={() => handleIndicatorClick(i)}
           />
         ))}
       </IndicatorContainer>
