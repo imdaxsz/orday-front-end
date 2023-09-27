@@ -10,6 +10,7 @@ export type StrictPropsWithChildren<P = unknown> = P & {
 };
 
 export interface ProductInfo {
+  id: number;
   image: string;
   url: string;
   brand: string;
