@@ -21,7 +21,7 @@ export default function Button({
   children,
   ...props
 }: ButtonProps) {
-  if (iconOnly) return <IconButton>{children}</IconButton>;
+  if (iconOnly) return <IconButton {...props}>{children}</IconButton>;
   return (
     <Container $variant={$variant} color={color} size={size} {...props}>
       {children}
