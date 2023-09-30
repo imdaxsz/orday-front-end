@@ -1,4 +1,5 @@
 import { IoArrowBackOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Button from "@/components/Button";
@@ -7,6 +8,7 @@ import ProductCard from "@/components/ProductCard";
 import { ProductInfo } from "@/types";
 
 export default function BrandDetail() {
+  const navigate = useNavigate();
   const productMockData: ProductInfo = {
     image:
       "https://image.msscdn.net/images/goods_img/20230323/3174776/3174776_16795542598248_big.png",
@@ -20,7 +22,7 @@ export default function BrandDetail() {
   return (
     <div style={{ paddingBottom: "150px" }}>
       <Header>
-        <Button iconOnly>
+        <Button iconOnly onClick={() => navigate(-1)}>
           <IoArrowBackOutline size={24} />
         </Button>
         <LikeButton target="brand" />
@@ -40,9 +42,11 @@ const Header = styled.div`
   height: 250px;
   background: rgba(0, 0, 0, 0.3);
   position: relative;
+
   button {
     position: absolute;
     z-index: 200;
+    cursor: pointer;
   }
 
   & > button:first-of-type {
