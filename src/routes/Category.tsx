@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { styled } from "styled-components";
 
+import CategoryNav from "@/components/CategoryNav";
 import Dropdown from "@/components/Dropdown";
 import ProductCard from "@/components/ProductCard";
 
@@ -60,7 +62,7 @@ const mockdata2 = [
     image: "",
     url: "",
     brand: "브랜드명",
-    name: "상품1",
+    name: "상품4",
     price: 10000,
   },
   {
@@ -68,7 +70,7 @@ const mockdata2 = [
     image: "",
     url: "",
     brand: "브랜드명",
-    name: "상품2",
+    name: "상품5",
     price: 10000,
   },
   {
@@ -76,7 +78,7 @@ const mockdata2 = [
     image: "",
     url: "",
     brand: "브랜드명",
-    name: "상품3",
+    name: "상품6",
     price: 10000,
   },
   {
@@ -84,7 +86,7 @@ const mockdata2 = [
     image: "",
     url: "",
     brand: "브랜드명",
-    name: "상품2",
+    name: "상품7",
     price: 10000,
   },
   {
@@ -92,14 +94,20 @@ const mockdata2 = [
     image: "",
     url: "",
     brand: "브랜드명",
-    name: "상품3",
+    name: "상품8",
     price: 10000,
   },
 ];
 
 export default function Category() {
+  const [selectedOption, setSelectedOption] = useState({
+    name: "정렬방식",
+    value: "",
+  });
+
   return (
     <>
+      <CategoryNav />
       <CategoryNewList>
         {mockdata.map((item) => (
           <ProductCard key={item.id} info={item} size="xl" $tag="NEW" />
@@ -107,16 +115,17 @@ export default function Category() {
       </CategoryNewList>
 
       <CategoryItems>
-        <Dropdown type="product" />
+        <Dropdown
+          type="product"
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+        />
         <ItemList>
           {mockdata2.map((item) => (
             <ProductCard key={item.id} info={item} size="md" />
           ))}
         </ItemList>
       </CategoryItems>
-
-      <Dropdown type="product" />
-      <Dropdown type="brand" />
     </>
   );
 }
@@ -125,14 +134,13 @@ const CategoryNewList = styled.section`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 6rem;
-  margin-bottom: 15rem;
 `;
 
 const CategoryItems = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  margin: 15rem 0;
 `;
 
 const ItemList = styled.div`
