@@ -15,15 +15,20 @@ export const Container = styled.ul<TabStyleProps>`
 `;
 
 export const TabContainer = styled.li`
-  display: flex;
   width: 100%;
-  justify-content: center;
-  align-items: center;
+  height: 100%;
   cursor: pointer;
   background-color: white;
   border-bottom: solid 2px white;
   color: ${({ theme }) => theme.colors["neutral"]["40"]};
-  text-align: center;
   font-size: 16px;
   font-weight: 300;
+
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: inherit;
+  }
 `;
