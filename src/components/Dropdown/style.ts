@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const DropdownBox = styled.div`
   position: relative;
-  width: 8rem;
+  min-width: 8rem;
   padding: 0.5rem;
   border-radius: 12px;
   background-color: transparent;

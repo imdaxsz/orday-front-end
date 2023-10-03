@@ -47,9 +47,8 @@ export default function Dropdown({
   const brandOptions = [
     { name: "전체", value: "option1" },
     { name: "인기순", value: "option2" },
-    { name: "최근 입점순", value: "option3" },
-    { name: "가나다순", value: "option4" },
-    { name: "ABC순", value: "option5" },
+    { name: "이름(오름차순)", value: "option3" },
+    { name: "이름(내림차순)", value: "option4" },
   ];
 
   return (
