@@ -1,8 +1,8 @@
 import BestTag from "@/assets/best.svg?react";
 import NewTag from "@/assets/new.svg?react";
+import LikeButton from "@/components/LikeButton";
 import { ProductInfo } from "@/types";
 
-import LikeButton from "./LikeButton";
 import RemoveButton from "./RemoveButton";
 import {
   Brand,
@@ -36,7 +36,7 @@ export default function ProductCard({
           <>
             {$tag === "NEW" && <NewTag />}
             {$tag === "BEST" && <BestTag />}
-            <LikeButton />
+            <LikeButton target="product" />
           </>
         ) : (
           <RemoveButton />
