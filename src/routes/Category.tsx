@@ -101,8 +101,8 @@ const mockdata2 = [
 
 export default function Category() {
   const [selectedOption, setSelectedOption] = useState({
-    name: "정렬방식",
-    value: "",
+    name: "최신순",
+    value: "new",
   });
 
   return (

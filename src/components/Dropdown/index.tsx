@@ -36,19 +36,16 @@ export default function Dropdown({
   };
 
   const productOptions = [
-    { name: "전체", value: "option1" },
-    { name: "인기순", value: "option2" },
-    { name: "추천순", value: "option3" },
-    { name: "낮은 가격순", value: "option4" },
-    { name: "높은 가격순", value: "option5" },
-    { name: "할인순", value: "option6" },
+    { name: "최신순", value: "new" },
+    { name: "인기순", value: "popularity" },
+    { name: "낮은 가격순", value: "price_asc" },
+    { name: "높은 가격순", value: "prcie_desc" },
   ];
 
   const brandOptions = [
-    { name: "전체", value: "option1" },
-    { name: "인기순", value: "option2" },
-    { name: "이름(오름차순)", value: "option3" },
-    { name: "이름(내림차순)", value: "option4" },
+    { name: "인기순", value: "popularity" },
+    { name: "이름(오름차순)", value: "name_asc" },
+    { name: "이름(내림차순)", value: "name_desc" },
   ];
 
   return (
