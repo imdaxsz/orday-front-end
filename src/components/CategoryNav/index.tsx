@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import RightIcon from "@/assets/chevron_right.svg?react";
 import { menuData } from "@/constants";
 
-import { CategoryNavBox, CurCategoryList, CategoryList } from "./style";
+import { CategoryNavBox, CurCategory, CategoryList } from "./style";
 
 export default function CategoryNav() {
   const location = useLocation();
@@ -23,7 +23,7 @@ export default function CategoryNav() {
       {curCategory?.subItem.map((data, idx) => (
         <div key={idx}>
           {data.url === location.pathname ? (
-            <CurCategoryList>{data.label}</CurCategoryList>
+            <CurCategory>{data.label}</CurCategory>
           ) : (
             <CategoryList
               role="presentation"

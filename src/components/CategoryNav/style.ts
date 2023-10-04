@@ -8,7 +8,7 @@ export const CategoryNavBox = styled.div`
   margin-bottom: 24px;
 `;
 
-export const CurCategoryList = styled.span`
+export const CurCategory = styled.span`
   font-weight: bold;
   color: ${({ theme }) => theme.colors.neutral["100"]};
   margin-left: 1rem;
