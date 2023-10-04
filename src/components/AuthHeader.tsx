@@ -6,7 +6,7 @@ import HomeIcon from "@/assets/home.svg?react";
 
 import Button from "./Button";
 
-export default function AuthIconHeader({ title }: { title: string }) {
+export default function AuthHeader({ title }: { title: string }) {
   const navigate = useNavigate();
   return (
     <Container>
