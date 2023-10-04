@@ -7,7 +7,7 @@ export const RadioText = styled.label`
     cursor: pointer;
   }
   span {
-    color: #5b5b5b;
+    color: ${({ theme }) => theme.colors.neutral["70"]};
     margin-left: 0.3rem;
   }
 `;
