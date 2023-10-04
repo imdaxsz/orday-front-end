@@ -1,10 +1,9 @@
 import { InputHTMLAttributes } from "react";
 
-import { StrictPropsWithChildren } from "@/types";
-
 import { RadioInput, RadioText } from "./style";
 
 interface RadioButtonProps extends InputHTMLAttributes<HTMLInputElement> {
+  text: string;
   handleRadio: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -13,9 +12,9 @@ export function RadioButton({
   name,
   id,
   disabled,
+  text,
   handleRadio,
-  children,
-}: StrictPropsWithChildren<RadioButtonProps>) {
+}: RadioButtonProps) {
   return (
     <RadioText htmlFor={id}>
       <RadioInput
@@ -26,7 +25,7 @@ export function RadioButton({
         disabled={disabled}
         onChange={handleRadio}
       />
-      <span>{children}</span>
+      <span>{text}</span>
     </RadioText>
   );
 }
