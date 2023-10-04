@@ -1,12 +1,10 @@
+import { InputHTMLAttributes } from "react";
+
 import { StrictPropsWithChildren } from "@/types";
 
 import { RadioInput, RadioText } from "./style";
 
-interface RadioButtonProps {
-  value: string;
-  name: string;
-  id: string;
-  disabled?: boolean;
+interface RadioButtonProps extends InputHTMLAttributes<HTMLInputElement> {
   handleRadio: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
