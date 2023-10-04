@@ -1,0 +1,45 @@
+import { IoIosArrowBack } from "react-icons/io";
+import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+import HomeIcon from "@/assets/home.svg?react";
+
+import Button from "./Button";
+
+export default function AuthIconHeader({ title }: { title: string }) {
+  const navigate = useNavigate();
+  return (
+    <Container>
+      <Icons>
+        <Button iconOnly onClick={() => navigate(-1)}>
+          <IoIosArrowBack size={24} />
+        </Button>
+        <Link to="/">
+          <HomeIcon />
+        </Link>
+      </Icons>
+      <h1>{title}</h1>
+    </Container>
+  );
+}
+
+const Container = styled.div`
+  width: 100%;
+
+  h1 {
+    text-align: center;
+    ${({ theme }) => theme.typo["title-1-b"]};
+    margin-top: 27px;
+  }
+`;
+
+const Icons = styled.div`
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  svg {
+    color: #676767;
+  }
+`;
