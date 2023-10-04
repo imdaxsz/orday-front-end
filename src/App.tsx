@@ -6,6 +6,7 @@ import theme from "@/styles/theme";
 import Layout from "./components/Layout";
 import BrandDetail from "./routes/Brand/Detail";
 import BrandList from "./routes/Brand/List";
+import Category from "./routes/Category";
 import Home from "./routes/Home";
 import Login from "./routes/Login";
 import GlobalStyle from "./styles/GlobalStyle";
@@ -20,6 +21,7 @@ export default function App() {
             <Route path="" element={<Home />} />
             <Route path="brands" element={<BrandList />} />
             <Route path="brands/:name" element={<BrandDetail />} />
+            <Route path="category" element={<Category />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/login/guestOrder" element={<Login />} />
