@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
+import AuthIconHeader from "@/components/AuthIconHeader";
 import BaseTabs, { Tab } from "@/components/Tabs";
 
 import GuestOrder from "./GuestOrder";
@@ -11,6 +12,7 @@ export default function Login() {
   const LOGIN = pathname === undefined;
   return (
     <Container>
+      <AuthIconHeader title="로그인" />
       <Tabs defaultActiveId={LOGIN ? 1 : 2}>
         <Tab value={1} label="회원 로그인" url="/login" />
         <Tab value={2} label="비회원 주문조회" url="/login/guestOrder" />
@@ -28,7 +30,7 @@ const Container = styled.div`
 const Tabs = styled(BaseTabs)`
   width: 100%;
   height: 40px;
-  margin: 30px auto 40px;
+  margin: 26px auto 40px;
   & > li {
     color: ${({ theme }) => theme.colors["neutral"]["100"]};
   }
