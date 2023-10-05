@@ -4,7 +4,7 @@ export const Container = styled.div`
   & > label {
     display: block;
     ${({ theme }) => theme.typo["body-3-r"]};
-    color: ${({ theme }) => theme.colors["neutral"]["70"]};
+    color: ${({ theme }) => theme.colors["neutral"]["60"]};
     line-height: 120%;
     margin-bottom: 5px;
   }
@@ -30,6 +30,6 @@ export const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-color: ${({ theme }) => theme.colors["neutral"]["70"]};
+    border-color: ${({ theme }) => theme.colors["neutral"]["60"]};
   }
 `;

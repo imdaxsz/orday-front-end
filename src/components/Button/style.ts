@@ -45,7 +45,7 @@ const getButtonStyle = (
         ${color === "primary"
           ? theme.colors["primary"]["80"]
           : theme.colors["neutral"]["40"]};
-      color: ${color === "primary" ? "white" : theme.colors["neutral"]["70"]};
+      color: ${color === "primary" ? "white" : theme.colors["neutral"]["60"]};
     `,
     outline: css`
       background-color: white;

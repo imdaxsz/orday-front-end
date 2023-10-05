@@ -7,7 +7,8 @@ export const CheckboxContainer = styled.div`
 `;
 
 export const CheckboxText = styled.label`
-  margin-left: 0.5rem;
+  padding-left: 0.5rem;
+  cursor: pointer;
 `;
 
 export const CheckboxInput = styled.input<{ $isCircle: boolean }>`

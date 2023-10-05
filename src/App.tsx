@@ -8,6 +8,7 @@ import BrandDetail from "./routes/Brand/Detail";
 import BrandList from "./routes/Brand/List";
 import Category from "./routes/Category";
 import Home from "./routes/Home";
+import Join from "./routes/Join";
 import Login from "./routes/Login";
 import GlobalStyle from "./styles/GlobalStyle";
 
@@ -25,6 +26,7 @@ export default function App() {
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/login/guestOrder" element={<Login />} />
+          <Route path="/join" element={<Join />} />
         </Routes>
       </ThemeProvider>
     </>
