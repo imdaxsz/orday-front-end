@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
 interface MenuProps {
-  isVisible: boolean;
+  $isVisible: boolean;
 }
 
 export const Container = styled.div<MenuProps>`
   width: 100%;
   height: fit-content;
   flex-shrink: 0;
-  overflow: ${({ isVisible = false }) => (isVisible ? "visible" : "hidden")};
+  overflow: ${({ $isVisible = false }) => ($isVisible ? "visible" : "hidden")};
 `;
 
 export const Item = styled.div`
@@ -26,10 +26,10 @@ export const Item = styled.div`
 export const SubMenu = styled.div<MenuProps>`
   width: 100%;
   height: fit-content;
-  height: ${({ isVisible = false }) => (isVisible ? "fit-content" : "0px")};
+  height: ${({ $isVisible = false }) => ($isVisible ? "fit-content" : "0px")};
   transition: height 0.5s;
-  padding: ${({ isVisible = false }) =>
-    isVisible ? "9px 10px 5px 10px" : "0px"};
+  padding: ${({ $isVisible = false }) =>
+    $isVisible ? "9px 10px 5px 10px" : "0px"};
   display: flex;
   flex-direction: column;
   gap: 10px;
