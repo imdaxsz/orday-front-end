@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
@@ -43,10 +43,16 @@ const Item = styled.li`
 
 export default function Header() {
   const [menuIsVisible, setMenuIsVisible] = useState(false);
-  const pathname = useLocation().pathname.split("/");
+  const location = useLocation();
+  const pathname = location.pathname.split("/");
   // 랜딩 페이지, 브랜드 상세 페이지에서만 border bottom 제거
   const hasBorder =
     pathname[1] === "" || (pathname[1] === "brands" && Boolean(pathname[2]));
+
+  useEffect(() => {
+    setMenuIsVisible(false);
+  }, [location]);
+
   return (
     <Container $hasBorder={hasBorder}>
       <Content>
