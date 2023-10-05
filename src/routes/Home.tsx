@@ -52,6 +52,7 @@ export default function Home() {
   ];
 
   const productMockData: ProductInfo = {
+    id: 1,
     image:
       "https://image.msscdn.net/images/goods_img/20230323/3174776/3174776_16795542598248_big.png",
     url: "",
