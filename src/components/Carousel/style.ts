@@ -64,7 +64,7 @@ export const Info = styled(Link)`
   }
 
   & > span {
-    color: ${({ theme }) => theme.colors["neutral"]["70"]};
+    color: ${({ theme }) => theme.colors["neutral"]["60"]};
     ${({ theme }) => theme.typo["body-2-r"]};
   }
 `;
