@@ -80,6 +80,7 @@ export const IconButton = styled.button`
   all: initial;
   width: fit-content;
   height: fit-content;
+  cursor: pointer;
   svg {
     display: block;
   }

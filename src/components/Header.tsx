@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
+import Logo from "@/assets/logo.svg?react";
+
 import Menu from "./Menu";
 
 const Container = styled.div<{ $hasBorder: boolean }>`
@@ -21,7 +23,7 @@ const Content = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  img {
+  svg {
     display: block;
   }
 `;
@@ -53,7 +55,7 @@ export default function Header() {
           <Item>COMMUNITY</Item>
         </Group>
         <Link to="/">
-          <img src="/logo.svg" alt="Logo" />
+          <Logo />
         </Link>
         <Group>
           <Item>SEARCH</Item>

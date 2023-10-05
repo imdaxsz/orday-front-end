@@ -12,6 +12,7 @@ export interface TabStyleProps {
 export interface TabProps extends ComponentProps<"li"> {
   value: number;
   label: string;
+  url?: string;
 }
 
 interface TabsProps extends ComponentProps<"ul"> {
@@ -40,10 +41,10 @@ export default function Tabs({
   );
 }
 
-export function Tab({ value, label, onClick }: TabProps) {
+export function Tab({ value, label, url, onClick }: TabProps) {
   return (
     <TabContainer id={value.toString()} onClick={onClick}>
-      <Link to="#">{label}</Link>
+      <Link to={url ? url : "#"}>{label}</Link>
     </TabContainer>
   );
 }
