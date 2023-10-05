@@ -7,7 +7,7 @@ export const CheckboxContainer = styled.div`
 `;
 
 export const CheckboxText = styled.label`
-  padding-left: 0.5rem; // 체크박스와 label 사이 공간도 클릭이 가능해야 함
+  padding-left: 0.5rem;
   cursor: pointer;
 `;
 
