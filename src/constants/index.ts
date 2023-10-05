@@ -42,6 +42,6 @@ export const menuData: IMenuItem[] = [
   },
   {
     label: "브랜드",
-    subItem: [{ label: "전체", url: "/" }],
+    url: "/brands",
   },
 ];
