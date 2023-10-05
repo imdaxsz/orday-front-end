@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { ProductCardProps } from ".";
@@ -102,7 +103,7 @@ export const Info = styled.div<Pick<ProductCardProps, "size">>`
   }
 `;
 
-export const Brand = styled.p`
+export const Brand = styled(Link)`
   color: #797979;
   ${({ theme }) => theme.typo["body-2-r"]};
   line-height: 100%;

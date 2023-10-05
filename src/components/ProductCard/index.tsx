@@ -44,7 +44,7 @@ export default function ProductCard({
         <Image src={info.image} alt="1" size={size} />
       </ImageContainer>
       <Info>
-        <Brand>{info.brand}</Brand>
+        <Brand to={`/brands/${info.brand.pathname}`}>{info.brand.name}</Brand>
         <Name>{info.name}</Name>
         <Price size={size}>{info.price.toLocaleString()}원</Price>
       </Info>
