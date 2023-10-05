@@ -5,7 +5,7 @@ const MEDIUM = 500;
 const REGULAR = 400;
 
 const generateTypography = (size: number, weight: number) => css`
-  font-family: "Pretendard", "sans-serif", "system-ui";
+  font-family: "Pretendard Variable", "sans-serif", "system-ui";
   font-style: normal;
   line-height: normal;
   font-weight: ${weight};
