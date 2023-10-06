@@ -46,6 +46,7 @@ export default function LoginForm() {
       <Link to="/join">
         <Button $variant="outline">회원가입</Button>
       </Link>
+      <Button>구글 로그인</Button>
     </Container>
   );
 }
@@ -55,10 +56,16 @@ const Container = styled.div`
     width: 100%;
     ${({ theme }) => theme.typo["body-3-b"]};
   }
+  & > button {
+    margin-top: 80px;
+    background-color: #ca5849;
+    border-color: #ca5849;
+  }
   & > a {
     display: block;
     margin-top: 10px;
   }
+  padding-bottom: 120px;
 `;
 
 const Form = styled.form`
