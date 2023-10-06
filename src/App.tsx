@@ -7,6 +7,7 @@ import Layout from "./components/Layout";
 import BrandDetail from "./routes/Brand/Detail";
 import BrandList from "./routes/Brand/List";
 import Category from "./routes/Category";
+import Community from "./routes/Community";
 import Home from "./routes/Home";
 import Join from "./routes/Join";
 import Login from "./routes/Login";
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="brands" element={<BrandList />} />
             <Route path="brands/:name" element={<BrandDetail />} />
             <Route path="category" element={<Category />} />
+            <Route path="community" element={<Community />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/login/guestOrder" element={<Login />} />
