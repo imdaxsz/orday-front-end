@@ -18,7 +18,9 @@ interface HashTagItemProps {
   tag: string;
 }
 
-export const HashTagItem: React.FC<HashTagItemProps> = ({ tag }) => {
+export const HashTagItem: React.FC<HashTagItemProps> = ({
+  tag,
+}: HashTagItemProps) => {
   const [active, setActive] = useState(false);
 
   const handleClick = () => {
