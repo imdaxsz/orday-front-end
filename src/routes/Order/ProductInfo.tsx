@@ -1,0 +1,165 @@
+import { styled } from "styled-components";
+
+// 임시데이터
+const mockData = [
+  {
+    id: 1,
+    name: "파타고니아 레트로 x 양털 후리스 뽀글이 플리스 자켓",
+    color: "BROWN",
+    size: "L",
+    amount: "1",
+    price: "198000",
+    image:
+      "https://image.msscdn.net/images/goods_img/20230731/3434621/3434621_16908001897197_500.jpg",
+  },
+];
+
+export default function ProductInfo() {
+  const price = {
+    product: mockData
+      .map((item) => Number(item.price))
+      .reduce((acc, cur) => acc + cur),
+    sale: 0,
+    shipping: 0,
+  };
+  return (
+    <Container>
+      <InfoTitle>
+        주문상품
+        <span>{mockData.length}</span>
+      </InfoTitle>
+      <Line />
+      {mockData.map((item) => (
+        <>
+          <ProductItem key={item.id}>
+            <ProductImage src={item.image} />
+            <ItemInfo>
+              <div>
+                <h4>{item.name}</h4>
+                <ul>
+                  <li>{item.color}</li>
+                  <li>사이즈 {item.size}</li>
+                  <li>수량 {item.amount}개</li>
+                </ul>
+              </div>
+              <div>
+                <p>₩ {item.price}</p>
+              </div>
+            </ItemInfo>
+          </ProductItem>
+          <Line />
+        </>
+      ))}
+      <PriceList>
+        <li>
+          <p>상품금액</p>
+          <p>{price.product}원</p>
+        </li>
+        <li>
+          <p>상품할인</p>
+          <p>-{price.sale} 원</p>
+        </li>
+        <li>
+          <p>배송비</p>
+          <p>{price.shipping} 원</p>
+        </li>
+        <li>
+          <p>합계</p>
+          <p>{price.product + price.sale + price.shipping} 원</p>
+        </li>
+      </PriceList>
+      <Line />
+      <TotalPrice>
+        <p>총 결제금액</p>
+        <p>{price.product + price.sale + price.shipping} 원</p>
+      </TotalPrice>
+    </Container>
+  );
+}
+
+const Container = styled.div`
+  max-width: 350px;
+`;
+const InfoTitle = styled.h3`
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  span {
+    display: inline-flex;
+    height: 17px;
+    margin: 0 5px;
+    padding: 3px 6px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: ${({ theme }) => theme.colors.primary["80"]};
+    font-size: 12px;
+    color: #fff;
+  }
+`;
+
+const Line = styled.hr`
+  width: 350px;
+  height: 1px;
+  border: none;
+  background-color: ${({ theme }) => theme.colors.neutral["50"]};
+`;
+
+const ProductItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 24px 0;
+`;
+
+const ProductImage = styled.img`
+  background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
+  width: 5rem;
+  height: 7rem;
+  object-fit: cover;
+  border-radius: 0.625rem;
+`;
+
+const ItemInfo = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  h4 {
+    font-size: 12px;
+    margin: 5px 0;
+  }
+  ul {
+    font-size: 10px;
+    color: ${({ theme }) => theme.colors.neutral["40"]};
+  }
+  li {
+    margin: 1.5px 0;
+  }
+  p {
+    margin-top: 28px;
+    font-size: 14px;
+    font-weight: bold;
+    color: ${({ theme }) => theme.colors.neutral["40"]};
+    text-align: right;
+  }
+`;
+
+const PriceList = styled.ul`
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.neutral["40"]};
+  li {
+    display: flex;
+    justify-content: space-between;
+    margin: 16px 0;
+  }
+`;
+
+const TotalPrice = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 24px 0;
+  font-size: 18px;
+  font-weight: bold;
+`;
