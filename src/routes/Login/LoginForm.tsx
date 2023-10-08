@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import Button from "@/components/Button";
-import { CheckBox } from "@/components/CheckBox";
+import CheckBox from "@/components/CheckBox";
 import TextInput from "@/components/TextInput";
 
 export default function LoginForm() {

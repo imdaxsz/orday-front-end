@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import AuthHeader from "@/components/AuthHeader";
 import Button from "@/components/Button";
-import { CheckBox } from "@/components/CheckBox";
+import CheckBox from "@/components/CheckBox";
 import BaseInput from "@/components/TextInput";
 
 export default function Join() {
