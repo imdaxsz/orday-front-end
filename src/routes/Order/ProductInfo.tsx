@@ -1,5 +1,8 @@
 import { styled } from "styled-components";
 
+import Button from "@/components/Button";
+import CheckBox from "@/components/CheckBox";
+
 // 임시데이터
 const mockData = [
   {
@@ -7,8 +10,8 @@ const mockData = [
     name: "파타고니아 레트로 x 양털 후리스 뽀글이 플리스 자켓",
     color: "BROWN",
     size: "L",
-    amount: "1",
-    price: "198000",
+    amount: 1,
+    price: 198000,
     image:
       "https://image.msscdn.net/images/goods_img/20230731/3434621/3434621_16908001897197_500.jpg",
   },
@@ -30,8 +33,8 @@ export default function ProductInfo() {
       </InfoTitle>
       <Line />
       {mockData.map((item) => (
-        <>
-          <ProductItem key={item.id}>
+        <div key={item.id}>
+          <ProductItem>
             <ProductImage src={item.image} />
             <ItemInfo>
               <div>
@@ -43,36 +46,47 @@ export default function ProductInfo() {
                 </ul>
               </div>
               <div>
-                <p>₩ {item.price}</p>
+                <p>₩ {item.price.toLocaleString()}</p>
               </div>
             </ItemInfo>
           </ProductItem>
           <Line />
-        </>
+        </div>
       ))}
       <PriceList>
         <li>
           <p>상품금액</p>
-          <p>{price.product}원</p>
+          <p>{price.product.toLocaleString()}원</p>
         </li>
         <li>
           <p>상품할인</p>
-          <p>-{price.sale} 원</p>
+          <p>-{price.sale.toLocaleString()} 원</p>
         </li>
         <li>
           <p>배송비</p>
-          <p>{price.shipping} 원</p>
+          <p>{price.shipping.toLocaleString()} 원</p>
         </li>
         <li>
           <p>합계</p>
-          <p>{price.product + price.sale + price.shipping} 원</p>
+          <p>
+            {(price.product + price.sale + price.shipping).toLocaleString()}원
+          </p>
         </li>
       </PriceList>
       <Line />
       <TotalPrice>
         <p>총 결제금액</p>
-        <p>{price.product + price.sale + price.shipping} 원</p>
+        <p>
+          {(price.product + price.sale + price.shipping).toLocaleString()}원
+        </p>
       </TotalPrice>
+      <CheckAgreement>
+        <CheckBox text="주문정보 동의" />
+        <CheckBox text="제 3자 제공 동의" />
+      </CheckAgreement>
+      <Button type="submit" style={{ width: "100%" }}>
+        주문하기
+      </Button>
     </Container>
   );
 }
@@ -162,4 +176,13 @@ const TotalPrice = styled.div`
   margin: 24px 0;
   font-size: 18px;
   font-weight: bold;
+`;
+
+const CheckAgreement = styled.div`
+  color: ${({ theme }) => theme.colors.neutral["40"]};
+  font-size: 14px;
+  margin: 20px 0 50px 0;
+  input {
+    margin: 6px 0;
+  }
 `;
