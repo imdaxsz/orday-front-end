@@ -7,6 +7,8 @@ interface TextInputProps extends ComponentProps<"input"> {
   id: string;
   warn?: boolean;
   message?: string; // 오류 메시지
+  $frmInfo?: boolean;
+  $size?: "md" | "lg";
 }
 
 export default function TextInput({
