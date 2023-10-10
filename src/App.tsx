@@ -10,6 +10,8 @@ import Category from "./routes/Category";
 import Home from "./routes/Home";
 import Join from "./routes/Join";
 import Login from "./routes/Login";
+import Order from "./routes/Order";
+import GuestOrder from "./routes/Order/GuestOrder";
 import GlobalStyle from "./styles/GlobalStyle";
 
 export default function App() {
@@ -23,6 +25,8 @@ export default function App() {
             <Route path="brands" element={<BrandList />} />
             <Route path="brands/:name" element={<BrandDetail />} />
             <Route path="category" element={<Category />} />
+            <Route path="order" element={<Order />} />
+            <Route path="order/guest" element={<GuestOrder />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/login/guestOrder" element={<Login />} />
