@@ -7,16 +7,20 @@ import styled from "styled-components";
  */
 type LikeTarget = "product" | "brand" | "post";
 
-export default function LikeButton({ target }: { target: LikeTarget }) {
-  const [like, setLike] = useState(false);
-  const handlerClick = () => {
+interface LikeButtonProps {
+  target: LikeTarget;
+  isLiked?: boolean; // 현재 사용자의 좋아요 여부
+}
+
+export default function LikeButton({ target, isLiked }: LikeButtonProps) {
+  const [like, setLike] = useState(isLiked || false);
+
+  const handlerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     setLike((prev) => !prev);
     console.log(target); // 임시
     // TODO 서버 요청
   };
-
-  // TODO
-  // 서버에서 사용자가 좋아요 한 상품 또는 브랜드인지 확인
 
   return (
     <Container onClick={handlerClick}>
