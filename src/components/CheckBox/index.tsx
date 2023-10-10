@@ -6,7 +6,7 @@ interface CheckBoxProps {
   type?: string;
 }
 
-export function CheckBox({ text, onChange, type }: CheckBoxProps) {
+export default function CheckBox({ text, onChange, type }: CheckBoxProps) {
   return (
     <CheckboxContainer>
       <CheckboxInput
