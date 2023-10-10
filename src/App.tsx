@@ -9,6 +9,7 @@ import BrandList from "./routes/Brand/List";
 import Category from "./routes/Category";
 import Home from "./routes/Home";
 import Join from "./routes/Join";
+import LikeBrandList from "./routes/Like/Brand";
 import Login from "./routes/Login";
 import Order from "./routes/Order";
 import GuestOrder from "./routes/Order/GuestOrder";
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="category" element={<Category />} />
             <Route path="order" element={<Order />} />
             <Route path="order/guest" element={<GuestOrder />} />
+            <Route path="like/brands" element={<LikeBrandList />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/login/guestOrder" element={<Login />} />
