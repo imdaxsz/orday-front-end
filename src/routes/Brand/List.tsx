@@ -5,7 +5,7 @@ import styled from "styled-components";
 import BackButton from "@/components/BackButton";
 import Dropdown from "@/components/Dropdown";
 
-interface Brand {
+export interface BrandInfo {
   name: string;
   image: string;
 }
@@ -15,13 +15,13 @@ export default function BrandList() {
     name: "인기순",
     value: "popularity",
   });
-  const brandmockData: Brand = {
+  const brandmockData: BrandInfo = {
     name: "test",
     image:
       "https://s3-alpha-sig.figma.com/img/cf7c/e3f4/d7a8698a8182ae23145a875332ba5172?Expires=1696204800&Signature=L2dz-XfbV9p0do4TdZXDszmaadl5Dzu-OXy161x-4am7U57ZOHIqf~ZG4crzJTrsM13JoC84RNvnARYr1M-SqtH8CaGMdmTb6PPtF4OLiabCDy2jnyL84iBJy6drFiwNFQm6OH026biZE5yuVdA1iDDYccYuHAGjzdYtR-pALYqo42jUmZrnHyeKy5drIiF40H4hfsAx-bBLtOHtr1jcPWVniTNckeVPCyxAVFGZ3oIUgPC~YS0CQFYwFBquw3WTIn~xTwmQSwDOKnICNZqE6AnOZhX1~PhxELIwMAsS~6mD1k-92rimEk8YduA8I2pIzr0kK2pOlYDRKc5kZzWoXA__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
   };
 
-  const brandsMockData: Brand[] = Array(12).fill(brandmockData);
+  const brandsMockData: BrandInfo[] = Array(12).fill(brandmockData);
   return (
     <Container>
       <BackButton pageTitle="브랜드" />
@@ -43,11 +43,11 @@ export default function BrandList() {
   );
 }
 
-const Container = styled.div`
+export const Container = styled.div`
   padding: 0 30px 200px;
 `;
 
-const Content = styled.div`
+export const Content = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -55,7 +55,7 @@ const Content = styled.div`
   gap: 44px;
 `;
 
-const Brands = styled.div`
+export const Brands = styled.div`
   width: fit-content;
   height: fit-content;
   display: grid;
@@ -64,13 +64,14 @@ const Brands = styled.div`
   margin: 0 auto;
 `;
 
-const Brand = styled(Link)`
+export const Brand = styled(Link)`
   display: block;
   width: 183px;
   height: 183px;
   border-radius: 100%;
   overflow: hidden;
   background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
+  position: relative;
 
   img {
     width: 100%;
