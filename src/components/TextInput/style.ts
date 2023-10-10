@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   & > label {
@@ -16,9 +16,21 @@ export const Container = styled.div`
   }
 `;
 
-export const Input = styled.input`
-  height: 50px;
-  padding: 18px 20px;
+const InputWidthSizes = {
+  md: css`
+    width: 390px;
+  `,
+  lg: css`
+    width: 805px;
+  `,
+};
+
+export const Input = styled.input<{
+  $size?: "md" | "lg";
+}>`
+  ${({ $size }) => $size && InputWidthSizes[$size]};
+  height: "50px";
+  padding: 10px 20px;
   border-radius: 10px;
   background: white;
   color: ${({ theme }) => theme.colors["neutral"]["100"]};

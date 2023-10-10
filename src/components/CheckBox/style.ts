@@ -23,7 +23,7 @@ export const CheckboxInput = styled.input<{ $isCircle: boolean }>`
 
   &:checked {
     border-color: transparent;
-    background: center url("src/assets/check_icon.svg") no-repeat;
+    background: center url("../src/assets/check_icon.svg") no-repeat;
     background-size: 100% 100%;
     background-position: 50%;
     background-repeat: no-repeat;
