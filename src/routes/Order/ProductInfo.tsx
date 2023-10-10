@@ -12,8 +12,7 @@ const mockData = [
     size: "L",
     amount: 1,
     price: 198000,
-    image:
-      "https://image.msscdn.net/images/goods_img/20230731/3434621/3434621_16908001897197_500.jpg",
+    image: "",
   },
 ];
 

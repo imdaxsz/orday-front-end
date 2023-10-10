@@ -73,7 +73,6 @@ export default function UserInfo({ user = "member" }: UserInfoProps) {
           value={infoForm.name}
           onChange={handleInputChange}
           label="이름"
-          $frmInfo
           $size="md"
         />
         <PhoneNumber>
@@ -83,21 +82,18 @@ export default function UserInfo({ user = "member" }: UserInfoProps) {
             value={infoForm.phone.first}
             label="휴대전화"
             onChange={(e) => handleInputChange(e, "first")}
-            $frmInfo
           />
           <TextInput
             id="phoneSecond"
             type="text"
             value={infoForm.phone.second}
             onChange={(e) => handleInputChange(e, "second")}
-            $frmInfo
           />
           <TextInput
             id="phoneThird"
             type="text"
             value={infoForm.phone.third}
             onChange={(e) => handleInputChange(e, "third")}
-            $frmInfo
           />
         </PhoneNumber>
       </InfoContainer>
@@ -110,7 +106,6 @@ export default function UserInfo({ user = "member" }: UserInfoProps) {
             value={emailForm.emailId}
             label="이메일"
             onChange={handleInputChange}
-            $frmInfo
             $size="md"
           />
           <EmailAt>@</EmailAt>
@@ -119,7 +114,6 @@ export default function UserInfo({ user = "member" }: UserInfoProps) {
             type="text"
             value={emailForm.emailAddress}
             onChange={handleInputChange}
-            $frmInfo
             $size="md"
           />
         </InfoContainer>
@@ -135,6 +129,10 @@ const InfoContainer = styled.div`
   gap: 1.5rem;
   margin-top: 1rem;
   align-items: flex-end;
+  input {
+    height: 40px;
+    border: solid 1px #d6d6d6;
+  }
 `;
 const PhoneNumber = styled.div`
   display: flex;

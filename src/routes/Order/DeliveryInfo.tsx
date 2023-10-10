@@ -79,7 +79,6 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
               value={infoForm.name}
               onChange={handleInputChange}
               label="받는사람"
-              $frmInfo
               $size="md"
             />
             <PhoneNumber>
@@ -89,21 +88,18 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
                 value={infoForm.phone.first}
                 label="휴대전화"
                 onChange={(e) => handleInputChange(e, "first")}
-                $frmInfo
               />
               <TextInput
                 id="phoneSecond"
                 type="text"
                 value={infoForm.phone.second}
                 onChange={(e) => handleInputChange(e, "second")}
-                $frmInfo
               />
               <TextInput
                 id="phoneThird"
                 type="text"
                 value={infoForm.phone.third}
                 onChange={(e) => handleInputChange(e, "third")}
-                $frmInfo
               />
             </PhoneNumber>
           </InfoContainer>
@@ -117,7 +113,6 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
           value={deliveryForm.deliveryAddress}
           label="주소"
           onChange={handleInputChange}
-          $frmInfo
           disabled
         />
         <Button style={{ width: "123px", height: "40px", fontSize: "14px" }}>
@@ -129,7 +124,6 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
         type="text"
         value={deliveryForm.deliveryDetail}
         onChange={handleInputChange}
-        $frmInfo
         $size="lg"
         placeholder="상세 주소 입력"
       />
@@ -141,6 +135,10 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
 const Container = styled.div`
   max-width: 805px;
   margin: 2.5rem 0;
+  input[type="text"] {
+    height: 40px;
+    border: solid 1px #d6d6d6;
+  }
 `;
 const RadioGroup = styled.div`
   display: flex;

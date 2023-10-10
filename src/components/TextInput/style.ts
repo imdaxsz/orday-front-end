@@ -26,18 +26,15 @@ const InputWidthSizes = {
 };
 
 export const Input = styled.input<{
-  $frmInfo?: boolean;
   $size?: "md" | "lg";
 }>`
   ${({ $size }) => $size && InputWidthSizes[$size]};
-  height: ${({ $frmInfo }) => ($frmInfo ? "40px" : "50px")};
+  height: "50px";
   padding: 10px 20px;
   border-radius: 10px;
   background: white;
   color: ${({ theme }) => theme.colors["neutral"]["100"]};
-  border: solid 1px
-    ${({ theme, $frmInfo }) =>
-      $frmInfo ? "#d6d6d6" : theme.colors["neutral"]["40"]};
+  border: solid 1px ${({ theme }) => theme.colors["neutral"]["40"]};
 
   &::placeholder {
     color: ${({ theme }) => theme.colors["neutral"]["40"]};
