@@ -13,7 +13,7 @@ export const SelectContainer = styled.div<
   & > label {
     display: block;
     ${({ theme }) => theme.typo["body-3-r"]};
-    color: ${({ theme }) => theme.colors["neutral"]["60"]};
+    color: ${({ theme }) => theme.colors["neutral"]["70"]};
     margin-bottom: 5px;
   }
 `;
