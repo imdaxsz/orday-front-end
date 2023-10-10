@@ -4,10 +4,7 @@ import styled from "styled-components";
 
 import ReviewCard from "@/components/CommunityCard";
 import { Post } from "@/components/CommunityCard/post";
-import TipCard from "@/components/CommunityCard/Tip";
 import HashTagList from "@/components/HashTag/List";
-import { colors } from "@/styles/colors";
-import { Typography, typo } from "@/styles/typography";
 
 export default function Community() {
   const [isMainTitle, setMainTitle] = useState(true);
@@ -16,11 +13,11 @@ export default function Community() {
   const [ref, inView] = useInView();
 
   const toggleMainTitle = () => {
-    setMainTitle(!isMainTitle);
+    setMainTitle((prev) => !prev);
   };
 
   const toggleSubTitle = () => {
-    setSubTitle(!isSubTitle);
+    setSubTitle((prev) => !prev);
   };
 
   useEffect(() => {
@@ -56,24 +53,22 @@ export default function Community() {
       </SubTitle>
       {isMainTitle ? (
         <HashTag>
-          <HashTagTitle type="title-2-b">추천 해시태그</HashTagTitle>
+          <HashTagTitle>추천 해시태그</HashTagTitle>
           <HashTagList />
         </HashTag>
       ) : (
         <>
-          <RecommendTitle type="title-2-b">추천 게시글</RecommendTitle>
+          <RecommendTitle>추천 게시글</RecommendTitle>
           <Post />
         </>
       )}
       {mainContents.map((contentId) => (
         <MainContent key={contentId}>
-          {isMainTitle
-            ? Array(4)
-                .fill(0)
-                .map((_, index) => <ReviewCard key={index} />)
-            : Array(4)
-                .fill(0)
-                .map((_, index) => <TipCard key={index} />)}
+          {Array(4)
+            .fill(0)
+            .map((_, index) => (
+              <ReviewCard isMainTitle={isMainTitle} key={index} />
+            ))}
         </MainContent>
       ))}
       <div ref={ref}></div>
@@ -110,17 +105,18 @@ const MainTitle = styled.div`
   display: flex;
   justify-content: space-around;
   border-radius: 20px;
-  border: solid 1px ${colors.neutral[20]};
-  background-color: ${colors.neutral[10]};
+  border: solid 1px ${({ theme }) => theme.colors["neutral"]["20"]};
+  background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
 `;
 
 const Review = styled.div<{ active: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) =>
-    props.active ? colors.primary[80] : colors.neutral[10]};
-  color: ${(props) => (props.active ? colors.neutral[10] : colors.neutral[40])};
+  background-color: ${({ theme, active }) =>
+    active ? theme.colors["primary"]["80"] : theme.colors["neutral"]["10"]};
+  color: ${({ theme, active }) =>
+    active ? theme.colors["neutral"]["10"] : theme.colors["neutral"]["40"]};
   width: ${(props) => (props.active ? "50%" : "50%")};
   border-radius: 20px;
   cursor: pointer;
@@ -131,9 +127,10 @@ const Tip = styled.div<{ active: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) =>
-    props.active ? colors.neutral[10] : colors.primary[80]};
-  color: ${(props) => (props.active ? colors.neutral[40] : colors.neutral[10])};
+  background-color: ${({ theme, active }) =>
+    active ? theme.colors["neutral"]["10"] : theme.colors["primary"]["80"]};
+  color: ${({ theme, active }) =>
+    active ? theme.colors["neutral"]["40"] : theme.colors["neutral"]["10"]};
   width: ${(props) => (props.active ? "50%" : "50%")};
   border-radius: 20px;
   cursor: pointer;
@@ -145,7 +142,7 @@ const SubTitle = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 722px;
-  border-bottom: 1px solid ${colors.neutral[40]};
+  border-bottom: 1px solid ${({ theme }) => theme.colors["neutral"]["40"]};
   margin-top: 42px;
   gap: 30px;
   padding-bottom: 10px;
@@ -153,7 +150,8 @@ const SubTitle = styled.div`
 `;
 
 const Following = styled.div<{ active: boolean }>`
-  font-size: ${(props) => (props.active ? typo["body-3-b"] : typo["body-3-r"])};
+  font-size: ${({ theme, active }) =>
+    active ? theme.typo["body-3-b"] : theme.typo["body-3-r"]};
   cursor: pointer;
   position: relative;
   z-index: 2;
@@ -164,14 +162,15 @@ const Following = styled.div<{ active: boolean }>`
     gap: 10px;
     width: 100%;
     height: 1px;
-    background-color: ${colors.neutral[100]};
+    background-color: ${({ theme }) => theme.colors["neutral"]["100"]};
     opacity: ${(props) => (props.active ? 1 : 0)};
     transition: opacity 0.3s ease-in-out;
   }
 `;
 
 const Recommend = styled.div<{ active: boolean }>`
-  font-size: ${(props) => (props.active ? typo["body-3-r"] : typo["body-3-b"])};
+  font-size: ${({ theme, active }) =>
+    active ? theme.typo["body-3-r"] : theme.typo["body-3-b"]};
   cursor: pointer;
   position: relative;
   z-index: 2;
@@ -181,7 +180,7 @@ const Recommend = styled.div<{ active: boolean }>`
     bottom: -10px;
     width: 100%;
     height: 1px;
-    background-color: ${colors.neutral[100]};
+    background-color: ${({ theme }) => theme.colors["neutral"]["100"]};
     opacity: ${(props) => (props.active ? 0 : 1)};
     transition: opacity 0.3s ease-in-out;
   }
@@ -197,8 +196,8 @@ const HashTag = styled.div`
   gap: 21px;
 `;
 
-const HashTagTitle = styled.div<{ type: keyof Typography }>`
-  font-size: ${(props) => typo[props.type]};
+const HashTagTitle = styled.div`
+  font-size: ${({ theme }) => theme.typo["title-2-b"]};
 `;
 
 const MainContent = styled.div`
@@ -207,7 +206,7 @@ const MainContent = styled.div`
   margin-top: 34px;
   gap: 24px;
   width: 722px;
-  height: 1200px;
+  height: auto;
   > :nth-child(2) {
     margin-top: 122px;
   }
@@ -216,10 +215,10 @@ const MainContent = styled.div`
   }
 `;
 
-const RecommendTitle = styled.div<{ type: keyof Typography }>`
+const RecommendTitle = styled.div`
   width: 722px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  font-size: ${(props) => typo[props.type]};
+  font-size: ${({ theme }) => theme.typo["title-2-b"]};
 `;

@@ -54,7 +54,7 @@ export function Post() {
 
   return (
     <PostComponent>
-      <LeftChevron type="title-2-b" onClick={prevPost}>
+      <LeftChevron onClick={prevPost}>
         <FaChevronLeft />
       </LeftChevron>
       {getPostCard().map((tip, index) => (
@@ -62,18 +62,14 @@ export function Post() {
           <Profile>
             <Image />
             <Info>
-              <InfoName type="body-3-m">김환경</InfoName>
-              <InfoState type="body-4-r" left={index === 0}>
-                실시간 인기 급등!
-              </InfoState>
+              <InfoName>김환경</InfoName>
+              <InfoState left={index === 0}>실시간 인기 급등!</InfoState>
             </Info>
           </Profile>
-          <Preview type="body-3-r" left={index === 0}>
-            업사이클링 체험해 보셨나요?{tip}
-          </Preview>
+          <Preview left={index === 0}>업사이클링 체험해 보셨나요?{tip}</Preview>
         </PostCard>
       ))}
-      <RightChevron type="title-2-b" onClick={NextPost}>
+      <RightChevron onClick={NextPost}>
         <FaChevronRight />
       </RightChevron>
     </PostComponent>

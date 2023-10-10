@@ -1,8 +1,5 @@
 import styled from "styled-components";
 
-import { colors } from "@/styles/colors";
-import { Typography, typo } from "@/styles/typography";
-
 export const PostComponent = styled.div`
   display: flex;
   justify-content: space-between;
@@ -16,19 +13,19 @@ export const PostCard = styled.div<{ left?: boolean }>`
   width: 225px;
   height: 250px;
   border-radius: 20px;
-  background-color: ${colors.neutral[20]};
   padding: 30px;
   display: flex;
   flex-direction: column;
+  background-color: ${({ theme }) => theme.colors["neutral"]["20"]};
   ${(props) =>
     props.left &&
     `
-    background: linear-gradient(${colors.neutral[10]},${colors.neutral[40]});
-    color: ${colors.neutral[10]};
+    background: linear-gradient(to bottom, ${props.theme.colors["neutral"]["10"]}, ${props.theme.colors["neutral"]["40"]});
+    color: ${props.theme.colors["neutral"]["10"]};
   `}
 `;
 
-export const LeftChevron = styled.div<{ type: keyof Typography }>`
+export const LeftChevron = styled.div`
   position: absolute;
   top: 50%;
   left: 1%;
@@ -39,7 +36,7 @@ export const LeftChevron = styled.div<{ type: keyof Typography }>`
   cursor: pointer;
 `;
 
-export const RightChevron = styled.div<{ type: keyof Typography }>`
+export const RightChevron = styled.div`
   position: absolute;
   top: 50%;
   right: 1%;
@@ -69,17 +66,19 @@ export const Info = styled.div`
   height: 50px;
 `;
 
-export const InfoName = styled.div<{ type: keyof Typography }>`
-  font-size: ${(props) => typo[props.type]};
+export const InfoName = styled.div`
+  font-size: ${({ theme }) => theme.typo["body-3-m"]};
 `;
 
-export const InfoState = styled.div<{ type: keyof Typography; left?: boolean }>`
-  font-size: ${(props) => typo[props.type]};
-  color: ${(props) => (props.left ? colors.neutral[10] : colors.neutral[40])};
+export const InfoState = styled.div<{ left?: boolean }>`
+  font-size: ${({ theme }) => theme.typo["body-4-r"]};
+  color: ${({ theme, left }) =>
+    left ? theme.colors["neutral"]["10"] : theme.colors["neutral"]["40"]};
 `;
 
-export const Preview = styled.div<{ type: keyof Typography; left?: boolean }>`
-  font-size: ${(props) => typo[props.type]};
-  color: ${(props) => (props.left ? colors.neutral[10] : colors.neutral[40])};
+export const Preview = styled.div<{ left?: boolean }>`
+  font-size: ${({ theme }) => theme.typo["body-3-r"]};
+  color: ${({ theme, left }) =>
+    left ? theme.colors["neutral"]["10"] : theme.colors["neutral"]["40"]};
   margin-top: auto;
 `;

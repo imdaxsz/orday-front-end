@@ -1,22 +1,21 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import { colors } from "@/styles/colors";
+interface HashTagItemProps {
+  tag: string;
+}
 
 const TagItem = styled.div<{ active: boolean }>`
   padding: 8px 16px;
   margin: 8px;
-  background-color: ${(props) =>
-    props.active ? colors.primary[80] : colors.neutral[10]};
-  color: ${(props) => (props.active ? colors.neutral[10] : colors.neutral[40])};
+  background-color: ${({ theme, active }) =>
+    active ? theme.colors.primary[80] : theme.colors.neutral[10]};
+  color: ${({ theme, active }) =>
+    active ? theme.colors.neutral[10] : theme.colors.neutral[40]};
   cursor: pointer;
   border-radius: 16px;
   display: inline-block;
 `;
-
-interface HashTagItemProps {
-  tag: string;
-}
 
 export const HashTagItem: React.FC<HashTagItemProps> = ({
   tag,
@@ -24,7 +23,7 @@ export const HashTagItem: React.FC<HashTagItemProps> = ({
   const [active, setActive] = useState(false);
 
   const handleClick = () => {
-    setActive(!active);
+    setActive((prev) => !prev);
   };
 
   useEffect(() => {
