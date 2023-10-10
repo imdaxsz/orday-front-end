@@ -103,7 +103,7 @@ export default function UserInfo({ user = "member" }: UserInfoProps) {
       </InfoContainer>
 
       {user === "guest" && (
-        <EmailContainer>
+        <InfoContainer>
           <TextInput
             id="emailId"
             type="text"
@@ -113,6 +113,7 @@ export default function UserInfo({ user = "member" }: UserInfoProps) {
             $frmInfo
             $size="md"
           />
+          <EmailAt>@</EmailAt>
           <TextInput
             id="emailAddress"
             type="text"
@@ -121,17 +122,19 @@ export default function UserInfo({ user = "member" }: UserInfoProps) {
             $frmInfo
             $size="md"
           />
-        </EmailContainer>
+        </InfoContainer>
       )}
     </>
   );
 }
 
 const InfoContainer = styled.div`
+  position: relative;
   max-width: 805px;
   display: flex;
   gap: 1.5rem;
   margin-top: 1rem;
+  align-items: flex-end;
 `;
 const PhoneNumber = styled.div`
   display: flex;
@@ -143,11 +146,9 @@ const PhoneNumber = styled.div`
     width: 100%;
   }
 `;
-
-const EmailContainer = styled.div`
-  max-width: 805px;
-  display: flex;
-  gap: 1.5rem;
-  margin-top: 1rem;
-  align-items: flex-end;
+const EmailAt = styled.span`
+  position: absolute;
+  top: 50%;
+  left: 395px;
+  color: ${({ theme }) => theme.colors["neutral"]["60"]};
 `;
