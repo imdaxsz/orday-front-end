@@ -12,51 +12,30 @@ import {
 } from "../style";
 
 interface HeaderProps {
-  isMainTitle: boolean;
+  headerType: "review" | "tip";
+  info: {
+    name: string;
+    update: string;
+  };
 }
 
-const CommunityData = {
-  infoName: "김환경",
-  infoUpdate: "7 분전",
-};
-
-const TipData = {
-  infoName: "박나무",
-  infoUpdate: "좋아요 1위!",
-};
-
-function MainTitleHeader() {
+export default function CommunityHeader({ headerType, info }: HeaderProps) {
   return (
     <Header>
       <Profile>
         <Image />
         <Info>
-          <InfoName>{CommunityData.infoName}</InfoName>
-          <InfoUpdate>{CommunityData.infoUpdate}</InfoUpdate>
+          <InfoName>{info.name}</InfoName>
+          <InfoUpdate>{info.update}</InfoUpdate>
         </Info>
       </Profile>
-      <Following>팔로잉</Following>
+      {headerType === "review" ? (
+        <Following>팔로잉</Following>
+      ) : (
+        <Heart>
+          <BsFillHeartFill />
+        </Heart>
+      )}
     </Header>
   );
-}
-
-function TipTitleHeader() {
-  return (
-    <Header>
-      <Profile>
-        <Image />
-        <Info>
-          <InfoName>{TipData.infoName}</InfoName>
-          <InfoUpdate>{TipData.infoUpdate}</InfoUpdate>
-        </Info>
-      </Profile>
-      <Heart>
-        <BsFillHeartFill />
-      </Heart>
-    </Header>
-  );
-}
-
-export default function CommunityHeader({ isMainTitle }: HeaderProps) {
-  return isMainTitle ? <MainTitleHeader /> : <TipTitleHeader />;
 }

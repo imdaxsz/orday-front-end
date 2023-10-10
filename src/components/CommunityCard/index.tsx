@@ -5,13 +5,18 @@ import { ReviewComponent } from "./style";
 
 interface ReviewCardProps {
   isMainTitle: boolean;
-  key: number;
 }
 
-export default function ReviewCard({ isMainTitle, key }: ReviewCardProps) {
+export default function ReviewCard({ isMainTitle }: ReviewCardProps) {
+  const headerType = isMainTitle ? "review" : "tip";
+  const info = {
+    name: isMainTitle ? "김환경" : "박나무",
+    update: isMainTitle ? "7 분전" : "좋아요 1위!",
+  };
+
   return (
     <ReviewComponent>
-      <CommunityHeader isMainTitle={isMainTitle} key={key} />
+      <CommunityHeader headerType={headerType} info={info} />
       {isMainTitle ? <ReviewContent /> : <TipContent />}
     </ReviewComponent>
   );
