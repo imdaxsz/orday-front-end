@@ -15,7 +15,7 @@ interface LikeButtonProps {
 export default function LikeButton({ target, isLiked }: LikeButtonProps) {
   const [like, setLike] = useState(isLiked || false);
 
-  const handlerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setLike((prev) => !prev);
     console.log(target); // 임시
@@ -23,7 +23,7 @@ export default function LikeButton({ target, isLiked }: LikeButtonProps) {
   };
 
   return (
-    <Container onClick={handlerClick}>
+    <Container onClick={handleClick}>
       {like ? <PiHeartFill /> : <PiHeartBold />}
     </Container>
   );
