@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-import ExpandIcon from "@/assets/expand_more.svg?react";
+import DropdownIcon from "@/assets/expand_more.svg?react";
+import DropupIcon from "@/assets/keyboard_arrow_up.svg?react";
 
 import { SelectContainer, Selected, Option, Options } from "./style";
 
@@ -50,7 +51,7 @@ export default function SelectBox({
       {label && <label htmlFor="select-box">{label}</label>}
       <Selected disabled={disabled} height={height}>
         {selected}
-        <ExpandIcon />
+        {isVisible ? <DropupIcon /> : <DropdownIcon />}
       </Selected>
       <Options
         $hasLabel={Boolean(label)}
