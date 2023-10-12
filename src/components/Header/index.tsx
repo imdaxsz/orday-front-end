@@ -20,6 +20,7 @@ export default function Header() {
 
   const handleMyClick = () => {
     // TODO: 로그인 상태 확인
+    // 로그인 상태일 때만 드롭다운이 펼쳐집니다.
     setMyMenuIsVisible(true);
   };
 
