@@ -51,7 +51,7 @@ export default function LikeBrandList() {
 const Brand = styled(BaseBrand)`
   button {
     position: absolute;
-    z-index: 500;
+    z-index: 20;
     width: 25px;
     height: 25px;
     left: 50%;

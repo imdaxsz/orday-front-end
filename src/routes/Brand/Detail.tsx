@@ -46,7 +46,7 @@ const Header = styled.div`
 
   button {
     position: absolute;
-    z-index: 200;
+    z-index: 20;
     cursor: pointer;
   }
 

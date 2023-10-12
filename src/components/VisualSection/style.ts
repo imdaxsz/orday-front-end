@@ -14,7 +14,7 @@ export const Gradient = styled.div`
   position: absolute;
   pointer-events: none;
   inset: 0;
-  z-index: 100;
+  z-index: 20;
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.1) 43.08%,
@@ -45,7 +45,7 @@ export const ArrowIconButton = styled(Button)`
   position: absolute;
   width: 44px;
   height: 44px;
-  z-index: 200;
+  z-index: 30;
   background-color: rgba(0, 0, 0, 0);
   top: calc(50% - 22px);
   border: none;
@@ -67,7 +67,7 @@ export const IndicatorContainer = styled.div`
   gap: 20px;
   position: absolute;
   bottom: 50px;
-  z-index: 200;
+  z-index: 30;
 `;
 
 export const Indicator = styled.span<{ $active?: boolean }>`
