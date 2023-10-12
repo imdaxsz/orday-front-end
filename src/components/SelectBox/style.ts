@@ -87,4 +87,8 @@ export const Option = styled.li`
   cursor: pointer;
   ${({ theme }) => theme.typo["body-1-r"]};
   color: ${({ theme }) => theme.colors["neutral"]["100"]};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors["neutral"]["20"]};
+  }
 `;
