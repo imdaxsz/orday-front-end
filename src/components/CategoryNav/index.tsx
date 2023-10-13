@@ -12,15 +12,15 @@ export default function CategoryNav() {
   // /new/:categoryId
   // /clothes/:categoryId
 
-  const curCategory = menuData.find((menu) =>
-    menu.subItem.find((data) => data.url === location.pathname),
+  const curCategory = menuData.find(
+    (menu) => menu.subItem?.find((data) => data.url === location.pathname),
   );
 
   return (
     <CategoryNavBox>
       {curCategory?.label}
       <RightIcon />
-      {curCategory?.subItem.map((data, idx) => (
+      {curCategory?.subItem?.map((data, idx) => (
         <div key={idx}>
           {data.url === location.pathname ? (
             <CurCategory>{data.label}</CurCategory>

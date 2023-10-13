@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { ProductCardProps } from ".";
@@ -41,12 +42,13 @@ export const Container = styled.div<Pick<ProductCardProps, "size">>`
   height: fit-content;
 `;
 
-export const ImageContainer = styled.div<Omit<ProductCardProps, "info">>`
+export const ImageContainer = styled(Link)<Omit<ProductCardProps, "info">>`
   width: 100%;
   ${({ size = "sm" }) => imageSizes[size]};
   background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
   margin-bottom: 15px;
   position: relative;
+  display: block;
 
   & > button {
     position: absolute;
@@ -102,20 +104,20 @@ export const Info = styled.div<Pick<ProductCardProps, "size">>`
   }
 `;
 
-export const Brand = styled.p`
+export const Brand = styled(Link)`
   color: #797979;
   ${({ theme }) => theme.typo["body-2-r"]};
   line-height: 100%;
 `;
 
-export const Name = styled.h5`
+export const Name = styled(Link)`
   color: ${({ theme }) => theme.colors["neutral"]["100"]};
   ${({ theme }) => theme.typo["body-2-r"]};
   line-height: 100%;
   letter-spacing: -0.5px;
 `;
 
-export const Price = styled.h4<Pick<ProductCardProps, "size">>`
+export const Price = styled(Link)<Pick<ProductCardProps, "size">>`
   color: ${({ theme }) => theme.colors["neutral"]["100"]};
   ${({ theme }) => theme.typo["body-1-b"]};
   line-height: 170%;

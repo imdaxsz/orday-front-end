@@ -10,7 +10,12 @@ export default function Menu() {
   return (
     <Container>
       {menuData.map((menu, i) => (
-        <MenuItem key={i} label={menu.label} subItem={menu.subItem} />
+        <MenuItem
+          key={i}
+          label={menu.label}
+          url={menu.url}
+          subItem={menu.subItem}
+        />
       ))}
       <Auth>
         <Link to="login">로그인</Link>

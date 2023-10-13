@@ -10,10 +10,11 @@ import { ProductInfo } from "@/types";
 export default function BrandDetail() {
   const navigate = useNavigate();
   const productMockData: ProductInfo = {
+    id: 1,
     image:
       "https://image.msscdn.net/images/goods_img/20230323/3174776/3174776_16795542598248_big.png",
     url: "",
-    brand: "플라스틱 아크",
+    brand: { name: "플라스틱 아크", pathname: "plasticark" },
     name: "팻볼 [FB-F1-05]",
     price: 74000,
   };
@@ -45,7 +46,7 @@ const Header = styled.div`
 
   button {
     position: absolute;
-    z-index: 200;
+    z-index: 20;
     cursor: pointer;
   }
 
