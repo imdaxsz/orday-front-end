@@ -1,13 +1,5 @@
 import styled from "styled-components";
 
-export const Info = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 273px;
-  height: 700px;
-  gap: 50px;
-`;
-
 export const InfoUser = styled.div`
   display: flex;
   align-items: center;
@@ -75,20 +67,4 @@ export const InfoFollow = styled.div`
   margin-top: 5px;
   font-size: ${({ theme }) => theme.typo["body-4-r"]};
   color: ${({ theme }) => theme.colors["neutral"]["40"]};
-`;
-
-export const SideBar = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
-
-export const SideBarInfo = styled.div`
-  font-size: ${({ theme }) => theme.typo["body-4-r"]};
-  color: ${({ theme }) => theme.colors["neutral"]["40"]};
-`;
-
-export const ShoppingText = styled.div`
-  font-size: ${({ theme }) => theme.typo["body-2-b"]};
-  cursor: pointer;
 `;

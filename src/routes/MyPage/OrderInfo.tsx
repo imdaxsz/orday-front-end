@@ -8,7 +8,7 @@ import {
   ListNumber,
   Order,
   OrderMessage,
-} from "./Current.style";
+} from "./OrderInfo.style";
 
 const orderStatus = [
   { name: "전체", number: 0 },
@@ -19,7 +19,7 @@ const orderStatus = [
   { name: "교환/반품", number: 0 },
 ];
 
-export default function CurrentInfo() {
+export default function OrderInfo() {
   return (
     <>
       <Current>
