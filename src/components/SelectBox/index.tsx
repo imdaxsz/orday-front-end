@@ -14,9 +14,10 @@ export interface SelectStyleProps {
 
 interface SelectBoxProps {
   label?: string;
-  text: string;
-  options: string[];
-  onChange?: (value: string) => void; // 값이 설정되면 수행할 함수
+  text?: string;
+  options: string[] | number[];
+  selected: string | null;
+  setSelected?: React.Dispatch<React.SetStateAction<string | null>>;
   disabled?: boolean;
   height?: string;
   className?: string;
@@ -26,18 +27,17 @@ export default function SelectBox({
   label,
   text,
   options,
-  onChange,
+  selected,
+  setSelected,
   disabled,
   height,
   className = "",
 }: SelectBoxProps) {
   const [isVisible, setIsVisible] = useState(false);
-  const [selected, setSelected] = useState(text);
 
   const handleOptionClick = (e: React.MouseEvent<HTMLLIElement>) => {
     const value = (e.target as HTMLLIElement).innerText;
-    setSelected(value);
-    if (onChange) onChange(value);
+    if (setSelected) setSelected(value);
   };
 
   return (
@@ -50,7 +50,7 @@ export default function SelectBox({
     >
       {label && <label htmlFor="select-box">{label}</label>}
       <Selected disabled={disabled} height={height}>
-        {selected}
+        {selected ? selected : text}
         {isVisible ? <DropupIcon /> : <DropdownIcon />}
       </Selected>
       <Options

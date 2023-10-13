@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 import AuthHeader from "@/components/AuthHeader";
@@ -7,11 +8,13 @@ import BaseSelectBox from "@/components/SelectBox";
 import BaseInput from "@/components/TextInput";
 
 export default function Join() {
-  const YEAR = Array.from({ length: 2023 - 1950 + 1 }, (_, i) =>
-    (2023 - i).toString(),
-  );
-  const MONTH = Array.from({ length: 12 }, (_, i) => (i + 1).toString());
-  const DAY = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
+  const YEAR = Array.from({ length: 2023 - 1950 + 1 }, (_, i) => 2023 - i);
+  const MONTH = Array.from({ length: 12 }, (_, i) => i + 1);
+  const DAY = Array.from({ length: 31 }, (_, i) => i + 1);
+
+  const [year, setYear] = useState<string | null>(null);
+  const [month, setMonth] = useState<string | null>(null);
+  const [day, setDay] = useState<string | null>(null);
 
   return (
     <Container>
@@ -22,9 +25,25 @@ export default function Join() {
         <TextInput id="confirmPw" type="password" label="비밀번호 확인" />
         <TextInput id="name" type="text" label="이름" />
         <BirthDate>
-          <SelectBox label="생년월일" options={YEAR} text="연도" />
-          <SelectBox text="월" options={MONTH} />
-          <SelectBox text="일" options={DAY} />
+          <SelectBox
+            label="생년월일"
+            options={YEAR}
+            text="연도"
+            selected={year}
+            setSelected={setYear}
+          />
+          <SelectBox
+            text="월"
+            options={MONTH}
+            selected={month}
+            setSelected={setMonth}
+          />
+          <SelectBox
+            text="일"
+            options={DAY}
+            selected={day}
+            setSelected={setDay}
+          />
         </BirthDate>
         <ZipCode>
           <TextInput id="zipCode" disabled label="우편번호" />
