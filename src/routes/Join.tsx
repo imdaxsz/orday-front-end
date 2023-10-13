@@ -1,11 +1,21 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 import AuthHeader from "@/components/AuthHeader";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
+import BaseSelectBox from "@/components/SelectBox";
 import BaseInput from "@/components/TextInput";
 
 export default function Join() {
+  const YEAR = Array.from({ length: 2023 - 1950 + 1 }, (_, i) => 2023 - i);
+  const MONTH = Array.from({ length: 12 }, (_, i) => i + 1);
+  const DAY = Array.from({ length: 31 }, (_, i) => i + 1);
+
+  const [year, setYear] = useState<string | null>(null);
+  const [month, setMonth] = useState<string | null>(null);
+  const [day, setDay] = useState<string | null>(null);
+
   return (
     <Container>
       <AuthHeader title="회원가입" />
@@ -14,6 +24,27 @@ export default function Join() {
         <TextInput id="password" type="password" label="비밀번호" />
         <TextInput id="confirmPw" type="password" label="비밀번호 확인" />
         <TextInput id="name" type="text" label="이름" />
+        <BirthDate>
+          <SelectBox
+            label="생년월일"
+            options={YEAR}
+            text="연도"
+            selected={year}
+            setSelected={setYear}
+          />
+          <SelectBox
+            text="월"
+            options={MONTH}
+            selected={month}
+            setSelected={setMonth}
+          />
+          <SelectBox
+            text="일"
+            options={DAY}
+            selected={day}
+            setSelected={setDay}
+          />
+        </BirthDate>
         <ZipCode>
           <TextInput id="zipCode" disabled label="우편번호" />
           <Button>검색</Button>
@@ -30,7 +61,7 @@ export default function Join() {
         <CheckAll>
           <CheckBox text="이용약관 및 개인정보 수집 및 이용, 쇼핑정보 수신(선택)에 모두 동의합니다." />
         </CheckAll>
-        <ul>
+        <Terms>
           <li>
             <div>
               <CheckBox text="[필수] 이용약관 동의" />
@@ -61,7 +92,7 @@ export default function Join() {
               <TermsBox></TermsBox>
             </div>
           </li>
-        </ul>
+        </Terms>
         <Button type="submit">회원 가입</Button>
       </Form>
     </Container>
@@ -72,6 +103,18 @@ const Container = styled.div`
   width: 438px;
   margin: 0 auto;
   padding-bottom: 200px;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 80px;
+
+  & > button {
+    width: 100%;
+    ${({ theme }) => theme.typo["body-3-b"]};
+  }
 `;
 
 const TextInput = styled(BaseInput)`
@@ -85,24 +128,10 @@ const TextInput = styled(BaseInput)`
   }
 `;
 
-const CheckAll = styled.div`
+const BirthDate = styled.div`
   display: flex;
-  align-items: center;
-  ${({ theme }) => theme.typo["body-3-r"]};
-  font-weight: 300;
-  color: #2c2c2c;
-  margin: 45px 0 40px;
-`;
-
-const TermsBox = styled.div`
-  width: 438px;
-  height: 100px;
-  border-radius: 10px;
-  border: 1px solid #d9d9d9;
-  margin-top: 9px;
-  padding: 15px;
-  overflow-y: auto;
-  color: ${({ theme }) => theme.colors["neutral"]["40"]};
+  gap: 24px;
+  align-items: flex-end;
 `;
 
 const ZipCode = styled.div`
@@ -117,11 +146,16 @@ const ZipCode = styled.div`
   }
 `;
 
-const Form = styled.form`
+const CheckAll = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-top: 80px;
+  align-items: center;
+  ${({ theme }) => theme.typo["body-3-r"]};
+  font-weight: 300;
+  color: #2c2c2c;
+  margin: 45px 0 40px;
+`;
+
+const Terms = styled.ul`
   li {
     ${({ theme }) => theme.typo["body-3-r"]};
     font-weight: 300;
@@ -131,8 +165,21 @@ const Form = styled.form`
   li:last-of-type {
     margin-bottom: 30px;
   }
-  & > button {
-    width: 100%;
-    ${({ theme }) => theme.typo["body-3-b"]};
+`;
+
+const TermsBox = styled.div`
+  width: 438px;
+  height: 100px;
+  border-radius: 10px;
+  border: 1px solid #d9d9d9;
+  margin-top: 9px;
+  padding: 15px;
+  overflow-y: auto;
+  color: ${({ theme }) => theme.colors["neutral"]["40"]};
+`;
+
+const SelectBox = styled(BaseSelectBox)`
+  & > div:first-of-type {
+    background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
   }
 `;
