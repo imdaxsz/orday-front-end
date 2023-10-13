@@ -4,7 +4,7 @@ export const Container = styled.div`
   & > label {
     display: block;
     ${({ theme }) => theme.typo["body-3-r"]};
-    color: ${({ theme }) => theme.colors["neutral"]["60"]};
+    color: ${({ theme }) => theme.colors["neutral"]["70"]};
     line-height: 120%;
     margin-bottom: 5px;
   }
@@ -29,7 +29,7 @@ export const Input = styled.input<{
   $size?: "md" | "lg";
 }>`
   ${({ $size }) => $size && InputWidthSizes[$size]};
-  height: "50px";
+  height: 50px;
   padding: 10px 20px;
   border-radius: 10px;
   background: white;
