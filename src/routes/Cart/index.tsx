@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import AddBtn from "@/assets/add_btn.svg?react";
@@ -64,13 +65,17 @@ export default function Cart() {
     }
   };
 
-  const totalPrice = {
-    product: mockData
-      .map((item) => Number(item.price))
-      .reduce((acc, cur) => acc + cur),
+  const price = {
+    product: mockData.length
+      ? mockData
+          .map((item) => Number(item.price))
+          .reduce((acc, cur) => acc + cur)
+      : 0,
     sale: 0,
     shipping: 0,
   };
+  const totalPrice = price.product + price.sale + price.shipping;
+
   return (
     <>
       <BackButton pageTitle="장바구니" />
@@ -84,7 +89,7 @@ export default function Cart() {
           onChange={handleAllCheck}
           checked={checkedNum === mockData.length}
         />
-        <p>선택상품 삭제</p>
+        <RemoveBasket>선택상품 삭제</RemoveBasket>
       </Box>
       <ProductList>
         {!mockData.length ? (
@@ -126,29 +131,26 @@ export default function Cart() {
       <PriceList>
         <li>
           <p>총 상품금액</p>
-          <p>{mockData.length ? totalPrice.product.toLocaleString() : 0}원</p>
+          <p>{price.product.toLocaleString()}원</p>
         </li>
         <li>
           <p>상품할인</p>
-          <p>{mockData.length ? totalPrice.sale.toLocaleString() : 0}원</p>
+          <p>{price.sale.toLocaleString()}원</p>
         </li>
         <li>
           <p>배송비</p>
-          <p>{mockData.length ? totalPrice.shipping.toLocaleString() : 0}원</p>
+          <p>{price.shipping.toLocaleString()}원</p>
         </li>
         <TotalPrice style={{ margin: "24px 0" }}>
           <p>총 주문금액</p>
-          <p>
-            {/* {(price.product + price.sale + price.shipping).toLocaleString()}원 */}
-            0원
-          </p>
+          <p>{totalPrice.toLocaleString()}원</p>
         </TotalPrice>
       </PriceList>
       <ButtonBox>
         <Button type="submit" style={{ width: "390px" }}>
           주문하기
         </Button>
-        <span>계속 쇼핑하기</span>
+        <LinkBtn to={"/"}>계속 쇼핑하기</LinkBtn>
       </ButtonBox>
     </>
   );
@@ -180,9 +182,10 @@ const Box = styled.div`
   justify-content: space-between;
   font-size: 14px;
   color: #5b5b5b;
-  p {
-    cursor: pointer;
-  }
+`;
+
+const RemoveBasket = styled.p`
+  cursor: pointer;
 `;
 
 const ProductList = styled.ul``;
@@ -289,11 +292,11 @@ const ButtonBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  span {
-    margin: 16px 0;
-    color: ${({ theme }) => theme.colors.neutral["40"]};
-    font-size: 12px;
-    text-decoration-line: underline;
-    cursor: pointer;
-  }
+`;
+
+const LinkBtn = styled(Link)`
+  margin: 16px 0;
+  color: ${({ theme }) => theme.colors.neutral["40"]};
+  font-size: 12px;
+  text-decoration-line: underline;
 `;
