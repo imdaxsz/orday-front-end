@@ -14,35 +14,51 @@ interface Props {
 }
 
 export default function ProductCarousel({ products, productsTag }: Props) {
-  const [translateX, setTranslateX] = useState(-310 * 4);
-  const [lastItem, setLastItem] = useState(7);
-  const [transition, setTransition] = useState(0.3);
+  const SHOWING_ITEM_COUNT = 4;
+  const SLIDE_TRANSITION = 0.3;
 
+  const [translateX, setTranslateX] = useState(-310 * SHOWING_ITEM_COUNT);
+  const [lastItem, setLastItem] = useState(2 * SHOWING_ITEM_COUNT - 1);
+  const [transition, setTransition] = useState(SLIDE_TRANSITION);
+
+  // 무한 캐러셀을 위한 배열 확장
   const carouselProducts: ProductInfo[] = [
-    ...products.slice(-4),
+    ...products.slice(-SHOWING_ITEM_COUNT),
     ...products,
-    ...products.slice(0, 4),
+    ...products.slice(0, SHOWING_ITEM_COUNT),
   ];
 
   const handlePrevClick = () => {
-    setTransition(0.3);
+    setTransition(SLIDE_TRANSITION);
     setTranslateX((prev) => prev + 310);
     setLastItem((prev) => prev - 1);
   };
 
   const handleNextClick = () => {
-    setTransition(0.3);
+    setTransition(SLIDE_TRANSITION);
     setTranslateX((prev) => prev - 310);
     setLastItem((prev) => prev + 1);
   };
 
+  // 맨 앞, 맨 뒤일 때 위치 이동
   useEffect(() => {
-    if (lastItem === 3 || lastItem === carouselProducts.length - 1) {
+    if (
+      lastItem === SHOWING_ITEM_COUNT - 1 ||
+      lastItem === carouselProducts.length - 1
+    ) {
       setTimeout(() => {
         setTransition(0);
-        setLastItem(lastItem === 3 ? carouselProducts.length - 5 : 7);
-        setTranslateX(lastItem === 3 ? -310 * products.length : -310 * 4);
-      }, 300);
+        setLastItem(
+          lastItem === SHOWING_ITEM_COUNT - 1
+            ? carouselProducts.length - (SHOWING_ITEM_COUNT + 1)
+            : 2 * SHOWING_ITEM_COUNT - 1,
+        );
+        setTranslateX(
+          lastItem === SHOWING_ITEM_COUNT - 1
+            ? -310 * products.length
+            : -310 * SHOWING_ITEM_COUNT,
+        );
+      }, 1000 * SLIDE_TRANSITION);
     }
   }, [lastItem, carouselProducts.length, products.length]);
 
