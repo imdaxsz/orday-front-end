@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import styled from "styled-components";
 
@@ -38,6 +39,31 @@ const mockData: Item[] = [
   },
 ];
 export default function Cart() {
+  const [checkedListById, setCheckedListById] = useState<number[]>([]);
+  const checkedNum = checkedListById.length;
+
+  const handleCheckChange = (id: number) => {
+    const isChecked = checkedListById.includes(id);
+
+    if (isChecked) {
+      setCheckedListById((prev) => prev.filter((el) => el !== id));
+    } else {
+      setCheckedListById((prev) => [...prev, id]);
+    }
+  };
+
+  const handleAllCheck = ({
+    target: { checked },
+  }: {
+    target: { checked: boolean };
+  }) => {
+    if (checked) {
+      setCheckedListById(mockData.map((item: Item) => item.id));
+    } else {
+      setCheckedListById([]);
+    }
+  };
+
   const totalPrice = {
     product: mockData
       .map((item) => Number(item.price))
@@ -53,7 +79,11 @@ export default function Cart() {
         <span>{mockData.length ? mockData.length : 0}</span>
       </InfoTitle>
       <Box>
-        <CheckBox text="전체선택" />
+        <CheckBox
+          text="전체선택"
+          onChange={handleAllCheck}
+          checked={checkedNum === mockData.length}
+        />
         <p>선택상품 삭제</p>
       </Box>
       <ProductList>
@@ -63,7 +93,10 @@ export default function Cart() {
           <>
             {mockData.map((item) => (
               <ProductItem key={item.id}>
-                <CheckBox />
+                <CheckBox
+                  onChange={() => handleCheckChange(item.id)}
+                  checked={checkedListById.includes(item.id)}
+                />
                 <ProductImage src={item.image} />
                 <ItemName>
                   <Name>{item.name}</Name>
@@ -120,6 +153,7 @@ export default function Cart() {
     </>
   );
 }
+
 const InfoTitle = styled.h3`
   font-size: 1rem;
   margin-bottom: 1rem;
