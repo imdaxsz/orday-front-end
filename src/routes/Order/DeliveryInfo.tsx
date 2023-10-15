@@ -1,9 +1,13 @@
 import { useState } from "react";
+import DaumPostcode from "react-daum-postcode";
+import { IoMdClose } from "react-icons/io";
 import { styled } from "styled-components";
 
 import Button from "@/components/Button";
+import Modal from "@/components/Modal";
 import { RadioButton } from "@/components/RadioButton";
 import TextInput from "@/components/TextInput";
+import { useModal } from "@/hooks/useModal";
 
 interface DeliveryInfoProps {
   user?: "member" | "guest";
@@ -49,6 +53,13 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
     setRadioValue(e.target.value);
   };
   console.log("radioValue", radioValue);
+
+  const { isModalOpen, openModal, closeModal } = useModal();
+
+  const handleSearchAddr = (data: { address: string }) => {
+    setDeliveryForm((prev) => ({ ...prev, deliveryAddress: data.address }));
+    closeModal();
+  };
 
   return (
     <Container>
@@ -106,6 +117,14 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
         </>
       )}
 
+      {/* 주소 검색모달창 */}
+      <Modal isOpen={isModalOpen}>
+        <ModalCloseBtn onClick={closeModal}>
+          <IoMdClose />
+        </ModalCloseBtn>
+        <DaumPostcode onComplete={handleSearchAddr} />
+      </Modal>
+
       <DeliverySearch>
         <TextInput
           id="deliveryAddress"
@@ -115,7 +134,10 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
           onChange={handleInputChange}
           disabled
         />
-        <Button style={{ width: "123px", height: "40px", fontSize: "14px" }}>
+        <Button
+          style={{ width: "123px", height: "40px", fontSize: "14px" }}
+          onClick={openModal}
+        >
           검색
         </Button>
       </DeliverySearch>
@@ -162,6 +184,11 @@ const PhoneNumber = styled.div`
   input {
     width: 100%;
   }
+`;
+const ModalCloseBtn = styled.div`
+  font-size: 20px;
+  cursor: pointer;
+  text-align: right;
 `;
 const DeliverySearch = styled.div`
   display: flex;
