@@ -2,7 +2,7 @@ import { IoMdClose } from "react-icons/io";
 import styled from "styled-components";
 
 import AddBtn from "@/assets/add_btn.svg?react";
-import RemoveBtn from "@/assets/remove_btn.svg?react";
+import ReduceBtn from "@/assets/reduce_btn.svg?react";
 import CheckBox from "@/components/CheckBox";
 
 import { Item } from ".";
@@ -34,7 +34,7 @@ export default function ProductItem({
         <p>수량</p>
         <Count>
           {/* onClick시 api 수량 감소, 금액 변경 */}
-          <RemoveBtn style={{ cursor: "pointer" }} />
+          <ReduceBtn style={{ cursor: "pointer" }} />
           <p>{item.amount}</p>
           <AddBtn style={{ cursor: "pointer" }} />
         </Count>
