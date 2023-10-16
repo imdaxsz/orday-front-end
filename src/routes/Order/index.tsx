@@ -28,8 +28,10 @@ export default function Order() {
 
 const Container = styled.div`
   padding: 0 30px;
+  padding-bottom: 100px;
 `;
 
 const InfoContainer = styled.div`
   display: flex;
+  justify-content: space-between;
 `;

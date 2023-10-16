@@ -131,6 +131,7 @@ export default function Category() {
 }
 const Container = styled.div`
   padding: 0 30px;
+  padding-bottom: 200px;
 `;
 
 const CategoryNewList = styled.section`
@@ -143,7 +144,7 @@ const CategoryItems = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin: 15rem 0;
+  margin-top: 15rem;
 `;
 
 const ItemList = styled.div`
