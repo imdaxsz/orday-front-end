@@ -1,8 +1,8 @@
 import {
-  Current,
-  CurrentTitle,
-  CurrentBox,
-  CurrentList,
+  Container,
+  Title,
+  Box,
+  List,
   ListBox,
   ListName,
   ListNumber,
@@ -22,22 +22,22 @@ const orderStatus = [
 export default function OrderInfo() {
   return (
     <>
-      <Current>
-        <CurrentTitle>최근 주문 현황</CurrentTitle>
-        <CurrentBox>
-          <CurrentList>
+      <Container>
+        <Title>최근 주문 현황</Title>
+        <Box>
+          <List>
             {orderStatus.map((status, index) => (
               <ListBox key={index}>
                 <ListName>{status.name}</ListName>
                 <ListNumber>{status.number}</ListNumber>
               </ListBox>
             ))}
-          </CurrentList>
-        </CurrentBox>
+          </List>
+        </Box>
         <Order>
           <OrderMessage>주문 내역이 없습니다.</OrderMessage>
         </Order>
-      </Current>
+      </Container>
     </>
   );
 }
