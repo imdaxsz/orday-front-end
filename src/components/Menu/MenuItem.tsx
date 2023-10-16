@@ -13,26 +13,34 @@ interface ISubItem {
 
 export interface IMenuItem {
   label: string;
-  subItem: ISubItem[];
+  url?: string;
+  subItem?: ISubItem[];
 }
 
-export default function MenuItem({ label, subItem }: IMenuItem) {
+export default function MenuItem({ label, url, subItem }: IMenuItem) {
   const [isVisible, setIsvisible] = useState(false);
+  if (!subItem)
+    return (
+      <Item>
+        <Link to={url ? url : "#"}>{label}</Link>
+      </Item>
+    );
   return (
     <Container
-      isVisible={isVisible}
-      onClick={() => setIsvisible((prev) => !prev)}
+      $isVisible={isVisible}
+      onClick={() => subItem && setIsvisible((prev) => !prev)}
     >
       <Item>
         {label}
         {isVisible ? <DropupIcon /> : <DropdownIcon />}
       </Item>
-      <SubMenu isVisible={isVisible}>
-        {subItem.map((item, i) => (
-          <Link key={i} to={item.url}>
-            {item.label}
-          </Link>
-        ))}
+      <SubMenu $isVisible={isVisible}>
+        {subItem &&
+          subItem.map((item, i) => (
+            <Link key={i} to={item.url}>
+              {item.label}
+            </Link>
+          ))}
       </SubMenu>
     </Container>
   );

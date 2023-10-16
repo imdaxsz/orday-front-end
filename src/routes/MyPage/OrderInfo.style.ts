@@ -1,17 +1,17 @@
 import styled from "styled-components";
 
-export const Current = styled.div`
+export const Container = styled.div`
   width: 800px;
   height: 176px;
 `;
 
-export const CurrentTitle = styled.div`
+export const Title = styled.div`
   width: 113px;
   height: 24px;
   font-size: ${({ theme }) => theme.typo["body-2-b"]};
 `;
 
-export const CurrentBox = styled.div`
+export const Box = styled.div`
   width: 800px;
   height: 127px;
   border-bottom: 2px solid ${({ theme }) => theme.colors["neutral"]["40"]};
@@ -22,7 +22,7 @@ export const CurrentBox = styled.div`
   align-items: center;
 `;
 
-export const CurrentList = styled.div`
+export const List = styled.div`
   width: 614px;
   height: 68px;
   display: flex;
