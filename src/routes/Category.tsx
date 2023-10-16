@@ -106,7 +106,7 @@ export default function Category() {
   });
 
   return (
-    <>
+    <Container>
       <CategoryNav />
       <CategoryNewList>
         {mockdata.map((item) => (
@@ -126,9 +126,12 @@ export default function Category() {
           ))}
         </ItemList>
       </CategoryItems>
-    </>
+    </Container>
   );
 }
+const Container = styled.div`
+  padding: 0 30px;
+`;
 
 const CategoryNewList = styled.section`
   display: flex;

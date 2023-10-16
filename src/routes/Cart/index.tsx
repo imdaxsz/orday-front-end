@@ -76,7 +76,7 @@ export default function Cart() {
   const totalPrice = price.product + price.sale + price.shipping;
 
   return (
-    <>
+    <Container>
       <BackButton pageTitle="장바구니" />
       <InfoTitle>
         주문상품
@@ -131,13 +131,18 @@ export default function Cart() {
         </Button>
         <LinkBtn to={"/"}>계속 쇼핑하기</LinkBtn>
       </ButtonBox>
-    </>
+    </Container>
   );
 }
 
+const Container = styled.div`
+  padding: 0 30px;
+  padding-bottom: 80px;
+`;
+
 const InfoTitle = styled.h3`
-  font-size: 1rem;
   margin-bottom: 1rem;
+  font-size: 1rem;
   span {
     display: inline-flex;
     height: 17px;

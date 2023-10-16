@@ -10,7 +10,7 @@ import UserInfo from "./UserInfo";
 
 export default function Order() {
   return (
-    <>
+    <Container>
       <BackButton pageTitle="주문/결제" />
       <InfoContainer>
         <div>
@@ -22,10 +22,14 @@ export default function Order() {
           <ProductInfo />
         </div>
       </InfoContainer>
-    </>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  padding: 0 30px;
+`;
+
 const InfoContainer = styled.div`
   display: flex;
-  gap: 3rem;
 `;
