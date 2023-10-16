@@ -1,9 +1,9 @@
 import { PropsWithChildren } from "react";
 
+import Button from "../Button";
+
 import {
   ButtonBox,
-  CancelBtn,
-  ConfirmBtn,
   Content,
   Detail,
   ModalContainer,
@@ -40,8 +40,10 @@ export default function Modal({
               <Detail>{detail}</Detail>
             </Content>
             <ButtonBox>
-              <ConfirmBtn onClick={onSubmit}>확인</ConfirmBtn>
-              <CancelBtn onClick={onClose}>취소</CancelBtn>
+              <Button onClick={onSubmit}>확인</Button>
+              <Button color="neutral" onClick={onClose}>
+                취소
+              </Button>
             </ButtonBox>
           </>
         )}

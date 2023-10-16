@@ -43,21 +43,10 @@ export const ButtonBox = styled.div`
   display: flex;
   justify-content: center;
   gap: 8px;
-`;
-export const ConfirmBtn = styled.button`
-  width: 100px;
-  height: 34px;
-  border: none;
-  border-radius: 5px;
-  background-color: ${({ theme }) => theme.colors.primary["80"]};
-  color: #fff;
-  cursor: pointer;
-`;
-export const CancelBtn = styled.button`
-  width: 100px;
-  height: 34px;
-  border-radius: 5px;
-  border: 1px solid #9d9d9d;
-  background-color: ${({ theme }) => theme.colors.neutral["10"]};
-  cursor: pointer;
+  & > button {
+    width: 100px;
+    height: 34px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
 `;
