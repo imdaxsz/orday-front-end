@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import BackButton from "@/components/BackButton";
 import Dropdown from "@/components/Dropdown";
+import Head from "@/components/Head";
 
 export interface BrandInfo {
   name: string;
@@ -24,6 +25,7 @@ export default function BrandList() {
   const brandsMockData: BrandInfo[] = Array(12).fill(brandmockData);
   return (
     <Container>
+      <Head title="Orday | 브랜드" />
       <BackButton pageTitle="브랜드" />
       <Content>
         <Dropdown
