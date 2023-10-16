@@ -6,6 +6,7 @@ import theme from "@/styles/theme";
 import Layout from "./components/Layout";
 import BrandDetail from "./routes/Brand/Detail";
 import BrandList from "./routes/Brand/List";
+import Cart from "./routes/Cart";
 import Category from "./routes/Category";
 import Community from "./routes/Community";
 import Home from "./routes/Home";
@@ -33,6 +34,7 @@ export default function App() {
             <Route path="order/guest" element={<GuestOrder />} />
             <Route path="like/brands" element={<LikeBrandList />} />
             <Route path="/my-page" element={<MyPage />} />
+            <Route path="cart" element={<Cart />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/login/guestOrder" element={<Login />} />

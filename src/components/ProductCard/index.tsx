@@ -31,7 +31,7 @@ export default function ProductCard({
 }: ProductCardProps) {
   return (
     <Container size={size}>
-      <ImageContainer size={size} $tag={$tag} $remove={$remove}>
+      <ImageContainer to={info.url} size={size} $tag={$tag} $remove={$remove}>
         {!$remove ? (
           <>
             {$tag === "NEW" && <NewTag />}
@@ -41,12 +41,14 @@ export default function ProductCard({
         ) : (
           <RemoveButton />
         )}
-        <Image src={info.image} alt="1" size={size} />
+        <Image src={info.image} alt={info.name} size={size} />
       </ImageContainer>
       <Info>
-        <Brand>{info.brand}</Brand>
-        <Name>{info.name}</Name>
-        <Price size={size}>{info.price.toLocaleString()}원</Price>
+        <Brand to={`/brands/${info.brand.pathname}`}>{info.brand.name}</Brand>
+        <Name to={info.url}>{info.name}</Name>
+        <Price to={info.url} size={size}>
+          {info.price.toLocaleString()}원
+        </Price>
       </Info>
     </Container>
   );

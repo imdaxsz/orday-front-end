@@ -13,7 +13,7 @@ export interface ProductInfo {
   id: number;
   image: string;
   url: string;
-  brand: string;
+  brand: { name: string; pathname: string }; // pathname: 브랜드 영문 이름
   name: string;
   price: number;
 }
