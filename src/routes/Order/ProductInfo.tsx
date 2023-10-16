@@ -2,6 +2,8 @@ import { styled } from "styled-components";
 
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
+import Modal from "@/components/Modal";
+import { useModal } from "@/hooks/useModal";
 
 // 임시데이터
 const mockData = [
@@ -17,12 +19,16 @@ const mockData = [
 ];
 
 export default function ProductInfo() {
+  const { isModalOpen, openModal, closeModal } = useModal();
   const price = {
     product: mockData
       .map((item) => Number(item.price))
       .reduce((acc, cur) => acc + cur),
     sale: 0,
     shipping: 0,
+  };
+  const onSubmit = () => {
+    // console.log();
   };
   return (
     <Container>
@@ -83,9 +89,16 @@ export default function ProductInfo() {
         <CheckBox text="주문정보 동의" />
         <CheckBox text="제 3자 제공 동의" />
       </CheckAgreement>
-      <Button type="submit" style={{ width: "100%" }}>
+      <Button style={{ width: "100%" }} onClick={openModal}>
         주문하기
       </Button>
+      <Modal
+        isOpen={isModalOpen}
+        onSubmit={onSubmit}
+        onClose={closeModal}
+        title="주문확인 안내"
+        detail="선택하신 상품을 주문하시겠습니까?"
+      />
     </Container>
   );
 }
