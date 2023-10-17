@@ -26,7 +26,12 @@ export default function Join() {
         <TextInput id="password" type="password" label="비밀번호" />
         <TextInput id="confirmPw" type="password" label="비밀번호 확인" />
         <TextInput id="name" type="text" label="이름" />
-        <BirthDate>
+        <InputContainer>
+          <TextInput id="phoneFirst" type="text" label="연락처" />
+          <TextInput id="phoneSecond" type="text" />
+          <TextInput id="phoneThird" type="text" />
+        </InputContainer>
+        <InputContainer>
           <SelectBox
             label="생년월일"
             options={YEAR}
@@ -46,7 +51,7 @@ export default function Join() {
             selected={day}
             setSelected={setDay}
           />
-        </BirthDate>
+        </InputContainer>
         <ZipCode>
           <TextInput id="zipCode" disabled label="우편번호" />
           <Button>검색</Button>
@@ -104,7 +109,7 @@ export default function Join() {
 const Container = styled.div`
   width: 438px;
   margin: 0 auto;
-  padding-bottom: 200px;
+  padding-bottom: 150px;
 `;
 
 const Form = styled.form`
@@ -124,13 +129,11 @@ const TextInput = styled(BaseInput)`
   input {
     width: 100%;
     background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
-  }
-  label {
-    color: ${({ theme }) => theme.colors["neutral"]["100"]};
+    border-color: #aeaeae;
   }
 `;
 
-const BirthDate = styled.div`
+const InputContainer = styled.div`
   display: flex;
   gap: 24px;
   align-items: flex-end;
@@ -183,5 +186,6 @@ const TermsBox = styled.div`
 const SelectBox = styled(BaseSelectBox)`
   & > div:first-of-type {
     background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
+    border-color: #aeaeae;
   }
 `;
