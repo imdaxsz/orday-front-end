@@ -83,16 +83,10 @@ export default function useJoin() {
     if (i === 0) {
       setAgree((prev) => {
         const allChecked = prev.every((item) => item.userAgreed);
-        if (allChecked)
-          return prev.map((item) => ({
-            ...item,
-            userAgreed: false,
-          }));
-        else
-          return prev.map((item) => ({
-            ...item,
-            userAgreed: true,
-          }));
+        return prev.map((item) => ({
+          ...item,
+          userAgreed: !allChecked,
+        }));
       });
     }
     // 개별 동의 또는 해제
