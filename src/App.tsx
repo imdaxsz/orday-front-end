@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
 import theme from "@/styles/theme";
@@ -20,7 +20,6 @@ import GuestOrder from "./routes/Order/GuestOrder";
 import GlobalStyle from "./styles/GlobalStyle";
 
 export default function App() {
-  console.log(useLocation());
   return (
     <>
       <ThemeProvider theme={theme}>
