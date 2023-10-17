@@ -4,6 +4,7 @@ import styled from "styled-components";
 import AuthHeader from "@/components/AuthHeader";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
+import Head from "@/components/Head";
 import BaseSelectBox from "@/components/SelectBox";
 import BaseInput from "@/components/TextInput";
 
@@ -18,6 +19,7 @@ export default function Join() {
 
   return (
     <Container>
+      <Head title="Orday | 회원가입" />
       <AuthHeader title="회원가입" />
       <Form>
         <TextInput id="email" type="email" label="아이디(이메일)" />

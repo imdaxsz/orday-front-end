@@ -4,7 +4,7 @@ import styled from "styled-components";
 export default function MyMenu() {
   return (
     <Container>
-      <Item to="#">회원정보</Item>
+      <Item to="/myPage">회원정보</Item>
       <Item to="#">관심상품</Item>
       <Item to="#">주문내역</Item>
       <Item to="#">구매후기</Item>

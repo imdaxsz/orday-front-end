@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Button from "@/components/Button";
+import Head from "@/components/Head";
 import LikeButton from "@/components/LikeButton";
 import ProductCard from "@/components/ProductCard";
 import { ProductInfo } from "@/types";
@@ -22,6 +23,7 @@ export default function BrandDetail() {
 
   return (
     <div style={{ paddingBottom: "150px" }}>
+      <Head title={`Orday | ${productMockData.brand.name}`} />
       <Header>
         <Button iconOnly onClick={() => navigate(-1)}>
           <IoArrowBackOutline size={24} />
