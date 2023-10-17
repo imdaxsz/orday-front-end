@@ -5,6 +5,7 @@ import styled from "styled-components";
 import BackButton from "@/components/BackButton";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
+import Head from "@/components/Head";
 
 import ProductItem from "./ProductItem";
 
@@ -77,6 +78,7 @@ export default function Cart() {
 
   return (
     <Container>
+      <Head title="Orday | 장바구니" />
       <BackButton pageTitle="장바구니" />
       <InfoTitle>
         주문상품

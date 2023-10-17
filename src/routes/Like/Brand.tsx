@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import BackButton from "@/components/BackButton";
 import Dropdown from "@/components/Dropdown";
+import Head from "@/components/Head";
 import LikeButton from "@/components/LikeButton";
 
 import {
@@ -28,6 +29,7 @@ export default function LikeBrandList() {
   const brandsMockData: BrandInfo[] = Array(12).fill(brandmockData);
   return (
     <Container>
+      <Head title="Orday | 관심 브랜드" />
       <BackButton pageTitle="관심 브랜드" />
       <Content>
         <Dropdown
