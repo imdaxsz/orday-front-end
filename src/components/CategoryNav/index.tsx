@@ -1,39 +1,38 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import RightIcon from "@/assets/chevron_right.svg?react";
 import { menuData } from "@/constants";
 
-import { CategoryNavBox, CurCategory, CategoryList } from "./style";
+import { CategoryNavBox, CategoryItem } from "./style";
 
 export default function CategoryNav() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  console.log(location);
-  // /new/:categoryId
-  // /clothes/:categoryId
+  const { pathname, search } = useLocation();
+  const path = pathname + search;
 
-  const curCategory = menuData.find(
-    (menu) => menu.subItem?.find((data) => data.url === location.pathname),
-  );
+  const foundItem = menuData.find((item) => {
+    if (item.subItem)
+      return item.subItem.some((subItem) => subItem.url === path);
+    else return item.url === path;
+  });
+
+  if (!foundItem) return null;
 
   return (
     <CategoryNavBox>
-      {curCategory?.label}
+      {foundItem.label}
       <RightIcon />
-      {curCategory?.subItem?.map((data, idx) => (
+      {foundItem.subItem?.map((data, idx) => (
         <div key={idx}>
-          {data.url === location.pathname ? (
-            <CurCategory>{data.label}</CurCategory>
-          ) : (
-            <CategoryList
-              role="presentation"
-              onClick={() => navigate(data.url)}
-            >
-              {data.label}
-            </CategoryList>
-          )}
+          <CategoryItem $current={data.url === path} to={data.url}>
+            {data.label}
+          </CategoryItem>
         </div>
       ))}
+      {!foundItem.subItem && foundItem.url && (
+        <CategoryItem $current to={foundItem.url}>
+          전체
+        </CategoryItem>
+      )}
     </CategoryNavBox>
   );
 }

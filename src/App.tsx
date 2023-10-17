@@ -28,7 +28,10 @@ export default function App() {
             <Route path="" element={<Home />} />
             <Route path="brands" element={<BrandList />} />
             <Route path="brands/:name" element={<BrandDetail />} />
-            <Route path="category" element={<Category />} />
+            <Route path="products" element={<Category />} />
+            <Route path="new" element={<Category />} />
+            <Route path="best" element={<Category />} />
+            <Route path="sale" element={<Category />} />
             <Route path="community" element={<Community />} />
             <Route path="order" element={<Order />} />
             <Route path="order/guest" element={<GuestOrder />} />
