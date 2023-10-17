@@ -112,9 +112,9 @@ export default function Join() {
             onChange={handleSelectChange}
           />
         </InputContainer>
-        <ZipCode>
+        <PostCode>
           <TextInput
-            id="zipCode"
+            id="postCode"
             value={form.addressInfo.postcode}
             disabled
             label="우편번호"
@@ -122,7 +122,7 @@ export default function Join() {
           <Button type="button" onClick={openModal}>
             검색
           </Button>
-        </ZipCode>
+        </PostCode>
         <PostCodeModal
           isModalOpen={isModalOpen}
           closeModal={closeModal}
@@ -233,7 +233,7 @@ const InputContainer = styled.div`
   align-items: flex-end;
 `;
 
-const ZipCode = styled.div`
+const PostCode = styled.div`
   display: flex;
   gap: 24px;
   align-items: flex-end;
