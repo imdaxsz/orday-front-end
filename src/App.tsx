@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
 import theme from "@/styles/theme";
@@ -20,6 +20,7 @@ import GuestOrder from "./routes/Order/GuestOrder";
 import GlobalStyle from "./styles/GlobalStyle";
 
 export default function App() {
+  console.log(useLocation());
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -34,8 +35,9 @@ export default function App() {
             <Route path="order" element={<Order />} />
             <Route path="order/guest" element={<GuestOrder />} />
             <Route path="like/brands" element={<LikeBrandList />} />
+            <Route path="like/products" element={<LikeList />} />
+            <Route path="like/posts" element={<LikeList />} />
             <Route path="/myPage" element={<MyPage />} />
-            <Route path="/myPage/like" element={<LikeList />} />
             <Route path="cart" element={<Cart />} />
           </Route>
           <Route path="/login" element={<Login />} />
