@@ -11,6 +11,7 @@ import Category from "./routes/Category";
 import Community from "./routes/Community";
 import Home from "./routes/Home";
 import Join from "./routes/Join";
+import LikeList from "./routes/Like";
 import LikeBrandList from "./routes/Like/Brand";
 import Login from "./routes/Login";
 import MyPage from "./routes/MyPage";
@@ -36,6 +37,8 @@ export default function App() {
             <Route path="order" element={<Order />} />
             <Route path="order/guest" element={<GuestOrder />} />
             <Route path="like/brands" element={<LikeBrandList />} />
+            <Route path="like/products" element={<LikeList />} />
+            <Route path="like/posts" element={<LikeList />} />
             <Route path="/myPage" element={<MyPage />} />
             <Route path="cart" element={<Cart />} />
           </Route>
