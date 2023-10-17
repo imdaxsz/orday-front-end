@@ -9,6 +9,12 @@ export const Container = styled.div`
     margin-bottom: 5px;
   }
 
+  &:focus-within {
+    & > label {
+      color: ${({ theme }) => theme.colors["neutral"]["100"]};
+    }
+  }
+
   & > span {
     color: red;
     ${({ theme }) => theme.typo["body-4-r"]};
