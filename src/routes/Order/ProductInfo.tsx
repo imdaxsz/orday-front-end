@@ -146,6 +146,7 @@ const ProductImage = styled.img`
   height: 7rem;
   object-fit: cover;
   border-radius: 0.625rem;
+  flex-shrink: 0;
 `;
 
 const ItemInfo = styled.div`
