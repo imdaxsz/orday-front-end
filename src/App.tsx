@@ -34,8 +34,8 @@ export default function App() {
             <Route path="order" element={<Order />} />
             <Route path="order/guest" element={<GuestOrder />} />
             <Route path="like/brands" element={<LikeBrandList />} />
-            <Route path="/my-page" element={<MyPage />} />
-            <Route path="/product" element={<Product />} />
+            <Route path="/myPage" element={<MyPage />} />
+            <Route path="/product/:id" element={<Product />} />
             <Route path="cart" element={<Cart />} />
           </Route>
           <Route path="/login" element={<Login />} />

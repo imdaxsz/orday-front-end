@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { BsHeartFill } from "react-icons/bs";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+
+import Button from "@/components/Button";
 
 import {
   ProductDetail,
@@ -10,10 +13,9 @@ import {
   ProductSize,
   SizeBox,
   ProductBtn,
-  Button,
-  ProductCaution,
-  CautionKey,
-  CautionValue,
+  ProductDetailInfo,
+  DetailInfoKey,
+  DetailInfoValue,
 } from "./Detail.style";
 import ProductQuantity from "./Quantity";
 
@@ -26,46 +28,46 @@ const ProductData = {
 
 const sizes = ["S", "M", "L"];
 
-const buttons = ["구매하기", "장바구니", "Heart"];
-
 const CautionData = [
   { key: "상세정보", value: "상세정보1" },
   { key: "배송안내", value: "배송안내2" },
   { key: "교환 및 반품안내", value: "교환 및 반품안내3" },
   { key: "품질 보증 및 A/S", value: "품질 보증 및 A/S4" },
   { key: "취급주의사항", value: "취급주의사항5" },
-  { key: "제품후기", value: "제품후기6" },
 ];
 
 export default function DetailComponent() {
-  const [selectedSize, setSelectedSize] = useState("");
-  const [selectedBtn, setSelectedBtn] = useState("");
-  const [selectedCautionIndex, setSelectedCautionIndex] = useState(0);
+  const navigate = useNavigate();
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [selectedCautionIndices, setSelectedCautionIndices] = useState([0]);
+
+  const CustomButton = ({ ...props }) => (
+    <Button {...props} style={{ width: "213px", height: "50px" }} />
+  );
+
+  const LikeButton = ({ ...props }) => (
+    <Button {...props} style={{ width: "50px", height: "50px" }} />
+  );
 
   const handleSelection = (selection: string) => {
-    if (sizes.includes(selection)) {
-      setSelectedSize(selection);
-      if (selectedBtn === "") {
-        setSelectedBtn("구매하기");
-      }
-    } else if (buttons.includes(selection)) {
-      setSelectedBtn(selection);
-      if (selectedSize === "") {
-        setSelectedSize("M");
-      }
+    if (selectedSizes.includes(selection)) {
+      setSelectedSizes(selectedSizes.filter((size) => size !== selection));
+    } else {
+      setSelectedSizes([...selectedSizes, selection]);
     }
   };
 
-  const handleCancel = () => {
-    setSelectedSize("");
-    setSelectedBtn("");
+  const handleCancel = (sizeToCancel: string) => {
+    setSelectedSizes(selectedSizes.filter((size) => size !== sizeToCancel));
   };
 
   const handleToggleCaution = (index: number) => {
-    if (selectedCautionIndex === index) {
-      setSelectedCautionIndex(-1);
+    if (selectedCautionIndices.includes(index)) {
+      setSelectedCautionIndices(
+        selectedCautionIndices.filter((i) => i !== index),
+      );
     } else {
-      setSelectedCautionIndex(index);
+      setSelectedCautionIndices([...selectedCautionIndices, index]);
     }
   };
 
@@ -87,45 +89,56 @@ export default function DetailComponent() {
           <SizeBox
             key={index}
             onClick={() => handleSelection(size)}
-            selected={selectedSize === size}
+            selected={selectedSizes.includes(size)}
           >
             {size}
           </SizeBox>
         ))}
       </ProductSize>
-      {selectedSize !== "" && (
-        <ProductQuantity
-          price={ProductData.price}
-          selectedSize={selectedSize}
-          handleCancel={handleCancel}
-        />
-      )}
-      <ProductBtn>
-        {buttons.map((button, index) => (
-          <Button
-            key={index}
-            selectedBtn={selectedBtn === button}
-            onClick={() => handleSelection(button)}
-          >
-            {button === "Heart" ? <BsHeartFill /> : button}
-          </Button>
+      {selectedSizes.length > 0 &&
+        selectedSizes.map((selectedSize) => (
+          <ProductQuantity
+            key={selectedSize}
+            price={ProductData.price}
+            selectedSize={selectedSize}
+            handleCancel={() => handleCancel(selectedSize)}
+          />
         ))}
+      <ProductBtn>
+        <CustomButton $variant="solid" color="primary">
+          구매하기
+        </CustomButton>
+        <CustomButton
+          $variant="outline"
+          color="primary"
+          onClick={() => navigate("/cart")}
+        >
+          장바구니
+        </CustomButton>
+        <LikeButton
+          $variant="outline"
+          size="md"
+          color="primary"
+          onClick={() => navigate("/myPage")}
+        >
+          <BsHeartFill />
+        </LikeButton>
       </ProductBtn>
-      <ProductCaution>
+      <ProductDetailInfo>
         {CautionData.map((caution, index) => (
-          <CautionKey key={index} onClick={() => handleToggleCaution(index)}>
-            {selectedCautionIndex === index ? (
+          <DetailInfoKey key={index} onClick={() => handleToggleCaution(index)}>
+            {selectedCautionIndices.includes(index) ? (
               <FaChevronUp />
             ) : (
               <FaChevronDown />
             )}
             {caution.key}
-            {selectedCautionIndex === index && (
-              <CautionValue>{caution.value}</CautionValue>
+            {selectedCautionIndices.includes(index) && (
+              <DetailInfoValue>{caution.value}</DetailInfoValue>
             )}
-          </CautionKey>
+          </DetailInfoKey>
         ))}
-      </ProductCaution>
+      </ProductDetailInfo>
     </ProductDetail>
   );
 }

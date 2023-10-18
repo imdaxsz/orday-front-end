@@ -47,14 +47,13 @@ const Container = styled.div`
   align-items: flex-start;
   padding: 20px;
   margin-top: 75px;
-  height: 1120px;
+  height: auto;
   gap: 60px;
 `;
 
 const ProductImage = styled.div`
   grid-column: 1 / 2;
   width: 650px;
-  height: 970px;
 `;
 
 const Image = styled.div`
@@ -62,7 +61,8 @@ const Image = styled.div`
   height: 900px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.colors["neutral"]["20"]};
-  margin-top: 40px;
+  grid-row: 1 / 3;
+  margin-top: 55px;
 `;
 
 const ProductCategory = styled.div`
@@ -79,7 +79,8 @@ const ProductComment = styled.div`
   gap: 50px;
   display: flex;
   flex-direction: column;
-  font-size: ${({ theme }) => theme.typo["body-1-b"]};
+  ${({ theme }) => theme.typo["body-1-b"]};
+  overflow: auto;
 `;
 
 const ProductReview = styled.div`

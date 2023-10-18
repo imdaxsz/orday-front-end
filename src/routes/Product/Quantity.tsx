@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { FaXmark } from "react-icons/fa6";
 
+import AddBtn from "@/assets/add_btn.svg?react";
+import ReduceBtn from "@/assets/reduce_btn.svg?react";
+
 import {
   CostBox,
   QuantityBox,
   Size,
   Count,
-  Decrease,
-  Increase,
   CancelBtn,
   ProductTotalCost,
   TotalCost,
@@ -26,11 +27,11 @@ export default function ProductQuantity({
 }: QuantityProps) {
   const [quantity, setQuantity] = useState(1);
 
-  const increaseQuantity = () => {
+  const AddQuantity = () => {
     setQuantity(quantity + 1);
   };
 
-  const decreaseQuantity = () => {
+  const ReduceQuantity = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
     }
@@ -45,9 +46,15 @@ export default function ProductQuantity({
       <QuantityBox>
         <Size>{selectedSize}</Size>
         <Count>
-          <Decrease onClick={decreaseQuantity}>-</Decrease>
+          <ReduceBtn
+            onClick={ReduceQuantity}
+            style={{ cursor: "pointer", userSelect: "none" }}
+          />
           {quantity}
-          <Increase onClick={increaseQuantity}>+</Increase>
+          <AddBtn
+            onClick={AddQuantity}
+            style={{ cursor: "pointer", userSelect: "none" }}
+          />
         </Count>
         <CancelBtn onClick={handleCancelClick}>
           <FaXmark />
