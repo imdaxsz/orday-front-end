@@ -9,6 +9,7 @@ interface CheckBoxProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export default function CheckBox({
+  id,
   name,
   text,
   onChange,
@@ -19,13 +20,13 @@ export default function CheckBox({
     <CheckboxContainer>
       <CheckboxInput
         type="checkbox"
-        id={name}
+        id={id}
         name={name}
         onChange={onChange}
         $isCircle={type === "circle"}
         checked={checked}
       />
-      <CheckboxText htmlFor={text}>{text}</CheckboxText>
+      <CheckboxText htmlFor={id}>{text}</CheckboxText>
     </CheckboxContainer>
   );
 }

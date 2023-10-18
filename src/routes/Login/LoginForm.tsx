@@ -30,9 +30,10 @@ export default function LoginForm() {
           placeholder="비밀번호"
           warn={test}
           message="비밀번호를 입력하세요."
+          autoComplete="on"
         />
         <UserActions>
-          <CheckBox text="자동 로그인" type="circle" />
+          <CheckBox id="autoLogin" text="자동 로그인" type="circle" />
           <Find>
             <Link to="/">아이디 찾기</Link>
             <RxDividerVertical size={14} />

@@ -2,8 +2,11 @@ import { useState } from "react";
 import { styled } from "styled-components";
 
 import Button from "@/components/Button";
+import PostCodeModal from "@/components/PostCodeModal";
 import { RadioButton } from "@/components/RadioButton";
+import SelectBox from "@/components/SelectBox";
 import TextInput from "@/components/TextInput";
+import { useModal } from "@/hooks/useModal";
 
 interface DeliveryInfoProps {
   user?: "member" | "guest";
@@ -23,6 +26,15 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
     deliveryAddress: "",
     deliveryDetail: "",
   });
+  const [require, setRequire] = useState<string | null>("");
+  const [requireInput, setRequireInput] = useState("");
+  const DELIVERY_OPTIONS = [
+    "직접 입력",
+    "빠른배송 바랍니다",
+    "부재시 경비실에 맡겨주세요",
+    "배송 전에 연락주세요",
+  ];
+
   const [radioValue, setRadioValue] = useState("");
 
   const handleInputChange = (
@@ -49,6 +61,13 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
     setRadioValue(e.target.value);
   };
   console.log("radioValue", radioValue);
+
+  const { isModalOpen, openModal, closeModal } = useModal();
+
+  const handleSearchAddr = (data: { address: string }) => {
+    setDeliveryForm((prev) => ({ ...prev, deliveryAddress: data.address }));
+    closeModal();
+  };
 
   return (
     <Container>
@@ -106,6 +125,13 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
         </>
       )}
 
+      {/* 주소 검색모달창 */}
+      <PostCodeModal
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        onComplete={handleSearchAddr}
+      />
+
       <DeliverySearch>
         <TextInput
           id="deliveryAddress"
@@ -115,7 +141,10 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
           onChange={handleInputChange}
           disabled
         />
-        <Button style={{ width: "123px", height: "40px", fontSize: "14px" }}>
+        <Button
+          style={{ width: "123px", height: "40px", fontSize: "14px" }}
+          onClick={openModal}
+        >
           검색
         </Button>
       </DeliverySearch>
@@ -128,6 +157,25 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
         placeholder="상세 주소 입력"
       />
       {/* 배송시 요청사항 추가 */}
+      <SelectBox
+        height="40px"
+        label="배송시 요청사항"
+        text="배송시 요청사항을 선택해주세요"
+        options={DELIVERY_OPTIONS}
+        selected={require}
+        setSelected={setRequire}
+        className="deliveryRequire"
+      />
+      {require === "직접 입력" && (
+        <TextInput
+          id="requireInput"
+          type="text"
+          value={requireInput}
+          onChange={(e) => setRequireInput(e.target.value)}
+          $size="lg"
+          placeholder="배송시 요청사항을 입력해주세요"
+        />
+      )}
     </Container>
   );
 }
@@ -139,7 +187,21 @@ const Container = styled.div`
     height: 40px;
     border: solid 1px #d6d6d6;
   }
+  .deliveryRequire {
+    width: 100%;
+    margin: 1rem 0;
+    & > div {
+      border: solid 1px #d6d6d6;
+    }
+    & > ul {
+      border: solid 1px #d6d6d6;
+      & > li {
+        font-size: 14px;
+      }
+    }
+  }
 `;
+
 const RadioGroup = styled.div`
   display: flex;
   align-items: center;

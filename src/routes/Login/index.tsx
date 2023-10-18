@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import AuthHeader from "@/components/AuthHeader";
+import Head from "@/components/Head";
 import BaseTabs, { Tab } from "@/components/Tabs";
 
 import GuestOrder from "./GuestOrder";
@@ -12,6 +13,7 @@ export default function Login() {
   const LOGIN = pathname === undefined;
   return (
     <Container>
+      <Head title="Orday | 로그인" />
       <AuthHeader title="로그인" />
       <Tabs defaultActiveId={LOGIN ? 1 : 2}>
         <Tab value={1} label="회원 로그인" url="/login" />
