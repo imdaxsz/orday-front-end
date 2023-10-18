@@ -1,10 +1,8 @@
 import { useState } from "react";
-import DaumPostcode from "react-daum-postcode";
-import { IoMdClose } from "react-icons/io";
 import { styled } from "styled-components";
 
 import Button from "@/components/Button";
-import Modal from "@/components/Modal";
+import PostCodeModal from "@/components/PostCodeModal";
 import { RadioButton } from "@/components/RadioButton";
 import SelectBox from "@/components/SelectBox";
 import TextInput from "@/components/TextInput";
@@ -128,12 +126,11 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
       )}
 
       {/* 주소 검색모달창 */}
-      <Modal isOpen={isModalOpen}>
-        <ModalCloseBtn onClick={closeModal}>
-          <IoMdClose />
-        </ModalCloseBtn>
-        <DaumPostcode onComplete={handleSearchAddr} />
-      </Modal>
+      <PostCodeModal
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        onComplete={handleSearchAddr}
+      />
 
       <DeliverySearch>
         <TextInput
@@ -227,11 +224,6 @@ const PhoneNumber = styled.div`
   input {
     width: 100%;
   }
-`;
-const ModalCloseBtn = styled.div`
-  font-size: 20px;
-  cursor: pointer;
-  text-align: right;
 `;
 const DeliverySearch = styled.div`
   display: flex;

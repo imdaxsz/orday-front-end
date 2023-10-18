@@ -34,7 +34,7 @@ export default function GuestOrder() {
             id="phoneFirst"
             type="text"
             value={form.phone.first}
-            label="핸드폰 번호"
+            label="연락처"
             onChange={(e) => handleInputChange(e, "first")}
           />
           <TextInput
@@ -50,7 +50,7 @@ export default function GuestOrder() {
             onChange={(e) => handleInputChange(e, "third")}
           />
         </PhoneNumber>
-        {error.phone && <span>휴대폰 번호를 다시 확인해 주세요.</span>}
+        {error.phone && <span>연락처를 다시 확인해 주세요.</span>}
         <Button type="submit">주문 내역 조회하기</Button>
       </Form>
       <Link to="/join">회원가입</Link>
