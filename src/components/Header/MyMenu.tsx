@@ -5,10 +5,10 @@ export default function MyMenu() {
   return (
     <Container>
       <Item to="/myPage">회원정보</Item>
-      <Item to="#">관심상품</Item>
+      <Item to="/like/products">관심상품</Item>
       <Item to="#">주문내역</Item>
-      <Item to="#">구매후기</Item>
-      <Item to="#">로그아웃</Item>
+      <Item to="/myPage/reviews">구매후기</Item>
+      <Item to="/logout">로그아웃</Item>
     </Container>
   );
 }
