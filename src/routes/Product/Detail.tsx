@@ -61,7 +61,7 @@ export default function DetailComponent() {
     setSelectedSizes(selectedSizes.filter((size) => size !== sizeToCancel));
   };
 
-  const handleToggleCaution = (index: number) => {
+  const handleToggleDetailInfo = (index: number) => {
     if (selectedDetailInfo.includes(index)) {
       setSelectedDetailInfo(selectedDetailInfo.filter((i) => i !== index));
     } else {
@@ -123,16 +123,19 @@ export default function DetailComponent() {
         </LikeButton>
       </ProductBtn>
       <ProductDetailInfo>
-        {DetailInfoData.map((caution, index) => (
-          <DetailInfoKey key={index} onClick={() => handleToggleCaution(index)}>
+        {DetailInfoData.map((info, index) => (
+          <DetailInfoKey
+            key={index}
+            onClick={() => handleToggleDetailInfo(index)}
+          >
             {selectedDetailInfo.includes(index) ? (
               <FaChevronUp />
             ) : (
               <FaChevronDown />
             )}
-            {caution.key}
+            {info.key}
             {selectedDetailInfo.includes(index) && (
-              <DetailInfoValue>{caution.value}</DetailInfoValue>
+              <DetailInfoValue>{info.value}</DetailInfoValue>
             )}
           </DetailInfoKey>
         ))}
