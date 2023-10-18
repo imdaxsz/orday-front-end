@@ -28,7 +28,7 @@ const ProductData = {
 
 const sizes = ["S", "M", "L"];
 
-const CautionData = [
+const DetailInfoData = [
   { key: "상세정보", value: "상세정보1" },
   { key: "배송안내", value: "배송안내2" },
   { key: "교환 및 반품안내", value: "교환 및 반품안내3" },
@@ -39,7 +39,7 @@ const CautionData = [
 export default function DetailComponent() {
   const navigate = useNavigate();
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
-  const [selectedCautionIndices, setSelectedCautionIndices] = useState([0]);
+  const [selectedDetailInfo, setSelectedDetailInfo] = useState([0]);
 
   const CustomButton = ({ ...props }) => (
     <Button {...props} style={{ width: "213px", height: "50px" }} />
@@ -62,12 +62,10 @@ export default function DetailComponent() {
   };
 
   const handleToggleCaution = (index: number) => {
-    if (selectedCautionIndices.includes(index)) {
-      setSelectedCautionIndices(
-        selectedCautionIndices.filter((i) => i !== index),
-      );
+    if (selectedDetailInfo.includes(index)) {
+      setSelectedDetailInfo(selectedDetailInfo.filter((i) => i !== index));
     } else {
-      setSelectedCautionIndices([...selectedCautionIndices, index]);
+      setSelectedDetailInfo([...selectedDetailInfo, index]);
     }
   };
 
@@ -125,15 +123,15 @@ export default function DetailComponent() {
         </LikeButton>
       </ProductBtn>
       <ProductDetailInfo>
-        {CautionData.map((caution, index) => (
+        {DetailInfoData.map((caution, index) => (
           <DetailInfoKey key={index} onClick={() => handleToggleCaution(index)}>
-            {selectedCautionIndices.includes(index) ? (
+            {selectedDetailInfo.includes(index) ? (
               <FaChevronUp />
             ) : (
               <FaChevronDown />
             )}
             {caution.key}
-            {selectedCautionIndices.includes(index) && (
+            {selectedDetailInfo.includes(index) && (
               <DetailInfoValue>{caution.value}</DetailInfoValue>
             )}
           </DetailInfoKey>
