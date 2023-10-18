@@ -227,13 +227,13 @@ const TextInput = styled(BaseInput)`
   }
 `;
 
-const InputContainer = styled.div`
+export const InputContainer = styled.div`
   display: flex;
   gap: 24px;
   align-items: flex-end;
 `;
 
-const PostCode = styled.div`
+export const PostCode = styled.div`
   display: flex;
   gap: 24px;
   align-items: flex-end;
