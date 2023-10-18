@@ -50,4 +50,8 @@ export const Input = styled.input<{
     outline: none;
     border-color: ${({ theme }) => theme.colors["neutral"]["60"]};
   }
+
+  &:disabled {
+    color: ${({ theme }) => theme.colors["neutral"]["40"]};
+  }
 `;
