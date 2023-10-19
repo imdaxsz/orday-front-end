@@ -23,7 +23,7 @@ export default function BrandDetail() {
 
   return (
     <div style={{ paddingBottom: "150px" }}>
-      <Head title={`Orday | ${productMockData.brand.name}`} />
+      <Head title={`${productMockData.brand.name} | Orday`} />
       <Header>
         <Button iconOnly onClick={() => navigate(-1)}>
           <IoArrowBackOutline size={24} />

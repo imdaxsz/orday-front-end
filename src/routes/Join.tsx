@@ -31,7 +31,7 @@ export default function Join() {
 
   return (
     <Container>
-      <Head title="Orday | 회원가입" />
+      <Head title="회원가입 | Orday" />
       <AuthHeader title="회원가입" />
       <Form onSubmit={handleSubmit}>
         <TextInput

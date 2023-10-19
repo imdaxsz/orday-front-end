@@ -13,7 +13,7 @@ export default function Login() {
   const LOGIN = pathname === undefined;
   return (
     <Container>
-      <Head title="Orday | 로그인" />
+      <Head title="로그인 | Orday" />
       <AuthHeader title="로그인" />
       <Tabs defaultActiveId={LOGIN ? 1 : 2}>
         <Tab value={1} label="회원 로그인" url="/login" />

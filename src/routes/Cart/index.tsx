@@ -78,7 +78,7 @@ export default function Cart() {
 
   return (
     <Container>
-      <Head title="Orday | 장바구니" />
+      <Head title="장바구니 | Orday" />
       <BackButton pageTitle="장바구니" />
       <InfoTitle>
         주문상품

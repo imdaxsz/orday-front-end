@@ -31,7 +31,7 @@ export default function EditProfile() {
 
   return (
     <Container>
-      <Head title="Orday | 회원정보 수정" />
+      <Head title="회원정보 수정 | Orday" />
       <BackButton pageTitle="회원정보 수정" />
       <Content>
         <Item>
