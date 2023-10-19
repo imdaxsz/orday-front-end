@@ -9,6 +9,7 @@ import BrandList from "./routes/Brand/List";
 import Cart from "./routes/Cart";
 import Category from "./routes/Category";
 import Community from "./routes/Community";
+import CommunityDetail from "./routes/Community/Detail";
 import Home from "./routes/Home";
 import Join from "./routes/Join";
 import LikeList from "./routes/Like";
@@ -37,6 +38,8 @@ export default function App() {
             <Route path="best" element={<Category />} />
             <Route path="sale" element={<Category />} />
             <Route path="community" element={<Community />} />
+            <Route path="community/tips/:id" element={<CommunityDetail />} />
+            <Route path="community/reviews/:id" element={<CommunityDetail />} />
             <Route path="order" element={<Order />} />
             <Route path="order/guest" element={<GuestOrder />} />
             <Route path="/myPage" element={<MyPage />} />
