@@ -41,6 +41,7 @@ const mockData: Item[] = [
 ];
 export default function Cart() {
   const [cartItems, setCartItems] = useState(mockData);
+
   const decreaseAmount = (id: number) => {
     const updatedItems = cartItems.map((item) => {
       return item.id === id && item.amount > 1
@@ -49,16 +50,20 @@ export default function Cart() {
     });
     setCartItems(updatedItems);
   };
-
   const increaseAmount = (id: number) => {
     const updatedItems = cartItems.map((item) => {
       return item.id === id ? { ...item, amount: item.amount + 1 } : item;
     });
     setCartItems(updatedItems);
   };
-
   const removeItem = (id: number) => {
     const updatedItems = cartItems.filter((item) => item.id !== id);
+    setCartItems(updatedItems);
+  };
+  const removeSelectedItems = (checkedIds: number[]) => {
+    const updatedItems = cartItems.filter(
+      (item) => !checkedIds.includes(item.id),
+    );
     setCartItems(updatedItems);
   };
 
@@ -90,7 +95,7 @@ export default function Cart() {
   const price = {
     product: cartItems.length
       ? cartItems
-          .map((item) => Number(item.price))
+          .map((item) => Number(item.price) * item.amount)
           .reduce((acc, cur) => acc + cur)
       : 0,
     sale: 0,
@@ -113,7 +118,9 @@ export default function Cart() {
           onChange={handleAllCheck}
           checked={checkedNum === cartItems.length}
         />
-        <RemoveBasket>선택상품 삭제</RemoveBasket>
+        <RemoveBasket onClick={() => removeSelectedItems(checkedListById)}>
+          선택상품 삭제
+        </RemoveBasket>
       </Box>
       <ProductList>
         {!cartItems.length ? (

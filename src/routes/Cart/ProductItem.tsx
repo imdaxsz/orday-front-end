@@ -51,7 +51,7 @@ export default function ProductItem({
           />
         </Count>
       </ItemAmount>
-      <ItemPrice>{item.price.toLocaleString()}원</ItemPrice>
+      <ItemPrice>{(item.price * item.amount).toLocaleString()}원</ItemPrice>
       {/* 클릭시 장바구니에서 삭제 */}
       <DeleteBtn onClick={() => removeItem(item.id)}>
         <IoMdClose />
