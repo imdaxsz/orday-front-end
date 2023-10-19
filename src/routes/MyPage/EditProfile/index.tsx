@@ -140,6 +140,7 @@ export default function EditProfile() {
           isOpen={isModalOpen}
           onSubmit={() => console.log("test")}
           onClose={closeModal}
+          type="alert"
           title="회원정보 수정"
           detail="회원정보 수정이 완료되었습니다."
         />

@@ -96,6 +96,7 @@ export default function ProductInfo() {
         isOpen={isModalOpen}
         onSubmit={onSubmit}
         onClose={closeModal}
+        type="confirm"
         title="주문확인 안내"
         detail="선택하신 상품을 주문하시겠습니까?"
       />
