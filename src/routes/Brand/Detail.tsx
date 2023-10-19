@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Button from "@/components/Button";
+import CategoryNav from "@/components/CategoryNav";
+import Dropdown from "@/components/Dropdown";
 import Head from "@/components/Head";
 import LikeButton from "@/components/LikeButton";
 import ProductCard from "@/components/ProductCard";
@@ -10,6 +13,11 @@ import { ProductInfo } from "@/types";
 
 export default function BrandDetail() {
   const navigate = useNavigate();
+  const [selectedOption, setSelectedOption] = useState({
+    name: "최신순",
+    value: "new",
+  });
+
   const productMockData: ProductInfo = {
     id: 1,
     image:
@@ -31,6 +39,14 @@ export default function BrandDetail() {
         <LikeButton target="brand" />
         <BackgroundImage src="https://s3-alpha-sig.figma.com/img/cf7c/e3f4/d7a8698a8182ae23145a875332ba5172?Expires=1696204800&Signature=L2dz-XfbV9p0do4TdZXDszmaadl5Dzu-OXy161x-4am7U57ZOHIqf~ZG4crzJTrsM13JoC84RNvnARYr1M-SqtH8CaGMdmTb6PPtF4OLiabCDy2jnyL84iBJy6drFiwNFQm6OH026biZE5yuVdA1iDDYccYuHAGjzdYtR-pALYqo42jUmZrnHyeKy5drIiF40H4hfsAx-bBLtOHtr1jcPWVniTNckeVPCyxAVFGZ3oIUgPC~YS0CQFYwFBquw3WTIn~xTwmQSwDOKnICNZqE6AnOZhX1~PhxELIwMAsS~6mD1k-92rimEk8YduA8I2pIzr0kK2pOlYDRKc5kZzWoXA__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" />
       </Header>
+      <Menu>
+        <CategoryNav brand categories={[1, 2, 3]} />
+        <Dropdown
+          type="product"
+          selectedOption={selectedOption}
+          setSelectedOption={setSelectedOption}
+        />
+      </Menu>
       <Items>
         {productsMockData.map((product, i) => (
           <ProductCard key={i} size="md" $tag="NEW" info={product} />
@@ -79,5 +95,18 @@ const Items = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  margin: 50px auto;
+  margin: 20px auto;
+`;
+
+export const Menu = styled.div`
+  width: 100%;
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 34px;
+
+  & > div:first-of-type {
+    margin: 0;
+  }
 `;
