@@ -1,28 +1,36 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-interface SidebarItems {
-  [key: string]: string[];
-  shopping: string[];
-  membership: string[];
-  activity: string[];
+interface Item {
+  title: string;
+  url: string;
 }
 
-const sidebarItems: SidebarItems = {
+interface Sidebar {
+  [key: string]: Item[];
+  shopping: Item[];
+  membership: Item[];
+  activity: Item[];
+}
+
+const sidebar: Sidebar = {
   shopping: [
-    "주문내역 조회",
-    "취소/교환/환불 내역",
-    "관심 상품",
-    "관심 게시글",
-    "관심 브랜드",
+    { title: "주문내역 조회", url: "#" },
+    { title: "관심 상품", url: "/like/products" },
+    { title: "관심 게시글", url: "/like/posts" },
+    { title: "관심 브랜드", url: "/like/brands" },
   ],
-  membership: ["회원정보 수정", "배송지 관리", "로그아웃"],
-  activity: ["재입고알림", "리뷰작성/수정", "1:1 알림"],
+  membership: [
+    { title: "회원정보 수정", url: "/myPage/editProfile" },
+    { title: "로그아웃", url: "/logout" },
+  ],
+  activity: [{ title: "리뷰작성/수정", url: "/myPage/reviews" }],
 };
 
 export default function SideBarComponent() {
   return (
     <>
-      {Object.keys(sidebarItems).map((sidebarKey, index) => (
+      {Object.keys(sidebar).map((sidebarKey, index) => (
         <SideBar key={index}>
           <SideBarInfo>
             {sidebarKey === "shopping"
@@ -31,8 +39,10 @@ export default function SideBarComponent() {
               ? "회원 정보"
               : "활동 정보"}
           </SideBarInfo>
-          {sidebarItems[sidebarKey].map((item, subIndex) => (
-            <ShoppingText key={subIndex}>{item}</ShoppingText>
+          {sidebar[sidebarKey].map((item, subIndex) => (
+            <SidebarItem key={subIndex} to={item.url}>
+              {item.title}
+            </SidebarItem>
           ))}
         </SideBar>
       ))}
@@ -51,7 +61,7 @@ const SideBarInfo = styled.div`
   color: ${({ theme }) => theme.colors["neutral"]["40"]};
 `;
 
-const ShoppingText = styled.div`
+const SidebarItem = styled(Link)`
   font-size: ${({ theme }) => theme.typo["body-2-b"]};
   cursor: pointer;
 `;

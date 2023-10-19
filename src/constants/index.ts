@@ -66,3 +66,14 @@ export const menuData: IMenuItem[] = [
     url: "/brands",
   },
 ];
+
+const currentYear = new Date().getFullYear();
+
+export const DATE = {
+  year: Array.from(
+    { length: currentYear - 1950 + 1 },
+    (_, i) => currentYear - i,
+  ),
+  month: Array.from({ length: 12 }, (_, i) => i + 1),
+  day: Array.from({ length: 31 }, (_, i) => i + 1),
+};

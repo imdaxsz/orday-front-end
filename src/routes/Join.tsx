@@ -7,14 +7,11 @@ import Head from "@/components/Head";
 import PostCodeModal from "@/components/PostCodeModal";
 import BaseSelectBox from "@/components/SelectBox";
 import BaseInput from "@/components/TextInput";
+import { DATE } from "@/constants";
 import useJoin from "@/hooks/useJoin";
 import { useModal } from "@/hooks/useModal";
 
 export default function Join() {
-  const YEAR = Array.from({ length: 2023 - 1950 + 1 }, (_, i) => 2023 - i);
-  const MONTH = Array.from({ length: 12 }, (_, i) => i + 1);
-  const DAY = Array.from({ length: 31 }, (_, i) => i + 1);
-
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const {
@@ -91,7 +88,7 @@ export default function Join() {
         <InputContainer>
           <SelectBox
             label="생년월일"
-            options={YEAR}
+            options={DATE.year}
             id="year"
             text="연도"
             selected={form.birthDate.year}
@@ -100,14 +97,14 @@ export default function Join() {
           <SelectBox
             text="월"
             id="month"
-            options={MONTH}
+            options={DATE.month}
             selected={form.birthDate.month}
             onChange={handleSelectChange}
           />
           <SelectBox
             text="일"
             id="day"
-            options={DAY}
+            options={DATE.day}
             selected={form.birthDate.day}
             onChange={handleSelectChange}
           />
@@ -222,18 +219,17 @@ const TextInput = styled(BaseInput)`
   flex-grow: 1;
   input {
     width: 100%;
-    background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
     border-color: #aeaeae;
   }
 `;
 
-const InputContainer = styled.div`
+export const InputContainer = styled.div`
   display: flex;
   gap: 24px;
   align-items: flex-end;
 `;
 
-const PostCode = styled.div`
+export const PostCode = styled.div`
   display: flex;
   gap: 24px;
   align-items: flex-end;
@@ -279,7 +275,6 @@ const TermsBox = styled.div`
 
 const SelectBox = styled(BaseSelectBox)`
   & > div:first-of-type {
-    background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
     border-color: #aeaeae;
   }
 `;

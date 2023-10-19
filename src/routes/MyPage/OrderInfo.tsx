@@ -16,7 +16,7 @@ const orderStatus = [
   { name: "배송중", number: 0 },
   { name: "배송완료", number: 0 },
   { name: "구매확정", number: 0 },
-  { name: "교환/반품", number: 0 },
+  { name: "취소/교환/반품", number: 0 },
 ];
 
 export default function OrderInfo() {
