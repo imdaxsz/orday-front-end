@@ -11,15 +11,15 @@ export const ModalContainer = styled.div<{ $isOpen: boolean }>`
   z-index: 5;
 `;
 
-export const ModalContent = styled.div<{ $onSubmit: boolean }>`
+export const ModalContent = styled.div<{ $type: boolean }>`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: ${({ $onSubmit }) => ($onSubmit ? "400px" : "500px")};
+  width: ${({ $type }) => ($type ? "400px" : "500px")};
   height: auto;
   background-color: #fff;
-  padding: ${({ $onSubmit }) => ($onSubmit ? "none" : "20px")};
+  padding: ${({ $type }) => ($type ? "none" : "20px")};
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 `;

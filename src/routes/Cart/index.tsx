@@ -40,6 +40,33 @@ const mockData: Item[] = [
   },
 ];
 export default function Cart() {
+  const [cartItems, setCartItems] = useState(mockData);
+
+  const decreaseAmount = (id: number) => {
+    const updatedItems = cartItems.map((item) => {
+      return item.id === id && item.amount > 1
+        ? { ...item, amount: item.amount - 1 }
+        : item;
+    });
+    setCartItems(updatedItems);
+  };
+  const increaseAmount = (id: number) => {
+    const updatedItems = cartItems.map((item) => {
+      return item.id === id ? { ...item, amount: item.amount + 1 } : item;
+    });
+    setCartItems(updatedItems);
+  };
+  const removeItem = (id: number) => {
+    const updatedItems = cartItems.filter((item) => item.id !== id);
+    setCartItems(updatedItems);
+  };
+  const removeSelectedItems = (checkedIds: number[]) => {
+    const updatedItems = cartItems.filter(
+      (item) => !checkedIds.includes(item.id),
+    );
+    setCartItems(updatedItems);
+  };
+
   const [checkedListById, setCheckedListById] = useState<number[]>([]);
   const checkedNum = checkedListById.length;
 
@@ -59,16 +86,16 @@ export default function Cart() {
     target: { checked: boolean };
   }) => {
     if (checked) {
-      setCheckedListById(mockData.map((item: Item) => item.id));
+      setCheckedListById(cartItems.map((item: Item) => item.id));
     } else {
       setCheckedListById([]);
     }
   };
 
   const price = {
-    product: mockData.length
-      ? mockData
-          .map((item) => Number(item.price))
+    product: cartItems.length
+      ? cartItems
+          .map((item) => Number(item.price) * item.amount)
           .reduce((acc, cur) => acc + cur)
       : 0,
     sale: 0,
@@ -78,31 +105,37 @@ export default function Cart() {
 
   return (
     <Container>
-      <Head title="Orday | 장바구니" />
+      <Head title="장바구니 | Orday" />
       <BackButton pageTitle="장바구니" />
       <InfoTitle>
         주문상품
-        <span>{mockData.length ? mockData.length : 0}</span>
+        <span>{cartItems.length ? cartItems.length : 0}</span>
       </InfoTitle>
       <Box>
         <CheckBox
+          id="allCheck"
           text="전체선택"
           onChange={handleAllCheck}
-          checked={checkedNum === mockData.length}
+          checked={checkedNum === cartItems.length}
         />
-        <RemoveBasket>선택상품 삭제</RemoveBasket>
+        <RemoveBasket onClick={() => removeSelectedItems(checkedListById)}>
+          선택상품 삭제
+        </RemoveBasket>
       </Box>
       <ProductList>
-        {!mockData.length ? (
+        {!cartItems.length ? (
           <Empty>장바구니가 비어있습니다.</Empty>
         ) : (
           <>
-            {mockData.map((item) => (
+            {cartItems.map((item) => (
               <ProductItem
                 key={item.id}
                 item={item}
                 handleCheckChange={handleCheckChange}
                 checkedListById={checkedListById}
+                decreaseAmount={decreaseAmount}
+                increaseAmount={increaseAmount}
+                removeItem={removeItem}
               />
             ))}
           </>
