@@ -9,7 +9,7 @@ import UserInfo from "./UserInfo";
 export default function MyPage() {
   return (
     <Container>
-      <Head title="Orday | 마이페이지" />
+      <Head title="마이페이지 | Orday" />
       <PageLeft>
         <UserInfo />
         <SideBarComponent />
