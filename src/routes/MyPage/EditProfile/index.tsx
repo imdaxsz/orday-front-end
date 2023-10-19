@@ -197,6 +197,5 @@ const TextInput = styled(BaseInput)`
   flex-grow: 1;
   input {
     width: 100%;
-    background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
   }
 `;
