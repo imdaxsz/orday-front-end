@@ -4,7 +4,9 @@ import BackButton from "@/components/BackButton";
 import Button from "@/components/Button";
 import Head from "@/components/Head";
 import Modal from "@/components/Modal";
+import SelectBox from "@/components/SelectBox";
 import BaseInput from "@/components/TextInput";
+import { DATE } from "@/constants";
 import { useModal } from "@/hooks/useModal";
 import { InputContainer, PostCode } from "@/routes/Join";
 
@@ -15,6 +17,11 @@ export default function EditProfile() {
     name: "홍길동",
     email: "test@naver.com",
     phone: "01012345678",
+    birthDate: {
+      year: "2023",
+      month: "10",
+      day: "19",
+    },
     addressInfo: {
       postcode: "12345",
       address: "서울시 강남구 어쩌고",
@@ -65,6 +72,32 @@ export default function EditProfile() {
               id="phoneThird"
               value={USER_MOCK_DATA.phone.slice(-4)}
               type="text"
+            />
+          </InputContainer>
+        </Item>
+        <Item>
+          <span>생년월일</span>
+          <InputContainer>
+            <SelectBox
+              options={DATE.year}
+              id="year"
+              text="연도"
+              selected={USER_MOCK_DATA.birthDate.year}
+              // onChange={handleSelectChange}
+            />
+            <SelectBox
+              text="월"
+              id="month"
+              options={DATE.month}
+              selected={USER_MOCK_DATA.birthDate.month}
+              // onChange={handleSelectChange}
+            />
+            <SelectBox
+              text="일"
+              id="day"
+              options={DATE.day}
+              selected={USER_MOCK_DATA.birthDate.day}
+              // onChange={handleSelectChange}
             />
           </InputContainer>
         </Item>
@@ -167,8 +200,3 @@ const TextInput = styled(BaseInput)`
     background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
   }
 `;
-
-// const InputContainer = styled.div`
-//   display: flex;
-//   gap: 24px;
-// `;
