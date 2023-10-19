@@ -18,6 +18,12 @@ export default function BrandDetail() {
     value: "new",
   });
 
+  const brandMockData = {
+    name: "플라스틱 아크",
+    logo: "https://url.kr/atx7ql",
+    image: "https://url.kr/4murbh",
+  };
+
   const productMockData: ProductInfo = {
     id: 1,
     image:
@@ -31,13 +37,14 @@ export default function BrandDetail() {
 
   return (
     <div style={{ paddingBottom: "150px" }}>
-      <Head title={`${productMockData.brand.name} | Orday`} />
+      <Head title={`${brandMockData.name} | Orday`} />
       <Header>
         <Button iconOnly onClick={() => navigate(-1)}>
           <IoArrowBackOutline size={24} />
         </Button>
         <LikeButton target="brand" />
-        <BackgroundImage src="https://s3-alpha-sig.figma.com/img/cf7c/e3f4/d7a8698a8182ae23145a875332ba5172?Expires=1696204800&Signature=L2dz-XfbV9p0do4TdZXDszmaadl5Dzu-OXy161x-4am7U57ZOHIqf~ZG4crzJTrsM13JoC84RNvnARYr1M-SqtH8CaGMdmTb6PPtF4OLiabCDy2jnyL84iBJy6drFiwNFQm6OH026biZE5yuVdA1iDDYccYuHAGjzdYtR-pALYqo42jUmZrnHyeKy5drIiF40H4hfsAx-bBLtOHtr1jcPWVniTNckeVPCyxAVFGZ3oIUgPC~YS0CQFYwFBquw3WTIn~xTwmQSwDOKnICNZqE6AnOZhX1~PhxELIwMAsS~6mD1k-92rimEk8YduA8I2pIzr0kK2pOlYDRKc5kZzWoXA__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" />
+        <LogoImage src={brandMockData.logo} alt={brandMockData.name} />
+        <BackgroundImage src={brandMockData.image} alt={brandMockData.name} />
       </Header>
       <Menu>
         <CategoryNav brand categories={[1, 2, 3]} />
@@ -87,6 +94,16 @@ const BackgroundImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+`;
+
+const LogoImage = styled.img`
+  height: 26px;
+  object-fit: cover;
+  display: block;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
 const Items = styled.div`
