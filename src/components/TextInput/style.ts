@@ -53,5 +53,6 @@ export const Input = styled.input<{
 
   &:disabled {
     color: ${({ theme }) => theme.colors["neutral"]["40"]};
+    background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
   }
 `;
