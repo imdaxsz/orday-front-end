@@ -219,7 +219,6 @@ const TextInput = styled(BaseInput)`
   flex-grow: 1;
   input {
     width: 100%;
-    background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
     border-color: #aeaeae;
   }
 `;
@@ -276,7 +275,6 @@ const TermsBox = styled.div`
 
 const SelectBox = styled(BaseSelectBox)`
   & > div:first-of-type {
-    background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
     border-color: #aeaeae;
   }
 `;
