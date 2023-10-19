@@ -1,5 +1,18 @@
 import { IMenuItem } from "@/components/Menu/MenuItem";
 
+export const CATEGORY = [
+  "의류",
+  "소품",
+  "잡화",
+  "홈리빙",
+  "뷰티",
+  "상의",
+  "바지/스커트",
+  "아우터",
+  "홈웨어",
+  "언더웨어",
+];
+
 export const menuData: IMenuItem[] = [
   {
     label: "NEW",
