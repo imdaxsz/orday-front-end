@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 import Button from "@/components/Button";
@@ -19,6 +20,7 @@ const mockData = [
 ];
 
 export default function ProductInfo() {
+  const navigate = useNavigate();
   const { isModalOpen, openModal, closeModal } = useModal();
   const price = {
     product: mockData
@@ -29,6 +31,7 @@ export default function ProductInfo() {
   };
   const onSubmit = () => {
     // console.log();
+    navigate("/order/confirm");
   };
   return (
     <Container>
