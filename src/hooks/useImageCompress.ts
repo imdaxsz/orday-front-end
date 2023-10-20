@@ -10,8 +10,8 @@ export default function useImageCompress() {
     console.log(`원본 이미지 사이즈 : ${imageFile.size / 1024 / 1024} MB`);
 
     const options = {
-      maxSizeMB: 0.5,
-      maxWidthOrHeight: 800,
+      maxSizeMB: 10,
+      maxWidthOrHeight: 1920,
     };
 
     try {
