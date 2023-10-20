@@ -18,6 +18,7 @@ import MyPage from "./routes/MyPage";
 import EditProfile from "./routes/MyPage/EditProfile";
 import Order from "./routes/Order";
 import GuestOrder from "./routes/Order/GuestOrder";
+import OrderConfirm from "./routes/Order/OrderConfirm";
 import Product from "./routes/Product";
 import MyReviewList from "./routes/Review/List";
 import GlobalStyle from "./styles/GlobalStyle";
@@ -39,6 +40,7 @@ export default function App() {
             <Route path="community" element={<Community />} />
             <Route path="order" element={<Order />} />
             <Route path="order/guest" element={<GuestOrder />} />
+            <Route path="order/confirm" element={<OrderConfirm />} />
             <Route path="/myPage" element={<MyPage />} />
             <Route path="/product/:id" element={<Product />} />
             <Route path="like/products" element={<LikeList />} />
