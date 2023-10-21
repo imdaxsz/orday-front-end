@@ -8,12 +8,3 @@ import { ReactNode } from "react";
 export type StrictPropsWithChildren<P = unknown> = P & {
   children: ReactNode | JSX.Element;
 };
-
-export interface ProductInfo {
-  id: number;
-  image: string;
-  url: string;
-  brand: { name: string; pathname: string }; // pathname: 브랜드 영문 이름
-  name: string;
-  price: number;
-}
