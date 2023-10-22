@@ -44,53 +44,57 @@ export default function EditProfile() {
           <span>이메일</span>
           <TextInput id="email" value={form.email} disabled readOnly />
         </Item>
-        <Item>
-          <span>비밀번호</span>
-          <TextInput
-            id="password"
-            type="password"
-            value={form.password}
-            autoComplete="off"
-            onChange={handleInputChange}
-            warn={Boolean(error.password)}
-            message={USER_INFO_FORM_ERROR_MESSAGE.password[error.password]}
-          />
-        </Item>
-        <Item>
-          <span>비밀번호 확인</span>
-          <TextInput
-            id="confirmPw"
-            type="password"
-            value={form.confirmPw}
-            autoComplete="off"
-            onChange={handleInputChange}
-            message="비밀번호가 일치하지 않습니다."
-            warn={error.confirmPw}
-          />
-        </Item>
+        {form.socialType && form.socialType === "WEB" && (
+          <>
+            <Item>
+              <span>비밀번호</span>
+              <TextInput
+                id="password"
+                type="password"
+                value={form.password}
+                autoComplete="off"
+                onChange={handleInputChange}
+                warn={Boolean(error.password)}
+                message={USER_INFO_FORM_ERROR_MESSAGE.password[error.password]}
+              />
+            </Item>
+            <Item>
+              <span>비밀번호 확인</span>
+              <TextInput
+                id="confirmPw"
+                type="password"
+                value={form.confirmPw}
+                autoComplete="off"
+                onChange={handleInputChange}
+                message="비밀번호가 일치하지 않습니다."
+                warn={error.confirmPw}
+              />
+            </Item>
+          </>
+        )}
         <Item>
           <span>연락처</span>
           <InputContainer>
             <TextInput
               id="phoneFirst"
-              value={phone.first}
+              value={phone.first || ""}
               onChange={(e) => handleInputChange(e, "phone", "first")}
             />
             <TextInput
               id="phoneSecond"
-              value={phone.second}
+              value={phone.second || ""}
               onChange={(e) => handleInputChange(e, "phone", "second")}
             />
             <TextInput
               id="phoneThird"
-              value={phone.third}
+              value={phone.third || ""}
               onChange={(e) => handleInputChange(e, "phone", "third")}
             />
           </InputContainer>
         </Item>
-        {Boolean(error.phone) && (
+        {Boolean(error.phoneNumber) && (
           <ErrorMessage>
-            {USER_INFO_FORM_ERROR_MESSAGE.phone[error.phone]}
+            {USER_INFO_FORM_ERROR_MESSAGE.phone[error.phoneNumber]}
           </ErrorMessage>
         )}
         <Item>
