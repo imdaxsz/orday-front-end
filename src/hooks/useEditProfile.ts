@@ -61,9 +61,9 @@ export default function useEditProfile() {
     // TODO: api 요청
     setForm((prev) => ({ ...prev, ...MOCK_DATA }));
     setPhone({
-      first: MOCK_DATA.phoneNumber.split("-")[0],
-      second: MOCK_DATA.phoneNumber.split("-")[1],
-      third: MOCK_DATA.phoneNumber.split("-")[2],
+      first: MOCK_DATA.phoneNumber.split("-")[0] || "",
+      second: MOCK_DATA.phoneNumber.split("-")[1] || "",
+      third: MOCK_DATA.phoneNumber.split("-")[2] || "",
     });
   }, []);
 
@@ -89,15 +89,13 @@ export default function useEditProfile() {
         ...prev,
         addressInfo: { ...prev.addressInfo, addressDetail: value },
       }));
-    if (part && part in phone) setPhone((prev) => ({ ...prev, [part]: value }));
+    else if (part && part in phone)
+      setPhone((prev) => ({ ...prev, [part]: value }));
     else setForm((prev) => ({ ...prev, [id]: value }));
 
     // 비밀번호 & 비밀번호 확인 일치 여부 확인, 오류 설정
-    if (id === "confirmPw") {
-      if (value !== form.password)
-        setError((prev) => ({ ...prev, confirmPw: true }));
-      else setError((prev) => ({ ...prev, confirmPw: false }));
-    }
+    if (id === "confirmPw")
+      setError((prev) => ({ ...prev, confirmPw: value !== form.password }));
   };
 
   // 생년월일
@@ -166,9 +164,9 @@ export default function useEditProfile() {
   // 변경 취소
   const cancelUpdate = () => {
     setPhone({
-      first: MOCK_DATA.phoneNumber.split("-")[0],
-      second: MOCK_DATA.phoneNumber.split("-")[1],
-      third: MOCK_DATA.phoneNumber.split("-")[2],
+      first: MOCK_DATA.phoneNumber.split("-")[0] || "",
+      second: MOCK_DATA.phoneNumber.split("-")[1] || "",
+      third: MOCK_DATA.phoneNumber.split("-")[2] || "",
     });
     setForm({ ...DEFAULT_DATA, ...MOCK_DATA });
     setError(INIT_ERROR);
