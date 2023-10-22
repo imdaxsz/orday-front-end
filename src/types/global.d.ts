@@ -23,15 +23,16 @@ declare interface UserInfoForm {
   password: string;
   confirmPw: string;
   name: string;
-  phone: string;
+  phoneNumber: string;
   birthDate: BirthDate;
   addressInfo: Address;
+  socialType?: string;
 }
 
 declare interface UserInfoFormError {
   password: number;
   confirmPw: boolean;
-  phone: number;
+  phoneNumber: number;
   birthDate: boolean;
   address: boolean;
 }
