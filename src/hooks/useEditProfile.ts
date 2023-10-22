@@ -4,10 +4,9 @@ import { useModal } from "./useModal";
 
 const MOCK_DATA = {
   email: "test@naver.com",
-  password: "",
-  confirmPw: "",
   name: "홍길동",
-  phone: "010-1234-5678",
+  phoneNumber: "010-1234-5678",
+  socialType: "WEB",
   birthDate: {
     year: "2023",
     month: "10",
@@ -20,29 +19,58 @@ const MOCK_DATA = {
   },
 };
 
+const DEFAULT_DATA: UserInfoForm = {
+  email: "",
+  password: "",
+  confirmPw: "",
+  name: "",
+  phoneNumber: "",
+  birthDate: {
+    year: "",
+    month: "",
+    day: "",
+  },
+  addressInfo: {
+    postcode: "",
+    address: "",
+    addressDetail: "",
+  },
+};
+
 export default function useEditProfile() {
   const { isModalOpen, openModal, closeModal } = useModal(); // 수정 완료 모달
 
   const [phone, setPhone] = useState<Phone>({
-    first: MOCK_DATA.phone.split("-")[0],
-    second: MOCK_DATA.phone.split("-")[1],
-    third: MOCK_DATA.phone.split("-")[2],
+    first: DEFAULT_DATA.phoneNumber.split("-")[0],
+    second: DEFAULT_DATA.phoneNumber.split("-")[1],
+    third: DEFAULT_DATA.phoneNumber.split("-")[2],
   });
 
-  const [form, setForm] = useState<UserInfoForm>(MOCK_DATA);
+  const [form, setForm] = useState<UserInfoForm>(DEFAULT_DATA);
 
   // phone number form에 update
   useEffect(() => {
     setForm((prev) => ({
       ...prev,
-      phone: `${phone.first}-${phone.second}-${phone.third}`,
+      phoneNumber: `${phone.first}-${phone.second}-${phone.third}`,
     }));
   }, [phone]);
+
+  // 서버에서 회원 정보 조회
+  useEffect(() => {
+    // TODO: api 요청
+    setForm((prev) => ({ ...prev, ...MOCK_DATA }));
+    setPhone({
+      first: MOCK_DATA.phoneNumber.split("-")[0],
+      second: MOCK_DATA.phoneNumber.split("-")[1],
+      third: MOCK_DATA.phoneNumber.split("-")[2],
+    });
+  }, []);
 
   const INIT_ERROR = {
     password: 0,
     confirmPw: false,
-    phone: 0,
+    phoneNumber: 0,
     birthDate: false,
     address: false,
   };
@@ -94,17 +122,19 @@ export default function useEditProfile() {
 
   // 비밀번호 유효성 검사
   const validatePassword = () => {
+    let isValidate = true;
+    setError((prev) => ({ ...prev, password: 0, confirmPw: false }));
     const passwordPattern =
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*])[A-Za-z\d~!@#$%^&*]{8,16}$/;
     if (!passwordPattern.test(form.password)) {
       setError((prev) => ({ ...prev, password: 2 }));
-      return false;
+      isValidate = false;
     }
     if (form.password !== form.confirmPw) {
-      setError((prev) => ({ ...prev, confirmPw: false }));
-      return false;
+      setError((prev) => ({ ...prev, confirmPw: true }));
+      isValidate = false;
     }
-    return true;
+    return isValidate;
   };
 
   // 비밀번호 제외 폼 유효성 검사
@@ -136,11 +166,11 @@ export default function useEditProfile() {
   // 변경 취소
   const cancelUpdate = () => {
     setPhone({
-      first: MOCK_DATA.phone.split("-")[0],
-      second: MOCK_DATA.phone.split("-")[1],
-      third: MOCK_DATA.phone.split("-")[2],
+      first: MOCK_DATA.phoneNumber.split("-")[0],
+      second: MOCK_DATA.phoneNumber.split("-")[1],
+      third: MOCK_DATA.phoneNumber.split("-")[2],
     });
-    setForm(MOCK_DATA);
+    setForm({ ...DEFAULT_DATA, ...MOCK_DATA });
     setError(INIT_ERROR);
   };
 
