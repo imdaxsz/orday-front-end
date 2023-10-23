@@ -29,7 +29,7 @@ export default function LikeBrandList() {
   const brandsMockData: BrandInfo[] = Array(12).fill(brandmockData);
   return (
     <Container>
-      <Head title="Orday | 관심 브랜드" />
+      <Head title="관심 브랜드 | Orday" />
       <BackButton pageTitle="관심 브랜드" />
       <Content>
         <Dropdown

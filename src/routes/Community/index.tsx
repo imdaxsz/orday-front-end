@@ -32,7 +32,7 @@ export default function Community() {
 
   return (
     <Container>
-      <Head title="Orday | 커뮤니티" />
+      <Head title="커뮤니티 | Orday" />
       <ContentSection>
         <ToggleComponent>
           <MainTitle>

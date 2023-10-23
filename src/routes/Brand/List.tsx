@@ -25,7 +25,7 @@ export default function BrandList() {
   const brandsMockData: BrandInfo[] = Array(12).fill(brandmockData);
   return (
     <Container>
-      <Head title="Orday | 브랜드" />
+      <Head title="브랜드 | Orday" />
       <BackButton pageTitle="브랜드" />
       <Content>
         <Dropdown

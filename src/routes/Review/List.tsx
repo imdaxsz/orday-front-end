@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import BackButton from "@/components/BackButton";
+import Head from "@/components/Head";
 import ReviewItem from "@/components/ReviewItem";
 import Tabs, { Tab } from "@/components/Tabs";
 
@@ -13,9 +14,10 @@ export default function MyReviewList() {
 
   return (
     <Container>
-      <BackButton pageTitle="리뷰 작성/수정" />
+      <Head title="상품 리뷰 | Orday" />
+      <BackButton pageTitle="상품 리뷰" />
       <LikeTabs>
-        <Tab value={1} label="작성가능 리뷰" />
+        <Tab value={1} label="작성 가능한 리뷰" />
         <Tab value={2} label="작성한 리뷰" />
       </LikeTabs>
       <ReviewItem
