@@ -89,8 +89,8 @@ export default function ProductInfo() {
         </p>
       </TotalPrice>
       <CheckAgreement>
-        <CheckBox text="주문정보 동의" />
-        <CheckBox text="제 3자 제공 동의" />
+        <CheckBox id="check1" text="주문정보 동의" />
+        <CheckBox id="check2" text="제 3자 제공 동의" />
       </CheckAgreement>
       <Button style={{ width: "100%" }} onClick={openModal}>
         주문하기
