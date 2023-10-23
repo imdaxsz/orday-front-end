@@ -17,6 +17,7 @@ export default function EditProfile() {
   const {
     form,
     phone,
+    socialInfo,
     error,
     handleInputChange,
     handleSelectChange,
@@ -38,13 +39,19 @@ export default function EditProfile() {
       <Form onSubmit={onSubmit}>
         <Item>
           <span>이름</span>
-          <TextInput id="name" value={form.name} disabled readOnly />
+          <TextInput
+            id="name"
+            value={form.name}
+            onChange={handleInputChange}
+            message="이름을 입력해 주세요."
+            warn={error.name}
+          />
         </Item>
         <Item>
           <span>이메일</span>
           <TextInput id="email" value={form.email} disabled readOnly />
         </Item>
-        {form.socialType && form.socialType === "WEB" && (
+        {socialInfo.socialType === "WEB" && (
           <>
             <Item>
               <span>비밀번호</span>
@@ -123,6 +130,9 @@ export default function EditProfile() {
             />
           </InputContainer>
         </Item>
+        {error.birthDate && (
+          <ErrorMessage>생년월일을 입력해 주세요.</ErrorMessage>
+        )}
         <Item>
           <span>우편번호</span>
           <PostCode>

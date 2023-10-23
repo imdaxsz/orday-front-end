@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import { useModal } from "./useModal";
 
 const MOCK_DATA = {
+  id: 1,
   email: "test@naver.com",
   name: "홍길동",
   phoneNumber: "010-1234-5678",
-  socialType: "WEB",
   birthDate: {
     year: "2023",
     month: "10",
@@ -17,6 +17,27 @@ const MOCK_DATA = {
     address: "서울시 강남구 어쩌고",
     addressDetail: "102동 203호",
   },
+  socialType: "WEB",
+  isInfoSet: true,
+};
+
+const GOOGLE_USER_MOCK_DATA = {
+  id: 2,
+  email: "test@naver.com",
+  name: "홍길동",
+  phoneNumber: "-",
+  birthDate: {
+    year: "",
+    month: "",
+    day: "",
+  },
+  addressInfo: {
+    postcode: "",
+    address: "",
+    addressDetail: "",
+  },
+  socialType: "GOOGLE",
+  isInfoSet: false,
 };
 
 const DEFAULT_DATA: UserInfoForm = {
@@ -37,6 +58,15 @@ const DEFAULT_DATA: UserInfoForm = {
   },
 };
 
+const INIT_ERROR = {
+  name: false,
+  password: 0,
+  confirmPw: false,
+  phoneNumber: 0,
+  birthDate: false,
+  address: false,
+};
+
 export default function useEditProfile() {
   const { isModalOpen, openModal, closeModal } = useModal(); // 수정 완료 모달
 
@@ -47,6 +77,12 @@ export default function useEditProfile() {
   });
 
   const [form, setForm] = useState<UserInfoForm>(DEFAULT_DATA);
+  const [socialInfo, setSocialInfo] = useState({
+    socialType: "",
+    isInfoSet: false, // 회원이 가입 시 정보 설정을 했는지
+  });
+
+  const [error, setError] = useState<UserInfoFormError>(INIT_ERROR);
 
   // phone number form에 update
   useEffect(() => {
@@ -59,23 +95,17 @@ export default function useEditProfile() {
   // 서버에서 회원 정보 조회
   useEffect(() => {
     // TODO: api 요청
-    setForm((prev) => ({ ...prev, ...MOCK_DATA }));
+    const { socialType, isInfoSet, ...formData } = GOOGLE_USER_MOCK_DATA;
+    setSocialInfo({ socialType, isInfoSet });
+    if (isInfoSet) setForm((prev) => ({ ...prev, ...formData }));
+    else
+      setForm((prev) => ({ ...prev, ...formData, name: "", phoneNumber: "" }));
     setPhone({
-      first: MOCK_DATA.phoneNumber.split("-")[0] || "",
-      second: MOCK_DATA.phoneNumber.split("-")[1] || "",
-      third: MOCK_DATA.phoneNumber.split("-")[2] || "",
+      first: formData.phoneNumber.split("-")[0] || "",
+      second: formData.phoneNumber.split("-")[1] || "",
+      third: formData.phoneNumber.split("-")[2] || "",
     });
   }, []);
-
-  const INIT_ERROR = {
-    password: 0,
-    confirmPw: false,
-    phoneNumber: 0,
-    birthDate: false,
-    address: false,
-  };
-
-  const [error, setError] = useState<UserInfoFormError>(INIT_ERROR);
 
   // 이메일, 이름, 비번, 비번확인, 휴대폰, 상세 주소
   const handleInputChange = (
@@ -141,13 +171,27 @@ export default function useEditProfile() {
     setError(INIT_ERROR);
 
     /* 빈 항목 검사 */
+
+    if (form.name.trim().length === 0)
+      setError((prev) => ({ ...prev, name: true }));
+
     // 연락처
     for (const key in phone) {
+      console.log(phone);
+      console.log(phone[key as keyof Phone].trim().length);
       if (phone[key as keyof Phone].trim().length === 0) {
-        setError((prev) => ({ ...prev, phone: 1 }));
+        setError((prev) => ({ ...prev, phoneNumber: 1 }));
         isValidate = false;
       } else if (!/^\d+$/.test(phone[key as keyof Phone])) {
-        setError((prev) => ({ ...prev, phone: 2 }));
+        setError((prev) => ({ ...prev, phoneNumber: 2 }));
+        isValidate = false;
+      }
+    }
+
+    // 생년월일
+    for (const key in form.birthDate) {
+      if (form.birthDate[key as keyof BirthDate].trim().length === 0) {
+        setError((prev) => ({ ...prev, birthDate: true }));
         isValidate = false;
       }
     }
@@ -187,6 +231,7 @@ export default function useEditProfile() {
   return {
     form,
     phone,
+    socialInfo,
     error,
     handleInputChange,
     handleSelectChange,
