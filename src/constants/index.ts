@@ -90,3 +90,13 @@ export const DATE = {
   month: Array.from({ length: 12 }, (_, i) => i + 1),
   day: Array.from({ length: 31 }, (_, i) => i + 1),
 };
+
+export const USER_INFO_FORM_ERROR_MESSAGE = {
+  email: ["", "이메일을 입력해 주세요.", "이메일 형식이 올바르지 않습니다."],
+  password: [
+    "",
+    "비밀번호를 입력해 주세요.",
+    "비밀번호는 8~16자 내로 영어, 숫자, 특수문자~!@#$%^&*를 반드시 포함해 주세요.",
+  ],
+  phone: ["", "연락처를 입력해 주세요.", "연락처 형식이 올바르지 않습니다."],
+};

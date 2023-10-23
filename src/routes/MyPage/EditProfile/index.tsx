@@ -4,77 +4,106 @@ import BackButton from "@/components/BackButton";
 import Button from "@/components/Button";
 import Head from "@/components/Head";
 import Modal from "@/components/Modal";
+import PostCodeModal from "@/components/PostCodeModal";
 import SelectBox from "@/components/SelectBox";
 import BaseInput from "@/components/TextInput";
-import { DATE } from "@/constants";
+import { DATE, USER_INFO_FORM_ERROR_MESSAGE } from "@/constants";
+import useEditProfile from "@/hooks/useEditProfile";
 import { useModal } from "@/hooks/useModal";
 import { InputContainer, PostCode } from "@/routes/Join";
 
 export default function EditProfile() {
   const { isModalOpen, openModal, closeModal } = useModal();
+  const {
+    form,
+    phone,
+    socialInfo,
+    error,
+    handleInputChange,
+    handleSelectChange,
+    handleAddressChange,
+    cancelUpdate,
+    onSubmit,
+    successModal,
+  } = useEditProfile();
 
-  const USER_MOCK_DATA = {
-    name: "홍길동",
-    email: "test@naver.com",
-    phone: "01012345678",
-    birthDate: {
-      year: "2023",
-      month: "10",
-      day: "19",
-    },
-    addressInfo: {
-      postcode: "12345",
-      address: "서울시 강남구 어쩌고",
-      addressDetail: "102동 203호",
-    },
+  const handleSearchAddr = (data: { address: string; zonecode: string }) => {
+    handleAddressChange(data.zonecode, data.address);
+    closeModal();
   };
 
   return (
     <Container>
       <Head title="회원정보 수정 | Orday" />
       <BackButton pageTitle="회원정보 수정" />
-      <Content>
+      <Form onSubmit={onSubmit}>
         <Item>
           <span>이름</span>
-          <TextInput id="name" value={USER_MOCK_DATA.name} disabled readOnly />
-        </Item>
-        <Item>
-          <span>이메일</span>
           <TextInput
-            id="email"
-            value={USER_MOCK_DATA.email}
-            disabled
-            readOnly
+            id="name"
+            value={form.name}
+            onChange={handleInputChange}
+            message="이름을 입력해 주세요."
+            warn={error.name}
           />
         </Item>
         <Item>
-          <span>비밀번호</span>
-          <TextInput id="password" type="password" autoComplete="off" />
+          <span>이메일</span>
+          <TextInput id="email" value={form.email} disabled readOnly />
         </Item>
-        <Item>
-          <span>비밀번호 확인</span>
-          <TextInput id="confirmPw" type="password" autoComplete="off" />
-        </Item>
+        {socialInfo.socialType === "WEB" && (
+          <>
+            <Item>
+              <span>비밀번호</span>
+              <TextInput
+                id="password"
+                type="password"
+                value={form.password}
+                autoComplete="off"
+                onChange={handleInputChange}
+                warn={Boolean(error.password)}
+                message={USER_INFO_FORM_ERROR_MESSAGE.password[error.password]}
+              />
+            </Item>
+            <Item>
+              <span>비밀번호 확인</span>
+              <TextInput
+                id="confirmPw"
+                type="password"
+                value={form.confirmPw}
+                autoComplete="off"
+                onChange={handleInputChange}
+                message="비밀번호가 일치하지 않습니다."
+                warn={error.confirmPw}
+              />
+            </Item>
+          </>
+        )}
         <Item>
           <span>연락처</span>
           <InputContainer>
             <TextInput
               id="phoneFirst"
-              type="text"
-              value={USER_MOCK_DATA.phone.slice(0, 3)}
+              value={phone.first || ""}
+              onChange={(e) => handleInputChange(e, "phone", "first")}
             />
             <TextInput
               id="phoneSecond"
-              value={USER_MOCK_DATA.phone.slice(3, 7)}
-              type="text"
+              value={phone.second || ""}
+              onChange={(e) => handleInputChange(e, "phone", "second")}
             />
             <TextInput
               id="phoneThird"
-              value={USER_MOCK_DATA.phone.slice(-4)}
-              type="text"
+              value={phone.third || ""}
+              onChange={(e) => handleInputChange(e, "phone", "third")}
             />
           </InputContainer>
         </Item>
+        {Boolean(error.phoneNumber) && (
+          <ErrorMessage>
+            {USER_INFO_FORM_ERROR_MESSAGE.phone[error.phoneNumber]}
+          </ErrorMessage>
+        )}
         <Item>
           <span>생년월일</span>
           <InputContainer>
@@ -82,35 +111,45 @@ export default function EditProfile() {
               options={DATE.year}
               id="year"
               text="연도"
-              selected={USER_MOCK_DATA.birthDate.year}
-              // onChange={handleSelectChange}
+              selected={form.birthDate.year}
+              onChange={handleSelectChange}
             />
             <SelectBox
               text="월"
               id="month"
               options={DATE.month}
-              selected={USER_MOCK_DATA.birthDate.month}
-              // onChange={handleSelectChange}
+              selected={form.birthDate.month}
+              onChange={handleSelectChange}
             />
             <SelectBox
               text="일"
               id="day"
               options={DATE.day}
-              selected={USER_MOCK_DATA.birthDate.day}
-              // onChange={handleSelectChange}
+              selected={form.birthDate.day}
+              onChange={handleSelectChange}
             />
           </InputContainer>
         </Item>
+        {error.birthDate && (
+          <ErrorMessage>생년월일을 입력해 주세요.</ErrorMessage>
+        )}
         <Item>
           <span>우편번호</span>
           <PostCode>
             <TextInput
               id="postcode"
-              value={USER_MOCK_DATA.addressInfo.postcode}
+              value={form.addressInfo.postcode}
               disabled
             />
-            <Button>검색</Button>
+            <Button type="button" onClick={openModal}>
+              검색
+            </Button>
           </PostCode>
+          <PostCodeModal
+            isModalOpen={isModalOpen}
+            closeModal={closeModal}
+            onComplete={handleSearchAddr}
+          />
         </Item>
         <Item>
           <span style={{ marginBottom: "60px" }}>주소</span>
@@ -118,33 +157,34 @@ export default function EditProfile() {
             <TextInput
               id="address"
               type="text"
-              value={USER_MOCK_DATA.addressInfo.address}
+              value={form.addressInfo.address}
               disabled
             />
             <TextInput
               id="addressDetail"
               type="text"
-              value={USER_MOCK_DATA.addressInfo.addressDetail}
+              value={form.addressInfo.addressDetail}
               placeholder="상세 주소"
               style={{ marginTop: "10px" }}
+              onChange={(e) => handleInputChange(e, "address")}
             />
           </div>
         </Item>
+        {error.address && <ErrorMessage>주소를 입력해 주세요.</ErrorMessage>}
         <Buttons>
-          <Button $variant="outline">취소</Button>
-          <Button type="button" onClick={openModal}>
-            수정
+          <Button $variant="outline" type="button" onClick={cancelUpdate}>
+            취소
           </Button>
+          <Button type="submit">수정</Button>
         </Buttons>
         <Modal
-          isOpen={isModalOpen}
-          onSubmit={() => console.log("test")}
-          onClose={closeModal}
+          isOpen={successModal.isModalOpen}
+          onClose={successModal.closeModal}
           type="alert"
           title="회원정보 수정"
           detail="회원정보 수정이 완료되었습니다."
         />
-      </Content>
+      </Form>
     </Container>
   );
 }
@@ -153,7 +193,7 @@ export const Container = styled.div`
   padding: 0 24px 100px;
 `;
 
-const Content = styled.form`
+const Form = styled.form`
   width: fit-content;
   margin: 0 auto;
   padding-right: 135px;
@@ -179,13 +219,20 @@ const Buttons = styled.div`
   }
 `;
 
+const ErrorMessage = styled.span`
+  color: red;
+  ${({ theme }) => theme.typo["body-4-r"]};
+  margin-top: -24px;
+  margin-left: 135px;
+`;
+
 export const Item = styled.div`
   display: flex;
   width: 573px;
   align-items: flex-start;
   gap: 26px;
 
-  span {
+  & > span {
     width: 109px;
     ${({ theme }) => theme.typo["title-2-b"]};
     flex-shrink: 0;
