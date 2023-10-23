@@ -19,7 +19,11 @@ const mockData = [
   },
 ];
 
-export default function ProductInfo() {
+interface ProductInfoProps {
+  form: OrderForm;
+}
+
+export default function ProductInfo({ form }: ProductInfoProps) {
   const navigate = useNavigate();
   const { isModalOpen, openModal, closeModal } = useModal();
   const price = {
@@ -30,7 +34,7 @@ export default function ProductInfo() {
     shipping: 0,
   };
   const onSubmit = () => {
-    // console.log();
+    console.log(form);
     navigate("/order/confirm");
   };
   return (
