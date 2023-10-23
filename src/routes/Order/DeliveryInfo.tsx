@@ -23,6 +23,7 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
     },
   });
   const [deliveryForm, setDeliveryForm] = useState({
+    postcode: "",
     deliveryAddress: "",
     deliveryDetail: "",
   });
@@ -64,8 +65,12 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const handleSearchAddr = (data: { address: string }) => {
-    setDeliveryForm((prev) => ({ ...prev, deliveryAddress: data.address }));
+  const handleSearchAddr = (data: { address: string; zonecode: string }) => {
+    setDeliveryForm((prev) => ({
+      ...prev,
+      deliveryAddress: data.address,
+      postcode: data.zonecode,
+    }));
     closeModal();
   };
 
@@ -131,31 +136,38 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
         closeModal={closeModal}
         onComplete={handleSearchAddr}
       />
-
-      <DeliverySearch>
+      <AddressForm>
+        <DeliverySearch>
+          <TextInput
+            id="postCode"
+            type="text"
+            label="주소"
+            value={deliveryForm.postcode}
+            disabled
+          />
+          <Button
+            style={{ width: "123px", height: "40px", fontSize: "14px" }}
+            onClick={openModal}
+          >
+            검색
+          </Button>
+        </DeliverySearch>
         <TextInput
           id="deliveryAddress"
           type="text"
           value={deliveryForm.deliveryAddress}
-          label="주소"
-          onChange={handleInputChange}
           disabled
+          $size="lg"
         />
-        <Button
-          style={{ width: "123px", height: "40px", fontSize: "14px" }}
-          onClick={openModal}
-        >
-          검색
-        </Button>
-      </DeliverySearch>
-      <TextInput
-        id="deliveryDetail"
-        type="text"
-        value={deliveryForm.deliveryDetail}
-        onChange={handleInputChange}
-        $size="lg"
-        placeholder="상세 주소 입력"
-      />
+        <TextInput
+          id="deliveryDetail"
+          type="text"
+          value={deliveryForm.deliveryDetail}
+          onChange={handleInputChange}
+          $size="lg"
+          placeholder="상세 주소 입력"
+        />
+      </AddressForm>
       {/* 배송시 요청사항 추가 */}
       <SelectBox
         height="40px"
@@ -225,13 +237,17 @@ const PhoneNumber = styled.div`
     width: 100%;
   }
 `;
+const AddressForm = styled.div`
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
 const DeliverySearch = styled.div`
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
-  margin: 1rem 0;
+  gap: 0.75rem;
   input {
     background-color: #f8f8f8;
-    width: 42rem;
   }
 `;
