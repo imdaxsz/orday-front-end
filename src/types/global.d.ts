@@ -26,10 +26,10 @@ declare interface UserInfoForm {
   phoneNumber: string;
   birthDate: BirthDate;
   addressInfo: Address;
-  socialType?: string;
 }
 
 declare interface UserInfoFormError {
+  name: boolean;
   password: number;
   confirmPw: boolean;
   phoneNumber: number;
@@ -39,7 +39,6 @@ declare interface UserInfoFormError {
 
 declare interface JoinFormError extends UserInfoFormError {
   email: number;
-  name: boolean;
   terms: boolean;
 }
 
