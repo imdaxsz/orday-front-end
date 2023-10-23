@@ -24,7 +24,7 @@ const sidebar: Sidebar = {
     { title: "회원정보 수정", url: "/myPage/editProfile" },
     { title: "로그아웃", url: "/logout" },
   ],
-  activity: [{ title: "리뷰작성/수정", url: "/myPage/reviews" }],
+  activity: [{ title: "상품 리뷰", url: "/myPage/reviews" }],
 };
 
 export default function SideBarComponent() {
