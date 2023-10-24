@@ -44,7 +44,7 @@ export default function DeliveryInfo({
   const [requireInput, setRequireInput] = useState("");
 
   useEffect(() => {
-    if (require && require !== "") {
+    if (require && require !== "직접 입력") {
       updateForm({ deliveryRequest: require });
     } else {
       updateForm({ deliveryRequest: requireInput });

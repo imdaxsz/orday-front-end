@@ -33,7 +33,7 @@ export default function UserInfo({
             id="phoneFirst"
             type="text"
             value={phone.first}
-            label="휴대전화"
+            label="연락처"
             onChange={(e) => handleInputChange(e, "first")}
             maxLength={3}
           />
