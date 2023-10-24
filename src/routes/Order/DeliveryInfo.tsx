@@ -1,129 +1,59 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 
 import Button from "@/components/Button";
 import PostCodeModal from "@/components/PostCodeModal";
-import { RadioButton } from "@/components/RadioButton";
 import SelectBox from "@/components/SelectBox";
 import TextInput from "@/components/TextInput";
 import { useModal } from "@/hooks/useModal";
 
 interface DeliveryInfoProps {
-  user?: "member" | "guest";
+  form: OrderForm;
+  handleInputChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    part?: PHONEPART,
+  ) => void;
+  updateForm: (updates: Partial<OrderForm>) => void;
 }
-type PhoneNumber = "first" | "second" | "third";
 
-export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
-  const [infoForm, setInfoForm] = useState({
-    name: "",
-    phone: {
-      first: "010",
-      second: "",
-      third: "",
-    },
-  });
-  const [deliveryForm, setDeliveryForm] = useState({
-    deliveryAddress: "",
-    deliveryDetail: "",
-  });
-  const [require, setRequire] = useState<string | null>("");
-  const [requireInput, setRequireInput] = useState("");
+export default function DeliveryInfo({
+  form,
+  handleInputChange,
+  updateForm,
+}: DeliveryInfoProps) {
+  const { isModalOpen, openModal, closeModal } = useModal();
+
+  const handleSearchAddr = (data: { address: string; zonecode: string }) => {
+    updateForm({
+      addressInfo: {
+        postcode: data.zonecode,
+        address: data.address,
+        addressDetail: form.addressInfo.addressDetail,
+      },
+    });
+    closeModal();
+  };
+
   const DELIVERY_OPTIONS = [
     "직접 입력",
     "빠른배송 바랍니다",
     "부재시 경비실에 맡겨주세요",
     "배송 전에 연락주세요",
   ];
+  const [require, setRequire] = useState<string | null>("");
+  const [requireInput, setRequireInput] = useState("");
 
-  const [radioValue, setRadioValue] = useState("");
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    part?: PhoneNumber,
-  ) => {
-    const { id, value } = e.target;
-    if (user === "guest" && id in infoForm) {
-      if (part && part in infoForm.phone) {
-        setInfoForm((prev) => ({
-          ...prev,
-          phone: { ...prev.phone, [part]: value },
-        }));
-      } else setInfoForm((prev) => ({ ...prev, [id]: value }));
+  useEffect(() => {
+    if (require && require !== "직접 입력") {
+      updateForm({ deliveryRequest: require });
+    } else {
+      updateForm({ deliveryRequest: requireInput });
     }
-
-    // member, guest 공통부분
-    if (id in deliveryForm) {
-      setDeliveryForm((prev) => ({ ...prev, [id]: value }));
-    }
-  };
-
-  const handleRadio = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRadioValue(e.target.value);
-  };
-  console.log("radioValue", radioValue);
-
-  const { isModalOpen, openModal, closeModal } = useModal();
-
-  const handleSearchAddr = (data: { address: string }) => {
-    setDeliveryForm((prev) => ({ ...prev, deliveryAddress: data.address }));
-    closeModal();
-  };
+  }, [require, requireInput]);
 
   return (
     <Container>
       <h3>배송 정보</h3>
-      {user === "guest" && (
-        <>
-          <RadioGroup>
-            <RadioButton
-              value="basic"
-              name="deliveryInfo"
-              id="1"
-              handleRadio={handleRadio}
-              text="주문자 정보와 동일"
-            />
-            <RadioButton
-              value="new"
-              name="deliveryInfo"
-              id="2"
-              handleRadio={handleRadio}
-              text="새로운 배송지"
-            />
-          </RadioGroup>
-
-          <InfoContainer>
-            <TextInput
-              id="name"
-              type="text"
-              value={infoForm.name}
-              onChange={handleInputChange}
-              label="받는사람"
-              $size="md"
-            />
-            <PhoneNumber>
-              <TextInput
-                id="phoneFirst"
-                type="text"
-                value={infoForm.phone.first}
-                label="휴대전화"
-                onChange={(e) => handleInputChange(e, "first")}
-              />
-              <TextInput
-                id="phoneSecond"
-                type="text"
-                value={infoForm.phone.second}
-                onChange={(e) => handleInputChange(e, "second")}
-              />
-              <TextInput
-                id="phoneThird"
-                type="text"
-                value={infoForm.phone.third}
-                onChange={(e) => handleInputChange(e, "third")}
-              />
-            </PhoneNumber>
-          </InfoContainer>
-        </>
-      )}
 
       {/* 주소 검색모달창 */}
       <PostCodeModal
@@ -131,32 +61,39 @@ export default function DeliveryInfo({ user = "member" }: DeliveryInfoProps) {
         closeModal={closeModal}
         onComplete={handleSearchAddr}
       />
-
-      <DeliverySearch>
+      <AddressForm>
+        <DeliverySearch>
+          <TextInput
+            id="postcode"
+            type="text"
+            label="주소"
+            value={form.addressInfo.postcode}
+            disabled
+          />
+          <Button
+            style={{ width: "123px", height: "40px", fontSize: "14px" }}
+            onClick={openModal}
+          >
+            검색
+          </Button>
+        </DeliverySearch>
         <TextInput
-          id="deliveryAddress"
+          id="address"
           type="text"
-          value={deliveryForm.deliveryAddress}
-          label="주소"
-          onChange={handleInputChange}
+          value={form.addressInfo.address}
           disabled
+          $size="lg"
         />
-        <Button
-          style={{ width: "123px", height: "40px", fontSize: "14px" }}
-          onClick={openModal}
-        >
-          검색
-        </Button>
-      </DeliverySearch>
-      <TextInput
-        id="deliveryDetail"
-        type="text"
-        value={deliveryForm.deliveryDetail}
-        onChange={handleInputChange}
-        $size="lg"
-        placeholder="상세 주소 입력"
-      />
-      {/* 배송시 요청사항 추가 */}
+        <TextInput
+          id="addressDetail"
+          type="text"
+          value={form.addressInfo.addressDetail}
+          onChange={handleInputChange}
+          $size="lg"
+          placeholder="상세 주소 입력"
+        />
+      </AddressForm>
+
       <SelectBox
         height="40px"
         label="배송시 요청사항"
@@ -202,36 +139,17 @@ const Container = styled.div`
   }
 `;
 
-const RadioGroup = styled.div`
+const AddressForm = styled.div`
+  margin: 1rem 0;
   display: flex;
-  align-items: center;
-  font-size: 14px;
-  gap: 2.3rem;
-  margin-top: 1rem;
-`;
-const InfoContainer = styled.div`
-  max-width: 805px;
-  display: flex;
-  gap: 1.5rem;
-  margin-top: 1rem;
-`;
-const PhoneNumber = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 0.75rem;
-
-  input {
-    width: 100%;
-  }
+  flex-direction: column;
+  gap: 1rem;
 `;
 const DeliverySearch = styled.div`
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
-  margin: 1rem 0;
+  gap: 0.75rem;
   input {
     background-color: #f8f8f8;
-    width: 42rem;
   }
 `;
