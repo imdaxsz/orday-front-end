@@ -38,7 +38,8 @@ export default function useForm(initialState: OrderForm) {
     const { id, value } = e.target;
 
     if (part && part in phone) {
-      setPhone((prev) => ({ ...prev, [part]: value }));
+      const numberVal = value.replace(/[^0-9]/g, "");
+      setPhone((prev) => ({ ...prev, [part]: numberVal }));
     } else if (id === "addressDetail") {
       setForm((prev) => ({
         ...prev,

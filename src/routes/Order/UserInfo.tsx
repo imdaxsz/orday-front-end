@@ -35,18 +35,21 @@ export default function UserInfo({
             value={phone.first}
             label="휴대전화"
             onChange={(e) => handleInputChange(e, "first")}
+            maxLength={3}
           />
           <TextInput
             id="phoneSecond"
             type="text"
             value={phone.second}
             onChange={(e) => handleInputChange(e, "second")}
+            maxLength={4}
           />
           <TextInput
             id="phoneThird"
             type="text"
             value={phone.third}
             onChange={(e) => handleInputChange(e, "third")}
+            maxLength={4}
           />
         </PhoneNumber>
       </InfoContainer>
