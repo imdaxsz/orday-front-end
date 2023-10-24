@@ -112,13 +112,18 @@ const Content = styled.div`
 const Center = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 424px;
 
-  h4 {
+  & > h4 {
     ${({ theme }) => theme.typo["body-2-b"]};
-    line-height: 170%;
-    height: fit-content;
+    display: block;
     width: 100%;
+    height: fit-content;
+    line-height: 170%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    white-space: nowrap;
   }
 
   span {
