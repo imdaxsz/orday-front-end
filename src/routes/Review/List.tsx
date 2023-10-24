@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 import BackButton from "@/components/BackButton";
 import Head from "@/components/Head";
-import ReviewItem from "@/components/ReviewItem";
 import Tabs, { Tab } from "@/components/Tabs";
+import ReviewItem from "@/routes/Review/ReviewItem";
 
 const ProductMockData = {
   id: "1",

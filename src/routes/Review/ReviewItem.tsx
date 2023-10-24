@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Rating from "@/routes/Review/Rating";
 
-import Button from "../Button";
+import Button from "../../components/Button";
 
 interface ReviewProductInfo {
   id: string;
