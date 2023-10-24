@@ -1,4 +1,3 @@
-// MemberOrder
 import { styled } from "styled-components";
 
 import BackButton from "@/components/BackButton";
@@ -22,7 +21,8 @@ export default function Order() {
     selectedMethod: null,
   };
 
-  const { form, phone, handleInputChange, updateForm } = useForm(initialState);
+  const { form, phone, handleInputChange, updateForm } =
+    useForm<OrderForm>(initialState);
 
   return (
     <Container>

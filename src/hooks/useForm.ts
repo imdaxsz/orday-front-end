@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
-export default function useForm(initialState: OrderForm) {
+export default function useForm<T extends { addressInfo?: Address }>(
+  initialState: T,
+) {
   const [form, setForm] = useState(initialState);
 
   const [phone, setPhone] = useState({
@@ -50,7 +52,7 @@ export default function useForm(initialState: OrderForm) {
     }
   };
 
-  const updateForm = (updates: Partial<OrderForm>) => {
+  const updateForm = (updates: Partial<T>) => {
     setForm((prev) => ({
       ...prev,
       ...updates,
