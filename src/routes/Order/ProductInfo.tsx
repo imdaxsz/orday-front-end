@@ -41,7 +41,7 @@ export default function ProductInfo({ form }: ProductInfoProps) {
   const validateForm = () => {
     const { name, phoneNumber, addressInfo, selectedMethod } = form;
 
-    if (!name) {
+    if (name.trim().length === 0) {
       setModalMessage("이름을 입력해주세요.");
       return false;
     }
@@ -52,7 +52,7 @@ export default function ProductInfo({ form }: ProductInfoProps) {
     if (
       !addressInfo.postcode ||
       !addressInfo.address ||
-      !addressInfo.addressDetail
+      addressInfo.addressDetail.trim().length === 0
     ) {
       setModalMessage("주소를 입력해주세요.");
       return false;
