@@ -50,7 +50,9 @@ export default function Leave() {
         />
         {error && <span>회원 탈퇴에 동의해주세요.</span>}
         <Buttons>
-          <Button $variant="outline">취소</Button>
+          <Button $variant="outline" onClick={() => navigate(-1)}>
+            취소
+          </Button>
           <Button onClick={() => leave(openModal)}>탈퇴하기</Button>
         </Buttons>
       </Section>
