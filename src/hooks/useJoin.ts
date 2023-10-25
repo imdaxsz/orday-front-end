@@ -1,32 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-interface Phone {
-  first: string;
-  second: string;
-  third: string;
-}
+import { join } from "@/api/AuthApi";
 
-interface BirthDate {
-  year: string;
-  month: string;
-  day: string;
-}
-
-interface Address {
-  postcode: string;
-  address: string;
-  addressDetail?: string;
-}
-
-interface JoinForm {
-  email: string;
-  password: string;
-  confirmPw: string;
-  name: string;
-  phone: Phone;
-  birthDate: BirthDate;
-  addressInfo: Address;
-}
+import useEditProfile from "./useEditProfile";
 
 interface Agree {
   mandatory: boolean; // 필수 항목 여부
@@ -34,29 +11,31 @@ interface Agree {
 }
 
 export default function useJoin() {
-  type PHONEPART = keyof Phone;
+  const navigate = useNavigate();
 
-  const [form, setForm] = useState<JoinForm>({
-    email: "",
-    password: "",
-    confirmPw: "",
-    name: "",
-    phone: {
-      first: "",
-      second: "",
-      third: "",
-    },
-    birthDate: {
-      year: "",
-      month: "",
-      day: "",
-    },
-    addressInfo: {
-      postcode: "",
-      address: "",
-      addressDetail: "",
-    },
-  });
+  const {
+    form,
+    error: formError,
+    phone,
+    handleInputChange,
+    handleSelectChange,
+    handleAddressChange,
+    handleConfirmPwChange,
+    validatePassword,
+    validateFormData,
+  } = useEditProfile("join");
+
+  const INIT_ERROR = {
+    ...formError,
+    email: 0,
+    terms: false,
+  };
+
+  const [error, setError] = useState<JoinFormError>(INIT_ERROR);
+
+  useEffect(() => {
+    setError((prev) => ({ ...prev, ...formError }));
+  }, [formError]);
 
   const [agree, setAgree] = useState<Agree[]>([
     {
@@ -99,64 +78,61 @@ export default function useJoin() {
     }
   };
 
-  // 이메일, 이름, 비번, 비번확인, 휴대폰, 상세 주소
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    target?: "phone" | "address",
-    part?: PHONEPART,
-  ) => {
-    const { id, value } = e.target;
-    if (target === "address")
-      setForm((prev) => ({
-        ...prev,
-        addressInfo: { ...prev.addressInfo, addressDetail: value },
-      }));
-    if (part && part in form.phone) {
-      setForm((prev) => ({
-        ...prev,
-        phone: { ...prev.phone, [part]: value },
-      }));
-    } else setForm((prev) => ({ ...prev, [id]: value }));
-  };
-
-  // 생년월일
-  const handleSelectChange = (id: string, value: string) => {
-    setForm((prev) => ({
-      ...prev,
-      birthDate: { ...prev.birthDate, [id]: value },
-    }));
-  };
-
-  // 주소
-  const handleAddressChange = (postcode: string, address: string) => {
-    setForm((prev) => ({
-      ...prev,
-      addressInfo: {
-        ...prev.addressInfo,
-        postcode,
-        address,
-      },
-    }));
-  };
-
   // 폼 유효성 검사
   const validateForm = () => {
-    // TODO
+    let isValidate = true;
+    setError(INIT_ERROR);
+
+    // 이메일, 비밀번호 제외 form 유효성 검사
+    isValidate = validateFormData();
+
+    // 이메일 패턴 및 빈 문자열 검사
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailPattern.test(form.email)) {
+      setError((prev) => ({ ...prev, email: 2 }));
+      isValidate = false;
+    }
+    if (form.email.trim().length === 0)
+      setError((prev) => ({ ...prev, email: 1 }));
+
+    // 비밀번호 패턴 검사
+    isValidate = validatePassword();
+    if (form.password.trim().length === 0)
+      setError((prev) => ({ ...prev, password: 1 }));
+
+    // 필수 약관 동의 여부 확인
+    const hasDisagree = agree.find(
+      (item) => item.mandatory && !item.userAgreed,
+    );
+    if (hasDisagree) {
+      setError((prev) => ({ ...prev, terms: true }));
+      isValidate = false;
+    }
+
+    return isValidate;
   };
 
-  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    validateForm();
+    const isValidate = validateForm();
+    console.log(isValidate);
     console.log(form);
-
-    // API 요청
+    // TODO: API 요청
+    if (isValidate) {
+      const res = await join(form);
+      // if (성공) window.alert("회원가입이 완료되었습니다.");
+      navigate("/login");
+    }
   };
 
   return {
     form,
+    phone,
     agree,
+    error,
     handleAddressChange,
     handleInputChange,
+    handleConfirmPwChange,
     handleSelectChange,
     handleAgreeChange,
     handleSubmit,

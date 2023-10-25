@@ -1,25 +1,9 @@
 import { useState } from "react";
 
+import { DEFAULT_USER_INFO_DATA } from "@/constants";
+
 import useForm from "./useForm";
 import { useModal } from "./useModal";
-
-const DEFAULT_DATA: UserInfoForm = {
-  email: "",
-  password: "",
-  confirmPw: "",
-  name: "",
-  phoneNumber: "",
-  birthDate: {
-    year: "",
-    month: "",
-    day: "",
-  },
-  addressInfo: {
-    postcode: "",
-    address: "",
-    addressDetail: "",
-  },
-};
 
 const INIT_ERROR = {
   name: false,
@@ -30,11 +14,11 @@ const INIT_ERROR = {
   address: false,
 };
 
-export default function useEditProfile() {
+export default function useEditProfile(option?: "join") {
   const { isModalOpen, openModal, closeModal } = useModal(); // 수정 완료 모달
 
   const { form, phone, socialInfo, handleInputChange, updateForm, resetInfo } =
-    useForm<UserInfoForm>(DEFAULT_DATA);
+    useForm<UserInfoForm>(DEFAULT_USER_INFO_DATA, option);
 
   const [error, setError] = useState<UserInfoFormError>(INIT_ERROR);
 
@@ -142,6 +126,8 @@ export default function useEditProfile() {
     handleSelectChange,
     handleAddressChange,
     cancelUpdate,
+    validatePassword,
+    validateFormData,
     onSubmit,
     successModal: {
       isModalOpen,
