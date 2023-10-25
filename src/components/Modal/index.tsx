@@ -1,78 +1,62 @@
-import styled from "styled-components";
+import { PropsWithChildren } from "react";
 
-import { StrictPropsWithChildren } from "@/types";
+import Button from "../Button";
 
-interface ModalProps extends StrictPropsWithChildren {
+import {
+  ButtonBox,
+  Content,
+  Detail,
+  ModalContainer,
+  ModalContent,
+  Title,
+} from "./style";
+
+interface ModalProps extends PropsWithChildren {
   isOpen: boolean;
   onClose?: () => void;
   onSubmit?: () => void;
+  type?: "confirm" | "alert";
+  title?: string;
+  detail?: string;
 }
 
 export default function Modal({
   isOpen,
   onClose,
   onSubmit,
+  type,
+  title,
+  detail,
   children,
 }: ModalProps) {
   if (!isOpen) return null;
 
   return (
     <ModalContainer $isOpen={isOpen}>
-      <ModalContent>
+      <ModalContent $type={!!type}>
         {children}
-        {onSubmit && (
-          <ButtonBox>
-            <ConfirmBtn onClick={onSubmit}>확인</ConfirmBtn>
-            <CancelBtn onClick={onClose}>취소</CancelBtn>
-          </ButtonBox>
+        {type && (
+          <>
+            <Content>
+              <Title>{title}</Title>
+              <Detail>{detail}</Detail>
+            </Content>
+            {type === "alert" && (
+              <ButtonBox>
+                <Button onClick={onClose}>확인</Button>
+              </ButtonBox>
+            )}
+            {type === "confirm" && (
+              <ButtonBox>
+                <Button onClick={onSubmit}>확인</Button>
+                <Button color="neutral" onClick={onClose}>
+                  취소
+                </Button>
+              </ButtonBox>
+            )}
+          </>
         )}
       </ModalContent>
     </ModalContainer>
   );
 }
-
-const ModalContainer = styled.div<{ $isOpen: boolean }>`
-  display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
-  z-index: 5;
-`;
-
-const ModalContent = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  height: auto;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-`;
-
-const ButtonBox = styled.div`
-  margin: 28px 0 45px 0;
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-`;
-const ConfirmBtn = styled.button`
-  width: 100px;
-  height: 34px;
-  border: none;
-  border-radius: 5px;
-  background-color: ${({ theme }) => theme.colors.primary["80"]};
-  color: #fff;
-`;
-const CancelBtn = styled.button`
-  width: 100px;
-  height: 34px;
-  border-radius: 5px;
-  border: 1px solid #9d9d9d;
-  background-color: ${({ theme }) => theme.colors.neutral["10"]};
-`;

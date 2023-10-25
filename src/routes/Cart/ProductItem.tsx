@@ -11,12 +11,18 @@ interface ProductItemProps {
   item: Item;
   handleCheckChange: (id: number) => void;
   checkedListById: number[];
+  decreaseAmount: (id: number) => void;
+  increaseAmount: (id: number) => void;
+  removeItem: (id: number) => void;
 }
 
 export default function ProductItem({
   item,
   handleCheckChange,
   checkedListById,
+  decreaseAmount,
+  increaseAmount,
+  removeItem,
 }: ProductItemProps) {
   return (
     <Container>
@@ -34,14 +40,20 @@ export default function ProductItem({
         <p>수량</p>
         <Count>
           {/* onClick시 api 수량 감소, 금액 변경 */}
-          <ReduceBtn style={{ cursor: "pointer" }} />
+          <ReduceBtn
+            style={{ cursor: "pointer" }}
+            onClick={() => decreaseAmount(item.id)}
+          />
           <p>{item.amount}</p>
-          <AddBtn style={{ cursor: "pointer" }} />
+          <AddBtn
+            style={{ cursor: "pointer" }}
+            onClick={() => increaseAmount(item.id)}
+          />
         </Count>
       </ItemAmount>
-      <ItemPrice>{item.price.toLocaleString()}원</ItemPrice>
+      <ItemPrice>{(item.price * item.amount).toLocaleString()}원</ItemPrice>
       {/* 클릭시 장바구니에서 삭제 */}
-      <DeleteBtn>
+      <DeleteBtn onClick={() => removeItem(item.id)}>
         <IoMdClose />
       </DeleteBtn>
     </Container>

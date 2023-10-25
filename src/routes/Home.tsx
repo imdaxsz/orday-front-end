@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import Carousel from "@/components/Carousel";
+import Head from "@/components/Head";
 import ProductCarousel from "@/components/ProductCarousel";
 import Tabs, { Tab, TabProps } from "@/components/Tabs";
 import VisualSection, { Item } from "@/components/VisualSection";
@@ -128,6 +129,7 @@ export default function Home() {
 
   return (
     <Container>
+      <Head />
       <VisualSection items={visualSectionMockData} />
       <ProductSection>
         <Title>Orday BEST</Title>

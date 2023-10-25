@@ -14,10 +14,12 @@ export interface SelectStyleProps {
 
 interface SelectBoxProps {
   label?: string;
+  id?: string;
   text?: string;
   options: string[] | number[];
   selected: string | null;
   setSelected?: React.Dispatch<React.SetStateAction<string | null>>;
+  onChange?: (id: string, value: string) => void;
   disabled?: boolean;
   height?: string;
   className?: string;
@@ -25,10 +27,12 @@ interface SelectBoxProps {
 
 export default function SelectBox({
   label,
+  id,
   text,
   options,
   selected,
   setSelected,
+  onChange,
   disabled,
   height,
   className = "",
@@ -36,8 +40,11 @@ export default function SelectBox({
   const [isVisible, setIsVisible] = useState(false);
 
   const handleOptionClick = (e: React.MouseEvent<HTMLLIElement>) => {
-    const value = (e.target as HTMLLIElement).innerText;
+    const target = e.target as HTMLLIElement;
+    const value = target.innerText;
+    const { id } = target;
     if (setSelected) setSelected(value);
+    if (onChange) onChange(id, value);
   };
 
   return (
@@ -59,7 +66,7 @@ export default function SelectBox({
         height={height}
       >
         {options.map((option, i) => (
-          <Option key={i} onClick={(e) => handleOptionClick(e)}>
+          <Option key={i} id={id} onClick={(e) => handleOptionClick(e)}>
             {option}
           </Option>
         ))}

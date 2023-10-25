@@ -23,7 +23,7 @@ export const Box = styled.div`
 `;
 
 export const List = styled.div`
-  width: 614px;
+  width: fit-content;
   height: 68px;
   display: flex;
   gap: 75px;

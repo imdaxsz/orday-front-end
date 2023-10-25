@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import Head from "@/components/Head";
+
 import OrderInfo from "./OrderInfo";
 import SideBarComponent from "./SideBar";
 import UserInfo from "./UserInfo";
@@ -7,6 +9,7 @@ import UserInfo from "./UserInfo";
 export default function MyPage() {
   return (
     <Container>
+      <Head title="마이페이지 | Orday" />
       <PageLeft>
         <UserInfo />
         <SideBarComponent />

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import ReviewCard from "@/components/CommunityCard";
 import { Post } from "@/components/CommunityCard/post";
 import HashTagList from "@/components/HashTag/List";
+import Head from "@/components/Head";
 
 export default function Community() {
   const [isMainTitle, setMainTitle] = useState(true);
@@ -31,6 +32,7 @@ export default function Community() {
 
   return (
     <Container>
+      <Head title="커뮤니티 | Orday" />
       <ContentSection>
         <ToggleComponent>
           <MainTitle>
