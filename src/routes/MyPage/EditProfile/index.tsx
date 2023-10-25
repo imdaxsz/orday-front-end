@@ -21,6 +21,7 @@ export default function EditProfile() {
     socialInfo,
     error,
     handleInputChange,
+    handleConfirmPwChange,
     handleSelectChange,
     handleAddressChange,
     cancelUpdate,
@@ -73,7 +74,7 @@ export default function EditProfile() {
                 type="password"
                 value={form.confirmPw}
                 autoComplete="off"
-                onChange={handleInputChange}
+                onChange={handleConfirmPwChange}
                 message="비밀번호가 일치하지 않습니다."
                 warn={error.confirmPw}
               />
@@ -86,17 +87,17 @@ export default function EditProfile() {
             <TextInput
               id="phoneFirst"
               value={phone.first || ""}
-              onChange={(e) => handleInputChange(e, "phone", "first")}
+              onChange={(e) => handleInputChange(e, "first")}
             />
             <TextInput
               id="phoneSecond"
               value={phone.second || ""}
-              onChange={(e) => handleInputChange(e, "phone", "second")}
+              onChange={(e) => handleInputChange(e, "second")}
             />
             <TextInput
               id="phoneThird"
               value={phone.third || ""}
-              onChange={(e) => handleInputChange(e, "phone", "third")}
+              onChange={(e) => handleInputChange(e, "third")}
             />
           </InputContainer>
         </Item>
@@ -167,7 +168,7 @@ export default function EditProfile() {
               value={form.addressInfo.addressDetail}
               placeholder="상세 주소"
               style={{ marginTop: "10px" }}
-              onChange={(e) => handleInputChange(e, "address")}
+              onChange={handleInputChange}
             />
           </div>
         </Item>
