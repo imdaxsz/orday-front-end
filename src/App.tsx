@@ -13,6 +13,7 @@ import Home from "./routes/Home";
 import Join from "./routes/Join";
 import LikeBrandList from "./routes/Like/Brand";
 import Login from "./routes/Login";
+import MyOrder from "./routes/MyOrder";
 import MyPage from "./routes/MyPage";
 import Order from "./routes/Order";
 import GuestOrder from "./routes/Order/GuestOrder";
@@ -33,7 +34,8 @@ export default function App() {
             <Route path="order" element={<Order />} />
             <Route path="order/guest" element={<GuestOrder />} />
             <Route path="like/brands" element={<LikeBrandList />} />
-            <Route path="/my-page" element={<MyPage />} />
+            <Route path="/myPage" element={<MyPage />} />
+            <Route path="/myPage/order" element={<MyOrder />} />
             <Route path="cart" element={<Cart />} />
           </Route>
           <Route path="/login" element={<Login />} />

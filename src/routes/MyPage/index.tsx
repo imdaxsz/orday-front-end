@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import CurrentInfo from "./OrderInfo";
+import OrderInfo from "./OrderInfo";
 import SideBarComponent from "./SideBar";
 import UserInfo from "./UserInfo";
 
@@ -11,7 +11,7 @@ export default function MyPage() {
         <UserInfo />
         <SideBarComponent />
       </PageLeft>
-      <CurrentInfo />
+      <OrderInfo showIcon={true} />
     </Container>
   );
 }
