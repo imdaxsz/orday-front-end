@@ -40,10 +40,11 @@ const GOOGLE_USER_MOCK_DATA = {
 
 export default function useForm<T extends { addressInfo?: Address }>(
   initialState: T,
+  option?: "join",
 ) {
   const [form, setForm] = useState(initialState);
   const [phone, setPhone] = useState<Phone>({
-    first: "010",
+    first: "",
     second: "",
     third: "",
   });
@@ -60,7 +61,7 @@ export default function useForm<T extends { addressInfo?: Address }>(
   const getUserInfo = async () => {
     // TODO api 요청
     // const { socialType, infoSet, ...formData } = WEB_USER_MOCK_DATA;
-    const { socialType, infoSet, ...formData } = WEB_USER_MOCK_DATA;
+    const { socialType, infoSet, ...formData } = GOOGLE_USER_MOCK_DATA;
     setForm((prev) => ({ ...prev, ...formData }));
     setCurrentUserInfo((prev) => ({ ...prev, ...formData }));
     setSocialInfo({ socialType, infoSet });
@@ -74,8 +75,8 @@ export default function useForm<T extends { addressInfo?: Address }>(
   };
 
   useEffect(() => {
-    getUserInfo();
-  }, []);
+    if (!option) getUserInfo();
+  }, [option]);
 
   const resetInfo = () => {
     setForm({ ...currentUserInfo });
