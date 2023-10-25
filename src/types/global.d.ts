@@ -42,6 +42,14 @@ declare interface JoinFormError extends UserInfoFormError {
   terms: boolean;
 }
 
+declare interface OrderForm {
+  name: string;
+  phoneNumber: string;
+  addressInfo: Address;
+  deliveryRequest: string | null;
+  selectedMethod: number | null;
+}
+
 declare interface ProductInfo {
   id: number;
   image: string;

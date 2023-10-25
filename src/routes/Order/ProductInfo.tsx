@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
@@ -19,20 +20,73 @@ const mockData = [
   },
 ];
 
-export default function ProductInfo() {
+interface ProductInfoProps {
+  form: OrderForm;
+}
+
+export default function ProductInfo({ form }: ProductInfoProps) {
   const navigate = useNavigate();
   const { isModalOpen, openModal, closeModal } = useModal();
-  const price = {
-    product: mockData
+  const products = {
+    price: mockData
       .map((item) => Number(item.price))
       .reduce((acc, cur) => acc + cur),
     sale: 0,
     shipping: 0,
   };
+  const totalPrice = products.price + products.sale + products.shipping;
+
+  const [modalMessage, setModalMessage] = useState<string | null>(null);
+
+  const validateForm = () => {
+    const { name, phoneNumber, addressInfo, selectedMethod } = form;
+
+    if (name.trim().length === 0) {
+      setModalMessage("이름을 입력해주세요.");
+      return false;
+    }
+    if (!/^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/.test(phoneNumber)) {
+      setModalMessage("연락처를 입력해주세요.");
+      return false;
+    }
+    if (
+      !addressInfo.postcode ||
+      !addressInfo.address ||
+      addressInfo.addressDetail.trim().length === 0
+    ) {
+      setModalMessage("주소를 입력해주세요.");
+      return false;
+    }
+    if (!selectedMethod) {
+      setModalMessage("결제수단을 선택해주세요.");
+      return false;
+    }
+
+    setModalMessage(null);
+    return true;
+  };
+
+  const openCheckedModal = () => {
+    validateForm();
+    openModal();
+  };
+
   const onSubmit = () => {
-    // console.log();
+    if (!validateForm()) return;
+
+    const data = {
+      ...form,
+      productsInfo: mockData.map(({ id, amount }) => ({ id, amount })),
+      price: products.price,
+      sale: products.sale,
+      shipping: products.shipping,
+      totalPrice,
+    };
+    console.log("data", data);
+
     navigate("/order/confirm");
   };
+
   return (
     <Container>
       <InfoTitle>
@@ -64,45 +118,52 @@ export default function ProductInfo() {
       <PriceList>
         <li>
           <p>상품금액</p>
-          <p>{price.product.toLocaleString()}원</p>
+          <p>{products.price.toLocaleString()}원</p>
         </li>
         <li>
           <p>상품할인</p>
-          <p>-{price.sale.toLocaleString()} 원</p>
+          <p>-{products.sale.toLocaleString()} 원</p>
         </li>
         <li>
           <p>배송비</p>
-          <p>{price.shipping.toLocaleString()} 원</p>
+          <p>{products.shipping.toLocaleString()} 원</p>
         </li>
         <li>
           <p>합계</p>
-          <p>
-            {(price.product + price.sale + price.shipping).toLocaleString()}원
-          </p>
+          <p>{totalPrice.toLocaleString()}원</p>
         </li>
       </PriceList>
       <Line />
       <TotalPrice>
         <p>총 결제금액</p>
-        <p>
-          {(price.product + price.sale + price.shipping).toLocaleString()}원
-        </p>
+        <p>{totalPrice.toLocaleString()}원</p>
       </TotalPrice>
       <CheckAgreement>
-        <CheckBox text="주문정보 동의" />
-        <CheckBox text="제 3자 제공 동의" />
+        <CheckBox id="check1" text="주문정보 동의" />
+        <CheckBox id="check2" text="제 3자 제공 동의" />
       </CheckAgreement>
-      <Button style={{ width: "100%" }} onClick={openModal}>
+      <Button style={{ width: "100%" }} onClick={openCheckedModal}>
         주문하기
       </Button>
-      <Modal
-        isOpen={isModalOpen}
-        onSubmit={onSubmit}
-        onClose={closeModal}
-        type="confirm"
-        title="주문확인 안내"
-        detail="선택하신 상품을 주문하시겠습니까?"
-      />
+      {modalMessage ? (
+        <Modal
+          isOpen={isModalOpen}
+          onSubmit={onSubmit}
+          onClose={closeModal}
+          type="alert"
+          title="입력확인"
+          detail={modalMessage}
+        />
+      ) : (
+        <Modal
+          isOpen={isModalOpen}
+          onSubmit={onSubmit}
+          onClose={closeModal}
+          type="confirm"
+          title="주문확인 안내"
+          detail="선택하신 상품을 주문하시겠습니까?"
+        />
+      )}
     </Container>
   );
 }
