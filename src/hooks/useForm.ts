@@ -1,30 +1,86 @@
 import { useEffect, useState } from "react";
 
+const WEB_USER_MOCK_DATA = {
+  id: 1,
+  email: "test@naver.com",
+  name: "홍길동",
+  phoneNumber: "010-1234-5678",
+  birthDate: {
+    year: "2023",
+    month: "10",
+    day: "19",
+  },
+  addressInfo: {
+    postcode: "12345",
+    address: "서울시 강남구 어쩌고",
+    addressDetail: "102동 203호",
+  },
+  socialType: "WEB",
+  infoSet: true,
+};
+
+const GOOGLE_USER_MOCK_DATA = {
+  id: 2,
+  email: "test@naver.com",
+  name: "홍길동",
+  phoneNumber: "-",
+  birthDate: {
+    year: "",
+    month: "",
+    day: "",
+  },
+  addressInfo: {
+    postcode: "",
+    address: "",
+    addressDetail: "",
+  },
+  socialType: "GOOGLE",
+  infoSet: false,
+};
+
 export default function useForm<T extends { addressInfo?: Address }>(
   initialState: T,
 ) {
   const [form, setForm] = useState(initialState);
-
-  const [phone, setPhone] = useState({
+  const [phone, setPhone] = useState<Phone>({
     first: "010",
     second: "",
     third: "",
   });
 
-  useEffect(() => {
-    // 유저정보 가져오기
-    const user = {
-      name: "홍길동",
-      phone: "010-0000-0000",
+  const [currentUserInfo, setCurrentUserInfo] = useState(initialState); // 현재 회원 정보
+  const [currentPhone, setCurrentPhone] = useState<Phone>({ ...phone }); // 현재 회원 폰
+
+  const [socialInfo, setSocialInfo] = useState({
+    socialType: "",
+    infoSet: false, // 회원이 가입 시 정보 설정을 했는지
+  });
+
+  // 회원정보 조회
+  const getUserInfo = async () => {
+    // TODO api 요청
+    // const { socialType, infoSet, ...formData } = WEB_USER_MOCK_DATA;
+    const { socialType, infoSet, ...formData } = WEB_USER_MOCK_DATA;
+    setForm((prev) => ({ ...prev, ...formData }));
+    setCurrentUserInfo((prev) => ({ ...prev, ...formData }));
+    setSocialInfo({ socialType, infoSet });
+    const phoneData = {
+      first: formData.phoneNumber.split("-")[0] || "",
+      second: formData.phoneNumber.split("-")[1] || "",
+      third: formData.phoneNumber.split("-")[2] || "",
     };
-    setForm((prev) => ({ ...prev, name: user.name }));
-    const phonePart = user.phone.split("-");
-    setPhone({
-      first: phonePart[0] || "",
-      second: phonePart[1] || "",
-      third: phonePart[2] || "",
-    });
+    setPhone(phoneData);
+    setCurrentPhone(phoneData);
+  };
+
+  useEffect(() => {
+    getUserInfo();
   }, []);
+
+  const resetInfo = () => {
+    setForm({ ...currentUserInfo });
+    setPhone({ ...currentPhone });
+  };
 
   useEffect(() => {
     setForm((prev) => ({
@@ -62,7 +118,9 @@ export default function useForm<T extends { addressInfo?: Address }>(
   return {
     form,
     phone,
+    socialInfo,
     handleInputChange,
     updateForm,
+    resetInfo,
   };
 }
