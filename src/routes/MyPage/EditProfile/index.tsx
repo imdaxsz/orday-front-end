@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import BackButton from "@/components/BackButton";
@@ -185,12 +186,23 @@ export default function EditProfile() {
           detail="회원정보 수정이 완료되었습니다."
         />
       </Form>
+      <Link to="/myPage/leave">회원탈퇴</Link>
     </Container>
   );
 }
 
 export const Container = styled.div`
   padding: 0 24px 100px;
+
+  a {
+    display: block;
+    margin-top: 30px;
+    text-align: center;
+    text-decoration: underline;
+    ${({ theme }) => theme.typo["body-2-r"]};
+    color: ${({ theme }) => theme.colors["neutral"]["40"]};
+    line-height: 100%;
+  }
 `;
 
 const Form = styled.form`
@@ -208,11 +220,11 @@ const Buttons = styled.div`
   padding-left: 135px;
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 18px;
   margin-top: 40px;
 
   button {
-    width: 130px;
+    width: 210px;
     padding: 15px 10px;
     ${({ theme }) => theme.typo["title-2-b"]};
     line-height: 100%;
