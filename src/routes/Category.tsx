@@ -110,7 +110,7 @@ export default function Category() {
       <CategoryNav />
       <CategoryNewList>
         {mockdata.map((item) => (
-          <ProductCard key={item.id} info={item} size="xl" $tag="NEW" />
+          <ProductCard key={item.id} info={item} size="xl" $tag="BEST" />
         ))}
       </CategoryNewList>
 
