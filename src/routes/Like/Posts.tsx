@@ -7,6 +7,14 @@ const mockData = [
     id: 1,
     content: "",
   },
+  {
+    id: 2,
+    content: "",
+  },
+  {
+    id: 3,
+    content: "",
+  },
 ];
 
 export default function LikePostsList() {
@@ -16,9 +24,9 @@ export default function LikePostsList() {
         <Empty>관심 게시글이 없습니다.</Empty>
       ) : (
         <>
-          <ReviewCard isMainTitle={false} />
-          <ReviewCard isMainTitle={false} />
-          <ReviewCard isMainTitle={false} />
+          {mockData.map((item) => (
+            <ReviewCard key={item.id} isMainTitle={false} />
+          ))}
         </>
       )}
     </ProductList>
