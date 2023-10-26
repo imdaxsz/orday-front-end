@@ -67,6 +67,11 @@ export default function Cart() {
     setCartItems(updatedItems);
   };
 
+  const removeCheckedItems = (checkedIds: number[]) => {
+    removeSelectedItems(checkedIds);
+    setCheckedListById([]);
+  };
+
   const [checkedListById, setCheckedListById] = useState<number[]>([]);
   const checkedNum = checkedListById.length;
 
@@ -116,9 +121,9 @@ export default function Cart() {
           id="allCheck"
           text="전체선택"
           onChange={handleAllCheck}
-          checked={checkedNum === cartItems.length}
+          checked={cartItems.length > 0 && checkedNum === cartItems.length}
         />
-        <RemoveBasket onClick={() => removeSelectedItems(checkedListById)}>
+        <RemoveBasket onClick={() => removeCheckedItems(checkedListById)}>
           선택상품 삭제
         </RemoveBasket>
       </Box>
