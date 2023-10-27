@@ -16,36 +16,15 @@ export const CATEGORY = [
 export const menuData: IMenuItem[] = [
   {
     label: "NEW",
-    subItem: [
-      { label: "전체", url: "/new" },
-      { label: "의류", url: "/new?category=1" },
-      { label: "소품", url: "/new?category=2" },
-      { label: "잡화", url: "/new?category=3" },
-      { label: "홈리빙", url: "/new?category=4" },
-      { label: "뷰티", url: "/new?category=5" },
-    ],
+    url: "/new",
   },
   {
     label: "BEST",
-    subItem: [
-      { label: "전체", url: "/best" },
-      { label: "의류", url: "/best?category=1" },
-      { label: "소품", url: "/best?category=2" },
-      { label: "잡화", url: "/best?category=3" },
-      { label: "홈리빙", url: "/best?category=4" },
-      { label: "뷰티", url: "/best?category=5" },
-    ],
+    url: "/best",
   },
   {
     label: "SALE",
-    subItem: [
-      { label: "전체", url: "/sale" },
-      { label: "의류", url: "/sale?category=1" },
-      { label: "소품", url: "/sale?category=2" },
-      { label: "잡화", url: "/sale?category=3" },
-      { label: "홈리빙", url: "/sale?category=4" },
-      { label: "뷰티", url: "/sale?category=5" },
-    ],
+    url: "/sale",
   },
   {
     label: "의류",
@@ -99,4 +78,22 @@ export const USER_INFO_FORM_ERROR_MESSAGE = {
     "비밀번호는 8~16자 내로 영어, 숫자, 특수문자~!@#$%^&*를 반드시 포함해 주세요.",
   ],
   phone: ["", "연락처를 입력해 주세요.", "연락처 형식이 올바르지 않습니다."],
+};
+
+export const DEFAULT_USER_INFO_DATA: UserInfoForm = {
+  email: "",
+  password: "",
+  confirmPw: "",
+  name: "",
+  phoneNumber: "",
+  birthDate: {
+    year: "",
+    month: "",
+    day: "",
+  },
+  addressInfo: {
+    postcode: "",
+    address: "",
+    addressDetail: "",
+  },
 };

@@ -7,7 +7,7 @@ import Head from "@/components/Head";
 import PostCodeModal from "@/components/PostCodeModal";
 import BaseSelectBox from "@/components/SelectBox";
 import BaseInput from "@/components/TextInput";
-import { DATE } from "@/constants";
+import { DATE, USER_INFO_FORM_ERROR_MESSAGE } from "@/constants";
 import useJoin from "@/hooks/useJoin";
 import { useModal } from "@/hooks/useModal";
 
@@ -16,8 +16,11 @@ export default function Join() {
 
   const {
     form,
+    phone,
     agree,
+    error,
     handleInputChange,
+    handleConfirmPwChange,
     handleSelectChange,
     handleAddressChange,
     handleAgreeChange,
@@ -33,13 +36,15 @@ export default function Join() {
     <Container>
       <Head title="회원가입 | Orday" />
       <AuthHeader title="회원가입" />
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} noValidate>
         <TextInput
           id="email"
           type="email"
           value={form.email}
           onChange={handleInputChange}
           label="아이디(이메일)"
+          warn={Boolean(error.email)}
+          message={USER_INFO_FORM_ERROR_MESSAGE.email[error.email]}
         />
         <TextInput
           id="password"
@@ -48,14 +53,18 @@ export default function Join() {
           onChange={handleInputChange}
           label="비밀번호"
           autoComplete="on"
+          warn={Boolean(error.password)}
+          message={USER_INFO_FORM_ERROR_MESSAGE.password[error.password]}
         />
         <TextInput
           id="confirmPw"
           type="password"
           value={form.confirmPw}
-          onChange={handleInputChange}
+          onChange={handleConfirmPwChange}
           label="비밀번호 확인"
           autoComplete="on"
+          warn={Boolean(error.confirmPw)}
+          message="비밀번호가 일치하지 않습니다."
         />
         <TextInput
           id="name"
@@ -63,52 +72,62 @@ export default function Join() {
           value={form.name}
           onChange={handleInputChange}
           label="이름"
+          warn={error.name}
+          message="이름을 입력해 주세요."
         />
-        <InputContainer>
-          <TextInput
-            id="phoneFirst"
-            type="text"
-            value={form.phone.first}
-            onChange={(e) => handleInputChange(e, "phone", "first")}
-            label="연락처"
-          />
-          <TextInput
-            id="phoneSecond"
-            value={form.phone.second}
-            onChange={(e) => handleInputChange(e, "phone", "second")}
-            type="text"
-          />
-          <TextInput
-            id="phoneThird"
-            value={form.phone.third}
-            onChange={(e) => handleInputChange(e, "phone", "third")}
-            type="text"
-          />
-        </InputContainer>
-        <InputContainer>
-          <SelectBox
-            label="생년월일"
-            options={DATE.year}
-            id="year"
-            text="연도"
-            selected={form.birthDate.year}
-            onChange={handleSelectChange}
-          />
-          <SelectBox
-            text="월"
-            id="month"
-            options={DATE.month}
-            selected={form.birthDate.month}
-            onChange={handleSelectChange}
-          />
-          <SelectBox
-            text="일"
-            id="day"
-            options={DATE.day}
-            selected={form.birthDate.day}
-            onChange={handleSelectChange}
-          />
-        </InputContainer>
+        <div aria-label="연락처">
+          <InputContainer>
+            <TextInput
+              id="phoneFirst"
+              type="text"
+              value={phone.first || ""}
+              onChange={(e) => handleInputChange(e, "first")}
+              label="연락처"
+            />
+            <TextInput
+              id="phoneSecond"
+              value={phone.second || ""}
+              onChange={(e) => handleInputChange(e, "second")}
+              type="text"
+            />
+            <TextInput
+              id="phoneThird"
+              value={phone.third || ""}
+              onChange={(e) => handleInputChange(e, "third")}
+              type="text"
+            />
+          </InputContainer>
+          {Boolean(error.phoneNumber) && (
+            <span>{USER_INFO_FORM_ERROR_MESSAGE.phone[error.phoneNumber]}</span>
+          )}
+        </div>
+        <div aria-label="생년월일">
+          <InputContainer>
+            <SelectBox
+              label="생년월일"
+              options={DATE.year}
+              id="year"
+              text="연도"
+              selected={form.birthDate.year}
+              onChange={handleSelectChange}
+            />
+            <SelectBox
+              text="월"
+              id="month"
+              options={DATE.month}
+              selected={form.birthDate.month}
+              onChange={handleSelectChange}
+            />
+            <SelectBox
+              text="일"
+              id="day"
+              options={DATE.day}
+              selected={form.birthDate.day}
+              onChange={handleSelectChange}
+            />
+          </InputContainer>
+          {error.birthDate && <span>생년월일을 입력해 주세요.</span>}
+        </div>
         <PostCode>
           <TextInput
             id="postCode"
@@ -137,10 +156,11 @@ export default function Join() {
             id="addressDetail"
             type="text"
             value={form.addressInfo.addressDetail}
-            onChange={(e) => handleInputChange(e, "address")}
+            onChange={handleInputChange}
             placeholder="상세 주소"
             style={{ marginTop: "10px" }}
           />
+          {error.address && <span>주소를 입력해 주세요.</span>}
         </div>
         <CheckAll>
           <CheckBox
@@ -159,17 +179,17 @@ export default function Join() {
               onChange={() => handleAgreeChange(1)}
             />
             <TermsBox>
-              네이버 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다.
-              본 약관은 다양한 네이버 서비스의 이용과 관련하여 네이버 서비스를
-              제공하는 네이버 주식회사(이하 ‘네이버’)와 이를 이용하는 네이버
-              서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러
-              여러분의 네이버 서비스 이용에 도움이 될 수 있는 유익한 정보를
-              포함하고 있습니다. 네이버 서비스 및 제품(이하 ‘서비스’)을 이용해
-              주셔서 감사합니다. 본 약관은 다양한 네이버 서비스의 이용과
-              관련하여 네이버 서비스를 제공하는 네이버 주식회사(이하 ‘네이버’)와
-              이를 이용하는 네이버 서비스 회원(이하 ‘회원’) 또는 비회원과의
-              관계를 설명하며, 아울러 여러분의 네이버 서비스 이용에 도움이 될 수
-              있는 유익한 정보를 포함하고 있습니다.
+              올데이(Orday) 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서
+              감사합니다. 본 약관은 다양한 올데이 서비스의 이용과 관련하여
+              올데이 서비스를 제공하는 올데이 주식회사(이하 ‘올데이’)와 이를
+              이용하는 올데이 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를
+              설명하며, 아울러 여러분의 올데이 서비스 이용에 도움이 될 수 있는
+              유익한 정보를 포함하고 있습니다. 올데이 서비스 및 제품(이하
+              ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 올데이
+              서비스의 이용과 관련하여 올데이 서비스를 제공하는 올데이
+              주식회사(이하 ‘올데이’)와 이를 이용하는 올데이 서비스 회원(이하
+              ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 올데이
+              서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.
             </TermsBox>
           </li>
           <li>
@@ -191,6 +211,7 @@ export default function Join() {
             <TermsBox></TermsBox>
           </li>
         </Terms>
+        {error.terms && <span>필수 약관에 동의해 주세요.</span>}
         <Button type="submit">회원 가입</Button>
       </Form>
     </Container>
@@ -212,6 +233,12 @@ const Form = styled.form`
   & > button {
     width: 100%;
     ${({ theme }) => theme.typo["body-3-b"]};
+  }
+
+  span {
+    color: red;
+    ${({ theme }) => theme.typo["body-4-r"]};
+    margin-top: 5px;
   }
 `;
 
