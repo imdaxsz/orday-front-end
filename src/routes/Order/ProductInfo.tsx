@@ -5,6 +5,7 @@ import { styled } from "styled-components";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import Modal from "@/components/Modal";
+import useCheckBox from "@/hooks/useCheckBox";
 import { useModal } from "@/hooks/useModal";
 
 // 임시데이터
@@ -34,6 +35,7 @@ export default function ProductInfo({ form }: ProductInfoProps) {
     sale: 0,
     shipping: 0,
   };
+  const { checkedListById, handleCheckChange } = useCheckBox();
   const totalPrice = products.price + products.sale + products.shipping;
 
   const [modalMessage, setModalMessage] = useState<string | null>(null);
@@ -59,6 +61,15 @@ export default function ProductInfo({ form }: ProductInfoProps) {
     }
     if (!selectedMethod) {
       setModalMessage("결제수단을 선택해주세요.");
+      return false;
+    }
+
+    if (!checkedListById.includes(1)) {
+      setModalMessage("주문정보에 동의해주세요.");
+      return false;
+    }
+    if (!checkedListById.includes(2)) {
+      setModalMessage("제 3자 제공에 동의해주세요.");
       return false;
     }
 
@@ -139,8 +150,16 @@ export default function ProductInfo({ form }: ProductInfoProps) {
         <p>{totalPrice.toLocaleString()}원</p>
       </TotalPrice>
       <CheckAgreement>
-        <CheckBox id="check1" text="주문정보 동의" />
-        <CheckBox id="check2" text="제 3자 제공 동의" />
+        <CheckBox
+          id="check1"
+          text="주문정보 동의"
+          onChange={() => handleCheckChange(1)}
+        />
+        <CheckBox
+          id="check2"
+          text="제 3자 제공 동의"
+          onChange={() => handleCheckChange(2)}
+        />
       </CheckAgreement>
       <Button style={{ width: "100%" }} onClick={openCheckedModal}>
         주문하기
