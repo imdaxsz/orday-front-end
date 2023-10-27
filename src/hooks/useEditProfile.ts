@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { updateUserInfo } from "@/api/AuthApi";
 import { DEFAULT_USER_INFO_DATA } from "@/constants";
 
 import useForm from "./useForm";
@@ -17,8 +18,15 @@ const INIT_ERROR = {
 export default function useEditProfile(option?: "join") {
   const { isModalOpen, openModal, closeModal } = useModal(); // 수정 완료 모달
 
-  const { form, phone, socialInfo, handleInputChange, updateForm, resetInfo } =
-    useForm<UserInfoForm>(DEFAULT_USER_INFO_DATA, option);
+  const {
+    form,
+    phone,
+    updatedInfo,
+    socialInfo,
+    handleInputChange,
+    updateForm,
+    resetInfo,
+  } = useForm<UserInfoForm>(DEFAULT_USER_INFO_DATA, option);
 
   const [error, setError] = useState<UserInfoFormError>(INIT_ERROR);
 
@@ -104,14 +112,17 @@ export default function useEditProfile(option?: "join") {
     setError(INIT_ERROR);
   };
 
-  const onSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const isFormDataValidate = validateFormData();
     let isPasswordValidate = true;
     if (form.password !== "") isPasswordValidate = validatePassword();
-    console.log(form);
     if (isFormDataValidate && isPasswordValidate) {
-      // TODO 회원정보 수정 요청
+      const updatedUserInfoItems = updatedInfo();
+      console.log(updatedUserInfoItems);
+      // 기존 회원 정보에서 변경된 부분이 있는 경우에만 변경 요청
+      if (Object.keys(updatedUserInfoItems).length !== 0)
+        await updateUserInfo(updatedUserInfoItems);
       openModal();
     }
   };
