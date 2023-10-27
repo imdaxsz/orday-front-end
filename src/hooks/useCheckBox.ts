@@ -3,6 +3,10 @@ import { useState } from "react";
 export default function useCheckBox<T extends { id: number }>(itemList?: T[]) {
   const [checkedListById, setCheckedListById] = useState<number[]>([]);
 
+  const resetCheckedList = () => {
+    setCheckedListById([]);
+  };
+
   const handleCheckChange = (id: number) => {
     const isChecked = checkedListById.includes(id);
 
@@ -18,12 +22,8 @@ export default function useCheckBox<T extends { id: number }>(itemList?: T[]) {
     if (checked) {
       itemList && setCheckedListById(itemList.map((item: T) => item.id));
     } else {
-      setCheckedListById([]);
+      resetCheckedList();
     }
-  };
-
-  const resetCheckedList = () => {
-    setCheckedListById([]);
   };
 
   return {
