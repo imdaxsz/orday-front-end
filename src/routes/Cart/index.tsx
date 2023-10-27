@@ -6,6 +6,7 @@ import BackButton from "@/components/BackButton";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import Head from "@/components/Head";
+import useCheckBox from "@/hooks/useCheckBox";
 
 import ProductItem from "./ProductItem";
 
@@ -67,35 +68,20 @@ export default function Cart() {
     setCartItems(updatedItems);
   };
 
+  const {
+    checkedListById,
+    resetCheckedList,
+    handleCheckChange,
+    handleAllCheck,
+  } = useCheckBox<Item>(cartItems);
+
   const removeCheckedItems = (checkedIds: number[]) => {
+    if (!checkedIds.length) alert("삭제할 상품을 선택해주세요");
     removeSelectedItems(checkedIds);
-    setCheckedListById([]);
+    resetCheckedList();
   };
 
-  const [checkedListById, setCheckedListById] = useState<number[]>([]);
   const checkedNum = checkedListById.length;
-
-  const handleCheckChange = (id: number) => {
-    const isChecked = checkedListById.includes(id);
-
-    if (isChecked) {
-      setCheckedListById((prev) => prev.filter((el) => el !== id));
-    } else {
-      setCheckedListById((prev) => [...prev, id]);
-    }
-  };
-
-  const handleAllCheck = ({
-    target: { checked },
-  }: {
-    target: { checked: boolean };
-  }) => {
-    if (checked) {
-      setCheckedListById(cartItems.map((item: Item) => item.id));
-    } else {
-      setCheckedListById([]);
-    }
-  };
 
   const price = {
     product: cartItems.length
