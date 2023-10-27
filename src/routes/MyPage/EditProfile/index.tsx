@@ -34,6 +34,11 @@ export default function EditProfile() {
     closeModal();
   };
 
+  const updateCompleted = () => {
+    successModal.closeModal();
+    window.location.reload();
+  };
+
   return (
     <Container>
       <Head title="회원정보 수정 | Orday" />
@@ -181,7 +186,7 @@ export default function EditProfile() {
         </Buttons>
         <Modal
           isOpen={successModal.isModalOpen}
-          onClose={successModal.closeModal}
+          onClose={updateCompleted}
           type="alert"
           title="회원정보 수정"
           detail="회원정보 수정이 완료되었습니다."
