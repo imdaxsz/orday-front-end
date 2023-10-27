@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+import { getUserInfo as requestGetUserInfo } from "@/api/AuthApi";
+
+// TODO: MOCK_DATA 제거
 const WEB_USER_MOCK_DATA = {
   id: 1,
   email: "test@naver.com",
@@ -60,8 +63,9 @@ export default function useForm<T extends { addressInfo?: Address }>(
   // 회원정보 조회
   const getUserInfo = async () => {
     // TODO api 요청
-    // const { socialType, infoSet, ...formData } = WEB_USER_MOCK_DATA;
-    const { socialType, infoSet, ...formData } = GOOGLE_USER_MOCK_DATA;
+    // const { socialType, infoSet, ...formData } = await requestGetUserInfo();
+    const { socialType, infoSet, ...formData } = WEB_USER_MOCK_DATA;
+    // const { socialType, infoSet, ...formData } = GOOGLE_USER_MOCK_DATA;
     setForm((prev) => ({ ...prev, ...formData }));
     setCurrentUserInfo((prev) => ({ ...prev, ...formData }));
     setSocialInfo({ socialType, infoSet });
@@ -116,12 +120,23 @@ export default function useForm<T extends { addressInfo?: Address }>(
     }));
   };
 
+  /**@description 회원 정보 중 기존 데이터에서 수정된 항목만 return */
+  const updatedInfo = () => {
+    const updatedData: Partial<T> = {};
+    for (const key in form) {
+      if (JSON.stringify(form[key]) !== JSON.stringify(currentUserInfo[key]))
+        updatedData[key] = form[key];
+    }
+    return updatedData;
+  };
+
   return {
     form,
     phone,
     socialInfo,
     handleInputChange,
     updateForm,
+    updatedInfo,
     resetInfo,
   };
 }
