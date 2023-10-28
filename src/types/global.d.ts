@@ -67,6 +67,7 @@ declare interface Brand {
   categoryIds: number[];
   logoUrl: string;
   imageUrl: string;
+  isLiked: boolean;
 }
 
 declare type BrandListDto = Pick<Brand, "id" | "name" | "imageUrl">[];
