@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { RxDividerVertical } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -6,31 +5,32 @@ import styled from "styled-components";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import TextInput from "@/components/TextInput";
+import useLogin from "@/hooks/useLogin";
 
 export default function LoginForm() {
-  const [test, setTest] = useState(false);
-
-  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
+  const { email, password, error, handleInputChange, onSubmit } = useLogin();
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={onSubmit} noValidate>
         <TextInput
-          id="id"
+          id="email"
           type="text"
-          placeholder="아이디"
-          warn={test}
-          message="아이디를 입력하세요."
+          value={email}
+          placeholder="이메일"
+          warn={error.email}
+          message="이메일을 입력하세요."
+          onChange={(e) => handleInputChange(e, "email")}
         />
         <TextInput
           id="password"
           type="password"
+          value={password}
           placeholder="비밀번호"
-          warn={test}
+          warn={error.password}
           message="비밀번호를 입력하세요."
           autoComplete="on"
+          onChange={(e) => handleInputChange(e, "password")}
         />
         <UserActions>
           <CheckBox id="autoLogin" text="자동 로그인" type="circle" />
@@ -40,9 +40,10 @@ export default function LoginForm() {
             <Link to="/">비밀번호 찾기</Link>
           </Find>
         </UserActions>
-        <Button type="submit" onClick={() => setTest((prev) => !prev)}>
-          로그인
-        </Button>
+        {error.result && (
+          <span>이메일 또는 비밀번호를 다시 확인해 주세요.</span>
+        )}
+        <Button type="submit">로그인</Button>
       </Form>
       <Link to="/join">
         <Button $variant="outline">회원가입</Button>
@@ -80,6 +81,12 @@ const Form = styled.form`
 
   button {
     margin-top: 40px;
+  }
+
+  & > span {
+    color: red;
+    ${({ theme }) => theme.typo["body-4-r"]};
+    margin-top: 5px;
   }
 `;
 
