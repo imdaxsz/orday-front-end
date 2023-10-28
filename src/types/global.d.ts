@@ -50,11 +50,23 @@ declare interface OrderForm {
   selectedMethod: number | null;
 }
 
-declare interface ProductInfo {
+// 임시
+declare interface Product {
   id: number;
-  image: string;
-  url: string;
-  brand: { name: string; pathname: string }; // pathname: 브랜드 영문 이름
   name: string;
   price: number;
+  score: number;
+  description: string;
+  imageUrl: string;
+  brandInfo: { id: number; name: string };
 }
+
+declare interface Brand {
+  id: number;
+  name: string;
+  categoryIds: number[];
+  logoUrl: string;
+  imageUrl: string;
+}
+
+declare type BrandListDto = Pick<Brand, "id" | "name" | "imageUrl">[];
