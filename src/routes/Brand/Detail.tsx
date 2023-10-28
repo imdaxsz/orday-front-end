@@ -14,6 +14,7 @@ import { ProductInfo } from "@/types";
 export default function BrandDetail() {
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState({
+    id: 0,
     name: "최신순",
     value: "new",
   });
