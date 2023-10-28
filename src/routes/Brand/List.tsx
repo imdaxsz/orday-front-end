@@ -1,28 +1,23 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import BackButton from "@/components/BackButton";
 import Dropdown from "@/components/Dropdown";
 import Head from "@/components/Head";
-
-export interface BrandInfo {
-  name: string;
-  image: string;
-}
+import useBrandList from "@/hooks/useBrandList";
 
 export default function BrandList() {
-  const [selectedOption, setSelectedOption] = useState({
-    name: "인기순",
-    value: "popularity",
-  });
-  const brandmockData: BrandInfo = {
-    name: "test",
-    image:
-      "https://s3-alpha-sig.figma.com/img/cf7c/e3f4/d7a8698a8182ae23145a875332ba5172?Expires=1696204800&Signature=L2dz-XfbV9p0do4TdZXDszmaadl5Dzu-OXy161x-4am7U57ZOHIqf~ZG4crzJTrsM13JoC84RNvnARYr1M-SqtH8CaGMdmTb6PPtF4OLiabCDy2jnyL84iBJy6drFiwNFQm6OH026biZE5yuVdA1iDDYccYuHAGjzdYtR-pALYqo42jUmZrnHyeKy5drIiF40H4hfsAx-bBLtOHtr1jcPWVniTNckeVPCyxAVFGZ3oIUgPC~YS0CQFYwFBquw3WTIn~xTwmQSwDOKnICNZqE6AnOZhX1~PhxELIwMAsS~6mD1k-92rimEk8YduA8I2pIzr0kK2pOlYDRKc5kZzWoXA__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
-  };
+  const brandsMockData: BrandListDto = Array.from(
+    { length: 12 },
+    (_, index) => ({
+      id: index + 1,
+      name: "test",
+      imageUrl: "https://url.kr/l2wry9",
+    }),
+  );
 
-  const brandsMockData: BrandInfo[] = Array(12).fill(brandmockData);
+  const { brands, selectedOption, setSelectedOption } = useBrandList();
+
   return (
     <Container>
       <Head title="브랜드 | Orday" />
@@ -35,8 +30,8 @@ export default function BrandList() {
         />
         <Brands>
           {brandsMockData.map((brand, i) => (
-            <Brand to={`/brands/${brand.name}`} key={i}>
-              <img src={brand.image} alt={brand.name} />
+            <Brand to={`/brands/${brand.id}`} key={i}>
+              <img src={brand.imageUrl} alt={brand.name} />
             </Brand>
           ))}
         </Brands>
