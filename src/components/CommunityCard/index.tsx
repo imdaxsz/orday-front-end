@@ -8,7 +8,6 @@ interface ReviewCardProps {
 }
 
 export default function ReviewCard({ isMainTitle }: ReviewCardProps) {
-  const headerType = isMainTitle ? "review" : "tip";
   const info = {
     name: isMainTitle ? "김환경" : "박나무",
     update: isMainTitle ? "7 분전" : "좋아요 1위!",
@@ -16,7 +15,7 @@ export default function ReviewCard({ isMainTitle }: ReviewCardProps) {
 
   return (
     <ReviewComponent>
-      <CommunityHeader headerType={headerType} info={info} />
+      <CommunityHeader info={info} />
       {isMainTitle ? <ReviewContent /> : <TipContent />}
     </ReviewComponent>
   );

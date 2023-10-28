@@ -1,25 +1,13 @@
-import { BsFillHeartFill } from "react-icons/bs";
-
-import {
-  Header,
-  Profile,
-  Image,
-  Info,
-  InfoName,
-  InfoUpdate,
-  Following,
-  Heart,
-} from "../style";
+import { Header, Profile, Image, Info, InfoName, InfoUpdate } from "../style";
 
 interface HeaderProps {
-  headerType: "review" | "tip";
   info: {
     name: string;
     update: string;
   };
 }
 
-export default function CommunityHeader({ headerType, info }: HeaderProps) {
+export default function CommunityHeader({ info }: HeaderProps) {
   return (
     <Header>
       <Profile>
@@ -29,13 +17,6 @@ export default function CommunityHeader({ headerType, info }: HeaderProps) {
           <InfoUpdate>{info.update}</InfoUpdate>
         </Info>
       </Profile>
-      {headerType === "review" ? (
-        <Following>팔로잉</Following>
-      ) : (
-        <Heart>
-          <BsFillHeartFill />
-        </Heart>
-      )}
     </Header>
   );
 }
