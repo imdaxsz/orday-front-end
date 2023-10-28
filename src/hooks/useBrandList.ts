@@ -16,10 +16,10 @@ export default function useBrandList() {
   const fetchData = useCallback(
     async (sortId: number) => {
       if (location === "brands") {
-        const { data } = await getBrandList(sortId);
+        const data = await getBrandList(sortId);
         setBrands(data);
       } else {
-        const { data } = await getLikeBrands(sortId);
+        const data = await getLikeBrands(sortId);
         setBrands(data);
       }
     },
