@@ -133,6 +133,7 @@ const Center = styled.div`
 
 const Right = styled.div`
   display: flex;
+  width: 116px;
   height: 100px;
   padding-top: 8px;
   flex-direction: column;
