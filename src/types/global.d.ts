@@ -76,3 +76,29 @@ declare type BrandListDto = Pick<Brand, "id" | "name" | "imageUrl">[];
  * @description 좋아요 기능 적용 가능 대상
  */
 declare type LikeTarget = "product" | "brand" | "post";
+
+declare type ReviewStatus = "WRITABLE" | "WRITTEN";
+
+declare interface CreateReviewDto {
+  orderId: number;
+  productId: number;
+  contents: string;
+  rating: number;
+  image: string;
+}
+
+declare interface WritableReview {
+  orderId: number;
+  productId: number;
+  name: string;
+  color: string;
+  size: string;
+  imageUrl: string; // 상품 이미지 (후기 이미지 X)
+}
+
+declare interface WrittenReview extends WritableReview {
+  reviewId: number;
+  content: string;
+  rating: number;
+  createdAt: string;
+}
