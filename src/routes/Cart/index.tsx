@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -7,20 +8,13 @@ import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import Head from "@/components/Head";
 import useCheckBox from "@/hooks/useCheckBox";
+import { useAppDispatch } from "@/store";
+import { ReducerType } from "@/store/rootReducer";
+import { fetchCartItems, removeCartItem } from "@/store/slices/cartSlice";
 
 import ProductItem from "./ProductItem";
 
-export interface Item {
-  id: number;
-  name: string;
-  color: string;
-  size: string;
-  amount: number;
-  price: number;
-  image: string;
-}
-
-const mockData: Item[] = [
+const mockData: CartItem[] = [
   {
     id: 1,
     name: "파타고니아 레트로 x 양털 후리스 뽀글이 플리스 자켓",
@@ -28,7 +22,8 @@ const mockData: Item[] = [
     size: "L",
     amount: 1,
     price: 100000,
-    image: "",
+    imageUrl: "",
+    discountPrice: 10000,
   },
   {
     id: 2,
@@ -37,51 +32,32 @@ const mockData: Item[] = [
     size: "L",
     amount: 1,
     price: 50000,
-    image: "",
+    imageUrl: "",
+    discountPrice: 0,
   },
 ];
-export default function Cart() {
-  const [cartItems, setCartItems] = useState(mockData);
 
-  const decreaseAmount = (id: number) => {
-    const updatedItems = cartItems.map((item) => {
-      return item.id === id && item.amount > 1
-        ? { ...item, amount: item.amount - 1 }
-        : item;
-    });
-    setCartItems(updatedItems);
-  };
-  const increaseAmount = (id: number) => {
-    const updatedItems = cartItems.map((item) => {
-      return item.id === id ? { ...item, amount: item.amount + 1 } : item;
-    });
-    setCartItems(updatedItems);
-  };
-  const removeItem = (id: number) => {
-    const updatedItems = cartItems.filter((item) => item.id !== id);
-    setCartItems(updatedItems);
-  };
-  const removeSelectedItems = (checkedIds: number[]) => {
-    const updatedItems = cartItems.filter(
-      (item) => !checkedIds.includes(item.id),
-    );
-    setCartItems(updatedItems);
-  };
+export default function Cart() {
+  const cartItems = useSelector((state: ReducerType) => state.cart.items);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCartItems());
+  }, [dispatch]);
 
   const {
     checkedListById,
     resetCheckedList,
     handleCheckChange,
     handleAllCheck,
-  } = useCheckBox<Item>(cartItems);
-
-  const removeCheckedItems = (checkedIds: number[]) => {
-    if (!checkedIds.length) alert("삭제할 상품을 선택해주세요");
-    removeSelectedItems(checkedIds);
-    resetCheckedList();
-  };
+  } = useCheckBox<CartItem>(cartItems);
 
   const checkedNum = checkedListById.length;
+  const removeCheckedItems = (checkedIds: number[]) => {
+    if (!checkedIds.length) alert("삭제할 상품을 선택해주세요");
+    dispatch(removeCartItem(checkedIds));
+    resetCheckedList();
+  };
 
   const price = {
     product: cartItems.length
@@ -89,10 +65,15 @@ export default function Cart() {
           .map((item) => Number(item.price) * item.amount)
           .reduce((acc, cur) => acc + cur)
       : 0,
-    sale: 0,
+    sale: cartItems.length
+      ? cartItems
+          .map((item) => Number(item.discountPrice) * item.amount)
+          .reduce((acc, cur) => acc + cur)
+      : 0,
     shipping: 0,
   };
-  const totalPrice = price.product + price.sale + price.shipping;
+
+  const totalPrice = price.product - price.sale + price.shipping;
 
   return (
     <Container>
@@ -124,9 +105,6 @@ export default function Cart() {
                 item={item}
                 handleCheckChange={handleCheckChange}
                 checkedListById={checkedListById}
-                decreaseAmount={decreaseAmount}
-                increaseAmount={increaseAmount}
-                removeItem={removeItem}
               />
             ))}
           </>
