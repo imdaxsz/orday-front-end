@@ -1,5 +1,5 @@
 import { IoArrowBackOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Button from "@/components/Button";
@@ -13,9 +13,10 @@ import useProductList from "@/hooks/useProuductList";
 
 export default function BrandDetail() {
   const navigate = useNavigate();
-  const { info } = useBrandDetail();
+  // const { info } = useBrandDetail();
+  const brandId = Number(useLocation().pathname.split("/")[2]);
   const { ref, products, selectedOption, setSelectedOption } =
-    useProductList(1);
+    useProductList(brandId);
 
   const brandMockData: Brand = {
     id: 1,
