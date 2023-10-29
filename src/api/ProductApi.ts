@@ -33,6 +33,18 @@ const productMockData: Product = {
   liked: false,
 };
 const productsMockData: Product[] = Array(12).fill(productMockData);
+const productMockData2: Product = {
+  id: 2,
+  imageUrl:
+    "https://image.msscdn.net/images/goods_img/20230913/3555856/3555856_16945764091440_big.jpg",
+  brandInfo: { id: 2, name: "브랜드2" },
+  name: "상품2",
+  score: 1,
+  description: "상품 설명",
+  price: 30000,
+  liked: true,
+};
+const productsMockData2: Product[] = Array(12).fill(productMockData2);
 
 export const testProductsApi = async (
   brandId: number,
@@ -43,6 +55,11 @@ export const testProductsApi = async (
   const params = key
     ? { key, size: 12, brandId, categoryId }
     : { size: 12, brandId, categoryId };
+  if (categoryId === 3 || sortId === 1)
+    return {
+      cursorRequest: { key: 1, size: 12 },
+      body: productsMockData2,
+    };
   return {
     cursorRequest: { key: 1, size: 12 },
     body: productsMockData,
