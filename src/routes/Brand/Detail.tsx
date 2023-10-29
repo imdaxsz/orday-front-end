@@ -9,31 +9,38 @@ import Dropdown from "@/components/Dropdown";
 import Head from "@/components/Head";
 import LikeButton from "@/components/LikeButton";
 import ProductCard from "@/components/ProductCard";
-import { ProductInfo } from "@/types";
+import useBrandDetail from "@/hooks/useBrandDetail";
 
 export default function BrandDetail() {
   const navigate = useNavigate();
+  const { info } = useBrandDetail();
+
+  const brandMockData: Brand = {
+    id: 1,
+    name: "플라스틱 아크",
+    categoryIds: [1, 2, 3],
+    logoUrl: "https://url.kr/atx7ql",
+    imageUrl: "https://url.kr/4murbh",
+    isLiked: false,
+  };
+
   const [selectedOption, setSelectedOption] = useState({
+    id: 0,
     name: "최신순",
     value: "new",
   });
 
-  const brandMockData = {
-    name: "플라스틱 아크",
-    logo: "https://url.kr/atx7ql",
-    image: "https://url.kr/4murbh",
-  };
-
-  const productMockData: ProductInfo = {
+  const productMockData: Product = {
     id: 1,
-    image:
+    imageUrl:
       "https://image.msscdn.net/images/goods_img/20230323/3174776/3174776_16795542598248_big.png",
-    url: "",
-    brand: { name: "플라스틱 아크", pathname: "plasticark" },
+    brandInfo: { id: 1, name: "플라스틱 아크" },
     name: "팻볼 [FB-F1-05]",
+    score: 1,
+    description: "상품 설명",
     price: 74000,
   };
-  const productsMockData: ProductInfo[] = Array(4).fill(productMockData);
+  const productsMockData: Product[] = Array(4).fill(productMockData);
 
   return (
     <div style={{ paddingBottom: "150px" }}>
@@ -42,12 +49,19 @@ export default function BrandDetail() {
         <Button iconOnly onClick={() => navigate(-1)}>
           <IoArrowBackOutline size={24} />
         </Button>
-        <LikeButton target="brand" />
-        <LogoImage src={brandMockData.logo} alt={brandMockData.name} />
-        <BackgroundImage src={brandMockData.image} alt={brandMockData.name} />
+        <LikeButton
+          isLiked={brandMockData.isLiked}
+          target="brand"
+          id={brandMockData.id}
+        />
+        <LogoImage src={brandMockData.logoUrl} alt={brandMockData.name} />
+        <BackgroundImage
+          src={brandMockData.imageUrl}
+          alt={brandMockData.name}
+        />
       </Header>
       <Menu>
-        <CategoryNav brand categories={[1, 2, 3]} />
+        <CategoryNav brand categories={brandMockData.categoryIds} />
         <Dropdown
           type="product"
           selectedOption={selectedOption}

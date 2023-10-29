@@ -6,6 +6,7 @@ import DropupIcon from "@/assets/arrow_drop_up.svg?react";
 import { DropdownBox, Label, DropdownOptions, Option } from "./style";
 
 interface OptionType {
+  id: number;
   name: string;
   value: string;
 }
@@ -32,20 +33,21 @@ export default function Dropdown({
       type == "product"
         ? productOptions.find((option) => option.value === value)
         : brandOptions.find((option) => option.value === value);
-    if (value && option) setSelectedOption({ name: option.name, value });
+    if (value && option)
+      setSelectedOption({ id: option.id, name: option.name, value });
   };
 
   const productOptions = [
-    { name: "최신순", value: "new" },
-    { name: "인기순", value: "popularity" },
-    { name: "낮은 가격순", value: "price_asc" },
-    { name: "높은 가격순", value: "prcie_desc" },
+    { id: 0, name: "최신순", value: "new" },
+    { id: 1, name: "인기순", value: "popularity" },
+    { id: 2, name: "낮은 가격순", value: "price_asc" },
+    { id: 3, name: "높은 가격순", value: "prcie_desc" },
   ];
 
   const brandOptions = [
-    { name: "인기순", value: "popularity" },
-    { name: "이름(오름차순)", value: "name_asc" },
-    { name: "이름(내림차순)", value: "name_desc" },
+    { id: 0, name: "좋아요순", value: "like" },
+    { id: 1, name: "이름(오름차순)", value: "name_asc" },
+    { id: 2, name: "이름(내림차순)", value: "name_desc" },
   ];
 
   return (

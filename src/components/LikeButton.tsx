@@ -1,26 +1,16 @@
-import { useState } from "react";
 import { PiHeartBold, PiHeartFill } from "react-icons/pi";
 import styled from "styled-components";
 
-/**
- * @description 좋아요 기능 적용 가능 대상
- */
-type LikeTarget = "product" | "brand" | "post";
+import useToggleLike from "@/hooks/useToggleLike";
 
 interface LikeButtonProps {
+  id: number;
   target: LikeTarget;
   isLiked?: boolean; // 현재 사용자의 좋아요 여부
 }
 
-export default function LikeButton({ target, isLiked }: LikeButtonProps) {
-  const [like, setLike] = useState(isLiked || false);
-
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setLike((prev) => !prev);
-    console.log(target); // 임시
-    // TODO 서버 요청
-  };
+export default function LikeButton({ id, target, isLiked }: LikeButtonProps) {
+  const { like, handleClick } = useToggleLike(id, target, isLiked);
 
   return (
     <Container onClick={handleClick}>

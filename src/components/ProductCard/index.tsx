@@ -36,7 +36,7 @@ export default function ProductCard({
           <>
             {$tag === "NEW" && <NewTag />}
             {$tag === "BEST" && <BestTag />}
-            <LikeButton target="product" />
+            <LikeButton target="product" id={info.id} />
           </>
         ) : (
           <RemoveButton />
@@ -44,7 +44,7 @@ export default function ProductCard({
         <Image src={info.image} alt={info.name} size={size} />
       </ImageContainer>
       <Info>
-        <Brand to={`/brands/${info.brand.pathname}`}>{info.brand.name}</Brand>
+        <Brand to={`/brands/${info.brandInfo.id}`}>{info.brandInfo.name}</Brand>
         <Name to={info.url}>{info.name}</Name>
         <Price to={info.url} size={size}>
           {info.price.toLocaleString()}원
