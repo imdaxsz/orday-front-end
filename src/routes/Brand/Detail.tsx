@@ -9,7 +9,7 @@ import Head from "@/components/Head";
 import LikeButton from "@/components/LikeButton";
 import ProductCard from "@/components/ProductCard";
 import useBrandDetail from "@/hooks/useBrandDetail";
-import useProductList from "@/hooks/useProuductList";
+import useProductList from "@/hooks/useProductList";
 
 export default function BrandDetail() {
   const navigate = useNavigate();
