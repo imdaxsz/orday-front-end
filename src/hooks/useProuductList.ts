@@ -44,9 +44,17 @@ export default function useProductList(brandId?: number) {
     }
   }, [brandId, categoryId, nextKey, selectedOption.id]);
 
+  // 무한 스크롤 조회
   useEffect(() => {
     if (inView && nextKey !== -1) fetchData();
-  }, [fetchData, inView, nextKey]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView]);
+
+  // // 카테고리 또는 정렬 옵션이 바뀌면 상품 리스트 초기화
+  useEffect(() => {
+    setProducts([]);
+    setNextKey(null);
+  }, [categoryId, selectedOption.id]);
 
   return { ref, products, selectedOption, setSelectedOption };
 }
