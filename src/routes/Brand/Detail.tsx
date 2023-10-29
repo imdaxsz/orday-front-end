@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -10,10 +9,13 @@ import Head from "@/components/Head";
 import LikeButton from "@/components/LikeButton";
 import ProductCard from "@/components/ProductCard";
 import useBrandDetail from "@/hooks/useBrandDetail";
+import useProductList from "@/hooks/useProuductList";
 
 export default function BrandDetail() {
   const navigate = useNavigate();
   const { info } = useBrandDetail();
+  const { ref, products, selectedOption, setSelectedOption } =
+    useProductList(1);
 
   const brandMockData: Brand = {
     id: 1,
@@ -23,24 +25,6 @@ export default function BrandDetail() {
     imageUrl: "https://url.kr/4murbh",
     isLiked: false,
   };
-
-  const [selectedOption, setSelectedOption] = useState({
-    id: 0,
-    name: "최신순",
-    value: "new",
-  });
-
-  const productMockData: Product = {
-    id: 1,
-    imageUrl:
-      "https://image.msscdn.net/images/goods_img/20230323/3174776/3174776_16795542598248_big.png",
-    brandInfo: { id: 1, name: "플라스틱 아크" },
-    name: "팻볼 [FB-F1-05]",
-    score: 1,
-    description: "상품 설명",
-    price: 74000,
-  };
-  const productsMockData: Product[] = Array(4).fill(productMockData);
 
   return (
     <div style={{ paddingBottom: "150px" }}>
@@ -69,10 +53,11 @@ export default function BrandDetail() {
         />
       </Menu>
       <Items>
-        {productsMockData.map((product, i) => (
+        {products.map((product, i) => (
           <ProductCard key={i} size="md" $tag="NEW" info={product} />
         ))}
       </Items>
+      <div ref={ref} />
     </div>
   );
 }
