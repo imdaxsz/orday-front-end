@@ -8,8 +8,12 @@ export default function useBrandDetail() {
   const [info, setInfo] = useState<Brand | null>(null);
 
   const fetchData = async (brandId: number) => {
-    const data = await getBrandDetail(brandId);
-    setInfo(data);
+    try {
+      const data = await getBrandDetail(brandId);
+      setInfo(data);
+    } catch (error) {
+      console.error("Error fetching brand detail: ", error);
+    }
   };
 
   useEffect(() => {

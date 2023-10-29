@@ -15,12 +15,13 @@ export default function useBrandList() {
 
   const fetchData = useCallback(
     async (sortId: number) => {
-      if (location === "brands") {
-        const data = await getBrandList(sortId);
+      try {
+        let data: BrandListDto = [];
+        if (location === "brands") data = await getBrandList(sortId);
+        else data = await getLikeBrands(sortId);
         setBrands(data);
-      } else {
-        const data = await getLikeBrands(sortId);
-        setBrands(data);
+      } catch (error) {
+        console.log("Error fetching brand list: ", error);
       }
     },
     [location],
