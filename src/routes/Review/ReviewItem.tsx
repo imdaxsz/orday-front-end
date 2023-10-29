@@ -18,7 +18,7 @@ export default function ReviewItem({ status, review }: Props) {
           <h3>{status === "WRITABLE" ? "작성가능" : "작성완료"}</h3>
           <span>{review.orderId}</span>
         </div>
-        {"createdAt" in review && <p>{review.createdAt}</p>}
+        {"createdAt" in review && <p>{review.createdAt.split("T")[0]}</p>}
       </Header>
       <Content>
         <Link to={`/products/${review.productId}`}>

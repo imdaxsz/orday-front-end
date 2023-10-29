@@ -50,7 +50,7 @@ export const getMockWrittenReviews = async () => {
     orderId: 1000000000,
     content: "리뷰1입니다. 리뷰1입니다.",
     rating: 4,
-    createdAt: "2023-10-24",
+    createdAt: "2023-10-24T01:12:12.887305",
   };
   const reviewMockData4 = {
     ...ProductMockData,
@@ -58,7 +58,7 @@ export const getMockWrittenReviews = async () => {
     content:
       "리뷰2입니다. 리뷰2입니다. 리뷰2입니다. 리뷰2입니다.리뷰2입니다. 리뷰2입니다.리뷰2입니다. 리뷰2입니다.리뷰2입니다. 리뷰2입니다.리뷰2입니다. 리뷰2입니다.리뷰2입니다. 리",
     rating: 5,
-    createdAt: "2023-10-26",
+    createdAt: "2023-10-27T01:12:12.887305",
   };
   return [reviewMockData4, reviewMockData3];
 };
