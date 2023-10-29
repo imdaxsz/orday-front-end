@@ -27,6 +27,6 @@ export const getLikeBrands = async (sortId: number) => {
 /**
  @description 관심 브랜드 추가 또는 삭제 요청
  */
-export const toggleLikeBrand = async (brandId: number) => {
+export const toggleLikeBrand = async (brandId: number): Promise<void> => {
   return await post(`brand/like/${brandId}`);
 };
