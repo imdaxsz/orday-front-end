@@ -11,11 +11,17 @@ export default function useToggleLike(
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setLike((prev) => !prev);
     console.log(target); // 임시
+
     // target에 따른 서버 요청
-    if (target === "brand") await toggleLikeBrand(id);
-    // TODO: 관심 상품 추가/삭제
+    try {
+      if (target === "brand") await toggleLikeBrand(id);
+      // TODO: 관심 상품 추가/삭제
+      // if (target === "product")
+      setLike((prev) => !prev);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return { like, handleClick };
