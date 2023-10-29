@@ -49,6 +49,7 @@ export const ImageContainer = styled(Link)<Omit<ProductCardProps, "info">>`
   margin-bottom: 15px;
   position: relative;
   display: block;
+  overflow: hidden;
 
   & > button {
     position: absolute;
