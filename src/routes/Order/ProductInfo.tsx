@@ -34,7 +34,6 @@ export default function ProductInfo({ form }: ProductInfoProps) {
       ...form,
       productsInfo: productItems.map(({ id, amount }) => ({ id, amount })),
     };
-    console.log("data", orderInfo);
 
     try {
       await createOrderProduct(orderInfo);
