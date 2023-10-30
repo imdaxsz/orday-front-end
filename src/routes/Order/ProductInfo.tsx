@@ -37,6 +37,8 @@ export default function ProductInfo({ form }: ProductInfoProps) {
   const totalPrice = products.price - products.sale + products.shipping;
 
   const [modalMessage, setModalMessage] = useState<string | null>(null);
+  const AGREEMENT_1 = 1;
+  const AGREEMENT_2 = 2;
 
   const validateForm = () => {
     const { name, phoneNumber, addressInfo, selectedMethod } = form;
@@ -62,11 +64,11 @@ export default function ProductInfo({ form }: ProductInfoProps) {
       return false;
     }
 
-    if (!checkedListById.includes(1)) {
+    if (!checkedListById.includes(AGREEMENT_1)) {
       setModalMessage("주문정보에 동의해주세요.");
       return false;
     }
-    if (!checkedListById.includes(2)) {
+    if (!checkedListById.includes(AGREEMENT_2)) {
       setModalMessage("제 3자 제공에 동의해주세요.");
       return false;
     }
@@ -163,25 +165,16 @@ export default function ProductInfo({ form }: ProductInfoProps) {
       <Button style={{ width: "100%" }} onClick={openCheckedModal}>
         주문하기
       </Button>
-      {modalMessage ? (
-        <Modal
-          isOpen={isModalOpen}
-          onSubmit={onSubmit}
-          onClose={closeModal}
-          type="alert"
-          title="입력확인"
-          detail={modalMessage}
-        />
-      ) : (
-        <Modal
-          isOpen={isModalOpen}
-          onSubmit={onSubmit}
-          onClose={closeModal}
-          type="confirm"
-          title="주문확인 안내"
-          detail="선택하신 상품을 주문하시겠습니까?"
-        />
-      )}
+      <Modal
+        isOpen={isModalOpen}
+        onSubmit={modalMessage ? undefined : onSubmit}
+        onClose={closeModal}
+        title={modalMessage ? "입력확인" : "확인 안내"}
+        type={modalMessage ? "alert" : "confirm"}
+        detail={
+          modalMessage ? modalMessage : "선택하신 상품을 주문하시겠습니까?"
+        }
+      />
     </Container>
   );
 }
