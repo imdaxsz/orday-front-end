@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { login } from "@/api/AuthApi";
 
@@ -6,12 +7,14 @@ export default function useLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const INIT_ERROR = {
     email: false,
     password: false,
     result: false,
   };
-  const [error, setError] = useState(INIT_ERROR);
+  const [loginError, setLoginError] = useState(INIT_ERROR);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -22,12 +25,12 @@ export default function useLogin() {
   };
 
   const validateForm = () => {
-    setError(INIT_ERROR);
+    setLoginError(INIT_ERROR);
     const isEmailEmpty = email.trim().length === 0;
     const isPasswordEmpty = password.trim().length === 0;
 
-    if (isEmailEmpty) setError((prev) => ({ ...prev, email: true }));
-    if (isPasswordEmpty) setError((prev) => ({ ...prev, password: true }));
+    if (isEmailEmpty) setLoginError((prev) => ({ ...prev, email: true }));
+    if (isPasswordEmpty) setLoginError((prev) => ({ ...prev, password: true }));
     if (isEmailEmpty || isPasswordEmpty) return false;
 
     return true;
@@ -37,19 +40,22 @@ export default function useLogin() {
     e.preventDefault();
     const isValidate = validateForm();
     if (isValidate) {
-      const result = await login(email, password);
-      // TODO: 로그인 결과 확인
-      // 성공 시
-      // navigate("/");
-      // 실패 시
-      // error.result = true;
+      try {
+        await login(email, password);
+        navigate("/");
+      } catch (error) {
+        // TODO: 응답 코드 확인
+        // 로그인 실패 시...
+        loginError.result = true;
+        console.log("Error login: ", error);
+      }
     }
   };
 
   return {
     email,
     password,
-    error,
+    loginError,
     handleInputChange,
     onSubmit,
   };

@@ -8,7 +8,13 @@ import TextInput from "@/components/TextInput";
 import useLogin from "@/hooks/useLogin";
 
 export default function LoginForm() {
-  const { email, password, error, handleInputChange, onSubmit } = useLogin();
+  const {
+    email,
+    password,
+    loginError: error,
+    handleInputChange,
+    onSubmit,
+  } = useLogin();
 
   return (
     <Container>
