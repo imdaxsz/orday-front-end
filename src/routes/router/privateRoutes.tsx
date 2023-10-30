@@ -10,6 +10,7 @@ const MyPage = lazy(() => import("@/routes/MyPage"));
 const MyOrder = lazy(() => import("@/routes/MyOrder"));
 const EditProfile = lazy(() => import("@/routes/MyPage/EditProfile"));
 const MyReviewList = lazy(() => import("@/routes/Review/List"));
+const WriteReview = lazy(() => import("@/routes/Review/Write"));
 const Leave = lazy(() => import("@/routes/MyPage/Leave"));
 const LikeList = lazy(() => import("@/routes/Like"));
 const LikeBrandList = lazy(() => import("@/routes/Like/Brand"));
@@ -56,6 +57,10 @@ export const privateRoutes: RouteObject[] = [
       {
         path: "myPage/reviews",
         element: <MyReviewList />,
+      },
+      {
+        path: "review/write",
+        element: <WriteReview />,
       },
       {
         path: "myPage/leave",
