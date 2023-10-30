@@ -4,7 +4,9 @@ import { get, post, put } from "@/libs/api";
  @description 새로운 리뷰 작성 요청
   * @returns 생성된 review id
  */
-export const createReview = async (review: CreateReviewDto): Promise<void> => {
+export const createReview = async (
+  review: CreateReviewDto,
+): Promise<number> => {
   return await post("product/review/add", review);
 };
 
@@ -41,19 +43,19 @@ export const getReviewDetail = async (reviewId: number) => {
 export const updateReview = async (
   reviewId: number,
   contents: ReviewEditContent,
-) => {
-  return await put<ReviewDetail>(`product/review/update/${reviewId}`, contents);
+): Promise<void> => {
+  return await put(`product/review/update/${reviewId}`, contents);
 };
 
 /**
  @description 리뷰 수정 (첨부 이미지)
  */
-export const updateReviewImage = async (reviewId: number, image?: File) => {
+export const updateReviewImage = async (
+  reviewId: number,
+  image?: File,
+): Promise<void> => {
   const dto = image ? { image } : {};
-  return await put<ReviewDetail>(
-    `product/review/update/${reviewId}/image`,
-    dto,
-  );
+  return await put(`product/review/update/${reviewId}/image`, dto);
 };
 
 // 리뷰 목록 조회 테스트용 api
@@ -96,4 +98,38 @@ export const getMockWrittenReviews = async () => {
     createdAt: "2023-10-27T01:12:12.887305",
   };
   return [reviewMockData4, reviewMockData3];
+};
+
+// 수정할 리뷰 데이터 조회 test api
+export const testGetEditReviewData = async (id: number) => {
+  const dto: ReviewDetail = {
+    reviewId: id,
+    productId: 1000,
+    content: "정말 좋아요",
+    rating: 5,
+    name: "자켓",
+    color: "BLACK",
+    size: "L",
+    productImageUrl:
+      "https://image.msscdn.net/images/goods_img/20220203/2338457/2338457_1_500.jpg",
+    reviewImageUrl:
+      "https://image.msscdn.net/images/goods_img/20230913/3555856/3555856_16945764091440_big.jpg",
+  };
+
+  return dto;
+};
+
+export const testGetReviewProductInfo = async (id: number) => {
+  const dto = {
+    id: id,
+    name: "모자 모자 모자",
+    imageUrl:
+      "https://image.msscdn.net/images/goods_img/20220203/2338457/2338457_1_500.jpg",
+    color: "RED",
+    size: "L",
+    price: 15000,
+    amount: 1,
+    discountPrice: 0,
+  };
+  return [dto];
 };
