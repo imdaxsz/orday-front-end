@@ -18,14 +18,26 @@ declare interface Address {
   addressDetail: string;
 }
 
-declare interface UserInfoForm {
+declare interface BaseUserInfo {
   email: string;
-  password: string;
-  confirmPw: string;
   name: string;
   phoneNumber: string;
   birthDate: BirthDate;
   addressInfo: Address;
+}
+
+declare interface UserInfoForm extends BaseUserInfo {
+  password: string;
+  confirmPw: string;
+}
+
+/**
+ * @description 서버에서 받아온 회원 정보 타입
+ */
+declare interface UserInfoDto extends BaseUserInfo {
+  id: number;
+  socialType: string;
+  infoSet: boolean;
 }
 
 declare interface UserInfoFormError {

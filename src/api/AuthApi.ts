@@ -12,7 +12,7 @@ export const login = async (email: string, password: string): Promise<void> => {
 
 /**@description 회원정보 조회 요청 */
 export const getUserInfo = async () => {
-  return await get("user/get/info");
+  return await get<UserInfoDto>("user/get/info");
 };
 
 /**@description 회원정보 수정 요청 */
