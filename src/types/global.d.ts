@@ -80,19 +80,24 @@ declare type LikeTarget = "product" | "brand" | "post";
 declare type ReviewStatus = "WRITABLE" | "WRITTEN";
 
 declare interface CreateReviewDto {
-  orderId: number;
-  productId: number;
-  contents: string;
-  rating: number;
-  image: string;
+  productReviewRequest: {
+    orderId: number;
+    productId: number;
+    content: string;
+    rating: number;
+  };
+  image?: File;
 }
 
-declare interface WritableReview {
-  orderId: number;
+interface ReviewProductBaseInfo {
   productId: number;
   name: string;
   color: string;
   size: string;
+}
+
+declare interface WritableReview extends ReviewProductBaseInfo {
+  orderId: number;
   imageUrl: string; // 상품 이미지 (후기 이미지 X)
 }
 
@@ -101,4 +106,17 @@ declare interface WrittenReview extends WritableReview {
   content: string;
   rating: number;
   createdAt: string;
+}
+
+declare interface ReviewDetail extends ReviewProductBaseInfo {
+  reviewId: number;
+  content: string;
+  rating: number;
+  productImageUrl: string;
+  reviewImageUrl: string;
+}
+
+declare interface ReviewEditContent {
+  content?: string;
+  rating?: number;
 }
