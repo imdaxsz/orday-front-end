@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
+import { createOrderProduct } from "@/api/OrderApi";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import Modal from "@/components/Modal";
@@ -82,20 +83,21 @@ export default function ProductInfo({ form }: ProductInfoProps) {
     openModal();
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (!validateForm()) return;
 
-    const data = {
+    const orderInfo: OrderInfo = {
       ...form,
       productsInfo: mockData.map(({ id, amount }) => ({ id, amount })),
-      price: products.price,
-      sale: products.sale,
-      shipping: products.shipping,
-      totalPrice,
     };
-    console.log("data", data);
+    console.log("data", orderInfo);
 
-    navigate("/order/confirm");
+    try {
+      await createOrderProduct(orderInfo);
+      navigate("/order/confirm");
+    } catch (error) {
+      console.log("Error creating order: ", error);
+    }
   };
 
   return (
