@@ -59,6 +59,7 @@ declare interface Product {
   description: string;
   imageUrl: string;
   brandInfo: { id: number; name: string };
+  liked: boolean;
 }
 
 declare interface Brand {
@@ -76,3 +77,29 @@ declare type BrandListDto = Pick<Brand, "id" | "name" | "imageUrl">[];
  * @description 좋아요 기능 적용 가능 대상
  */
 declare type LikeTarget = "product" | "brand" | "post";
+
+declare interface ProductListDto {
+  cursorRequest: {
+    key: number;
+    size: number;
+  };
+  body: Product[];
+}
+
+declare interface CartItem {
+  id: number;
+  name: string;
+  imageUrl: string;
+  color: string;
+  size: string;
+  price: number;
+  amount: number;
+  discountPrice: number;
+}
+
+declare interface CartProductInfo {
+  data: {
+    id: number;
+    amount: number;
+  };
+}
