@@ -1,6 +1,16 @@
 import { get } from "@/libs/api";
 
 /**
+ @description 장바구니, 리뷰 작성에 사용되는 상품 id를 통한 상품 조회
+ * @returns 상품 리스트
+ */
+export const getProductsInfo = async (idList: number[]) => {
+  return get<CartItem[]>("product/get", {
+    params: { productIds: idList.join(",") },
+  });
+};
+
+/**
  @description 브랜드 상품 목록 조회 요청
  * @returns 상품 리스트
  */
