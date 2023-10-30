@@ -97,9 +97,27 @@ declare interface CartItem {
   discountPrice: number;
 }
 
+declare interface ProductInfo {
+  id: number;
+  amount: number;
+}
+
 declare interface CartProductInfo {
-  data: {
-    id: number;
-    amount: number;
+  data: ProductInfo;
+}
+
+declare interface OrderForm {
+  name: string;
+  phoneNumber: string;
+  addressInfo: {
+    postcode: string;
+    address: string;
+    addressDetail: string;
   };
+  deliveryRequest: string;
+  selectedMethod: number | null;
+}
+
+declare interface OrderInfo extends OrderForm {
+  productsInfo: ProductInfo[];
 }
