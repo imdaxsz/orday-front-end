@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 import { getUserInfo as requestGetUserInfo } from "@/api/AuthApi";
 
@@ -61,26 +61,35 @@ export default function useForm<T extends { addressInfo?: Address }>(
   });
 
   // 회원정보 조회
-  const getUserInfo = async () => {
-    // TODO api 요청
-    // const { socialType, infoSet, ...formData } = await requestGetUserInfo();
-    const { socialType, infoSet, ...formData } = WEB_USER_MOCK_DATA;
-    // const { socialType, infoSet, ...formData } = GOOGLE_USER_MOCK_DATA;
-    setForm((prev) => ({ ...prev, ...formData }));
-    setCurrentUserInfo((prev) => ({ ...prev, ...formData }));
-    setSocialInfo({ socialType, infoSet });
-    const phoneData = {
-      first: formData.phoneNumber.split("-")[0] || "",
-      second: formData.phoneNumber.split("-")[1] || "",
-      third: formData.phoneNumber.split("-")[2] || "",
-    };
-    setPhone(phoneData);
-    setCurrentPhone(phoneData);
-  };
+  const getUserInfo = useCallback(async () => {
+    try {
+      // const { socialType, infoSet, ...formData } = await requestGetUserInfo();
+      const { socialType, infoSet, id, birthDate, ...formData } =
+        WEB_USER_MOCK_DATA;
+      // const { socialType, infoSet, ...formData } = GOOGLE_USER_MOCK_DATA;
+      if ("id" in form || "birthDate" in form) {
+        setForm((prev) => ({ ...prev, id, birthDate, ...formData }));
+        setCurrentUserInfo((prev) => ({ ...prev, id, birthDate, ...formData }));
+        setSocialInfo({ socialType, infoSet });
+      } else {
+        setForm((prev) => ({ ...prev, ...formData }));
+      }
+      const phoneData = {
+        first: formData.phoneNumber.split("-")[0] || "",
+        second: formData.phoneNumber.split("-")[1] || "",
+        third: formData.phoneNumber.split("-")[2] || "",
+      };
+      setPhone(phoneData);
+      setCurrentPhone(phoneData);
+    } catch (error) {
+      console.log("Error fetching user info: ", error);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!option) getUserInfo();
-  }, [option]);
+  }, [option, getUserInfo]);
 
   const resetInfo = () => {
     setForm({ ...currentUserInfo });
