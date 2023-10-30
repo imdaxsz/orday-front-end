@@ -11,13 +11,14 @@ const MyOrder = lazy(() => import("@/routes/MyOrder"));
 const EditProfile = lazy(() => import("@/routes/MyPage/EditProfile"));
 const MyReviewList = lazy(() => import("@/routes/Review/List"));
 const Leave = lazy(() => import("@/routes/MyPage/Leave"));
+const Logout = lazy(() => import("@/routes/Logout"));
 const LikeList = lazy(() => import("@/routes/Like"));
 const LikeBrandList = lazy(() => import("@/routes/Like/Brand"));
 
 function PrivateRoute({ children }: PropsWithChildren) {
   // 로그인 검증 (refresh token 확인)
   const isLoggedIn = true; // 임시
-  return isLoggedIn ? children : <Navigate to="/login" />;
+  return isLoggedIn ? children : <Navigate to="/login" replace />;
 }
 
 export const privateRoutes: RouteObject[] = [
@@ -60,6 +61,10 @@ export const privateRoutes: RouteObject[] = [
       {
         path: "myPage/leave",
         element: <Leave />,
+      },
+      {
+        path: "/logout",
+        element: <Logout />,
       },
       {
         path: "like/products",
