@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 import { createOrderProduct } from "@/api/OrderApi";
@@ -8,19 +9,7 @@ import CheckBox from "@/components/CheckBox";
 import Modal from "@/components/Modal";
 import useCheckBox from "@/hooks/useCheckBox";
 import { useModal } from "@/hooks/useModal";
-
-// 임시데이터
-const mockData = [
-  {
-    id: 1,
-    name: "파타고니아 레트로 x 양털 후리스 뽀글이 플리스 자켓",
-    color: "BROWN",
-    size: "L",
-    amount: 1,
-    price: 198000,
-    image: "",
-  },
-];
+import { ReducerType } from "@/store/rootReducer";
 
 interface ProductInfoProps {
   form: OrderForm;
@@ -28,16 +17,24 @@ interface ProductInfoProps {
 
 export default function ProductInfo({ form }: ProductInfoProps) {
   const navigate = useNavigate();
+  const { state: productIds } = useLocation();
   const { isModalOpen, openModal, closeModal } = useModal();
+  const { checkedListById, handleCheckChange } = useCheckBox();
+  const cartItems = useSelector((state: ReducerType) => state.cart.items);
+  const productItems = cartItems.filter((item) => productIds.includes(item.id));
+
   const products = {
-    price: mockData
+    price: productItems
       .map((item) => Number(item.price))
       .reduce((acc, cur) => acc + cur),
-    sale: 0,
+    sale: productItems.length
+      ? productItems
+          .map((item) => Number(item.discountPrice) * item.amount)
+          .reduce((acc, cur) => acc + cur)
+      : 0,
     shipping: 0,
   };
-  const { checkedListById, handleCheckChange } = useCheckBox();
-  const totalPrice = products.price + products.sale + products.shipping;
+  const totalPrice = products.price - products.sale + products.shipping;
 
   const [modalMessage, setModalMessage] = useState<string | null>(null);
 
@@ -88,7 +85,7 @@ export default function ProductInfo({ form }: ProductInfoProps) {
 
     const orderInfo: OrderInfo = {
       ...form,
-      productsInfo: mockData.map(({ id, amount }) => ({ id, amount })),
+      productsInfo: productItems.map(({ id, amount }) => ({ id, amount })),
     };
     console.log("data", orderInfo);
 
@@ -104,13 +101,13 @@ export default function ProductInfo({ form }: ProductInfoProps) {
     <Container>
       <InfoTitle>
         주문상품
-        <span>{mockData.length}</span>
+        <span>{productItems.length}</span>
       </InfoTitle>
       <Line />
-      {mockData.map((item) => (
+      {productItems.map((item) => (
         <div key={item.id}>
           <ProductItem>
-            <ProductImage src={item.image} />
+            <ProductImage src={item.imageUrl} />
             <ItemInfo>
               <div>
                 <h4>{item.name}</h4>
