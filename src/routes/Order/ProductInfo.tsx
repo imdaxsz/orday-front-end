@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
@@ -7,7 +6,7 @@ import { createOrderProduct } from "@/api/OrderApi";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import Modal from "@/components/Modal";
-import useCheckBox from "@/hooks/useCheckBox";
+import useFormCheck from "@/hooks/useFormCheck";
 import { useModal } from "@/hooks/useModal";
 import { ReducerType } from "@/store/rootReducer";
 
@@ -19,63 +18,9 @@ export default function ProductInfo({ form }: ProductInfoProps) {
   const navigate = useNavigate();
   const { state: productIds } = useLocation();
   const { isModalOpen, openModal, closeModal } = useModal();
-  const { checkedListById, handleCheckChange } = useCheckBox();
   const cartItems = useSelector((state: ReducerType) => state.cart.items);
   const productItems = cartItems.filter((item) => productIds.includes(item.id));
-
-  const products = {
-    price: productItems
-      .map((item) => Number(item.price))
-      .reduce((acc, cur) => acc + cur),
-    sale: productItems.length
-      ? productItems
-          .map((item) => Number(item.discountPrice) * item.amount)
-          .reduce((acc, cur) => acc + cur)
-      : 0,
-    shipping: 0,
-  };
-  const totalPrice = products.price - products.sale + products.shipping;
-
-  const [modalMessage, setModalMessage] = useState<string | null>(null);
-  const AGREEMENT_1 = 1;
-  const AGREEMENT_2 = 2;
-
-  const validateForm = () => {
-    const { name, phoneNumber, addressInfo, selectedMethod } = form;
-
-    if (name.trim().length === 0) {
-      setModalMessage("이름을 입력해주세요.");
-      return false;
-    }
-    if (!/^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/.test(phoneNumber)) {
-      setModalMessage("연락처를 입력해주세요.");
-      return false;
-    }
-    if (
-      !addressInfo.postcode ||
-      !addressInfo.address ||
-      addressInfo.addressDetail.trim().length === 0
-    ) {
-      setModalMessage("주소를 입력해주세요.");
-      return false;
-    }
-    if (!selectedMethod) {
-      setModalMessage("결제수단을 선택해주세요.");
-      return false;
-    }
-
-    if (!checkedListById.includes(AGREEMENT_1)) {
-      setModalMessage("주문정보에 동의해주세요.");
-      return false;
-    }
-    if (!checkedListById.includes(AGREEMENT_2)) {
-      setModalMessage("제 3자 제공에 동의해주세요.");
-      return false;
-    }
-
-    setModalMessage(null);
-    return true;
-  };
+  const { modalMessage, validateForm, handleCheckChange } = useFormCheck(form);
 
   const openCheckedModal = () => {
     validateForm();
@@ -98,6 +43,19 @@ export default function ProductInfo({ form }: ProductInfoProps) {
       console.log("Error creating order: ", error);
     }
   };
+
+  const products = {
+    price: productItems
+      .map((item) => Number(item.price))
+      .reduce((acc, cur) => acc + cur),
+    sale: productItems.length
+      ? productItems
+          .map((item) => Number(item.discountPrice) * item.amount)
+          .reduce((acc, cur) => acc + cur)
+      : 0,
+    shipping: 0,
+  };
+  const totalPrice = products.price - products.sale + products.shipping;
 
   return (
     <Container>
