@@ -4,33 +4,32 @@ import styled from "styled-components";
 import AddBtn from "@/assets/add_btn.svg?react";
 import ReduceBtn from "@/assets/reduce_btn.svg?react";
 import CheckBox from "@/components/CheckBox";
-
-import { Item } from ".";
+import { useAppDispatch } from "@/store";
+import {
+  decreaseCartItemQuantity,
+  increaseCartItemQuantity,
+  removeCartItem,
+} from "@/store/slices/cartSlice";
 
 interface ProductItemProps {
-  item: Item;
+  item: CartItem;
   handleCheckChange: (id: number) => void;
   checkedListById: number[];
-  decreaseAmount: (id: number) => void;
-  increaseAmount: (id: number) => void;
-  removeItem: (id: number) => void;
 }
 
 export default function ProductItem({
   item,
   handleCheckChange,
   checkedListById,
-  decreaseAmount,
-  increaseAmount,
-  removeItem,
 }: ProductItemProps) {
+  const dispatch = useAppDispatch();
   return (
     <Container>
       <CheckBox
         onChange={() => handleCheckChange(item.id)}
         checked={checkedListById.includes(item.id)}
       />
-      <ProductImage src={item.image} />
+      <ProductImage src={item.imageUrl} />
       <ItemName>
         <Name>{item.name}</Name>
         <Color>{item.color}</Color>
@@ -39,21 +38,19 @@ export default function ProductItem({
       <ItemAmount>
         <p>수량</p>
         <Count>
-          {/* onClick시 api 수량 감소, 금액 변경 */}
           <ReduceBtn
             style={{ cursor: "pointer" }}
-            onClick={() => decreaseAmount(item.id)}
+            onClick={() => dispatch(decreaseCartItemQuantity(item.id))}
           />
           <p>{item.amount}</p>
           <AddBtn
             style={{ cursor: "pointer" }}
-            onClick={() => increaseAmount(item.id)}
+            onClick={() => dispatch(increaseCartItemQuantity(item.id))}
           />
         </Count>
       </ItemAmount>
       <ItemPrice>{(item.price * item.amount).toLocaleString()}원</ItemPrice>
-      {/* 클릭시 장바구니에서 삭제 */}
-      <DeleteBtn onClick={() => removeItem(item.id)}>
+      <DeleteBtn onClick={() => dispatch(removeCartItem([item.id]))}>
         <IoMdClose />
       </DeleteBtn>
     </Container>
