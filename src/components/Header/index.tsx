@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import Logo from "@/assets/logo.svg?react";
 
@@ -12,6 +12,7 @@ import { Container, Content, Group, Item } from "./style";
 export default function Header() {
   const [menuIsVisible, setMenuIsVisible] = useState(false);
   const [myMenuIsVisible, setMyMenuIsVisible] = useState(false);
+  const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname.split("/");
   // 랜딩 페이지, 브랜드 상세 페이지에서만 border bottom 제거
@@ -19,9 +20,9 @@ export default function Header() {
     pathname[1] === "" || (pathname[1] === "brands" && Boolean(pathname[2]));
 
   const handleMyClick = () => {
-    // TODO: 로그인 상태 확인
     // 로그인 상태일 때만 드롭다운이 펼쳐집니다.
-    setMyMenuIsVisible(true);
+    if (localStorage.getItem("token")) setMyMenuIsVisible(true);
+    else navigate("/login");
   };
 
   useEffect(() => {
