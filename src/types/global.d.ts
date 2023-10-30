@@ -50,11 +50,56 @@ declare interface OrderForm {
   selectedMethod: number | null;
 }
 
-declare interface ProductInfo {
+// 임시
+declare interface Product {
   id: number;
-  image: string;
-  url: string;
-  brand: { name: string; pathname: string }; // pathname: 브랜드 영문 이름
   name: string;
   price: number;
+  score: number;
+  description: string;
+  imageUrl: string;
+  brandInfo: { id: number; name: string };
+  liked: boolean;
+}
+
+declare interface Brand {
+  id: number;
+  name: string;
+  categoryIds: number[];
+  logoUrl: string;
+  imageUrl: string;
+  isLiked: boolean;
+}
+
+declare type BrandListDto = Pick<Brand, "id" | "name" | "imageUrl">[];
+
+/**
+ * @description 좋아요 기능 적용 가능 대상
+ */
+declare type LikeTarget = "product" | "brand" | "post";
+
+declare interface ProductListDto {
+  cursorRequest: {
+    key: number;
+    size: number;
+  };
+  body: Product[];
+}
+
+declare interface CartItem {
+  id: number;
+  name: string;
+  imageUrl: string;
+  color: string;
+  size: string;
+  price: number;
+  amount: number;
+  discountPrice: number;
+}
+
+declare interface CartProductInfo {
+  data: {
+    id: number;
+    amount: number;
+  };
 }

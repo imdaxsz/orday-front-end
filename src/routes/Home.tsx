@@ -7,7 +7,6 @@ import Head from "@/components/Head";
 import ProductCarousel from "@/components/ProductCarousel";
 import Tabs, { Tab, TabProps } from "@/components/Tabs";
 import VisualSection, { Item } from "@/components/VisualSection";
-import { ProductInfo } from "@/types";
 
 export default function Home() {
   const visualSectionMockData: Item[] = [
@@ -48,48 +47,15 @@ export default function Home() {
     },
   ];
 
-  const productMockData1: ProductInfo = {
-    id: 1,
-    image: "",
-    url: "",
-    brand: { name: "플라스틱 아크", pathname: "plasticark" },
-    name: "상품1",
+  const productsMockData: Product[] = Array.from({ length: 6 }, (_, index) => ({
+    id: index + 1,
+    name: `상품${index + 1}`,
+    imageUrl: "",
+    brandInfo: { id: 1, name: "플라스틱 아크" },
     price: 74000,
-  };
-  const productMockData2: ProductInfo = {
-    ...productMockData1,
-    id: 2,
-    name: "상품2",
-  };
-  const productMockData3: ProductInfo = {
-    ...productMockData1,
-    id: 3,
-    name: "상품3",
-  };
-  const productMockData4: ProductInfo = {
-    ...productMockData1,
-    id: 4,
-    name: "상품4",
-  };
-  const productMockData5: ProductInfo = {
-    ...productMockData1,
-    id: 5,
-    name: "상품5",
-  };
-  const productMockData6: ProductInfo = {
-    ...productMockData1,
-    id: 6,
-    name: "상품6",
-  };
-
-  const productsMockData: ProductInfo[] = [
-    productMockData1,
-    productMockData2,
-    productMockData3,
-    productMockData4,
-    productMockData5,
-    productMockData6,
-  ];
+    score: 1,
+    description: "상품설명",
+  }));
 
   const carouselMockdata1 = {
     image:

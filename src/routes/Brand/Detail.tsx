@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Button from "@/components/Button";
@@ -9,31 +8,24 @@ import Dropdown from "@/components/Dropdown";
 import Head from "@/components/Head";
 import LikeButton from "@/components/LikeButton";
 import ProductCard from "@/components/ProductCard";
-import { ProductInfo } from "@/types";
+import useBrandDetail from "@/hooks/useBrandDetail";
+import useProductList from "@/hooks/useProductList";
 
 export default function BrandDetail() {
   const navigate = useNavigate();
-  const [selectedOption, setSelectedOption] = useState({
-    name: "최신순",
-    value: "new",
-  });
+  // const { info } = useBrandDetail();
+  const brandId = Number(useLocation().pathname.split("/")[2]);
+  const { ref, products, selectedOption, setSelectedOption } =
+    useProductList(brandId);
 
-  const brandMockData = {
-    name: "플라스틱 아크",
-    logo: "https://url.kr/atx7ql",
-    image: "https://url.kr/4murbh",
-  };
-
-  const productMockData: ProductInfo = {
+  const brandMockData: Brand = {
     id: 1,
-    image:
-      "https://image.msscdn.net/images/goods_img/20230323/3174776/3174776_16795542598248_big.png",
-    url: "",
-    brand: { name: "플라스틱 아크", pathname: "plasticark" },
-    name: "팻볼 [FB-F1-05]",
-    price: 74000,
+    name: "플라스틱 아크",
+    categoryIds: [1, 2, 3],
+    logoUrl: "https://url.kr/atx7ql",
+    imageUrl: "https://url.kr/4murbh",
+    isLiked: false,
   };
-  const productsMockData: ProductInfo[] = Array(4).fill(productMockData);
 
   return (
     <div style={{ paddingBottom: "150px" }}>
@@ -42,12 +34,19 @@ export default function BrandDetail() {
         <Button iconOnly onClick={() => navigate(-1)}>
           <IoArrowBackOutline size={24} />
         </Button>
-        <LikeButton target="brand" />
-        <LogoImage src={brandMockData.logo} alt={brandMockData.name} />
-        <BackgroundImage src={brandMockData.image} alt={brandMockData.name} />
+        <LikeButton
+          isLiked={brandMockData.isLiked}
+          target="brand"
+          id={brandMockData.id}
+        />
+        <LogoImage src={brandMockData.logoUrl} alt={brandMockData.name} />
+        <BackgroundImage
+          src={brandMockData.imageUrl}
+          alt={brandMockData.name}
+        />
       </Header>
       <Menu>
-        <CategoryNav brand categories={[1, 2, 3]} />
+        <CategoryNav brand categories={brandMockData.categoryIds} />
         <Dropdown
           type="product"
           selectedOption={selectedOption}
@@ -55,10 +54,11 @@ export default function BrandDetail() {
         />
       </Menu>
       <Items>
-        {productsMockData.map((product, i) => (
+        {products.map((product, i) => (
           <ProductCard key={i} size="md" $tag="NEW" info={product} />
         ))}
       </Items>
+      <div ref={ref} />
     </div>
   );
 }

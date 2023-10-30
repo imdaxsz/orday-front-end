@@ -1,7 +1,6 @@
 import BestTag from "@/assets/best.svg?react";
 import NewTag from "@/assets/new.svg?react";
 import LikeButton from "@/components/LikeButton";
-import { ProductInfo } from "@/types";
 
 import RemoveButton from "./RemoveButton";
 import {
@@ -21,7 +20,7 @@ export interface ProductCardProps {
   size?: Size;
   $tag?: TagType;
   $remove?: boolean;
-  info: ProductInfo;
+  info: Product;
 }
 export default function ProductCard({
   size,
@@ -31,22 +30,27 @@ export default function ProductCard({
 }: ProductCardProps) {
   return (
     <Container size={size}>
-      <ImageContainer to={info.url} size={size} $tag={$tag} $remove={$remove}>
+      <ImageContainer
+        to={`/product/${info.id}`}
+        size={size}
+        $tag={$tag}
+        $remove={$remove}
+      >
         {!$remove ? (
           <>
             {$tag === "NEW" && <NewTag />}
             {$tag === "BEST" && <BestTag />}
-            <LikeButton target="product" />
+            <LikeButton isLiked={info.liked} target="product" id={info.id} />
           </>
         ) : (
           <RemoveButton />
         )}
-        <Image src={info.image} alt={info.name} size={size} />
+        <Image src={info.imageUrl} alt={info.name} size={size} />
       </ImageContainer>
       <Info>
-        <Brand to={`/brands/${info.brand.pathname}`}>{info.brand.name}</Brand>
-        <Name to={info.url}>{info.name}</Name>
-        <Price to={info.url} size={size}>
+        <Brand to={`/brands/${info.brandInfo.id}`}>{info.brandInfo.name}</Brand>
+        <Name to={`/product/${info.id}`}>{info.name}</Name>
+        <Price to={`/product/${info.id}`} size={size}>
           {info.price.toLocaleString()}원
         </Price>
       </Info>
