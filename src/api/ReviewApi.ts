@@ -1,7 +1,8 @@
-import { get, post } from "@/libs/api";
+import { get, post, put } from "@/libs/api";
 
 /**
  @description 새로운 리뷰 작성 요청
+  * @returns 생성된 review id
  */
 export const createReview = async (review: CreateReviewDto): Promise<void> => {
   return await post("product/review/add", review);
@@ -23,7 +24,39 @@ export const getWrittenReivews = async () => {
   return await get<WrittenReview[]>("product/review/written/list");
 };
 
-// 테스트용 api
+/**
+ @description 리뷰 수정을 위한 특정 리뷰 상세 조회
+ * @returns 리뷰 상세 정보
+ */
+export const getReviewDetail = async (reviewId: number) => {
+  return await get<ReviewDetail>("product/review/detail/list", {
+    params: { reviewId },
+  });
+};
+
+/**
+ @description 리뷰 수정 (리뷰 내용, 별점)
+ */
+
+export const updateReview = async (
+  reviewId: number,
+  contents: ReviewEditContent,
+) => {
+  return await put<ReviewDetail>(`product/review/update/${reviewId}`, contents);
+};
+
+/**
+ @description 리뷰 수정 (첨부 이미지)
+ */
+export const updateReviewImage = async (reviewId: number, image?: File) => {
+  const dto = image ? { image } : {};
+  return await put<ReviewDetail>(
+    `product/review/update/${reviewId}/image`,
+    dto,
+  );
+};
+
+// 리뷰 목록 조회 테스트용 api
 const ProductMockData = {
   productId: 1,
   imageUrl: "",
@@ -47,6 +80,7 @@ export const getMockWritableReviews = async () => {
 export const getMockWrittenReviews = async () => {
   const reviewMockData3 = {
     ...ProductMockData,
+    reviewId: 1,
     orderId: 1000000000,
     content: "리뷰1입니다. 리뷰1입니다.",
     rating: 4,
@@ -54,6 +88,7 @@ export const getMockWrittenReviews = async () => {
   };
   const reviewMockData4 = {
     ...ProductMockData,
+    reviewId: 2,
     orderId: 2000000000,
     content:
       "리뷰2입니다. 리뷰2입니다. 리뷰2입니다. 리뷰2입니다.리뷰2입니다. 리뷰2입니다.리뷰2입니다. 리뷰2입니다.리뷰2입니다. 리뷰2입니다.리뷰2입니다. 리뷰2입니다.리뷰2입니다. 리",
@@ -62,7 +97,3 @@ export const getMockWrittenReviews = async () => {
   };
   return [reviewMockData4, reviewMockData3];
 };
-
-// 수정을 위한 리뷰 정보 조회
-
-// 리뷰 수정
