@@ -17,7 +17,7 @@ export default function ReviewItem({ status, review }: Props) {
     const url =
       "reviewId" in review
         ? `/review/write?mode=edit&id=${review.reviewId}`
-        : `/review/write?mode=new&id=${review.productId}`;
+        : `/review/write?mode=new&id=${review.productId}&orderNo=${review.orderId}`;
     navigate(url);
   };
 
