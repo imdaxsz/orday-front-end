@@ -168,6 +168,16 @@ export default function useWriteReview({
     }
   };
 
+  const requestUpdateReviewImage = async (id: number, file?: File | null) => {
+    try {
+      if (file) await updateReviewImage(id, file);
+      else if (fileUrl === "" && userFileUrl !== "")
+        await updateReviewImage(id);
+    } catch (error) {
+      console.log("Error updating review image: ", error);
+    }
+  };
+
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (file) console.log(file);
@@ -176,10 +186,7 @@ export default function useWriteReview({
         await requestCreateReview();
       } else if (mode === "edit") {
         await requestUpdateReview();
-        if (file) await updateReviewImage(id, file);
-        // 기존에 업로드했던 이미지를 삭제하는 경우
-        else if (fileUrl === "" && userFileUrl !== "")
-          await updateReviewImage(id);
+        await requestUpdateReviewImage(id, file);
       }
     }
   };
