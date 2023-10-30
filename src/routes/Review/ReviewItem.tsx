@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Rating from "@/routes/Review/Rating";
@@ -11,6 +11,16 @@ interface Props {
 }
 
 export default function ReviewItem({ status, review }: Props) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    const url =
+      "reviewId" in review
+        ? `/review/write?mode=edit&id=${review.reviewId}`
+        : `/review/write?mode=new&id=${review.productId}`;
+    navigate(url);
+  };
+
   return (
     <Container>
       <Header>
@@ -44,7 +54,9 @@ export default function ReviewItem({ status, review }: Props) {
         </Center>
         <Right>
           {"rating" in review && <Rating rating={review.rating} />}
-          <Button>{status === "WRITABLE" ? "작성하기" : "수정하기"}</Button>
+          <Button onClick={handleClick}>
+            {status === "WRITABLE" ? "작성하기" : "수정하기"}
+          </Button>
         </Right>
       </Content>
     </Container>
