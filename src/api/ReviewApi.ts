@@ -4,10 +4,8 @@ import { get, post, put } from "@/libs/api";
  @description 새로운 리뷰 작성 요청
   * @returns 생성된 review id
  */
-export const createReview = async (
-  review: CreateReviewDto,
-): Promise<number> => {
-  return await post("product/review/add", review);
+export const createReview = async (review: CreateReviewDto) => {
+  return await post<number>("product/review/add", review);
 };
 
 /**
