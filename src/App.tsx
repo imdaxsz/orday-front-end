@@ -5,6 +5,7 @@ import { ThemeProvider } from "styled-components";
 
 import theme from "@/styles/theme";
 
+import Loader from "./components/Loader";
 import router from "./routes/router";
 import store from "./store";
 import GlobalStyle from "./styles/GlobalStyle";
@@ -15,7 +16,7 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Provider store={store}>
-          <Suspense fallback={<>로딩중</>}>
+          <Suspense fallback={<Loader />}>
             <RouterProvider router={router} />
           </Suspense>
         </Provider>
