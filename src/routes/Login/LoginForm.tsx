@@ -3,12 +3,17 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import Button from "@/components/Button";
-import CheckBox from "@/components/CheckBox";
 import TextInput from "@/components/TextInput";
 import useLogin from "@/hooks/useLogin";
 
 export default function LoginForm() {
-  const { email, password, error, handleInputChange, onSubmit } = useLogin();
+  const {
+    email,
+    password,
+    loginError: error,
+    handleInputChange,
+    onSubmit,
+  } = useLogin();
 
   return (
     <Container>
@@ -33,7 +38,6 @@ export default function LoginForm() {
           onChange={(e) => handleInputChange(e, "password")}
         />
         <UserActions>
-          <CheckBox id="autoLogin" text="자동 로그인" type="circle" />
           <Find>
             <Link to="/">아이디 찾기</Link>
             <RxDividerVertical size={14} />
@@ -93,7 +97,7 @@ const Form = styled.form`
 const UserActions = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-top: 2px;
 
   label {

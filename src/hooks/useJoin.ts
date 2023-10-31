@@ -119,9 +119,13 @@ export default function useJoin() {
     console.log(form);
     // TODO: API 요청
     if (isValidate) {
-      const res = await join(form);
-      // if (성공) window.alert("회원가입이 완료되었습니다.");
-      navigate("/login");
+      try {
+        await join(form);
+        window.alert("회원가입이 완료되었습니다.");
+        navigate("/login");
+      } catch (error) {
+        console.log("Error join: ", error);
+      }
     }
   };
 

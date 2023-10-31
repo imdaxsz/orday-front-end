@@ -1,18 +1,29 @@
 import { useState } from "react";
 
+import { leave } from "@/api/AuthApi";
+
+import useLogout from "./useLogout";
+
 export default function useLeave() {
   const [confirm, setConfirm] = useState(false);
   const [error, setError] = useState(false);
+
+  const { logout } = useLogout();
 
   const handleClickConfirm = () => {
     setConfirm((prev) => !prev);
   };
 
-  const leave = (openModal: () => void) => {
+  const requestLeave = async (openModal: () => void) => {
     setError(!confirm);
     if (confirm) {
-      // TODO: 회원 탈퇴 요청
-      openModal();
+      try {
+        await leave();
+        logout();
+        openModal();
+      } catch (error) {
+        console.log("Error leave: ", error);
+      }
     }
   };
 
@@ -20,6 +31,6 @@ export default function useLeave() {
     confirm,
     error,
     handleClickConfirm,
-    leave,
+    requestLeave,
   };
 }

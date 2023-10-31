@@ -11,7 +11,12 @@ import { useModal } from "@/hooks/useModal";
 
 export default function Leave() {
   const { isModalOpen, openModal, closeModal } = useModal();
-  const { confirm, error, handleClickConfirm, leave } = useLeave();
+  const {
+    confirm,
+    error,
+    handleClickConfirm,
+    requestLeave: leave,
+  } = useLeave();
   const navigate = useNavigate();
 
   const redirectHome = () => {
