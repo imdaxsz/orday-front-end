@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
   createReview,
@@ -11,7 +12,6 @@ import {
 } from "@/api/ReviewApi";
 
 import useImageCompress from "./useImageCompress";
-import { useNavigate } from "react-router-dom";
 
 export default function useWriteReview({
   mode,
@@ -22,16 +22,21 @@ export default function useWriteReview({
   id: number;
   orderId: number;
 }) {
-  const [content, setContent] = useState("");
-  const [file, setFile] = useState<File | null>(null); // 서버에 넘길 File
-  const [fileUrl, setFileUrl] = useState("");
-  const [rating, setRating] = useState(3);
+  const [form, setForm] = useState<ReviewForm>({
+    content: "",
+    rating: 3,
+    file: null,
+    fileUrl: "",
+  });
 
   // 리뷰 수정 시 서버에서 받아온 기존 리뷰 데이터
-  const [userContent, setUserContent] = useState(content);
-  const [userRating, setUserRating] = useState(rating);
-  const [userFileUrl, setUserFileUrl] = useState(fileUrl);
+  const [existingReview, setExistingReview] = useState({
+    content: form.content,
+    rating: form.rating,
+    fileUrl: form.fileUrl,
+  });
 
+  // 리뷰 대상 상품 정보
   const [productInfo, setProductInfo] = useState<
     ReviewProductBaseInfo & { imageUrl: string }
   >({ productId: 0, name: "", color: "", size: "", imageUrl: "" });
@@ -54,12 +59,17 @@ export default function useWriteReview({
         size,
       } = await testGetEditReviewData(id);
       // getReviewDetail
-      setContent(content);
-      setUserContent(content);
-      setRating(rating);
-      setUserRating(rating);
-      setFileUrl(reviewImageUrl);
-      setUserFileUrl(reviewImageUrl);
+      setForm((prev) => ({
+        ...prev,
+        content,
+        rating,
+        fileUrl: reviewImageUrl,
+      }));
+      setExistingReview({
+        content,
+        rating,
+        fileUrl: reviewImageUrl,
+      });
       setProductInfo({
         productId,
         name,
@@ -72,9 +82,9 @@ export default function useWriteReview({
     }
   };
 
+  // 리뷰 작성일 경우 상품 정보 조회
   const fetchProductData = async (id: number) => {
     try {
-      // 상품 정보 가져오기
       const [{ id: productId, imageUrl, name, color, size }] =
         await testGetReviewProductInfo(id);
       // getProductsInfo
@@ -92,12 +102,12 @@ export default function useWriteReview({
 
   // 별점 입력
   const handleRatingChange = (i: number) => {
-    setRating(i);
+    setForm((prev) => ({ ...prev, rating: i }));
   };
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.currentTarget.value.length > 100) return;
-    setContent(e.currentTarget.value);
+    if (e.target.value.length > 100) return;
+    setForm((prev) => ({ ...prev, content: e.target.value }));
   };
 
   // 파일 첨부
@@ -106,7 +116,7 @@ export default function useWriteReview({
     if (files && files.length === 1) {
       const compressedImage = await compressImage(files[0]);
       if (!compressedImage) return;
-      setFile(compressedImage);
+      setForm((prev) => ({ ...prev, file: compressedImage }));
       const reader = new FileReader();
       reader.readAsDataURL(compressedImage);
       reader.onloadend = (finishedEvent) => {
@@ -114,7 +124,11 @@ export default function useWriteReview({
           finishedEvent.target &&
           typeof finishedEvent.target.result == "string"
         ) {
-          setFileUrl(finishedEvent.target.result);
+          const fileUrl = finishedEvent.target.result;
+          setForm((prev) => ({
+            ...prev,
+            fileUrl,
+          }));
         } else console.log("변환 실패");
       };
     }
@@ -123,12 +137,11 @@ export default function useWriteReview({
 
   // 파일 삭제
   const clearFile = () => {
-    setFile(null);
-    setFileUrl("");
+    setForm((prev) => ({ ...prev, file: null, fileUrl: "" }));
   };
 
   const validateContent = () => {
-    if (content.trim().length === 0) {
+    if (form.content.trim().length === 0) {
       alert("리뷰 내용을 작성해 주세요!");
       return false;
     }
@@ -140,11 +153,11 @@ export default function useWriteReview({
       productReviewRequest: {
         orderId,
         productId: productInfo.productId,
-        content,
-        rating,
+        content: form.content,
+        rating: form.rating,
       },
     };
-    if (file) dto.image = file;
+    if (form.file) dto.image = form.file;
     console.log(dto);
     try {
       await createReview(dto);
@@ -157,8 +170,9 @@ export default function useWriteReview({
   const requestUpdateReview = async () => {
     // 별점, 리뷰 내용 중 변동이 있는 데이터만 보냄
     const dto: ReviewEditContent = {};
-    if (content !== userContent) dto.content = content;
-    if (rating !== userRating) dto.rating = rating;
+    if (form.content !== existingReview.content) dto.content = form.content;
+    if (form.rating !== existingReview.rating) dto.rating = form.rating;
+    console.log(dto);
     if (Object.keys(dto).length === 0) return;
     try {
       await updateReview(id, dto);
@@ -171,7 +185,7 @@ export default function useWriteReview({
   const requestUpdateReviewImage = async (id: number, file?: File | null) => {
     try {
       if (file) await updateReviewImage(id, file);
-      else if (fileUrl === "" && userFileUrl !== "")
+      else if (form.fileUrl === "" && existingReview.fileUrl !== "")
         await updateReviewImage(id);
     } catch (error) {
       console.log("Error updating review image: ", error);
@@ -180,13 +194,13 @@ export default function useWriteReview({
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (file) console.log(file);
+    if (form.file) console.log(form.file);
     if (validateContent()) {
       if (mode === "new") {
         await requestCreateReview();
       } else if (mode === "edit") {
         await requestUpdateReview();
-        await requestUpdateReviewImage(id, file);
+        await requestUpdateReviewImage(id, form.file);
       }
     }
   };
@@ -194,11 +208,9 @@ export default function useWriteReview({
   return {
     isImageCompressing: isLoading,
     productInfo,
-    content,
+    form,
     handleContentChange,
-    rating,
     handleRatingChange,
-    fileUrl,
     handleFileChange,
     clearFile,
     handleSubmit,
