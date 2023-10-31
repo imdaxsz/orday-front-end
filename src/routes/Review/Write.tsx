@@ -20,11 +20,9 @@ export default function WriteReview() {
 
   const {
     productInfo,
-    content,
+    form,
     handleContentChange,
-    rating,
     handleRatingChange,
-    fileUrl,
     handleFileChange,
     clearFile,
     handleSubmit,
@@ -33,6 +31,10 @@ export default function WriteReview() {
   const idIsNotNumber = (id: string | null) => {
     if (!id) return true;
     return !/^[0-9]+$/.test(id);
+  };
+
+  const handleCancelClick = () => {
+    navigate("/myPage/reviews");
   };
 
   useEffect(() => {
@@ -66,27 +68,27 @@ export default function WriteReview() {
               </>
             )}
           </span>
-          <Rating rating={rating} onClick={handleRatingChange} />
+          <Rating rating={form.rating} onClick={handleRatingChange} />
         </div>
       </ProductInfo>
       <Form onSubmit={handleSubmit}>
         <label htmlFor="content">내용</label>
         <textarea
           id="content"
-          value={content}
+          value={form.content}
           placeholder="리뷰를 작성해주세요. (최대 100자)"
           onChange={handleContentChange}
         />
         <label htmlFor="photo">사진</label>
         <PhotoContainer>
-          {!fileUrl ? (
+          {!form.fileUrl ? (
             <label htmlFor="photo">
               <AiOutlinePlus color="#AEAEAE" size={24} />
             </label>
           ) : (
-            <img src={fileUrl} alt="attachment" />
+            <img src={form.fileUrl} alt="attachment" />
           )}
-          {fileUrl && <RiCloseCircleFill size={24} onClick={clearFile} />}
+          {form.fileUrl && <RiCloseCircleFill size={24} onClick={clearFile} />}
         </PhotoContainer>
         <input
           id="photo"
@@ -95,7 +97,7 @@ export default function WriteReview() {
           onChange={handleFileChange}
         />
         <Buttons>
-          <Button type="button" $variant="outline">
+          <Button type="button" $variant="outline" onClick={handleCancelClick}>
             취소
           </Button>
           <Button type="submit">등록</Button>
