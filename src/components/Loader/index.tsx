@@ -10,6 +10,6 @@ export default function Loader() {
   const el = document.getElementById("loader");
   return (
     el &&
-    createPortal(<SyncLoader cssOverride={override} color="#d9d9d9" />, el)
+    createPortal(<SyncLoader cssOverride={override} color="#6ee266" />, el)
   );
 }
