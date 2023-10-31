@@ -147,3 +147,10 @@ declare interface ReviewEditContent {
   content?: string;
   rating?: number;
 }
+
+declare interface ReviewForm {
+  content: string;
+  rating: number;
+  file: File | null;
+  fileUrl: string;
+}
