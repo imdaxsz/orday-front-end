@@ -1,83 +1,103 @@
+import { useEffect } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { RiCloseCircleFill } from "react-icons/ri";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
 import BackButton from "@/components/BackButton";
 import Button from "@/components/Button";
 import Head from "@/components/Head";
-import useTextarea from "@/hooks/useTextarea";
 import useWriteReview from "@/hooks/useWriteReview";
 
 import Rating from "./Rating";
 
 export default function WriteReview() {
-  const PRODUCT_MOCK_DATA = {
-    id: "1",
-    image: "",
-    name: "파타고니아 레트로 x 양털 후리스 뽀글이 플리스 자켓",
-  };
-
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("mode");
+  const id = searchParams.get("id");
+  const orderId = searchParams.get("orderNo");
+  const navigate = useNavigate();
 
   const {
-    text,
-    setText,
-    rating,
-    onRatingChange,
-    fileUrl,
-    onFileChange,
+    productInfo,
+    form,
+    handleContentChange,
+    handleRatingChange,
+    handleFileChange,
     clearFile,
-    onSubmit,
-  } = useWriteReview({ mode });
+    handleSubmit,
+  } = useWriteReview({ mode, id: Number(id), orderId: Number(orderId) });
 
-  const { textareaRef, setTextareaHeight } = useTextarea();
-
-  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.currentTarget.value);
-    setTextareaHeight();
+  const idIsNotNumber = (id: string | null) => {
+    if (!id) return true;
+    return !/^[0-9]+$/.test(id);
   };
+
+  const handleCancelClick = () => {
+    navigate("/myPage/reviews");
+  };
+
+  useEffect(() => {
+    const redirect =
+      !mode ||
+      !["new", "edit"].includes(mode) ||
+      idIsNotNumber(id) ||
+      (mode === "new" && idIsNotNumber(orderId));
+    if (redirect) navigate("/myPage/reviews");
+  }, [mode, id, navigate, orderId]);
 
   return (
     <Container>
       <Head title="에디터 | Orday" />
       <BackButton pageTitle="리뷰작성/수정" />
       <ProductInfo>
-        <img src={PRODUCT_MOCK_DATA.image} alt={PRODUCT_MOCK_DATA.name} />
+        <img src={productInfo.imageUrl} alt={productInfo.name} />
         <div>
-          <h3>{PRODUCT_MOCK_DATA.name}</h3>
-          <Rating rating={rating} onClick={onRatingChange} />
+          <h3>{productInfo.name}</h3>
+          <span>
+            {Boolean(productInfo.color) && (
+              <>
+                <strong>Color </strong>
+                {productInfo.color}&nbsp;&nbsp;
+              </>
+            )}
+            {Boolean(productInfo.size) && (
+              <>
+                <strong>Size </strong>
+                {productInfo.size}
+              </>
+            )}
+          </span>
+          <Rating rating={form.rating} onClick={handleRatingChange} />
         </div>
       </ProductInfo>
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={handleSubmit}>
         <label htmlFor="content">내용</label>
         <textarea
           id="content"
-          ref={textareaRef}
-          value={text}
-          placeholder="리뷰를 작성해주세요."
-          onChange={onChange}
+          value={form.content}
+          placeholder="리뷰를 작성해주세요. (최대 100자)"
+          onChange={handleContentChange}
         />
         <label htmlFor="photo">사진</label>
         <PhotoContainer>
-          {!fileUrl ? (
+          {!form.fileUrl ? (
             <label htmlFor="photo">
               <AiOutlinePlus color="#AEAEAE" size={24} />
             </label>
           ) : (
-            <img src={fileUrl} alt="attachment" />
+            <img src={form.fileUrl} alt="attachment" />
           )}
-          {fileUrl && <RiCloseCircleFill size={24} onClick={clearFile} />}
+          {form.fileUrl && <RiCloseCircleFill size={24} onClick={clearFile} />}
         </PhotoContainer>
         <input
           id="photo"
           type="file"
           accept="image/*"
-          onChange={onFileChange}
+          onChange={handleFileChange}
         />
         <Buttons>
-          <Button type="button" $variant="outline">
+          <Button type="button" $variant="outline" onClick={handleCancelClick}>
             취소
           </Button>
           <Button type="submit">등록</Button>
@@ -97,15 +117,22 @@ const Container = styled.div`
     cursor: pointer;
   }
 
-  h3,
   label {
     ${({ theme }) => theme.typo["body-2-b"]};
     color: ${({ theme }) => theme.colors["neutral"]["70"]};
   }
 
   h3 {
-    margin: 17px 0 8px;
+    ${({ theme }) => theme.typo["body-2-r"]};
+    margin-top: 12px;
     line-height: 170%;
+  }
+
+  span {
+    display: block;
+    margin-top: 3px;
+    ${({ theme }) => theme.typo["body-3-r"]};
+    color: ${({ theme }) => theme.colors["neutral"]["50"]};
   }
 `;
 
@@ -122,6 +149,10 @@ const ProductInfo = styled.div`
     border-radius: 10px;
     border: 1px solid #aeaeae;
     background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
+  }
+
+  & > div > div {
+    margin-top: 8px;
   }
 `;
 

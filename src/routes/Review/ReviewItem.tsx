@@ -1,57 +1,62 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Rating from "@/routes/Review/Rating";
 
 import Button from "../../components/Button";
 
-interface ReviewProductInfo {
-  id: string;
-  image: string;
-  name: string;
-  size: string;
-  color: string;
-}
-
-interface Review {
-  id?: string;
-  orderNo: string;
-  productInfo: ReviewProductInfo;
-  content?: string;
-  rating?: number;
-  createdAt?: string;
-}
-
 interface Props {
-  status: "WRITABLE" | "WRITTEN";
-  review: Review;
+  status: ReviewStatus;
+  review: WritableReview | WrittenReview;
 }
 
 export default function ReviewItem({ status, review }: Props) {
-  const { productInfo } = review;
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    const url =
+      "reviewId" in review
+        ? `/review/write?mode=edit&id=${review.reviewId}`
+        : `/review/write?mode=new&id=${review.productId}&orderNo=${review.orderId}`;
+    navigate(url);
+  };
+
   return (
     <Container>
       <Header>
         <div>
           <h3>{status === "WRITABLE" ? "작성가능" : "작성완료"}</h3>
-          <span>{review.orderNo}</span>
+          <span>{review.orderId}</span>
         </div>
-        {review.createdAt && <p>{review.createdAt}</p>}
+        {"createdAt" in review && <p>{review.createdAt.split("T")[0]}</p>}
       </Header>
       <Content>
-        <Link to={`/products/${productInfo.id}`}>
-          <img src={productInfo.image} alt={productInfo.name} />
+        <Link to={`/products/${review.productId}`}>
+          <img src={review.imageUrl} alt={review.name} />
         </Link>
         <Center>
-          <h4>{productInfo.name}</h4>
+          <h4>{review.name}</h4>
           <span>
-            <strong>Color </strong>Brown <strong>Size </strong>L
+            {Boolean(review.color) && (
+              <>
+                <strong>Color </strong>
+                {review.color}&nbsp;&nbsp;
+              </>
+            )}
+            {Boolean(review.size) && (
+              <>
+                <strong>Size </strong>
+                {review.size}
+              </>
+            )}
           </span>
-          <p>{review.content}</p>
+          <p>{"content" in review && review.content}</p>
         </Center>
         <Right>
-          {review.rating && <Rating rating={review.rating} />}
-          <Button>{status === "WRITABLE" ? "작성하기" : "수정하기"}</Button>
+          {"rating" in review && <Rating rating={review.rating} />}
+          <Button onClick={handleClick}>
+            {status === "WRITABLE" ? "작성하기" : "수정하기"}
+          </Button>
         </Right>
       </Content>
     </Container>
@@ -112,7 +117,7 @@ const Content = styled.div`
 const Center = styled.div`
   display: flex;
   flex-direction: column;
-  width: 424px;
+  width: 446px;
 
   & > h4 {
     ${({ theme }) => theme.typo["body-2-b"]};
@@ -140,6 +145,7 @@ const Center = styled.div`
 
 const Right = styled.div`
   display: flex;
+  width: 116px;
   height: 100px;
   padding-top: 8px;
   flex-direction: column;

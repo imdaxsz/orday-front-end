@@ -103,3 +103,54 @@ declare interface CartProductInfo {
     amount: number;
   };
 }
+
+declare type ReviewStatus = "WRITABLE" | "WRITTEN";
+
+declare interface CreateReviewDto {
+  productReviewRequest: {
+    orderId: number;
+    productId: number;
+    content: string;
+    rating: number;
+  };
+  image?: File;
+}
+
+interface ReviewProductBaseInfo {
+  productId: number;
+  name: string;
+  color: string;
+  size: string;
+}
+
+declare interface WritableReview extends ReviewProductBaseInfo {
+  orderId: number;
+  imageUrl: string; // 상품 이미지 (후기 이미지 X)
+}
+
+declare interface WrittenReview extends WritableReview {
+  reviewId: number;
+  content: string;
+  rating: number;
+  createdAt: string;
+}
+
+declare interface ReviewDetail extends ReviewProductBaseInfo {
+  reviewId: number;
+  content: string;
+  rating: number;
+  productImageUrl: string;
+  reviewImageUrl: string;
+}
+
+declare interface ReviewEditContent {
+  content?: string;
+  rating?: number;
+}
+
+declare interface ReviewForm {
+  content: string;
+  rating: number;
+  file: File | null;
+  fileUrl: string;
+}
