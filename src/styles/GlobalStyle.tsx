@@ -12,6 +12,18 @@ body,
   color: ${({ theme }) => theme.colors["neutral"]["100"]}
 }
 
+#loader {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  z-index: 500;
+  pointer-events: none;
+}
+
 html,
 body,
 div,
