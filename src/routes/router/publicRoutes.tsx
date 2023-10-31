@@ -7,13 +7,14 @@ import Home from "../Home";
 
 const BrandDetail = lazy(() => import("@/routes/Brand/Detail"));
 const BrandList = lazy(() => import("@/routes/Brand/List"));
+const Product = lazy(() => import("@/routes/Product"));
 const Category = lazy(() => import("@/routes/Category"));
 const Community = lazy(() => import("@/routes/Community"));
 const CommunityDetail = lazy(() => import("@/routes/Community/Detail"));
 const Join = lazy(() => import("@/routes/Join"));
 const Login = lazy(() => import("@/routes/Login"));
 const GuestOrder = lazy(() => import("@/routes/Login/GuestOrder"));
-const Product = lazy(() => import("@/routes/Product"));
+const NotFound = lazy(() => import("@/routes/NotFound"));
 
 export const publicRoutes: RouteObject[] = [
   {
@@ -79,6 +80,10 @@ export const publicRoutes: RouteObject[] = [
       {
         path: "order/guest",
         element: <GuestOrder />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },
