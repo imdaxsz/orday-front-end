@@ -21,6 +21,9 @@ export default function Leave() {
   const navigate = useNavigate();
   const { logout } = useLogout();
 
+  const modalMessage =
+    "회원 탈퇴 처리되었습니다.\n올데이를 이용해 주셔서 감사합니다.";
+
   const redirectHome = () => {
     closeModal();
     logout();
@@ -68,7 +71,7 @@ export default function Leave() {
         onClose={redirectHome}
         type="alert"
         title="회원 탈퇴"
-        detail="회원 탈퇴 처리되었습니다."
+        detail={modalMessage}
       />
     </Container>
   );
