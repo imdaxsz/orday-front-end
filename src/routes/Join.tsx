@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import styled from "styled-components";
 
 import AuthHeader from "@/components/AuthHeader";
@@ -31,6 +32,9 @@ export default function Join() {
     handleAddressChange(data.zonecode, data.address);
     closeModal();
   };
+
+  // 이미 로그인 상태인 경우 redirect
+  if (localStorage.getItem("token")) return <Navigate to="/" replace />;
 
   return (
     <Container>
