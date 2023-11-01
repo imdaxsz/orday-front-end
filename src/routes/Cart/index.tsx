@@ -11,6 +11,7 @@ import useCheckBox from "@/hooks/useCheckBox";
 import { useAppDispatch } from "@/store";
 import { ReducerType } from "@/store/rootReducer";
 import { fetchCartItems, removeCartItem } from "@/store/slices/cartSlice";
+import { addProducts } from "@/store/slices/productInfoSlice";
 
 import ProductItem from "./ProductItem";
 
@@ -32,13 +33,24 @@ export default function Cart() {
 
   const checkedNum = checkedListById.length;
   const removeCheckedItems = (checkedIds: number[]) => {
-    if (!checkedIds.length) alert("삭제할 상품을 선택해주세요");
+    if (!checkedIds.length) {
+      alert("삭제할 상품을 선택해주세요");
+      return;
+    }
     dispatch(removeCartItem(checkedIds));
     resetCheckedList();
   };
 
   const goOrderPage = () => {
-    navigate("/order", { state: checkedListById });
+    if (!checkedListById.length) {
+      alert("상품을 선택해주세요");
+      return;
+    }
+    const products = cartItems.filter((item) =>
+      checkedListById.includes(item.id),
+    );
+    dispatch(addProducts(products));
+    navigate("/order");
   };
 
   const price = {
