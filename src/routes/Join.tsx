@@ -11,6 +11,7 @@ import BaseInput from "@/components/TextInput";
 import { DATE, USER_INFO_FORM_ERROR_MESSAGE } from "@/constants";
 import useJoin from "@/hooks/useJoin";
 import { useModal } from "@/hooks/useModal";
+import { useAppSelector } from "@/store";
 
 export default function Join() {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -34,7 +35,8 @@ export default function Join() {
   };
 
   // 이미 로그인 상태인 경우 redirect
-  if (localStorage.getItem("token")) return <Navigate to="/" replace />;
+  const isLoggedIn = useAppSelector((state) => state.auth.accessToken);
+  if (isLoggedIn) return <Navigate to="/" replace />;
 
   return (
     <Container>

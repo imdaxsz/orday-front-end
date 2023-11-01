@@ -4,6 +4,7 @@ import styled from "styled-components";
 import AuthHeader from "@/components/AuthHeader";
 import Head from "@/components/Head";
 import BaseTabs, { Tab } from "@/components/Tabs";
+import { useAppSelector } from "@/store";
 
 import GuestOrder from "./GuestOrder";
 import LoginForm from "./LoginForm";
@@ -13,7 +14,8 @@ export default function Login() {
   const LOGIN = pathname === undefined;
 
   // 이미 로그인 상태인 경우 redirect
-  if (localStorage.getItem("token")) return <Navigate to="/" replace />;
+  const isLoggedIn = useAppSelector((state) => state.auth.accessToken);
+  if (isLoggedIn) return <Navigate to="/" replace />;
 
   return (
     <Container>

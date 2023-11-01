@@ -2,6 +2,7 @@ import { PropsWithChildren, lazy } from "react";
 import { Navigate, RouteObject } from "react-router-dom";
 
 import Layout from "@/components/Layout";
+import { useAppSelector } from "@/store";
 
 const Cart = lazy(() => import("@/routes/Cart"));
 const Order = lazy(() => import("@/routes/Order"));
@@ -18,7 +19,7 @@ const LikeBrandList = lazy(() => import("@/routes/Like/Brand"));
 
 function PrivateRoute({ children }: PropsWithChildren) {
   // 로그인 검증 (refresh token 확인)
-  const isLoggedIn = localStorage.getItem("token");
+  const isLoggedIn = useAppSelector((state) => state.auth.accessToken);
   return isLoggedIn ? children : <Navigate to="/login" replace />;
 }
 
