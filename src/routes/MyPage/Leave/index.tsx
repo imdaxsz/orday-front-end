@@ -7,6 +7,7 @@ import CheckBox from "@/components/CheckBox";
 import Head from "@/components/Head";
 import Modal from "@/components/Modal";
 import useLeave from "@/hooks/useLeave";
+import useLogout from "@/hooks/useLogout";
 import { useModal } from "@/hooks/useModal";
 
 export default function Leave() {
@@ -18,10 +19,11 @@ export default function Leave() {
     requestLeave: leave,
   } = useLeave();
   const navigate = useNavigate();
+  const { logout } = useLogout();
 
   const redirectHome = () => {
     closeModal();
-    navigate("/");
+    logout();
   };
 
   return (
