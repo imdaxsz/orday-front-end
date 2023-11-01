@@ -36,6 +36,7 @@ export const Title = styled.h3`
 
 export const Detail = styled.p`
   margin-top: 42px;
+  white-space: pre-line;
 `;
 
 export const ButtonBox = styled.div`
