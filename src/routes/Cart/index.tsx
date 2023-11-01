@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import BackButton from "@/components/BackButton";
@@ -14,32 +14,10 @@ import { fetchCartItems, removeCartItem } from "@/store/slices/cartSlice";
 
 import ProductItem from "./ProductItem";
 
-const mockData: CartItem[] = [
-  {
-    id: 1,
-    name: "파타고니아 레트로 x 양털 후리스 뽀글이 플리스 자켓",
-    color: "BROWN",
-    size: "L",
-    amount: 1,
-    price: 100000,
-    imageUrl: "",
-    discountPrice: 10000,
-  },
-  {
-    id: 2,
-    name: "파타고니아 레트로 x 양털 후리스 뽀글이 플리스 자켓",
-    color: "BROWN",
-    size: "L",
-    amount: 1,
-    price: 50000,
-    imageUrl: "",
-    discountPrice: 0,
-  },
-];
-
 export default function Cart() {
   const cartItems = useSelector((state: ReducerType) => state.cart.items);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchCartItems());
@@ -57,6 +35,10 @@ export default function Cart() {
     if (!checkedIds.length) alert("삭제할 상품을 선택해주세요");
     dispatch(removeCartItem(checkedIds));
     resetCheckedList();
+  };
+
+  const goOrderPage = () => {
+    navigate("/order", { state: checkedListById });
   };
 
   const price = {
@@ -130,7 +112,7 @@ export default function Cart() {
         </TotalPrice>
       </PriceList>
       <ButtonBox>
-        <Button type="submit" style={{ width: "390px" }}>
+        <Button type="submit" style={{ width: "390px" }} onClick={goOrderPage}>
           주문하기
         </Button>
         <LinkBtn to={"/"}>계속 쇼핑하기</LinkBtn>
