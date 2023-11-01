@@ -6,7 +6,7 @@ import {
   deleteCartItems,
   getCartList,
   increaseCartProduct,
-} from "@/libs/api/CartApi";
+} from "@/api/CartApi";
 
 interface CartState {
   items: CartItem[];
@@ -14,7 +14,29 @@ interface CartState {
 }
 
 const initialState: CartState = {
-  items: [],
+  items: [
+    // 임시데이터
+    {
+      id: 1,
+      name: "파타고니아 레트로 x 양털 후리스 뽀글이 플리스 자켓",
+      color: "BROWN",
+      size: "L",
+      amount: 1,
+      price: 100000,
+      imageUrl: "",
+      discountPrice: 10000,
+    },
+    {
+      id: 2,
+      name: "파타고니아 레트로 x 양털 후리스 뽀글이 플리스 자켓",
+      color: "BROWN",
+      size: "L",
+      amount: 1,
+      price: 50000,
+      imageUrl: "",
+      discountPrice: 0,
+    },
+  ],
   loading: "idle",
 };
 
