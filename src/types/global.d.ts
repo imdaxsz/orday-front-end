@@ -89,7 +89,7 @@ declare interface CartItem {
   discountPrice: number;
 }
 
-declare type ProductInfo = Pick<Product, "id", "amount">;
+declare type ProductInfo = Pick<CartItem, "id", "amount">;
 
 declare interface CartProductInfo {
   data: ProductInfo;
