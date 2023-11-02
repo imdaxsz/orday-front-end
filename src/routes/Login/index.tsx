@@ -1,9 +1,10 @@
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import AuthHeader from "@/components/AuthHeader";
 import Head from "@/components/Head";
 import BaseTabs, { Tab } from "@/components/Tabs";
+import { useAppSelector } from "@/store";
 
 import GuestOrder from "./GuestOrder";
 import LoginForm from "./LoginForm";
@@ -11,6 +12,11 @@ import LoginForm from "./LoginForm";
 export default function Login() {
   const pathname = useLocation().pathname.split("/")[2];
   const LOGIN = pathname === undefined;
+
+  // 이미 로그인 상태인 경우 redirect
+  const isLoggedIn = useAppSelector((state) => state.auth.accessToken);
+  if (isLoggedIn) return <Navigate to="/" replace />;
+
   return (
     <Container>
       <Head title="로그인 | Orday" />

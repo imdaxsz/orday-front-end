@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { login } from "@/api/AuthApi";
+import { ApiError } from "@/libs/error";
 
 export default function useLogin() {
   const [email, setEmail] = useState("");
@@ -44,9 +45,8 @@ export default function useLogin() {
         await login(email, password);
         navigate("/");
       } catch (error) {
-        // TODO: 응답 코드 확인
-        // 로그인 실패 시...
-        loginError.result = true;
+        if (error instanceof ApiError && error.status === 400)
+          loginError.result = true;
         console.log("Error login: ", error);
       }
     }

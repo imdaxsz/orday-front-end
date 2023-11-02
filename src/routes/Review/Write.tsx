@@ -43,7 +43,7 @@ export default function WriteReview() {
       !["new", "edit"].includes(mode) ||
       idIsNotNumber(id) ||
       (mode === "new" && idIsNotNumber(orderId));
-    if (redirect) navigate("/myPage/reviews");
+    if (redirect) navigate("/myPage/reviews", { replace: true });
   }, [mode, id, navigate, orderId]);
 
   return (
