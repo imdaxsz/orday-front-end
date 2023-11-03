@@ -1,17 +1,35 @@
 import { IMenuItem } from "@/components/Menu/MenuItem";
 
-export const CATEGORY = [
-  "의류",
-  "소품",
-  "잡화",
-  "홈리빙",
-  "뷰티",
-  "상의",
-  "바지/스커트",
-  "아우터",
-  "홈웨어",
-  "언더웨어",
+export const CATEGORY: Category[] = [
+  {
+    id: 1,
+    name: "의류",
+    subCategory: [
+      { id: 1, name: "상의" },
+      { id: 2, name: "바지/스커트" },
+      { id: 3, name: "아우터" },
+      { id: 4, name: "홈웨어" },
+      { id: 5, name: "언더웨어" },
+    ],
+  },
+  { id: 2, name: "소품" },
+  { id: 3, name: "잡화" },
+  { id: 4, name: "홈리빙" },
+  { id: 5, name: "뷰티" },
 ];
+
+export const CategoryMenu: IMenuItem[] = CATEGORY.map((item) => {
+  const menu: IMenuItem = {
+    label: item.name,
+    url: `/products?category=${item.id}`,
+  };
+  if (item.subCategory)
+    menu.subItem = item.subCategory.map((subItem) => ({
+      label: subItem.name,
+      url: `/products?category=${item.id}&sub-category=${subItem.id}`,
+    }));
+  return menu;
+});
 
 export const menuData: IMenuItem[] = [
   {
@@ -26,33 +44,7 @@ export const menuData: IMenuItem[] = [
     label: "SALE",
     url: "/sale",
   },
-  {
-    label: "의류",
-    subItem: [
-      { label: "전체", url: "/products?category=1" },
-      { label: "상의", url: "/products?category=6" },
-      { label: "바지/스커트", url: "/products?category=7" },
-      { label: "아우터", url: "/products?category=8" },
-      { label: "홈웨어", url: "/products?category=9" },
-      { label: "언더웨어", url: "/products?category=10" },
-    ],
-  },
-  {
-    label: "소품",
-    url: "/products?category=2",
-  },
-  {
-    label: "잡화",
-    url: "/products?category=3",
-  },
-  {
-    label: "홈리빙",
-    url: "/products?category=4",
-  },
-  {
-    label: "뷰티",
-    url: "/products?category=5",
-  },
+  ...CategoryMenu,
   {
     label: "브랜드",
     url: "/brands",
