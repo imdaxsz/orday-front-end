@@ -54,6 +54,12 @@ declare interface JoinFormError extends UserInfoFormError {
   terms: boolean;
 }
 
+declare interface Category {
+  name: string;
+  id: number;
+  subCategory?: Category[];
+}
+
 // 임시
 declare interface Product {
   id: number;
