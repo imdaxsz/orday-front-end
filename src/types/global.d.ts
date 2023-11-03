@@ -72,10 +72,15 @@ declare interface Product {
   liked: boolean;
 }
 
+declare interface BrandCategory {
+  categoryId: number;
+  subCategoryId: number;
+}
+
 declare interface Brand {
   id: number;
   name: string;
-  categoryIds: number[];
+  categoryIds: BrandCategory[];
   logoUrl: string;
   imageUrl: string;
   isLiked: boolean;
