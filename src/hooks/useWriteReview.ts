@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import {
   createReview,
-  getReviewDetail,
-  getProductsInfo,
+  // getReviewDetail,
   testGetEditReviewData,
   testGetReviewProductInfo,
   updateReview,

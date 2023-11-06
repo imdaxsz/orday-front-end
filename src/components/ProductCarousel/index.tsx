@@ -2,14 +2,13 @@ import { useState, useEffect } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 import { ArrowIconButton } from "@/components/VisualSection/style";
-import { ProductInfo } from "@/types";
 
 import ProductCard from "../ProductCard";
 
 import { Container, Slides } from "./style";
 
 interface Props {
-  products: ProductInfo[];
+  products: Product[];
   productsTag?: "NEW" | "BEST";
 }
 
@@ -22,7 +21,7 @@ export default function ProductCarousel({ products, productsTag }: Props) {
   const [transition, setTransition] = useState(SLIDE_TRANSITION);
 
   // 무한 캐러셀을 위한 배열 확장
-  const carouselProducts: ProductInfo[] = [
+  const carouselProducts: Product[] = [
     ...products.slice(-SHOWING_ITEM_COUNT),
     ...products,
     ...products.slice(0, SHOWING_ITEM_COUNT),

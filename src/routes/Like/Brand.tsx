@@ -11,6 +11,7 @@ import { Brands, Container, Content, Brand as BaseBrand } from "../Brand/List";
 export default function LikeBrandList() {
   const { brands, selectedOption, setSelectedOption } = useBrandList();
 
+  console.log(brands);
   const brandsMockData: BrandListDto = Array.from(
     { length: 12 },
     (_, index) => ({

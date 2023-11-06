@@ -14,7 +14,6 @@ const CommunityDetail = lazy(() => import("@/routes/Community/Detail"));
 const Join = lazy(() => import("@/routes/Join"));
 const Login = lazy(() => import("@/routes/Login"));
 const Logout = lazy(() => import("@/routes/Logout"));
-const GuestOrder = lazy(() => import("@/routes/Login/GuestOrder"));
 const NotFound = lazy(() => import("@/routes/NotFound"));
 
 export const publicRoutes: RouteObject[] = [
@@ -77,10 +76,6 @@ export const publicRoutes: RouteObject[] = [
       {
         path: "community/reviews/:id",
         element: <CommunityDetail />,
-      },
-      {
-        path: "order/guest",
-        element: <GuestOrder />,
       },
       {
         path: "/logout",
