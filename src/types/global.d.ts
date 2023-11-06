@@ -89,6 +89,18 @@ declare interface Brand {
 declare type BrandListDto = Pick<Brand, "id" | "name" | "imageUrl">[];
 
 /**
+ * @description 상품 목록 조회 요청 params
+ */
+declare interface ProductListRequestParams {
+  brandId?: number;
+  categoryId?: number;
+  subCategoryId?: number;
+  sortId: number;
+  key?: number;
+  size: number;
+}
+
+/**
  * @description 좋아요 기능 적용 가능 대상
  */
 declare type LikeTarget = "product" | "brand" | "post";
