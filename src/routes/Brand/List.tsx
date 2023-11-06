@@ -7,17 +7,7 @@ import Head from "@/components/Head";
 import useBrandList from "@/hooks/useBrandList";
 
 export default function BrandList() {
-  const brandsMockData: BrandListDto = Array.from(
-    { length: 12 },
-    (_, index) => ({
-      id: index + 1,
-      name: "test",
-      imageUrl: "https://url.kr/l2wry9",
-    }),
-  );
-
   const { brands, selectedOption, setSelectedOption } = useBrandList();
-
   return (
     <Container>
       <Head title="브랜드 | Orday" />
@@ -29,7 +19,7 @@ export default function BrandList() {
           setSelectedOption={setSelectedOption}
         />
         <Brands>
-          {brandsMockData.map((brand, i) => (
+          {brands.map((brand, i) => (
             <Brand to={`/brands/${brand.id}`} key={i}>
               <img src={brand.imageUrl} alt={brand.name} />
             </Brand>

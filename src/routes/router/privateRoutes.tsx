@@ -2,6 +2,7 @@ import { PropsWithChildren, lazy } from "react";
 import { Navigate, RouteObject } from "react-router-dom";
 
 import Layout from "@/components/Layout";
+import { useAppSelector } from "@/store";
 
 const Cart = lazy(() => import("@/routes/Cart"));
 const Order = lazy(() => import("@/routes/Order"));
@@ -12,13 +13,12 @@ const EditProfile = lazy(() => import("@/routes/MyPage/EditProfile"));
 const MyReviewList = lazy(() => import("@/routes/Review/List"));
 const WriteReview = lazy(() => import("@/routes/Review/Write"));
 const Leave = lazy(() => import("@/routes/MyPage/Leave"));
-const Logout = lazy(() => import("@/routes/Logout"));
 const LikeList = lazy(() => import("@/routes/Like"));
 const LikeBrandList = lazy(() => import("@/routes/Like/Brand"));
 
 function PrivateRoute({ children }: PropsWithChildren) {
   // 로그인 검증 (refresh token 확인)
-  const isLoggedIn = true; // 임시
+  const isLoggedIn = useAppSelector((state) => state.auth.accessToken);
   return isLoggedIn ? children : <Navigate to="/login" replace />;
 }
 
@@ -66,10 +66,6 @@ export const privateRoutes: RouteObject[] = [
       {
         path: "myPage/leave",
         element: <Leave />,
-      },
-      {
-        path: "/logout",
-        element: <Logout />,
       },
       {
         path: "like/products",

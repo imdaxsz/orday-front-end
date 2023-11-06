@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 
-import { getUserInfo as requestGetUserInfo } from "@/api/AuthApi";
+// import { getUserInfo as requestGetUserInfo } from "@/api/AuthApi";
 
 // TODO: MOCK_DATA 제거
 const WEB_USER_MOCK_DATA = {
@@ -22,24 +22,24 @@ const WEB_USER_MOCK_DATA = {
   infoSet: true,
 };
 
-const GOOGLE_USER_MOCK_DATA = {
-  id: 2,
-  email: "test@naver.com",
-  name: "홍길동",
-  phoneNumber: "-",
-  birthDate: {
-    year: "",
-    month: "",
-    day: "",
-  },
-  addressInfo: {
-    postcode: "",
-    address: "",
-    addressDetail: "",
-  },
-  socialType: "GOOGLE",
-  infoSet: false,
-};
+// const GOOGLE_USER_MOCK_DATA = {
+//   id: 2,
+//   email: "test@naver.com",
+//   name: "홍길동",
+//   phoneNumber: "-",
+//   birthDate: {
+//     year: "",
+//     month: "",
+//     day: "",
+//   },
+//   addressInfo: {
+//     postcode: "",
+//     address: "",
+//     addressDetail: "",
+//   },
+//   socialType: "GOOGLE",
+//   infoSet: false,
+// };
 
 export default function useForm<T extends { addressInfo?: Address }>(
   initialState: T,

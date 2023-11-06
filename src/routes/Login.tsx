@@ -2,7 +2,9 @@ import { RxDividerVertical } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import AuthHeader from "@/components/AuthHeader";
 import Button from "@/components/Button";
+import Head from "@/components/Head";
 import TextInput from "@/components/TextInput";
 import useLogin from "@/hooks/useLogin";
 
@@ -17,6 +19,8 @@ export default function LoginForm() {
 
   return (
     <Container>
+      <Head title="로그인 | Orday" />
+      <AuthHeader title="로그인" />
       <Form onSubmit={onSubmit} noValidate>
         <TextInput
           id="email"
@@ -58,6 +62,8 @@ export default function LoginForm() {
 }
 
 const Container = styled.div`
+  width: 438px;
+  margin: 0 auto;
   button {
     width: 100%;
     ${({ theme }) => theme.typo["body-3-b"]};
@@ -78,6 +84,8 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 15px;
+  margin-top: 40px;
+
   input[type="text"],
   input[type="password"] {
     width: 100%;
