@@ -6,15 +6,10 @@ import DropupIcon from "@/assets/arrow_drop_up.svg?react";
 
 import { Container, Item, SubMenu } from "./MenuItem.style";
 
-interface ISubItem {
-  label: string;
-  url: string;
-}
-
 export interface IMenuItem {
   label: string;
-  url?: string;
-  subItem?: ISubItem[];
+  url: string;
+  subItem?: IMenuItem[];
 }
 
 export default function MenuItem({ label, url, subItem }: IMenuItem) {
@@ -35,6 +30,7 @@ export default function MenuItem({ label, url, subItem }: IMenuItem) {
         {isVisible ? <DropupIcon /> : <DropdownIcon />}
       </Item>
       <SubMenu $isVisible={isVisible}>
+        <Link to={url}>전체</Link>
         {subItem &&
           subItem.map((item, i) => (
             <Link key={i} to={item.url}>

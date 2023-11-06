@@ -6,7 +6,7 @@ import { setAccessToken, signout } from "@/store/slices/authSlice";
 import { ApiError, BaseError } from "../error";
 
 const instance = axios.create({
-  baseURL: "http://localhost:5000/",
+  baseURL: import.meta.env.VITE_API_ROOT,
   timeout: 5 * 1000,
   withCredentials: true,
 });
@@ -27,6 +27,7 @@ instance.interceptors.response.use(
   (response) => {
     // response header에 access token이 있다면
     // access token이 (재)발급된 걸로 간주 -> redux store에 저장
+    console.log(response);
     const accessToken = response.headers["authorization"]
       ? response.headers["authorization"].split("Bearer")[1]
       : null;

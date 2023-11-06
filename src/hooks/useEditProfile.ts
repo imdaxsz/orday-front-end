@@ -9,7 +9,7 @@ import { useModal } from "./useModal";
 const INIT_ERROR = {
   name: false,
   password: 0,
-  confirmPw: false,
+  confirmPassword: false,
   phoneNumber: 0,
   birthDate: false,
   address: false,
@@ -32,8 +32,8 @@ export default function useEditProfile(option?: "join") {
 
   const handleConfirmPwChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    updateForm({ confirmPw: value });
-    setError((prev) => ({ ...prev, confirmPw: value !== form.password }));
+    updateForm({ confirmPassword: value });
+    setError((prev) => ({ ...prev, confirmPassword: value !== form.password }));
   };
 
   // 생년월일
@@ -55,14 +55,14 @@ export default function useEditProfile(option?: "join") {
   // 비밀번호 유효성 검사
   const validatePassword = () => {
     let isValidate = true;
-    setError((prev) => ({ ...prev, password: 0, confirmPw: false }));
+    setError((prev) => ({ ...prev, password: 0, confirmPassword: false }));
     const passwordPattern =
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$%^&*])[A-Za-z\d~!@#$%^&*]{8,16}$/;
     if (!passwordPattern.test(form.password)) {
       setError((prev) => ({ ...prev, password: 2 }));
       isValidate = false;
     }
-    if (form.password !== form.confirmPw) {
+    if (form.password !== form.confirmPassword) {
       setError((prev) => ({ ...prev, confirmPw: true }));
       isValidate = false;
     }

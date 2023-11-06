@@ -12,6 +12,7 @@ export default function useProductList(brandId?: number) {
    * 전체 카테고리일 경우 = 0
    */
   const categoryId = Number(searchParams.get("category")) ?? 0;
+  const subCategoryId = Number(searchParams.get("sub-category")) ?? 0;
 
   const [selectedOption, setSelectedOption] = useState({
     id: 0,
@@ -29,9 +30,10 @@ export default function useProductList(brandId?: number) {
         const {
           cursorRequest: { key },
           body,
-        } = await testProductsApi(
+        } = await getBrandProducts(
           brandId,
           categoryId,
+          subCategoryId,
           selectedOption.id,
           nextKey,
         );
@@ -42,7 +44,7 @@ export default function useProductList(brandId?: number) {
     } catch (error) {
       console.log("Error fetching products: ", error);
     }
-  }, [brandId, categoryId, nextKey, selectedOption.id]);
+  }, [brandId, categoryId, nextKey, selectedOption.id, subCategoryId]);
 
   // 무한 스크롤 조회
   useEffect(() => {
@@ -54,7 +56,7 @@ export default function useProductList(brandId?: number) {
   useEffect(() => {
     setProducts([]);
     setNextKey(null);
-  }, [categoryId, selectedOption.id]);
+  }, [categoryId, subCategoryId, selectedOption.id]);
 
   return { ref, products, selectedOption, setSelectedOption };
 }

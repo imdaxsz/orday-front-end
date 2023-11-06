@@ -46,7 +46,7 @@ export default function useLogin() {
         navigate("/");
       } catch (error) {
         if (error instanceof ApiError && error.status === 400)
-          loginError.result = true;
+          setLoginError((prev) => ({ ...prev, result: true }));
         console.log("Error login: ", error);
       }
     }

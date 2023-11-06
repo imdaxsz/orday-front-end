@@ -28,7 +28,7 @@ declare interface BaseUserInfo {
 
 declare interface UserInfoForm extends BaseUserInfo {
   password: string;
-  confirmPw: string;
+  confirmPassword: string;
 }
 
 /**
@@ -43,7 +43,7 @@ declare interface UserInfoDto extends BaseUserInfo {
 declare interface UserInfoFormError {
   name: boolean;
   password: number;
-  confirmPw: boolean;
+  confirmPassword: boolean;
   phoneNumber: number;
   birthDate: boolean;
   address: boolean;
@@ -52,6 +52,12 @@ declare interface UserInfoFormError {
 declare interface JoinFormError extends UserInfoFormError {
   email: number;
   terms: boolean;
+}
+
+declare interface Category {
+  name: string;
+  id: number;
+  subCategory?: Category[];
 }
 
 // 임시
@@ -66,16 +72,33 @@ declare interface Product {
   liked: boolean;
 }
 
+declare interface BrandCategory {
+  categoryId: number;
+  subCategoryId: number;
+}
+
 declare interface Brand {
   id: number;
   name: string;
-  categoryIds: number[];
+  categoryIds: BrandCategory[];
   logoUrl: string;
   imageUrl: string;
-  isLiked: boolean;
+  liked: boolean;
 }
 
 declare type BrandListDto = Pick<Brand, "id" | "name" | "imageUrl">[];
+
+/**
+ * @description 상품 목록 조회 요청 params
+ */
+declare interface ProductListRequestParams {
+  brandId?: number;
+  categoryId?: number;
+  subCategoryId?: number;
+  sortId: number;
+  key?: number;
+  size: number;
+}
 
 /**
  * @description 좋아요 기능 적용 가능 대상

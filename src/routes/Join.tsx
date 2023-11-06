@@ -63,13 +63,13 @@ export default function Join() {
           message={USER_INFO_FORM_ERROR_MESSAGE.password[error.password]}
         />
         <TextInput
-          id="confirmPw"
+          id="confirmPassword"
           type="password"
-          value={form.confirmPw}
+          value={form.confirmPassword}
           onChange={handleConfirmPwChange}
           label="비밀번호 확인"
           autoComplete="on"
-          warn={Boolean(error.confirmPw)}
+          warn={Boolean(error.confirmPassword)}
           message="비밀번호가 일치하지 않습니다."
         />
         <TextInput

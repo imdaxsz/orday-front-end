@@ -13,40 +13,24 @@ import useProductList from "@/hooks/useProductList";
 
 export default function BrandDetail() {
   const navigate = useNavigate();
-  // const { info } = useBrandDetail();
+  const { info } = useBrandDetail();
   const brandId = Number(useLocation().pathname.split("/")[2]);
   const { ref, products, selectedOption, setSelectedOption } =
     useProductList(brandId);
 
-  const brandMockData: Brand = {
-    id: 1,
-    name: "플라스틱 아크",
-    categoryIds: [1, 2, 3],
-    logoUrl: "https://url.kr/atx7ql",
-    imageUrl: "https://url.kr/4murbh",
-    isLiked: false,
-  };
-
   return (
     <div style={{ paddingBottom: "150px" }}>
-      <Head title={`${brandMockData.name} | Orday`} />
+      <Head title={`${info?.name} | Orday`} />
       <Header>
         <Button iconOnly onClick={() => navigate(-1)}>
           <IoArrowBackOutline size={24} />
         </Button>
-        <LikeButton
-          isLiked={brandMockData.isLiked}
-          target="brand"
-          id={brandMockData.id}
-        />
-        <LogoImage src={brandMockData.logoUrl} alt={brandMockData.name} />
-        <BackgroundImage
-          src={brandMockData.imageUrl}
-          alt={brandMockData.name}
-        />
+        <LikeButton isLiked={info?.liked} target="brand" id={info?.id ?? 0} />
+        <LogoImage src={info?.logoUrl} alt={info?.name} />
+        <BackgroundImage src={info?.imageUrl} alt={info?.name} />
       </Header>
       <Menu>
-        <CategoryNav brand categories={brandMockData.categoryIds} />
+        <CategoryNav brand categories={info?.categoryIds} />
         <Dropdown
           type="product"
           selectedOption={selectedOption}
