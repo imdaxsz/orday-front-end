@@ -1,25 +1,14 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
+import { createOrderProduct } from "@/api/OrderApi";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import Modal from "@/components/Modal";
-import useCheckBox from "@/hooks/useCheckBox";
+import useFormCheck from "@/hooks/useFormCheck";
 import { useModal } from "@/hooks/useModal";
-
-// 임시데이터
-const mockData = [
-  {
-    id: 1,
-    name: "파타고니아 레트로 x 양털 후리스 뽀글이 플리스 자켓",
-    color: "BROWN",
-    size: "L",
-    amount: 1,
-    price: 198000,
-    image: "",
-  },
-];
+import { ReducerType } from "@/store/rootReducer";
 
 interface ProductInfoProps {
   form: OrderForm;
@@ -27,88 +16,57 @@ interface ProductInfoProps {
 
 export default function ProductInfo({ form }: ProductInfoProps) {
   const navigate = useNavigate();
+  const { state: productIds } = useLocation();
   const { isModalOpen, openModal, closeModal } = useModal();
-  const products = {
-    price: mockData
-      .map((item) => Number(item.price))
-      .reduce((acc, cur) => acc + cur),
-    sale: 0,
-    shipping: 0,
-  };
-  const { checkedListById, handleCheckChange } = useCheckBox();
-  const totalPrice = products.price + products.sale + products.shipping;
-
-  const [modalMessage, setModalMessage] = useState<string | null>(null);
-
-  const validateForm = () => {
-    const { name, phoneNumber, addressInfo, selectedMethod } = form;
-
-    if (name.trim().length === 0) {
-      setModalMessage("이름을 입력해주세요.");
-      return false;
-    }
-    if (!/^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/.test(phoneNumber)) {
-      setModalMessage("연락처를 입력해주세요.");
-      return false;
-    }
-    if (
-      !addressInfo.postcode ||
-      !addressInfo.address ||
-      addressInfo.addressDetail.trim().length === 0
-    ) {
-      setModalMessage("주소를 입력해주세요.");
-      return false;
-    }
-    if (!selectedMethod) {
-      setModalMessage("결제수단을 선택해주세요.");
-      return false;
-    }
-
-    if (!checkedListById.includes(1)) {
-      setModalMessage("주문정보에 동의해주세요.");
-      return false;
-    }
-    if (!checkedListById.includes(2)) {
-      setModalMessage("제 3자 제공에 동의해주세요.");
-      return false;
-    }
-
-    setModalMessage(null);
-    return true;
-  };
+  const cartItems = useSelector((state: ReducerType) => state.cart.items);
+  const productItems = cartItems.filter((item) => productIds.includes(item.id));
+  const { modalMessage, validateForm, handleCheckChange } = useFormCheck(form);
 
   const openCheckedModal = () => {
     validateForm();
     openModal();
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (!validateForm()) return;
 
-    const data = {
+    const orderInfo: OrderInfo = {
       ...form,
-      productsInfo: mockData.map(({ id, amount }) => ({ id, amount })),
-      price: products.price,
-      sale: products.sale,
-      shipping: products.shipping,
-      totalPrice,
+      productsInfo: productItems.map(({ id, amount }) => ({ id, amount })),
     };
-    console.log("data", data);
 
-    navigate("/order/confirm");
+    try {
+      await createOrderProduct(orderInfo);
+      navigate("/order/confirm");
+    } catch (error) {
+      console.log("Error creating order: ", error);
+    }
   };
+
+  const products = {
+    price: productItems
+      .map((item) => Number(item.price))
+      .reduce((acc, cur) => acc + cur),
+    sale: productItems.length
+      ? productItems
+          .map((item) => Number(item.discountPrice) * item.amount)
+          .reduce((acc, cur) => acc + cur)
+      : 0,
+    shipping: 0,
+  };
+  const totalPrice = products.price - products.sale + products.shipping;
 
   return (
     <Container>
       <InfoTitle>
         주문상품
-        <span>{mockData.length}</span>
+        <span>{productItems.length}</span>
       </InfoTitle>
       <Line />
-      {mockData.map((item) => (
+      {productItems.map((item) => (
         <div key={item.id}>
           <ProductItem>
-            <ProductImage src={item.image} />
+            <ProductImage src={item.imageUrl} />
             <ItemInfo>
               <div>
                 <h4>{item.name}</h4>
@@ -164,25 +122,16 @@ export default function ProductInfo({ form }: ProductInfoProps) {
       <Button style={{ width: "100%" }} onClick={openCheckedModal}>
         주문하기
       </Button>
-      {modalMessage ? (
-        <Modal
-          isOpen={isModalOpen}
-          onSubmit={onSubmit}
-          onClose={closeModal}
-          type="alert"
-          title="입력확인"
-          detail={modalMessage}
-        />
-      ) : (
-        <Modal
-          isOpen={isModalOpen}
-          onSubmit={onSubmit}
-          onClose={closeModal}
-          type="confirm"
-          title="주문확인 안내"
-          detail="선택하신 상품을 주문하시겠습니까?"
-        />
-      )}
+      <Modal
+        isOpen={isModalOpen}
+        onSubmit={modalMessage ? undefined : onSubmit}
+        onClose={closeModal}
+        title={modalMessage ? "입력확인" : "확인 안내"}
+        type={modalMessage ? "alert" : "confirm"}
+        detail={
+          modalMessage ? modalMessage : "선택하신 상품을 주문하시겠습니까?"
+        }
+      />
     </Container>
   );
 }

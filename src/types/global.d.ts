@@ -54,14 +54,6 @@ declare interface JoinFormError extends UserInfoFormError {
   terms: boolean;
 }
 
-declare interface OrderForm {
-  name: string;
-  phoneNumber: string;
-  addressInfo: Address;
-  deliveryRequest: string | null;
-  selectedMethod: number | null;
-}
-
 // 임시
 declare interface Product {
   id: number;
@@ -109,11 +101,22 @@ declare interface CartItem {
   discountPrice: number;
 }
 
+declare type ProductInfo = Pick<CartItem, "id", "amount">;
+
 declare interface CartProductInfo {
-  data: {
-    id: number;
-    amount: number;
-  };
+  data: ProductInfo;
+}
+
+declare interface OrderForm {
+  name: string;
+  phoneNumber: string;
+  addressInfo: Address;
+  deliveryRequest: string | null;
+  selectedMethod: number | null;
+}
+
+declare interface OrderInfo extends OrderForm {
+  productsInfo: ProductInfo[];
 }
 
 declare type ReviewStatus = "WRITABLE" | "WRITTEN";

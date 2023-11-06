@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import styled from "styled-components";
 
 import AuthHeader from "@/components/AuthHeader";
@@ -10,6 +11,7 @@ import BaseInput from "@/components/TextInput";
 import { DATE, USER_INFO_FORM_ERROR_MESSAGE } from "@/constants";
 import useJoin from "@/hooks/useJoin";
 import { useModal } from "@/hooks/useModal";
+import { useAppSelector } from "@/store";
 
 export default function Join() {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -31,6 +33,10 @@ export default function Join() {
     handleAddressChange(data.zonecode, data.address);
     closeModal();
   };
+
+  // 이미 로그인 상태인 경우 redirect
+  const isLoggedIn = useAppSelector((state) => state.auth.accessToken);
+  if (isLoggedIn) return <Navigate to="/" replace />;
 
   return (
     <Container>

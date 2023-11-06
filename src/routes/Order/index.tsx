@@ -9,7 +9,7 @@ import ProductInfo from "./ProductInfo";
 import UserInfo from "./UserInfo";
 
 export default function Order() {
-  const initialState = {
+  const initialState: OrderForm = {
     name: "",
     phoneNumber: "010-",
     addressInfo: {
