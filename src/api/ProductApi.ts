@@ -17,13 +17,20 @@ export const getProductsInfo = async (idList: number[]) => {
 export const getBrandProducts = async (
   brandId: number,
   categoryId: number,
+  subCategoryId: number,
   sortId: number,
   key: number | null,
 ) => {
-  const params = key
-    ? { key, size: 12, brandId, categoryId }
-    : { size: 12, brandId, categoryId };
-  return get<ProductListDto>(`product/get/brand/${sortId}`, {
+  let url = "product/get/brand";
+  const params: ProductListRequestParams = key
+    ? { key, size: 12, sortId, brandId }
+    : { size: 12, sortId, brandId };
+  if (categoryId !== 0) {
+    params.categoryId = categoryId;
+    params.subCategoryId = subCategoryId;
+    url = url + "/category";
+  }
+  return get<ProductListDto>(url, {
     params,
   });
 };
@@ -59,12 +66,20 @@ const productsMockData2: Product[] = Array(12).fill(productMockData2);
 export const testProductsApi = async (
   brandId: number,
   categoryId: number,
+  subCategoryId: number,
   sortId: number,
   key: number | null,
 ) => {
-  const params = key
-    ? { key, size: 12, brandId, categoryId }
-    : { size: 12, brandId, categoryId };
+  let url = "product/get/brand";
+  const params: ProductListRequestParams = key
+    ? { key, size: 12, sortId, brandId }
+    : { size: 12, sortId, brandId };
+  if (categoryId !== 0) {
+    params.categoryId = categoryId;
+    params.subCategoryId = subCategoryId;
+    url = url + "/category";
+  }
+  console.log(url);
   if (categoryId === 3 || sortId === 1)
     return {
       cursorRequest: { key: 1, size: 12 },
