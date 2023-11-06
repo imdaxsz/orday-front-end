@@ -75,13 +75,13 @@ export default function EditProfile() {
             <Item>
               <span>비밀번호 확인</span>
               <TextInput
-                id="confirmPw"
+                id="confirmPassword"
                 type="password"
-                value={form.confirmPw}
+                value={form.confirmPassword}
                 autoComplete="off"
                 onChange={handleConfirmPwChange}
                 message="비밀번호가 일치하지 않습니다."
-                warn={error.confirmPw}
+                warn={error.confirmPassword}
               />
             </Item>
           </>

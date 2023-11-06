@@ -28,7 +28,7 @@ declare interface BaseUserInfo {
 
 declare interface UserInfoForm extends BaseUserInfo {
   password: string;
-  confirmPw: string;
+  confirmPassword: string;
 }
 
 /**
@@ -43,7 +43,7 @@ declare interface UserInfoDto extends BaseUserInfo {
 declare interface UserInfoFormError {
   name: boolean;
   password: number;
-  confirmPw: boolean;
+  confirmPassword: boolean;
   phoneNumber: number;
   birthDate: boolean;
   address: boolean;
@@ -83,7 +83,7 @@ declare interface Brand {
   categoryIds: BrandCategory[];
   logoUrl: string;
   imageUrl: string;
-  isLiked: boolean;
+  liked: boolean;
 }
 
 declare type BrandListDto = Pick<Brand, "id" | "name" | "imageUrl">[];

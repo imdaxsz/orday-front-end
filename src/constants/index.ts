@@ -75,7 +75,7 @@ export const USER_INFO_FORM_ERROR_MESSAGE = {
 export const DEFAULT_USER_INFO_DATA: UserInfoForm = {
   email: "",
   password: "",
-  confirmPw: "",
+  confirmPassword: "",
   name: "",
   phoneNumber: "",
   birthDate: {
