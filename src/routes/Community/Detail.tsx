@@ -7,6 +7,7 @@ import BaseInput from "@/components/TextInput";
 
 export default function CommunityDetail() {
   const MOCK_DATA = {
+    id: 1,
     profile: {
       image: "",
       name: "박나무",
@@ -50,7 +51,7 @@ export default function CommunityDetail() {
             <img src={MOCK_DATA.profile.image} alt={MOCK_DATA.profile.name} />
             <span>{MOCK_DATA.profile.name}</span>
           </Profile>
-          <LikeButton target="post" />
+          <LikeButton id={MOCK_DATA.id} target="post" />
         </Header>
         {MOCK_DATA.info.image && (
           <img src={MOCK_DATA.info.image} alt={MOCK_DATA.info.title} />

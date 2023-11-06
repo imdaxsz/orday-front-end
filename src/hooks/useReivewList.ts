@@ -3,8 +3,8 @@ import { useState, useEffect, useCallback } from "react";
 import {
   getMockWritableReviews,
   getMockWrittenReviews,
-  getWritableReivews,
-  getWrittenReivews,
+  // getWritableReivews,
+  // getWrittenReivews,
 } from "@/api/ReviewApi";
 export default function useReviewList(status: number) {
   const [reviews, setReviews] = useState<WritableReview[] | WrittenReview[]>(

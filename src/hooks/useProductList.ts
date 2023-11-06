@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useInView } from "react-intersection-observer";
 import { useSearchParams } from "react-router-dom";
 
-import { getBrandProducts, testProductsApi } from "@/api/ProductApi";
+import { getBrandProducts } from "@/api/ProductApi";
 
 export default function useProductList(brandId?: number) {
   const [ref, inView] = useInView();
