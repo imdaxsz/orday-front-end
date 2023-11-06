@@ -11,19 +11,23 @@ import VisualSection, { Item } from "@/components/VisualSection";
 export default function Home() {
   const visualSectionMockData: Item[] = [
     {
-      image: "https://url.kr/oirz6q",
+      image:
+        "https://my-shopping-mall.s3.ap-northeast-2.amazonaws.com/image/orday/visualsection1.png",
       url: "",
     },
     {
-      image: "https://url.kr/1czwok",
+      image:
+        "https://my-shopping-mall.s3.ap-northeast-2.amazonaws.com/image/orday/visualsection2.png",
       url: "",
     },
     {
-      image: "https://url.kr/efvjwn",
+      image:
+        "https://my-shopping-mall.s3.ap-northeast-2.amazonaws.com/image/orday/visualsection3.png",
       url: "",
     },
     {
-      image: "https://url.kr/l8n92d",
+      image:
+        "https://my-shopping-mall.s3.ap-northeast-2.amazonaws.com/image/orday/visualsection4.png",
       url: "",
     },
   ];
@@ -55,6 +59,7 @@ export default function Home() {
     price: 74000,
     score: 1,
     description: "상품설명",
+    liked: false,
   }));
 
   const carouselMockdata1 = {
@@ -113,8 +118,14 @@ export default function Home() {
       <EventSection>
         <Title>Orday EVENT</Title>
         <EventContent>
-          <img src="" alt="1" />
-          <img src="" alt="2" />
+          <img
+            src="https://my-shopping-mall.s3.ap-northeast-2.amazonaws.com/image/orday/event1.png"
+            alt="event1"
+          />
+          <img
+            src="https://my-shopping-mall.s3.ap-northeast-2.amazonaws.com/image/orday/event2.png"
+            alt="event2"
+          />
         </EventContent>
       </EventSection>
       <ProductSection>
@@ -125,7 +136,12 @@ export default function Home() {
         </MoreLink>
         <ProductCarousel products={productsMockData} productsTag="NEW" />
       </ProductSection>
-      <Magazine>매거진/이야기 등</Magazine>
+      <Magazine>
+        <img
+          src="https://my-shopping-mall.s3.ap-northeast-2.amazonaws.com/image/orday/magazine.png"
+          alt="magazine"
+        />
+      </Magazine>
       <SaleSection>
         <Title>Orday SALE</Title>
         <Carousel items={carouselMockData} />
@@ -203,6 +219,12 @@ const Magazine = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const SaleSection = styled.section`
