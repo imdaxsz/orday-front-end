@@ -18,7 +18,9 @@ const LikeBrandList = lazy(() => import("@/routes/Like/Brand"));
 
 function PrivateRoute({ children }: PropsWithChildren) {
   // 로그인 검증 (refresh token 확인)
-  const isLoggedIn = useAppSelector((state) => state.auth.accessToken);
+  // const isLoggedIn = useAppSelector((state) => state.auth.accessToken);
+  const isLoggedIn = localStorage.getItem("token");
+  // const isLoggedIn = true;
   return isLoggedIn ? children : <Navigate to="/login" replace />;
 }
 
