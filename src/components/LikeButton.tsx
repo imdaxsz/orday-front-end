@@ -6,7 +6,7 @@ import useToggleLike from "@/hooks/useToggleLike";
 interface LikeButtonProps {
   id: number;
   target: LikeTarget;
-  isLiked: boolean; // 현재 사용자의 좋아요 여부
+  isLiked?: boolean; // 현재 사용자의 좋아요 여부
 }
 
 export default function LikeButton({ id, target, isLiked }: LikeButtonProps) {

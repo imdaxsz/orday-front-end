@@ -5,7 +5,7 @@ import { toggleLikeBrand } from "@/api/BrandApi";
 export default function useToggleLike(
   id: number,
   target: LikeTarget,
-  isLiked: boolean,
+  isLiked?: boolean,
 ) {
   const [like, setLike] = useState(isLiked);
 
