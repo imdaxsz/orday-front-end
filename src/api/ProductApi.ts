@@ -64,16 +64,12 @@ export const getBestCategoryProducts = async (
  * @returns 상품 리스트
  */
 export const getBrandProducts = async (
-  brandId: number,
-  categoryId: number,
-  subCategoryId: number,
-  sortId: number,
-  key: number | null,
+  paramsInfo: ProductListRequestParams,
 ) => {
+  const { key, sortId, brandId, categoryId, subCategoryId } = paramsInfo;
+
   let url = "product/get/brand";
-  const params: ProductListRequestParams = key
-    ? { key, size: 12, sortId, brandId }
-    : { size: 12, sortId, brandId };
+  const params: ProductListRequestParams = { key, size: 12, sortId, brandId };
   if (categoryId !== 0) {
     params.categoryId = categoryId;
     params.subCategoryId = subCategoryId;
