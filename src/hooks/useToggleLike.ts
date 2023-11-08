@@ -7,10 +7,10 @@ export default function useToggleLike(
   target: LikeTarget,
   isLiked?: boolean,
 ) {
-  const [like, setLike] = useState(isLiked);
+  const [like, setLike] = useState(isLiked ?? false);
 
   useEffect(() => {
-    setLike(isLiked);
+    if (isLiked) setLike(isLiked);
   }, [isLiked]);
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
