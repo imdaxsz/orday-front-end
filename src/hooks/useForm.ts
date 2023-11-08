@@ -1,26 +1,26 @@
 import { useEffect, useState, useCallback } from "react";
 
-// import { getUserInfo as requestGetUserInfo } from "@/api/AuthApi";
+import { getUserInfo as requestGetUserInfo } from "@/api/AuthApi";
 
 // TODO: MOCK_DATA 제거
-const WEB_USER_MOCK_DATA = {
-  id: 1,
-  email: "test@naver.com",
-  name: "홍길동",
-  phoneNumber: "010-1234-5678",
-  birthDate: {
-    year: "2023",
-    month: "10",
-    day: "19",
-  },
-  addressInfo: {
-    postcode: "12345",
-    address: "서울시 강남구 어쩌고",
-    addressDetail: "102동 203호",
-  },
-  socialType: "WEB",
-  infoSet: true,
-};
+// const WEB_USER_MOCK_DATA = {
+//   id: 1,
+//   email: "test@naver.com",
+//   name: "홍길동",
+//   phoneNumber: "010-1234-5678",
+//   birthDate: {
+//     year: "2023",
+//     month: "10",
+//     day: "19",
+//   },
+//   addressInfo: {
+//     postcode: "12345",
+//     address: "서울시 강남구 어쩌고",
+//     addressDetail: "102동 203호",
+//   },
+//   socialType: "WEB",
+//   infoSet: true,
+// };
 
 // const GOOGLE_USER_MOCK_DATA = {
 //   id: 2,
@@ -63,9 +63,10 @@ export default function useForm<T extends { addressInfo?: Address }>(
   // 회원정보 조회
   const getUserInfo = useCallback(async () => {
     try {
-      // const { socialType, infoSet, ...formData } = await requestGetUserInfo();
       const { socialType, infoSet, id, birthDate, ...formData } =
-        WEB_USER_MOCK_DATA;
+        await requestGetUserInfo();
+      // const { socialType, infoSet, id, birthDate, ...formData } =
+      //   WEB_USER_MOCK_DATA;
       // const { socialType, infoSet, ...formData } = GOOGLE_USER_MOCK_DATA;
       if ("id" in form || "birthDate" in form) {
         setForm((prev) => ({ ...prev, id, birthDate, ...formData }));
