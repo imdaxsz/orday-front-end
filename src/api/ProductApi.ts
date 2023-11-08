@@ -27,7 +27,7 @@ export const getCategoryProducts = async (
  @description NEW, SALE 상품 목록 조회 요청
  * @returns 상품 리스트
  */
-export const getProducts = async (
+export const getNewOrSaleProducts = async (
   paramsInfo: ProductListRequestParams,
   pathname: string,
 ) => {

@@ -7,7 +7,7 @@ import {
   getBestCategoryProducts,
   getBrandProducts,
   getCategoryProducts,
-  getProducts,
+  getNewOrSaleProducts,
 } from "@/api/ProductApi";
 
 export default function useProductList(brandId?: number) {
@@ -40,13 +40,11 @@ export default function useProductList(brandId?: number) {
     };
   }, [nextKey, selectedOption.id]);
 
-  if (pathname === "products") {
+  if (pathname === "products" || brandId) {
     params.categoryId = categoryId;
     params.subCategoryId = subCategoryId;
   }
   if (brandId) {
-    params.categoryId = categoryId;
-    params.subCategoryId = subCategoryId;
     params.brandId = brandId;
   }
 
@@ -66,7 +64,7 @@ export default function useProductList(brandId?: number) {
         const {
           cursorRequest: { key },
           body,
-        } = await getProducts(params, pathname);
+        } = await getNewOrSaleProducts(params, pathname);
         setProducts((prev) => [...prev, ...body]);
         setNextKey(key);
       }
