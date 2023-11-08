@@ -1,131 +1,57 @@
-import { useState } from "react";
 import { styled } from "styled-components";
 
 import CategoryNav from "@/components/CategoryNav";
 import Dropdown from "@/components/Dropdown";
 import ProductCard from "@/components/ProductCard";
-
-const mockdata = [
-  {
-    id: 1,
-    image: "",
-    url: "",
-    brand: { name: "브랜드명", pathname: "test" },
-    name: "상품1",
-    price: 10000,
-  },
-  {
-    id: 2,
-    image: "",
-    url: "",
-    brand: { name: "브랜드명", pathname: "test" },
-    name: "상품2",
-    price: 10000,
-  },
-  {
-    id: 3,
-    image: "",
-    url: "",
-    brand: { name: "브랜드명", pathname: "test" },
-    name: "상품3",
-    price: 10000,
-  },
-];
-
-const mockdata2 = [
-  {
-    id: 1,
-    image: "",
-    url: "",
-    brand: { name: "브랜드명", pathname: "test" },
-    name: "상품1",
-    price: 10000,
-  },
-  {
-    id: 2,
-    image: "",
-    url: "",
-    brand: { name: "브랜드명", pathname: "test" },
-    name: "상품2",
-    price: 10000,
-  },
-  {
-    id: 3,
-    image: "",
-    url: "",
-    brand: { name: "브랜드명", pathname: "test" },
-    name: "상품3",
-    price: 10000,
-  },
-  {
-    id: 4,
-    image: "",
-    url: "",
-    brand: { name: "브랜드명", pathname: "test" },
-    name: "상품4",
-    price: 10000,
-  },
-  {
-    id: 5,
-    image: "",
-    url: "",
-    brand: { name: "브랜드명", pathname: "test" },
-    name: "상품5",
-    price: 10000,
-  },
-  {
-    id: 6,
-    image: "",
-    url: "",
-    brand: { name: "브랜드명", pathname: "test" },
-    name: "상품6",
-    price: 10000,
-  },
-  {
-    id: 7,
-    image: "",
-    url: "",
-    brand: { name: "브랜드명", pathname: "test" },
-    name: "상품7",
-    price: 10000,
-  },
-  {
-    id: 8,
-    image: "",
-    url: "",
-    brand: { name: "브랜드명", pathname: "test" },
-    name: "상품8",
-    price: 10000,
-  },
-];
+import useProductList from "@/hooks/useProductList";
 
 export default function Category() {
-  const [selectedOption, setSelectedOption] = useState({
-    id: 0,
-    name: "최신순",
-    value: "new",
-  });
+  const {
+    ref,
+    products,
+    selectedOption,
+    setSelectedOption,
+    categoryBestItems,
+    pathname,
+  } = useProductList();
 
   return (
     <Container>
       <CategoryNav />
-      <CategoryNewList>
-        {mockdata.map((item) => (
-          <ProductCard key={item.id} info={item} size="xl" $tag="BEST" />
-        ))}
-      </CategoryNewList>
+      {categoryBestItems && categoryBestItems.length > 0 ? (
+        <CategoryBestList>
+          {categoryBestItems.map((item) => (
+            <ProductCard key={item.id} info={item} size="xl" $tag="BEST" />
+          ))}
+        </CategoryBestList>
+      ) : (
+        <></>
+      )}
 
       <CategoryItems>
-        <Dropdown
-          type="product"
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-        />
-        <ItemList>
-          {mockdata2.map((item) => (
-            <ProductCard key={item.id} info={item} size="md" />
-          ))}
-        </ItemList>
+        {pathname === "best" ? (
+          <>
+            <ItemList>
+              {products.map((item) => (
+                <ProductCard key={item.id} info={item} size="md" />
+              ))}
+            </ItemList>
+          </>
+        ) : (
+          <>
+            <Dropdown
+              type="product"
+              selectedOption={selectedOption}
+              setSelectedOption={setSelectedOption}
+            />
+            <ItemList>
+              {products.map((item) => (
+                <ProductCard key={item.id} info={item} size="md" />
+              ))}
+            </ItemList>
+            <div ref={ref} />
+          </>
+        )}
       </CategoryItems>
     </Container>
   );
@@ -135,23 +61,22 @@ const Container = styled.div`
   padding-bottom: 200px;
 `;
 
-const CategoryNewList = styled.section`
+const CategoryBestList = styled.section`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 15rem;
 `;
 
 const CategoryItems = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin-top: 15rem;
 `;
 
 const ItemList = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 5rem 0;
 `;

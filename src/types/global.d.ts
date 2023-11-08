@@ -96,8 +96,8 @@ declare interface ProductListRequestParams {
   categoryId?: number;
   subCategoryId?: number;
   sortId: number;
-  key?: number;
-  size: number;
+  key?: number | null;
+  size?: number;
 }
 
 /**
