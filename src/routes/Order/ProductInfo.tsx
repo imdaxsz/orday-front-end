@@ -1,5 +1,5 @@
-import { useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 import { createOrderProduct } from "@/api/OrderApi";
@@ -8,7 +8,8 @@ import CheckBox from "@/components/CheckBox";
 import Modal from "@/components/Modal";
 import useFormCheck from "@/hooks/useFormCheck";
 import { useModal } from "@/hooks/useModal";
-import { ReducerType } from "@/store/rootReducer";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { resetProducts } from "@/store/slices/productInfoSlice";
 
 interface ProductInfoProps {
   form: OrderForm;
@@ -16,11 +17,21 @@ interface ProductInfoProps {
 
 export default function ProductInfo({ form }: ProductInfoProps) {
   const navigate = useNavigate();
-  const { state: productIds } = useLocation();
+  const dispatch = useAppDispatch();
   const { isModalOpen, openModal, closeModal } = useModal();
-  const cartItems = useSelector((state: ReducerType) => state.cart.items);
-  const productItems = cartItems.filter((item) => productIds.includes(item.id));
   const { modalMessage, validateForm, handleCheckChange } = useFormCheck(form);
+  const productItems = useAppSelector((state) => state.productInfo.items);
+
+  useEffect(() => {
+    if (!productItems.length) {
+      alert("주문할 상품이 없습니다");
+      navigate("/");
+    }
+  }, [productItems, navigate]);
+
+  if (!productItems.length) {
+    return null;
+  }
 
   const openCheckedModal = () => {
     validateForm();
@@ -29,15 +40,14 @@ export default function ProductInfo({ form }: ProductInfoProps) {
 
   const onSubmit = async () => {
     if (!validateForm()) return;
-
     const orderInfo: OrderInfo = {
       ...form,
       productsInfo: productItems.map(({ id, amount }) => ({ id, amount })),
     };
-
     try {
       await createOrderProduct(orderInfo);
-      navigate("/order/confirm");
+      navigate("/order/confirm", { replace: true });
+      dispatch(resetProducts());
     } catch (error) {
       console.log("Error creating order: ", error);
     }
