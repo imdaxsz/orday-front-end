@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import Logo from "@/assets/logo.svg?react";
-import { useAppSelector } from "@/store";
+// import { useAppSelector } from "@/store";
 
 import Backdrop from "../Backdrop";
 import Menu from "../Menu";
@@ -13,7 +13,8 @@ import { Container, Content, Group, Item } from "./style";
 export default function Header() {
   const [menuIsVisible, setMenuIsVisible] = useState(false);
   const [myMenuIsVisible, setMyMenuIsVisible] = useState(false);
-  const isLoggedIn = useAppSelector((state) => state.auth.accessToken);
+  // const isLoggedIn = useAppSelector((state) => state.auth.accessToken);
+  const isLoggedIn = localStorage.getItem("token");
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname.split("/");

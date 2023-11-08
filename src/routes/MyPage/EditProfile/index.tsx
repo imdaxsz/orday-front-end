@@ -118,21 +118,21 @@ export default function EditProfile() {
               options={DATE.year}
               id="year"
               text="연도"
-              selected={form.birthDate.year}
+              selected={form.birthDate?.year}
               onChange={handleSelectChange}
             />
             <SelectBox
               text="월"
               id="month"
               options={DATE.month}
-              selected={form.birthDate.month}
+              selected={form.birthDate?.month}
               onChange={handleSelectChange}
             />
             <SelectBox
               text="일"
               id="day"
               options={DATE.day}
-              selected={form.birthDate.day}
+              selected={form.birthDate?.day}
               onChange={handleSelectChange}
             />
           </InputContainer>

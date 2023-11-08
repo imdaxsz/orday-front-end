@@ -27,16 +27,17 @@ instance.interceptors.response.use(
   (response) => {
     // response header에 access token이 있다면
     // access token이 (재)발급된 걸로 간주 -> redux store에 저장
-    console.log(response);
-    const accessToken = response.headers["authorization"]
-      ? response.headers["authorization"].split("Bearer")[1]
-      : null;
+    const accessToken = response.headers["authorization"];
     if (accessToken) store.dispatch(setAccessToken(accessToken));
     // refresh token이 있다면 localstorage에 저장
-    const refreshToken = response.headers["authorization-refresh"]
-      ? response.headers["authorization-refresh"].split("Bearer")[1]
-      : null;
+    const refreshToken = response.headers["authorization-refresh"];
     if (refreshToken) localStorage.setItem("token", refreshToken);
+    // 토큰이 요청 중에 재발급된 경우 기존 요청 재요청
+    if (response.status === 201 && accessToken && refreshToken) {
+      response.config.headers["authorization"] = accessToken;
+      delete response.config.headers["authorization-refresh"];
+      return instance(response.config);
+    }
     return response.data;
   },
   (error) => {
@@ -45,7 +46,7 @@ instance.interceptors.response.use(
       const originalRequest = error.config;
       // access token 만료인 경우(요청 헤더에 access token만 있었던 경우)
       if (!originalRequest.headers["authorization-refresh"]) {
-        // refresh 토큰과 함께 이전 요청 재요청
+        // refresh 토큰과 함께 token 재발급 요청
         const refreshToken = localStorage.getItem("token");
         originalRequest.headers[
           "authorization-refresh"
