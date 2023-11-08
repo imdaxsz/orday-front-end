@@ -33,7 +33,7 @@ instance.interceptors.response.use(
     const refreshToken = response.headers["authorization-refresh"];
     if (refreshToken) localStorage.setItem("token", refreshToken);
     // 토큰이 요청 중에 재발급된 경우 기존 요청 재요청
-    if (response.status === 201) {
+    if (response.status === 201 && accessToken && refreshToken) {
       response.config.headers["authorization"] = accessToken;
       delete response.config.headers["authorization-refresh"];
       return instance(response.config);
