@@ -25,7 +25,11 @@ export default function BrandDetail() {
         <Button iconOnly onClick={() => navigate(-1)}>
           <IoArrowBackOutline size={24} />
         </Button>
-        <LikeButton isLiked={info?.liked} target="brand" id={info?.id ?? 0} />
+        <LikeButton
+          isLiked={info ? info.liked : false}
+          target="brand"
+          id={info ? info.id : 0}
+        />
         <LogoImage src={info?.logoUrl} alt={info?.name} />
         <BackgroundImage src={info?.imageUrl} alt={info?.name} />
       </Header>
@@ -38,8 +42,8 @@ export default function BrandDetail() {
         />
       </Menu>
       <Items>
-        {products.map((product, i) => (
-          <ProductCard key={i} size="md" $tag="NEW" info={product} />
+        {products.map((product) => (
+          <ProductCard key={product.id} size="md" $tag="NEW" info={product} />
         ))}
       </Items>
       <div ref={ref} />
