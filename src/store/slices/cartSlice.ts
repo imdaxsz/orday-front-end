@@ -54,7 +54,7 @@ export const fetchCartItems = createAsyncThunk(
 
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
-  async (itemInfo: CartProductInfo, thunkAPI) => {
+  async (itemInfo: ProductInfo[], thunkAPI) => {
     try {
       const data = await addCartItems(itemInfo);
       return data;

@@ -126,10 +126,6 @@ declare interface CartItem {
 
 declare type ProductInfo = Pick<CartItem, "id", "amount">;
 
-declare interface CartProductInfo {
-  data: ProductInfo;
-}
-
 declare interface OrderForm {
   name: string;
   phoneNumber: string;

@@ -12,7 +12,7 @@ export const getCartList = async () => {
  @description 장바구니 상품 추가
  * @returns 장바구니 리스트
  */
-export const addCartItems = async (productInfo: CartProductInfo) => {
+export const addCartItems = async (productInfo: ProductInfo[]) => {
   return await post<CartItem[]>("cart/product", productInfo);
 };
 
