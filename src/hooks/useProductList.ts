@@ -49,7 +49,6 @@ export default function useProductList(brandId?: number) {
     params.subCategoryId = subCategoryId;
     params.brandId = brandId;
   }
-  console.log("params", params);
 
   const fetchBestCategoryProducts = async () => {
     try {
@@ -112,7 +111,6 @@ export default function useProductList(brandId?: number) {
     setNextKey(null);
     if (pathname === "best") fetchData();
     if (pathname === "products") {
-      // 카테고리별 best 상품 3개 조회는 무한스크롤 반영하지 않고 한번만 불러오기
       fetchBestCategoryProducts();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
