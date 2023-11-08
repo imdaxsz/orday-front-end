@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import Logo from "@/assets/logo.svg?react";
-import { useAppSelector } from "@/store";
+// import { useAppSelector } from "@/store";
 
 import Backdrop from "../Backdrop";
 import Menu from "../Menu";

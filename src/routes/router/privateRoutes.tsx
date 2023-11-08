@@ -2,7 +2,7 @@ import { PropsWithChildren, lazy } from "react";
 import { Navigate, RouteObject } from "react-router-dom";
 
 import Layout from "@/components/Layout";
-import { useAppSelector } from "@/store";
+// import { useAppSelector } from "@/store";
 
 const Cart = lazy(() => import("@/routes/Cart"));
 const Order = lazy(() => import("@/routes/Order"));
