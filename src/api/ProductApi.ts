@@ -1,4 +1,4 @@
-import { get } from "@/libs/api";
+import { get, post } from "@/libs/api";
 
 /**
  @description 리뷰 작성에 사용되는 상품 id를 통한 상품 조회
@@ -57,6 +57,24 @@ export const getBestCategoryProducts = async (
   return await get<Product[]>("product/get/best", {
     params,
   });
+};
+
+/**
+ @description 관심 상품 조회 요청
+ * @returns 상품 리스트
+ */
+export const getLikedProducts = async (key: number | null) => {
+  const params = { key, size: 12 };
+  return await get<ProductListDto>("product/like/get/all", {
+    params,
+  });
+};
+
+/**
+ @description 관심 상품 추가 또는 삭제 요청
+ */
+export const toggleLikeProducts = async (productId: number) => {
+  return await post(`product/like/${productId}`);
 };
 
 /**
