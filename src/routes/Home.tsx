@@ -7,8 +7,10 @@ import Head from "@/components/Head";
 import ProductCarousel from "@/components/ProductCarousel";
 import Tabs, { Tab, TabProps } from "@/components/Tabs";
 import VisualSection, { Item } from "@/components/VisualSection";
+import useHomeProductList from "@/hooks/useHomeProductList";
 
 export default function Home() {
+  const { newProducts } = useHomeProductList();
   const visualSectionMockData: Item[] = [
     {
       image:
@@ -65,7 +67,7 @@ export default function Home() {
   const carouselMockdata1 = {
     image:
       "https://image.msscdn.net/images/goods_img/20220203/2338457/2338457_1_500.jpg",
-    url: "/test1",
+    url: "/sale",
     info: {
       title: "2023 BEST OUTER COLLECTION",
       content: "아우터 기획전",
@@ -75,7 +77,7 @@ export default function Home() {
   const carouselMockdata2 = {
     image:
       "https://image.msscdn.net/images/goods_img/20230913/3555856/3555856_16945764091440_big.jpg",
-    url: "/test2",
+    url: "/sale",
     info: {
       title: "F/W T-SHIRTS COLLECTION",
       content: "[23 F/W] 가을맞이 신상 기획전",
@@ -85,7 +87,7 @@ export default function Home() {
   const carouselMockdata3 = {
     image:
       "https://image.msscdn.net/images/goods_img/20211020/2190371/2190371_1_500.jpg",
-    url: "/test3",
+    url: "/sale",
     info: {
       title: "STEADY SELLER COLLECTION",
       content: "Orday 스테디셀러",
@@ -128,14 +130,16 @@ export default function Home() {
           />
         </EventContent>
       </EventSection>
-      <ProductSection>
-        <Title>Orday NEW</Title>
-        <MoreLink to="/new">
-          더보기
-          <IoIosArrowForward />
-        </MoreLink>
-        <ProductCarousel products={productsMockData} productsTag="NEW" />
-      </ProductSection>
+      {newProducts.length !== 0 && (
+        <ProductSection>
+          <Title>Orday NEW</Title>
+          <MoreLink to="/new">
+            더보기
+            <IoIosArrowForward />
+          </MoreLink>
+          <ProductCarousel products={newProducts} productsTag="NEW" />
+        </ProductSection>
+      )}
       <Magazine>
         <img
           src="https://my-shopping-mall.s3.ap-northeast-2.amazonaws.com/image/orday/magazine.png"
