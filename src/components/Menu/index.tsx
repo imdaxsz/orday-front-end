@@ -7,6 +7,7 @@ import MenuItem from "./MenuItem";
 import { Auth, Container } from "./style";
 
 export default function Menu() {
+  const isLoggedIn = localStorage.getItem("token");
   return (
     <Container>
       {menuData.map((menu, i) => (
@@ -17,11 +18,13 @@ export default function Menu() {
           subItem={menu.subItem}
         />
       ))}
-      <Auth>
-        <Link to="login">로그인</Link>
-        <RxDividerVertical size={12} color="#888" />
-        <Link to="join">회원가입</Link>
-      </Auth>
+      {!isLoggedIn && (
+        <Auth>
+          <Link to="login">로그인</Link>
+          <RxDividerVertical size={12} color="#888" />
+          <Link to="join">회원가입</Link>
+        </Auth>
+      )}
     </Container>
   );
 }
