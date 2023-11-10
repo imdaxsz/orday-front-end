@@ -5,12 +5,11 @@ import styled from "styled-components";
 import Carousel from "@/components/Carousel";
 import Head from "@/components/Head";
 import ProductCarousel from "@/components/ProductCarousel";
-import Tabs, { Tab, TabProps } from "@/components/Tabs";
 import VisualSection, { Item } from "@/components/VisualSection";
 import useHomeProductList from "@/hooks/useHomeProductList";
 
 export default function Home() {
-  const { newProducts } = useHomeProductList();
+  const { newProducts, bestProducts } = useHomeProductList();
   const visualSectionMockData: Item[] = [
     {
       image:
@@ -33,36 +32,6 @@ export default function Home() {
       url: "",
     },
   ];
-
-  const tabItem: TabProps[] = [
-    {
-      value: 1,
-      label: "전체",
-    },
-    {
-      value: 2,
-      label: "의류",
-    },
-    {
-      value: 3,
-      label: "소품",
-    },
-    {
-      value: 4,
-      label: "악세사리",
-    },
-  ];
-
-  const productsMockData: Product[] = Array.from({ length: 6 }, (_, index) => ({
-    id: index + 1,
-    name: `상품${index + 1}`,
-    imageUrl: "",
-    brandInfo: { id: 1, name: "플라스틱 아크" },
-    price: 74000,
-    score: 1,
-    description: "상품설명",
-    liked: false,
-  }));
 
   const carouselMockdata1 = {
     image:
@@ -104,19 +73,16 @@ export default function Home() {
     <Container>
       <Head />
       <VisualSection items={visualSectionMockData} />
-      <ProductSection>
-        <Title>Orday BEST</Title>
-        <Tabs>
-          {tabItem.map((item, i) => (
-            <Tab key={i} value={item.value} label={item.label} />
-          ))}
-        </Tabs>
-        <MoreLink to="/best">
-          더보기
-          <IoIosArrowForward />
-        </MoreLink>
-        <ProductCarousel products={productsMockData} productsTag="BEST" />
-      </ProductSection>
+      {bestProducts.length !== 0 && (
+        <ProductSection>
+          <Title>Orday BEST</Title>
+          <MoreLink to="/best">
+            더보기
+            <IoIosArrowForward />
+          </MoreLink>
+          <ProductCarousel products={bestProducts} productsTag="BEST" />
+        </ProductSection>
+      )}
       <EventSection>
         <Title>Orday EVENT</Title>
         <EventContent>
