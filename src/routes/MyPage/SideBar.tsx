@@ -17,7 +17,6 @@ const sidebar: Sidebar = {
   shopping: [
     { title: "주문내역 조회", url: "/myPage/order" },
     { title: "관심 상품", url: "/like/products" },
-    { title: "관심 게시글", url: "/like/posts" },
     { title: "관심 브랜드", url: "/like/brands" },
   ],
   membership: [
