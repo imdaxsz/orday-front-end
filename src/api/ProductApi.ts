@@ -4,7 +4,7 @@ import { get, post } from "@/libs/api";
  @description 리뷰 작성에 사용되는 상품 id를 통한 상품 조회
  * @returns 상품 리스트
  */
-export const getProductsInfo = async (idList: number[]) => {
+export const getReviewProductsInfo = async (idList: number[]) => {
   return get<CartItem[]>("product/get", {
     params: { productIds: idList.join(",") },
   });
