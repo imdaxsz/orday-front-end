@@ -1,28 +1,10 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { getLikedProducts } from "@/api/ProductApi";
 import ProductCard from "@/components/ProductCard";
+import useLikedList from "@/hooks/useLikedList";
 
 export default function LikeProductList() {
-  const [nextKey, setNextKey] = useState<number | null>(null);
-  const [products, setProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    const fetchLikedProducts = async () => {
-      try {
-        const {
-          cursorRequest: { key },
-          body,
-        } = await getLikedProducts(nextKey);
-        setNextKey(key);
-        setProducts((prev) => [...prev, ...body]);
-      } catch (error) {
-        console.log("Error fetching products: ", error);
-      }
-    };
-    fetchLikedProducts();
-  }, [nextKey]);
+  const { products } = useLikedList();
 
   return (
     <ProductList>
