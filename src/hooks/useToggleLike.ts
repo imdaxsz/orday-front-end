@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { toggleLikeBrand } from "@/api/BrandApi";
+import { toggleLikeProducts } from "@/api/ProductApi";
 
 export default function useToggleLike(
   id: number,
@@ -24,8 +25,7 @@ export default function useToggleLike(
     // target에 따른 서버 요청
     try {
       if (target === "brand") await toggleLikeBrand(id);
-      // TODO: 관심 상품 추가/삭제
-      // if (target === "product")
+      if (target === "product") await toggleLikeProducts(id);
       setLike((prev) => !prev);
     } catch (error) {
       console.log(error);
