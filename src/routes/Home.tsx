@@ -5,10 +5,11 @@ import styled from "styled-components";
 import Carousel from "@/components/Carousel";
 import Head from "@/components/Head";
 import ProductCarousel from "@/components/ProductCarousel";
-import Tabs, { Tab, TabProps } from "@/components/Tabs";
 import VisualSection, { Item } from "@/components/VisualSection";
+import useHomeProductList from "@/hooks/useHomeProductList";
 
 export default function Home() {
+  const { newProducts, bestProducts } = useHomeProductList();
   const visualSectionMockData: Item[] = [
     {
       image:
@@ -32,40 +33,10 @@ export default function Home() {
     },
   ];
 
-  const tabItem: TabProps[] = [
-    {
-      value: 1,
-      label: "전체",
-    },
-    {
-      value: 2,
-      label: "의류",
-    },
-    {
-      value: 3,
-      label: "소품",
-    },
-    {
-      value: 4,
-      label: "악세사리",
-    },
-  ];
-
-  const productsMockData: Product[] = Array.from({ length: 6 }, (_, index) => ({
-    id: index + 1,
-    name: `상품${index + 1}`,
-    imageUrl: "",
-    brandInfo: { id: 1, name: "플라스틱 아크" },
-    price: 74000,
-    score: 1,
-    description: "상품설명",
-    liked: false,
-  }));
-
   const carouselMockdata1 = {
     image:
       "https://image.msscdn.net/images/goods_img/20220203/2338457/2338457_1_500.jpg",
-    url: "/test1",
+    url: "/sale",
     info: {
       title: "2023 BEST OUTER COLLECTION",
       content: "아우터 기획전",
@@ -75,7 +46,7 @@ export default function Home() {
   const carouselMockdata2 = {
     image:
       "https://image.msscdn.net/images/goods_img/20230913/3555856/3555856_16945764091440_big.jpg",
-    url: "/test2",
+    url: "/sale",
     info: {
       title: "F/W T-SHIRTS COLLECTION",
       content: "[23 F/W] 가을맞이 신상 기획전",
@@ -85,7 +56,7 @@ export default function Home() {
   const carouselMockdata3 = {
     image:
       "https://image.msscdn.net/images/goods_img/20211020/2190371/2190371_1_500.jpg",
-    url: "/test3",
+    url: "/sale",
     info: {
       title: "STEADY SELLER COLLECTION",
       content: "Orday 스테디셀러",
@@ -102,19 +73,16 @@ export default function Home() {
     <Container>
       <Head />
       <VisualSection items={visualSectionMockData} />
-      <ProductSection>
-        <Title>Orday BEST</Title>
-        <Tabs>
-          {tabItem.map((item, i) => (
-            <Tab key={i} value={item.value} label={item.label} />
-          ))}
-        </Tabs>
-        <MoreLink to="/best">
-          더보기
-          <IoIosArrowForward />
-        </MoreLink>
-        <ProductCarousel products={productsMockData} productsTag="BEST" />
-      </ProductSection>
+      {bestProducts.length !== 0 && (
+        <ProductSection>
+          <Title>Orday BEST</Title>
+          <MoreLink to="/best">
+            더보기
+            <IoIosArrowForward />
+          </MoreLink>
+          <ProductCarousel products={bestProducts} productsTag="BEST" />
+        </ProductSection>
+      )}
       <EventSection>
         <Title>Orday EVENT</Title>
         <EventContent>
@@ -128,14 +96,16 @@ export default function Home() {
           />
         </EventContent>
       </EventSection>
-      <ProductSection>
-        <Title>Orday NEW</Title>
-        <MoreLink to="/new">
-          더보기
-          <IoIosArrowForward />
-        </MoreLink>
-        <ProductCarousel products={productsMockData} productsTag="NEW" />
-      </ProductSection>
+      {newProducts.length !== 0 && (
+        <ProductSection>
+          <Title>Orday NEW</Title>
+          <MoreLink to="/new">
+            더보기
+            <IoIosArrowForward />
+          </MoreLink>
+          <ProductCarousel products={newProducts} productsTag="NEW" />
+        </ProductSection>
+      )}
       <Magazine>
         <img
           src="https://my-shopping-mall.s3.ap-northeast-2.amazonaws.com/image/orday/magazine.png"
