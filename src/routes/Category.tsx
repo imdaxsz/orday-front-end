@@ -24,9 +24,7 @@ export default function Category() {
             <ProductCard key={item.id} info={item} size="xl" $tag="BEST" />
           ))}
         </CategoryBestList>
-      ) : (
-        <></>
-      )}
+      ) : null}
 
       <CategoryItems>
         {pathname === "best" ? (
