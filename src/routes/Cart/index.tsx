@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -8,15 +7,14 @@ import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import Head from "@/components/Head";
 import useCheckBox from "@/hooks/useCheckBox";
-import { useAppDispatch } from "@/store";
-import { ReducerType } from "@/store/rootReducer";
+import { useAppDispatch, useAppSelector } from "@/store";
 import { fetchCartItems, removeCartItem } from "@/store/slices/cartSlice";
 import { addProducts } from "@/store/slices/productInfoSlice";
 
 import ProductItem from "./ProductItem";
 
 export default function Cart() {
-  const cartItems = useSelector((state: ReducerType) => state.cart.items);
+  const cartItems = useAppSelector((state) => state.cart.items);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
