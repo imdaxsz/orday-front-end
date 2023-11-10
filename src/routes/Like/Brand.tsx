@@ -10,17 +10,6 @@ import { Brands, Container, Content, Brand as BaseBrand } from "../Brand/List";
 
 export default function LikeBrandList() {
   const { brands, selectedOption, setSelectedOption } = useBrandList();
-
-  console.log(brands);
-  const brandsMockData: BrandListDto = Array.from(
-    { length: 12 },
-    (_, index) => ({
-      id: index + 1,
-      name: "test",
-      imageUrl: "https://url.kr/l2wry9",
-    }),
-  );
-
   return (
     <Container>
       <Head title="관심 브랜드 | Orday" />
@@ -31,14 +20,17 @@ export default function LikeBrandList() {
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
         />
-        <Brands>
-          {brandsMockData.map((brand, i) => (
-            <Brand to={`/brands/${brand.id}`} key={i}>
-              <LikeButton isLiked target="brand" id={brand.id} />
-              <img src={brand.imageUrl} alt={brand.name} />
-            </Brand>
-          ))}
-        </Brands>
+        {brands.length === 0 && <Empty>관심 브랜드가 없습니다.</Empty>}
+        {brands.length !== 0 && (
+          <Brands>
+            {brands.map((brand) => (
+              <Brand to={`/brands/${brand.id}`} key={brand.id}>
+                <LikeButton isLiked target="brand" id={brand.id} />
+                <img src={brand.imageUrl} alt={brand.name} />
+              </Brand>
+            ))}
+          </Brands>
+        )}
       </Content>
     </Container>
   );
@@ -54,4 +46,11 @@ const Brand = styled(BaseBrand)`
     transform: translateX(-50%);
     bottom: 16px;
   }
+`;
+
+const Empty = styled.div`
+  width: 100%;
+  height: 300px;
+  text-align: center;
+  line-height: 300px;
 `;
