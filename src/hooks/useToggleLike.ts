@@ -17,9 +17,11 @@ export default function useToggleLike(
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const targetName =
-      target === "brand" ? "브랜드" : target === "product" ? "상품" : "게시글";
+      target === "brand" ? "브랜드" : target === "product" ? "상품" : "리뷰";
     if (!localStorage.getItem("token")) {
-      alert(`관심 ${targetName} 등록은 로그인 후 가능합니다.`);
+      const message =
+        target === "review" ? "리뷰 좋아요는" : `관심 ${targetName} 등록은`;
+      alert(`${message} 로그인 후 가능합니다.`);
       return;
     }
     // target에 따른 서버 요청
