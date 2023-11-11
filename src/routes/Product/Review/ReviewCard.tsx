@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 import Action from "@/components/CommunityCard/Review/Action";
-import CommunityHeader from "@/components/CommunityCard/Review/Header";
 
 import Rating from "../../Review/Rating";
 
@@ -12,9 +11,18 @@ export default function ReviewCard() {
         <Rating rating={5} text={"아주 좋아요"} />
         <span>{"2023.10.13"}</span>
       </Header>
-      <CommunityHeader
-        info={{ name: "김환경", update: "Color:Brown Size:L" }}
-      />
+      <Info>
+        <img src="" alt="profile"></img>
+        <div>
+          <h3>김환경</h3>
+          <span>
+            <strong>Color </strong>
+            {"BROWN"}&nbsp;&nbsp;
+            <strong>Size </strong>
+            {"M"}
+          </span>
+        </div>
+      </Info>
       <Content>{"너무 좋아요"}</Content>
       <Photo src="" alt="photo1" />
       <Action />
@@ -41,6 +49,29 @@ export const Header = styled.div`
 
   span {
     ${({ theme }) => theme.typo["body-2-r"]};
+    color: ${({ theme }) => theme.colors["neutral"]["50"]};
+  }
+`;
+
+export const Info = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  img {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #b7d2f1;
+  }
+
+  h3 {
+    ${({ theme }) => theme.typo["body-2-m"]};
+  }
+
+  span {
+    ${({ theme }) => theme.typo["body-3-r"]};
     color: ${({ theme }) => theme.colors["neutral"]["50"]};
   }
 `;

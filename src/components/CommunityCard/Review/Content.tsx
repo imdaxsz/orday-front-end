@@ -1,5 +1,3 @@
-import { useRef } from "react";
-
 import {
   BodyContainer,
   Ad,
@@ -11,23 +9,12 @@ import {
   Price,
 } from "../style";
 
-import Action from "./Action";
-
 const ContentData = {
-  keyword: "[NEW!]",
   product: "프라이탁 HWAII FIVE-O 화이트 메신저백",
   price: "248,000",
 };
 
 export default function ReviewContent() {
-  const commentRef = useRef<HTMLTextAreaElement | null>(null);
-
-  const focusCommentInput = () => {
-    if (commentRef.current) {
-      commentRef.current.focus();
-    }
-  };
-
   return (
     <>
       <BodyContainer />
@@ -35,14 +22,12 @@ export default function ReviewContent() {
         <AdImage />
         <AdText>
           <KeyWord>
-            {ContentData.keyword}
             <Product>{ContentData.product}</Product>
           </KeyWord>
           <Price>{ContentData.price}원</Price>
         </AdText>
       </Ad>
-      <Comment ref={commentRef} placeholder="최소 100자 이상 작성하세요." />
-      <Action commentRef={commentRef} focusCommentInput={focusCommentInput} />
+      <Comment>리뷰 내용입니다.</Comment>
     </>
   );
 }

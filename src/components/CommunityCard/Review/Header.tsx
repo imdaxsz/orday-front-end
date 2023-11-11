@@ -1,22 +1,20 @@
-import { Header, Profile, Image, Info, InfoName, InfoUpdate } from "../style";
+import { Profile, Image, Info, InfoName, InfoText } from "../style";
 
 interface HeaderProps {
   info: {
     name: string;
-    update: string;
+    text: string;
   };
 }
 
-export default function CommunityHeader({ info }: HeaderProps) {
+export default function ReviewHeader({ info }: HeaderProps) {
   return (
-    <Header>
-      <Profile>
-        <Image />
-        <Info>
-          <InfoName>{info.name}</InfoName>
-          <InfoUpdate>{info.update}</InfoUpdate>
-        </Info>
-      </Profile>
-    </Header>
+    <Profile>
+      <Image />
+      <Info>
+        <InfoName>{info.name}</InfoName>
+        <InfoText>{info.text}</InfoText>
+      </Info>
+    </Profile>
   );
 }
