@@ -3,10 +3,11 @@ import styled from "styled-components";
 
 interface Props {
   rating: number;
+  text?: string;
   onClick?: (i: number) => void;
 }
 
-export default function Rating({ rating, onClick }: Props) {
+export default function Rating({ rating, text, onClick }: Props) {
   return (
     <Container>
       {[...Array(rating)].map((_, i) => (
@@ -18,6 +19,7 @@ export default function Rating({ rating, onClick }: Props) {
           onClick={onClick && (() => onClick(rating + i + 1))}
         />
       ))}
+      {text}
     </Container>
   );
 }

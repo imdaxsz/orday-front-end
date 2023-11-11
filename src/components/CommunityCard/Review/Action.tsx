@@ -3,12 +3,7 @@ import { BiSolidComment } from "react-icons/bi";
 
 import { CommentButton, Reaction, LikeButton, LikeIcon } from "../style";
 
-interface ActionProps {
-  commentRef: React.RefObject<HTMLTextAreaElement | null>;
-  focusCommentInput: () => void;
-}
-
-export default function Action({ focusCommentInput }: ActionProps) {
+export default function Action() {
   const [isLike, setIsLike] = useState(false);
 
   const toggleLike = () => {
@@ -21,9 +16,9 @@ export default function Action({ focusCommentInput }: ActionProps) {
         <LikeIcon active={isLike} />
         좋아요
       </LikeButton>
-      <CommentButton onClick={focusCommentInput}>
+      <CommentButton>
         <BiSolidComment />
-        댓글 쓰기
+        {2}
       </CommentButton>
     </Reaction>
   );
