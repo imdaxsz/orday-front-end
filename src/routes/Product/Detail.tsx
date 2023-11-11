@@ -36,7 +36,7 @@ const DetailInfoData = [
   { key: "취급주의사항", value: "취급주의사항5" },
 ];
 
-export default function DetailComponent() {
+export default function DetailInfo() {
   const navigate = useNavigate();
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedDetailInfo, setSelectedDetailInfo] = useState([0]);
