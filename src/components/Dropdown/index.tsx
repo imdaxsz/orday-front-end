@@ -53,7 +53,6 @@ export default function Dropdown({
   const reviewOptions = [
     { id: 0, name: "최신순", value: "new" },
     { id: 1, name: "추천순", value: "like" },
-    { id: 2, name: "별점순", value: "rating" },
   ];
 
   return (
