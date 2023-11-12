@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { PiStarFill } from "react-icons/pi";
 import styled, { css } from "styled-components";
 
@@ -11,29 +10,28 @@ interface Graph {
 
 const INIT_GRAPH: Graph[] = RATING_LABEL.map((label) => ({ label, value: 0 }));
 
-export default function ReviewRating() {
-  // const [isAverage, setAverage] = useState(0);
-  // const [totalCount, setTotalCount] = useState(0);
-  // const [graph, setGraph] = useState(INIT_GRAPH);
+interface Props {
+  statics: ReviewStatics;
+}
 
+export default function ReviewRating({ statics }: Props) {
   return (
     <Container>
       <AverageRating>
         구매자 평점
         <RatingContainer>
           <PiStarFill />
-          <span>{5.0}</span>
-          {/* <span>{isAverage.toFixed(1)}</span> */}
+          <span>{statics.averageRating}</span>
         </RatingContainer>
       </AverageRating>
       <GraphContainer>
         {INIT_GRAPH.map((item, index) => (
-          <GraphItem key={index} $active>
+          <GraphItem key={index} $active={statics.proportion[index] !== 0}>
             <span>{item.label}</span>
-            <ProgressBar value={2}>
+            <ProgressBar value={statics.proportion[index]}>
               <div />
             </ProgressBar>
-            {item.value}%
+            <span>{statics.proportion[index]}%</span>
           </GraphItem>
         ))}
       </GraphContainer>
@@ -88,8 +86,11 @@ const GraphItem = styled.div<{ $active: boolean }>`
   display: flex;
   align-items: center;
   gap: 20px;
-  & > span {
+  & > span:first-of-type {
     width: 74px;
+  }
+  & > span:last-of-type {
+    width: 40px;
   }
   ${({ theme, $active = false }) =>
     $active
@@ -111,7 +112,7 @@ const ProgressBar = styled.div<{ value: number }>`
   background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
 
   & > div {
-    width: 30%;
+    width: ${({ value }) => `${value}%`};
     height: 100%;
     border-radius: 30px;
     background-color: ${({ theme }) => theme.colors["primary"]["80"]};

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import Dropdown from "@/components/Dropdown";
+import useProductReviews from "@/hooks/useProductReviews";
 
-import PhotoReviews from "../PhotoReviews";
-
+import PhotoReviews from "./PhotoReviews";
 import ReviewRating from "./ReviewRating";
 import ReviewCard from "./SimpleReviewCard";
 
@@ -13,18 +14,15 @@ const photoData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const reviewMock = [0, 1, 2];
 
 export default function ProductReview() {
+  const productId = useLocation().pathname.split("/")[2];
   const [isPhotoDetail, setPhotoDetail] = useState(false);
-
-  const initialOption = {
-    id: 0,
-    name: "최신순",
-    value: "new",
-  };
-  const [selectedOption, setSelectedOption] = useState(initialOption);
-
   const handlePhotoDetail = () => {
     setPhotoDetail(true);
   };
+
+  const { statics, selectedOption, setSelectedOption } = useProductReviews(
+    Number(productId),
+  );
 
   return (
     <Container>
@@ -33,8 +31,8 @@ export default function ProductReview() {
       ) : (
         <div>
           <ReviewStatics>
-            <h3>전체 리뷰 (2)</h3>
-            <ReviewRating />
+            <h3>전체 리뷰 ({statics.totalCount})</h3>
+            <ReviewRating statics={statics} />
           </ReviewStatics>
           <PhotoReviewHeader>
             <h3>포토 리뷰 ({photoData.length})</h3>
