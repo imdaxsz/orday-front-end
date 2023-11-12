@@ -12,7 +12,7 @@ interface OptionType {
 }
 
 interface DropdownProps {
-  type: "product" | "brand";
+  type: "product" | "brand" | "review";
   selectedOption: OptionType;
   setSelectedOption: React.Dispatch<React.SetStateAction<OptionType>>;
 }
@@ -50,6 +50,12 @@ export default function Dropdown({
     { id: 2, name: "이름(내림차순)", value: "name_desc" },
   ];
 
+  const reviewOptions = [
+    { id: 0, name: "최신순", value: "new" },
+    { id: 1, name: "추천순", value: "like" },
+    { id: 2, name: "별점순", value: "rating" },
+  ];
+
   return (
     <DropdownBox
       role="presentation"
@@ -73,6 +79,17 @@ export default function Dropdown({
           ))}
         {type === "brand" &&
           brandOptions.map((option) => (
+            <Option
+              role="presentation"
+              key={option.value}
+              value={option.value}
+              onClick={handleSelectChange}
+            >
+              {option.name}
+            </Option>
+          ))}
+        {type === "review" &&
+          reviewOptions.map((option) => (
             <Option
               role="presentation"
               key={option.value}

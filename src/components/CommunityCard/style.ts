@@ -1,4 +1,3 @@
-import { IoMdHeart } from "react-icons/io";
 import styled from "styled-components";
 
 export const ReviewComponent = styled.div`
@@ -11,19 +10,11 @@ export const ReviewComponent = styled.div`
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 `;
 
-export const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 310px;
-  height: 20%;
-`;
-
 export const Profile = styled.div`
-  width: 125px;
-  height: 50px;
   display: flex;
   gap: 10px;
+  width: 310px;
+  padding: 30px 0;
 `;
 
 export const Image = styled.div`
@@ -31,24 +22,25 @@ export const Image = styled.div`
   height: 50px;
   border-radius: 25px;
   background-color: #b7d2f1;
+  flex-shrink: 0;
 `;
 
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 70px;
+  width: 100%;
   height: 50px;
   gap: 2px;
 `;
 
 export const InfoName = styled.div`
-  font-size: ${({ theme }) => theme.typo["body-3-m"]};
+  ${({ theme }) => theme.typo["body-2-m"]};
 `;
 
-export const InfoUpdate = styled.div`
-  font-size: ${({ theme }) => theme.typo["body-4-r"]};
-  color: ${({ theme }) => theme.colors["neutral"]["40"]};
+export const InfoText = styled.div`
+  ${({ theme }) => theme.typo["body-3-r"]};
+  color: ${({ theme }) => theme.colors["neutral"]["50"]};
 `;
 
 export const Following = styled.div`
@@ -121,7 +113,7 @@ export const Price = styled.div`
   font-size: ${({ theme }) => theme.typo["body-4-b"]};
 `;
 
-export const Comment = styled.textarea`
+export const Comment = styled.div`
   margin-top: 5px;
   width: 310px;
   height: 60px;
@@ -131,8 +123,6 @@ export const Comment = styled.textarea`
   background-color: ${({ theme }) => theme.colors["neutral"]["20"]};
   color: ${({ theme }) => theme.colors["neutral"]["40"]};
   font-size: ${({ theme }) => theme.typo["body-4-r"]};
-  resize: none;
-  outline: none;
 `;
 
 export const Reaction = styled.div`
@@ -146,19 +136,18 @@ export const Reaction = styled.div`
   gap: 5px;
 `;
 
-export const LikeButton = styled.div<{ active: boolean }>`
+export const LikeButton = styled.div<{ $active: boolean }>`
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 3px;
-  color: ${({ theme, active }) =>
-    active ? theme.colors["neutral"]["80"] : theme.colors["neutral"]["40"]};
-`;
+  ${({ theme }) => theme.typo["body-3-r"]};
+  color: ${({ $active }) => ($active ? "#4681F2" : "#ccc")};
 
-export const LikeIcon = styled(IoMdHeart)`
-  color: ${({ theme, active }) =>
-    active ? "red" : theme.colors["neutral"]["40"]};
+  svg {
+    margin-top: 1px;
+  }
 `;
 
 export const CommentButton = styled.div`

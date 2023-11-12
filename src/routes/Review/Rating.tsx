@@ -28,6 +28,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+  ${({ theme }) => theme.typo["body-2-m"]};
   svg {
     fill: ${({ theme }) => theme.colors["primary"]["80"]};
     stroke-width: 2px;

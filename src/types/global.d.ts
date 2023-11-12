@@ -103,7 +103,7 @@ declare interface ProductListRequestParams {
 /**
  * @description 좋아요 기능 적용 가능 대상
  */
-declare type LikeTarget = "product" | "brand" | "post";
+declare type LikeTarget = "product" | "brand" | "review";
 
 declare interface ProductListDto {
   cursorRequest: {
