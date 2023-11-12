@@ -136,14 +136,14 @@ export const Reaction = styled.div`
   gap: 5px;
 `;
 
-export const LikeButton = styled.div<{ active: boolean }>`
+export const LikeButton = styled.div<{ $active: boolean }>`
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 3px;
   ${({ theme }) => theme.typo["body-3-r"]};
-  color: ${({ active }) => (active ? "#4681F2" : "#ccc")};
+  color: ${({ $active }) => ($active ? "#4681F2" : "#ccc")};
 
   svg {
     margin-top: 1px;

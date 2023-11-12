@@ -12,7 +12,7 @@ export default function ReviewAction() {
 
   return (
     <Reaction>
-      <LikeButton active={isLike} onClick={toggleLike}>
+      <LikeButton $active={isLike} onClick={toggleLike}>
         <PiHeartFill size={16} />
         {"0"}
       </LikeButton>
