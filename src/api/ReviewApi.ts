@@ -56,6 +56,24 @@ export const updateReviewImage = async (
   return await put(`product/review/update/${reviewId}/image`, dto);
 };
 
+/**
+ @description 상품 리뷰 별점 통계
+ */
+export const getReviewStatics = async (productId: number) => {
+  return await get<ReviewStatics>(`product/get/review/${productId}`);
+};
+
+export const getProductReviews = async (params: {
+  productId: number;
+  key?: number | null;
+  size: number;
+  sortId: number;
+}) => {
+  return await get<CursorPage<ReviewInfo>>(`product/get/review/list`, {
+    params,
+  });
+};
+
 // 리뷰 목록 조회 테스트용 api
 const ProductMockData = {
   productId: 1,
