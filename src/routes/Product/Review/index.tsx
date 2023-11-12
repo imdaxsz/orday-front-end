@@ -6,8 +6,8 @@ import Dropdown from "@/components/Dropdown";
 
 import PhotoReviews from "../PhotoReviews";
 
-import ReviewCard from "./ReviewCard";
-import ReviewRatingComponent from "./ReviewRating";
+import ReviewRating from "./ReviewRating";
+import ReviewCard from "./SimpleReviewCard";
 
 const photoData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const reviewMock = [0, 1, 2];
@@ -34,7 +34,7 @@ export default function ProductReview() {
         <div>
           <ReviewStatics>
             <h3>전체 리뷰 (2)</h3>
-            <ReviewRatingComponent />
+            <ReviewRating />
           </ReviewStatics>
           <PhotoReviewHeader>
             <h3>포토 리뷰 ({photoData.length})</h3>

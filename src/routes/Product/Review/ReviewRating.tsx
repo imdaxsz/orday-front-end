@@ -11,7 +11,7 @@ interface Graph {
 
 const INIT_GRAPH: Graph[] = RATING_LABEL.map((label) => ({ label, value: 0 }));
 
-export default function ReviewRatingComponent() {
+export default function ReviewRating() {
   // const [isAverage, setAverage] = useState(0);
   // const [totalCount, setTotalCount] = useState(0);
   // const [graph, setGraph] = useState(INIT_GRAPH);
