@@ -5,7 +5,7 @@ import styled from "styled-components";
 import ReviewCard from "@/components/CommunityCard";
 import Head from "@/components/Head";
 
-export default function Community() {
+export default function RecentReviews() {
   const [mainContents, setMainContents] = useState<number[]>([]);
   const [ref, inView] = useInView();
 
