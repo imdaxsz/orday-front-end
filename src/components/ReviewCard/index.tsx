@@ -1,6 +1,6 @@
-import ReviewAction from "./Review/Action";
-import ReviewContent from "./Review/Content";
-import ReviewHeader from "./Review/Header";
+import ReviewAction from "./Action";
+import ReviewContent from "./Content";
+import ReviewHeader from "./Header";
 import { ReviewComponent } from "./style";
 
 export default function ReviewCard() {

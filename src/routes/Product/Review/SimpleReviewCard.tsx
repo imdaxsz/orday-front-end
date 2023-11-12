@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
-import Action from "@/components/CommunityCard/Review/Action";
+import ReviewAction from "@/components/ReviewCard/Action";
+import Rating from "@/routes/Review/Rating";
 
-import Rating from "../../Review/Rating";
-
-export default function ReviewCard() {
+export default function SimpleReviewCard() {
   return (
     <DetailReview>
       <Header>
@@ -25,7 +24,7 @@ export default function ReviewCard() {
       </Info>
       <Content>{"너무 좋아요"}</Content>
       <Photo src="" alt="photo1" />
-      <Action />
+      <ReviewAction />
     </DetailReview>
   );
 }
