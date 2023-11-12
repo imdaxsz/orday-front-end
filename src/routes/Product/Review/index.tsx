@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { IoIosArrowForward } from "react-icons/io";
 import styled from "styled-components";
 
-import MoreButton from "@/assets/chevron_right.svg?react";
 import Dropdown from "@/components/Dropdown";
 
 import PhotoReviews from "../PhotoReviews";
@@ -33,13 +33,14 @@ export default function ProductReview() {
       ) : (
         <div>
           <ReviewStatics>
-            <h3>전체 리뷰(2)</h3>
+            <h3>전체 리뷰 (2)</h3>
             <ReviewRatingComponent />
           </ReviewStatics>
           <PhotoReviewHeader>
-            <h3>포토 리뷰({photoData.length})</h3>
+            <h3>포토 리뷰 ({photoData.length})</h3>
             <MorePhoto>
-              <span>전체보기</span> <MoreButton onClick={handlePhotoDetail} />
+              <span>전체보기</span>
+              <IoIosArrowForward onClick={handlePhotoDetail} />
             </MorePhoto>
           </PhotoReviewHeader>
           <PhotoContainer>
@@ -47,11 +48,13 @@ export default function ProductReview() {
               <Photo src="" alt="reviewImage" key={index} />
             ))}
           </PhotoContainer>
-          <Dropdown
-            type="review"
-            selectedOption={selectedOption}
-            setSelectedOption={setSelectedOption}
-          />
+          <div style={{ width: "fit-content", marginTop: "40px" }}>
+            <Dropdown
+              type="review"
+              selectedOption={selectedOption}
+              setSelectedOption={setSelectedOption}
+            />
+          </div>
           {reviewMock.map((_, i) => (
             <ReviewCard key={i} />
           ))}
@@ -92,8 +95,7 @@ const MorePhoto = styled.div`
   align-items: center;
   gap: 3px;
 
-  & > svg {
-    color: black;
+  svg {
     cursor: pointer;
   }
 `;
