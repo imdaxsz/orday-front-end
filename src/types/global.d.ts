@@ -105,12 +105,12 @@ declare interface ProductListRequestParams {
  */
 declare type LikeTarget = "product" | "brand" | "review";
 
-declare interface ProductListDto {
+declare interface CursorPage<T> {
   cursorRequest: {
     key: number;
     size: number;
   };
-  body: Product[];
+  body: T[];
 }
 
 declare interface CartItem {
@@ -188,3 +188,14 @@ declare interface ReviewForm {
   file: File | null;
   fileUrl: string;
 }
+
+declare interface ReviewStatics {
+  totalCount: number;
+  averageRating: number;
+  proportion: number[];
+}
+
+declare type ReviewInfo = Omit<
+  WrittenReview,
+  "imageUrl" | "name" | "productId" | "orderId"
+> & { userName: string; reviewImageUrl: string; reviewLikeCount: number };
