@@ -25,7 +25,7 @@ export default function PostCodeModal({
   );
 }
 
-const ModalCloseBtn = styled.div`
+export const ModalCloseBtn = styled.div`
   font-size: 20px;
   cursor: pointer;
   text-align: right;
