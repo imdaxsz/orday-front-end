@@ -18,7 +18,7 @@ body,
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: fixed;
   top: 0;
   z-index: 500;
   pointer-events: none;
