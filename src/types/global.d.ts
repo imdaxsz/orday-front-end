@@ -191,6 +191,7 @@ declare interface ReviewForm {
 
 declare interface ReviewStatics {
   totalCount: number;
+  photoReviewCount: number;
   averageRating: number;
   proportion: number[];
 }
