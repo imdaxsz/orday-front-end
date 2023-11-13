@@ -46,7 +46,6 @@ export default function Header() {
           <Logo />
         </Link>
         <Group>
-          <Item>SEARCH</Item>
           <Item>
             <Link to="/cart">CART</Link>
           </Item>
