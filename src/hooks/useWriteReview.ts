@@ -20,6 +20,8 @@ export default function useWriteReview({
   id: number;
   orderId: number;
 }) {
+  const [loading, setLoading] = useState(false);
+
   const [form, setForm] = useState<ReviewForm>({
     content: "",
     rating: 3,
@@ -84,7 +86,6 @@ export default function useWriteReview({
     try {
       const [{ id: productId, imageUrl, name, color, size }] =
         await getReviewProductsInfo([id]);
-      // getProductsInfo
       setProductInfo({ productId, name, color, size, imageUrl });
     } catch (error) {
       console.log("Error fetching product data: ", error);
@@ -205,17 +206,20 @@ export default function useWriteReview({
     e.preventDefault();
     if (form.file) console.log(form.file);
     if (validateContent()) {
+      setLoading(true);
       if (mode === "new") {
         await requestCreateReview();
       } else if (mode === "edit") {
         await requestUpdateReview();
         await requestUpdateReviewImage(id, form.file);
       }
+      setLoading(false);
     }
   };
 
   return {
     isImageCompressing: isLoading,
+    isReviewUploading: loading,
     productInfo,
     form,
     handleContentChange,

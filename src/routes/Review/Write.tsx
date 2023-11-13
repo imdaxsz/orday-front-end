@@ -7,6 +7,7 @@ import styled from "styled-components";
 import BackButton from "@/components/BackButton";
 import Button from "@/components/Button";
 import Head from "@/components/Head";
+import Loader from "@/components/Loader";
 import useWriteReview from "@/hooks/useWriteReview";
 
 import Rating from "./Rating";
@@ -25,6 +26,8 @@ export default function WriteReview() {
     handleRatingChange,
     handleFileChange,
     clearFile,
+    isImageCompressing,
+    isReviewUploading,
     handleSubmit,
   } = useWriteReview({ mode, id: Number(id), orderId: Number(orderId) });
 
@@ -48,6 +51,7 @@ export default function WriteReview() {
 
   return (
     <Container>
+      {(isImageCompressing || isReviewUploading) && <Loader />}
       <Head title="에디터 | Orday" />
       <BackButton pageTitle="리뷰작성/수정" />
       <ProductInfo>
