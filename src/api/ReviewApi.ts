@@ -63,6 +63,10 @@ export const getReviewStatics = async (productId: number) => {
   return await get<ReviewStatics>(`product/get/review/${productId}`);
 };
 
+/**
+ @description 상품 리뷰 목록 조회
+  * @returns 상품 리뷰 목록
+ */
 export const getProductReviews = async (params: {
   productId: number;
   key?: number | null;
@@ -72,6 +76,13 @@ export const getProductReviews = async (params: {
   return await get<CursorPage<ReviewInfo>>(`product/get/review/list`, {
     params,
   });
+};
+
+/**
+ @description 상품 리뷰 좋아요 추가 또는 삭제
+ */
+export const toggleLikeReview = async (productReviewId: number) => {
+  return await post(`product/like/review/${productReviewId}`);
 };
 
 // 리뷰 목록 조회 테스트용 api
