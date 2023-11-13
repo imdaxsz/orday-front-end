@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { getReviewProductsInfo } from "@/api/ProductApi";
 import {
   createReview,
-  // getReviewDetail,
-  testGetEditReviewData,
-  testGetReviewProductInfo,
+  getReviewDetail,
   updateReview,
   updateReviewImage,
 } from "@/api/ReviewApi";
@@ -56,8 +55,7 @@ export default function useWriteReview({
         name,
         color,
         size,
-      } = await testGetEditReviewData(id);
-      // getReviewDetail
+      } = await getReviewDetail(id);
       setForm((prev) => ({
         ...prev,
         content,
@@ -85,7 +83,7 @@ export default function useWriteReview({
   const fetchProductData = async (id: number) => {
     try {
       const [{ id: productId, imageUrl, name, color, size }] =
-        await testGetReviewProductInfo(id);
+        await getReviewProductsInfo([id]);
       // getProductsInfo
       setProductInfo({ productId, name, color, size, imageUrl });
     } catch (error) {
@@ -148,18 +146,29 @@ export default function useWriteReview({
   };
 
   const requestCreateReview = async () => {
-    const dto: CreateReviewDto = {
-      productReviewRequest: {
-        orderId,
-        productId: productInfo.productId,
-        content: form.content,
-        rating: form.rating,
-      },
-    };
-    if (form.file) dto.image = form.file;
-    console.log(dto);
+    const formData = new FormData();
+    formData.append(
+      "productReviewRequest",
+      new Blob(
+        [
+          JSON.stringify({
+            orderId,
+            productId: productInfo.productId,
+            content: form.content,
+            rating: form.rating,
+          }),
+        ],
+        {
+          type: "application/json",
+        },
+      ),
+    );
+    if (form.file) {
+      formData.append("image", form.file);
+    }
     try {
-      await createReview(dto);
+      console.log("ddd: ", formData);
+      await createReview(formData);
       navigate("/myPage/reviews");
     } catch (error) {
       console.log("Error uploading review: ", error);
@@ -186,6 +195,7 @@ export default function useWriteReview({
       if (file) await updateReviewImage(id, file);
       else if (form.fileUrl === "" && existingReview.fileUrl !== "")
         await updateReviewImage(id);
+      navigate("/myPage/reviews");
     } catch (error) {
       console.log("Error updating review image: ", error);
     }
