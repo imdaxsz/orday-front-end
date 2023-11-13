@@ -198,4 +198,9 @@ declare interface ReviewStatics {
 declare type ReviewInfo = Omit<
   WrittenReview,
   "imageUrl" | "name" | "productId" | "orderId"
-> & { userName: string; reviewImageUrl: string; reviewLikeCount: number };
+> & {
+  userName: string;
+  reviewImageUrl: string;
+  reviewLikeCount: number;
+  liked: boolean;
+};
