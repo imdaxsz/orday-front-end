@@ -32,7 +32,9 @@ export default function Dropdown({
     const option =
       type == "product"
         ? productOptions.find((option) => option.value === value)
-        : brandOptions.find((option) => option.value === value);
+        : type === "brand"
+        ? brandOptions.find((option) => option.value === value)
+        : reviewOptions.find((option) => option.value === value);
     if (value && option)
       setSelectedOption({ id: option.id, name: option.name, value });
   };
