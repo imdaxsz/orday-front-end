@@ -168,7 +168,6 @@ export default function useWriteReview({
       formData.append("image", form.file);
     }
     try {
-      console.log("ddd: ", formData);
       await createReview(formData);
       navigate("/myPage/reviews");
     } catch (error) {
@@ -181,7 +180,6 @@ export default function useWriteReview({
     const dto: ReviewEditContent = {};
     if (form.content !== existingReview.content) dto.content = form.content;
     if (form.rating !== existingReview.rating) dto.rating = form.rating;
-    console.log(dto);
     if (Object.keys(dto).length === 0) return;
     try {
       await updateReview(id, dto);
@@ -204,7 +202,6 @@ export default function useWriteReview({
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (form.file) console.log(form.file);
     if (validateContent()) {
       setLoading(true);
       if (mode === "new") {
