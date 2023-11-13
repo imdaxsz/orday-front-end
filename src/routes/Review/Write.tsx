@@ -88,7 +88,11 @@ export default function WriteReview() {
           ) : (
             <img src={form.fileUrl} alt="attachment" />
           )}
-          {form.fileUrl && <RiCloseCircleFill size={24} onClick={clearFile} />}
+          {form.fileUrl && (
+            <Button iconOnly onClick={clearFile}>
+              <RiCloseCircleFill size={24} />
+            </Button>
+          )}
         </PhotoContainer>
         <input
           id="photo"
@@ -203,11 +207,16 @@ const PhotoContainer = styled.div`
     padding: 36px;
   }
 
-  & > svg {
-    fill: ${({ theme }) => theme.colors["primary"]["80"]};
+  & > button {
+    background-color: white;
+    border-radius: 100%;
     position: absolute;
     right: 5px;
     top: 5px;
+
+    & > svg {
+      fill: ${({ theme }) => theme.colors["primary"]["80"]};
+    }
   }
 
   img {
