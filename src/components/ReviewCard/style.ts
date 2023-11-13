@@ -136,7 +136,8 @@ export const Reaction = styled.div`
   gap: 5px;
 `;
 
-export const LikeButton = styled.div<{ $active: boolean }>`
+export const LikeButton = styled.button<{ $active: boolean }>`
+  all: unset;
   cursor: pointer;
   display: flex;
   justify-content: center;

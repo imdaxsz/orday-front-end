@@ -1,20 +1,28 @@
-import { useState } from "react";
 import { PiHeartFill } from "react-icons/pi";
+
+import useToggleLike from "@/hooks/useToggleLike";
 
 import { Reaction, LikeButton } from "./style";
 
-export default function ReviewAction() {
-  const [isLike, setIsLike] = useState(false);
+interface Props {
+  reviewId: number;
+  isLiked?: boolean;
+  likeCount: number;
+}
 
-  const toggleLike = () => {
-    setIsLike((prev) => !prev);
-  };
+export default function ReviewAction({ reviewId, isLiked, likeCount }: Props) {
+  const { like, handleClick, count } = useToggleLike(
+    reviewId,
+    "review",
+    isLiked,
+    likeCount,
+  );
 
   return (
     <Reaction>
-      <LikeButton $active={isLike} onClick={toggleLike}>
+      <LikeButton $active={like || false} onClick={handleClick}>
         <PiHeartFill size={16} />
-        {"0"}
+        {count}
       </LikeButton>
     </Reaction>
   );
