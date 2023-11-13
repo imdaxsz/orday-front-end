@@ -16,7 +16,6 @@ export default function ReviewModal({
   isModalOpen,
   closeModal,
 }: Props) {
-  console.log(review);
   return (
     <Modal isOpen={isModalOpen}>
       <ModalCloseBtn onClick={closeModal}>
