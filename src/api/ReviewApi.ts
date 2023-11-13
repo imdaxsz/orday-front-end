@@ -78,6 +78,16 @@ export const getProductReviews = async (params: {
   });
 };
 
+export const getProductPhotoReviews = async (params: {
+  productId: number;
+  key?: number | null;
+  size: number;
+}) => {
+  return await get<CursorPage<ReviewInfo>>(`product/get/review/image/list`, {
+    params,
+  });
+};
+
 /**
  @description 상품 리뷰 좋아요 추가 또는 삭제
  */
