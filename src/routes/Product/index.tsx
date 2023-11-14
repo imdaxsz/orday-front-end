@@ -30,6 +30,4 @@ const ProductImg = styled.img`
   height: 900px;
   border-radius: 20px;
   background-color: ${({ theme }) => theme.colors["neutral"]["20"]};
-  grid-row: 1 / 3;
-  margin-top: 55px;
 `;
