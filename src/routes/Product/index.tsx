@@ -1,30 +1,12 @@
-import { FaChevronRight } from "react-icons/fa6";
 import styled from "styled-components";
 
 import ProductComment from "./Comment/index";
 import DetailComponent from "./Detail";
 
-const categories = [
-  "전체",
-  "상의",
-  "바지/스커트",
-  "아우터",
-  "홈웨어",
-  "언더웨어",
-];
-
 export default function Product() {
   return (
     <Container>
-      <ProductImage>
-        <ProductCategory>
-          의류 <FaChevronRight />
-          {categories.map((category, index) => (
-            <span key={index}>{category}</span>
-          ))}
-        </ProductCategory>
-        <Image />
-      </ProductImage>
+      <ProductImg alt="productImage" />
       <DetailComponent />
       <ProductComment />
     </Container>
@@ -41,22 +23,10 @@ const Container = styled.div`
   gap: 60px;
 `;
 
-const ProductImage = styled.div`
-  grid-column: 1 / 2;
-  width: 650px;
-`;
-
-const Image = styled.div`
+const ProductImg = styled.img`
   width: 650px;
   height: 900px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.colors["neutral"]["20"]};
   grid-row: 1 / 3;
-  margin-top: 55px;
-`;
-
-const ProductCategory = styled.div`
-  display: flex;
-  gap: 20px;
-  color: ${({ theme }) => theme.colors["neutral"]["40"]};
 `;
