@@ -12,7 +12,7 @@ interface QuantityProps {
   handleRemoveOption: () => void;
 }
 
-export default function ProductQuantity({
+export default function OptionProductBox({
   selectedColor,
   selectedSize,
   price,
