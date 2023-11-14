@@ -1,26 +1,19 @@
 import { useState } from "react";
 import { FaXmark } from "react-icons/fa6";
+import styled from "styled-components";
 
 import AddBtn from "@/assets/add_btn.svg?react";
 import ReduceBtn from "@/assets/reduce_btn.svg?react";
 
-import {
-  CostBox,
-  QuantityBox,
-  Size,
-  Count,
-  CancelBtn,
-  ProductTotalCost,
-  TotalCost,
-} from "./Quantity.style";
-
 interface QuantityProps {
+  selectedColor: string;
   selectedSize: string;
-  price: string;
+  price: number;
   handleCancel: () => void;
 }
 
 export default function ProductQuantity({
+  selectedColor,
   selectedSize,
   price,
   handleCancel,
@@ -42,9 +35,10 @@ export default function ProductQuantity({
   };
 
   return (
-    <CostBox>
+    <Container>
       <QuantityBox>
-        <Size>{selectedSize}</Size>
+        <p>{selectedColor}</p>
+        <p>{selectedSize}</p>
         <Count>
           <ReduceBtn
             onClick={ReduceQuantity}
@@ -63,9 +57,56 @@ export default function ProductQuantity({
       <ProductTotalCost>
         총 상품금액
         <TotalCost>
-          {(parseInt(price) * quantity).toLocaleString()}원 ({quantity}개)
+          {(price * quantity).toLocaleString()}원 ({quantity}개)
         </TotalCost>
       </ProductTotalCost>
-    </CostBox>
+    </Container>
   );
 }
+
+export const Container = styled.div`
+  width: 490px;
+  height: 133px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 20px;
+`;
+
+export const QuantityBox = styled.div`
+  width: 490px;
+  height: 33px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+
+  p {
+    ${({ theme }) => theme.typo["body-1-r"]};
+  }
+`;
+
+export const Count = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-left: 150px;
+`;
+
+export const CancelBtn = styled.div`
+  cursor: pointer;
+  ${({ theme }) => theme.typo["body-1-r"]};
+`;
+
+export const ProductTotalCost = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  ${({ theme }) => theme.typo["body-1-b"]};
+  margin-top: 10px;
+`;
+
+export const TotalCost = styled.div`
+  ${({ theme }) => theme.typo["body-1-b"]};
+`;
