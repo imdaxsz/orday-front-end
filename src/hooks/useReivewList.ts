@@ -1,11 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-import {
-  getMockWritableReviews,
-  getMockWrittenReviews,
-  // getWritableReivews,
-  // getWrittenReivews,
-} from "@/api/ReviewApi";
+import { getWritableReivews, getWrittenReivews } from "@/api/ReviewApi";
 export default function useReviewList(status: number) {
   const [reviews, setReviews] = useState<WritableReview[] | WrittenReview[]>(
     [],
@@ -14,10 +9,8 @@ export default function useReviewList(status: number) {
   const fetchData = useCallback(async () => {
     let data: WritableReview[] | WrittenReview[] = [];
     try {
-      if (status === 1) data = await getMockWritableReviews();
-      // if (status === 1) data = await getWritableReivews();
-      else data = await getMockWrittenReviews();
-      // else data = await getWrittenReivews();
+      if (status === 1) data = await getWritableReivews();
+      else data = await getWrittenReivews();
       setReviews(data);
     } catch (error) {
       console.log("Error fetching review list: ", error);

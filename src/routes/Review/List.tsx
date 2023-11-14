@@ -27,13 +27,19 @@ export default function MyReviewList() {
         />
         <Tab value={2} label="작성한 리뷰" onClick={() => handleTabClick(2)} />
       </LikeTabs>
-      {reviews.map((review, i) => (
-        <ReviewItem
-          key={i}
-          status={selectedTab === 1 ? "WRITABLE" : "WRITTEN"}
-          review={review}
-        />
-      ))}
+      {reviews.length === 0 && (
+        <Empty>{`작성${
+          selectedTab === 1 ? " 가능한 " : "한 "
+        }리뷰가 없습니다.`}</Empty>
+      )}
+      {reviews.length !== 0 &&
+        reviews.map((review, i) => (
+          <ReviewItem
+            key={i}
+            status={selectedTab === 1 ? "WRITABLE" : "WRITTEN"}
+            review={review}
+          />
+        ))}
     </Container>
   );
 }
@@ -50,4 +56,11 @@ const LikeTabs = styled(Tabs)`
   & > li {
     color: ${({ theme }) => theme.colors["neutral"]["100"]};
   }
+`;
+
+const Empty = styled.div`
+  width: 100%;
+  height: 400px;
+  text-align: center;
+  line-height: 400px;
 `;
