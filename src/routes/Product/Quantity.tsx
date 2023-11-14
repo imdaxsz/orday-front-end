@@ -9,14 +9,14 @@ interface QuantityProps {
   selectedColor: string;
   selectedSize: string;
   price: number;
-  handleCancel: () => void;
+  handleRemoveOption: () => void;
 }
 
 export default function ProductQuantity({
   selectedColor,
   selectedSize,
   price,
-  handleCancel,
+  handleRemoveOption,
 }: QuantityProps) {
   const [quantity, setQuantity] = useState(1);
 
@@ -28,10 +28,6 @@ export default function ProductQuantity({
     if (quantity > 1) {
       setQuantity(quantity - 1);
     }
-  };
-
-  const handleCancelClick = () => {
-    handleCancel();
   };
 
   return (
@@ -50,7 +46,7 @@ export default function ProductQuantity({
             style={{ cursor: "pointer", userSelect: "none" }}
           />
         </Count>
-        <CancelBtn onClick={handleCancelClick}>
+        <CancelBtn onClick={handleRemoveOption}>
           <FaXmark />
         </CancelBtn>
       </QuantityBox>

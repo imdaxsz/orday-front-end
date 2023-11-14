@@ -164,7 +164,9 @@ export default function DetailInfo() {
             price={productData.price}
             selectedSize={option.size}
             selectedColor={option.color}
-            handleCancel={() => handleRemoveOption(option.id, option.size)}
+            handleRemoveOption={() =>
+              handleRemoveOption(option.id, option.size)
+            }
           />
         ))}
       <ProductBtn>
