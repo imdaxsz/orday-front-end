@@ -99,17 +99,18 @@ export default function DetailInfo() {
     if (!selectedColor) return alert("색상을 선택해주세요");
     if (selectedSizes.includes(size)) {
       setSelectedSizes(selectedSizes.filter((size) => size !== size));
-      setSelectedOptions(
-        selectedOptions.filter((options) => options.id !== id),
-      );
+      setSelectedOptions(selectedOptions.filter((option) => option.id !== id));
     } else {
       setSelectedSizes([...selectedSizes, size]);
       setSelectedOptions((prev) => [...prev, { id, color, size }]);
     }
   };
 
-  const handleCancel = (sizeToCancel: string) => {
-    setSelectedSizes(selectedSizes.filter((size) => size !== sizeToCancel));
+  const handleRemoveOption = (optionId: number, optionSize: string) => {
+    setSelectedSizes(selectedSizes.filter((size) => size !== optionSize));
+    setSelectedOptions(
+      selectedOptions.filter((options) => options.id !== optionId),
+    );
   };
 
   const handleToggleDetailInfo = (infoId: number) => {
@@ -163,7 +164,7 @@ export default function DetailInfo() {
             price={productData.price}
             selectedSize={option.size}
             selectedColor={option.color}
-            handleCancel={() => handleCancel(option.size)}
+            handleCancel={() => handleRemoveOption(option.id, option.size)}
           />
         ))}
       <ProductBtn>
