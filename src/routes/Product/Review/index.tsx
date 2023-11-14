@@ -1,33 +1,47 @@
-import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import Dropdown from "@/components/Dropdown";
 import useProductReviews from "@/hooks/useProductReviews";
+import useReviewModal from "@/hooks/useReviewModal";
 
 import PhotoReviews from "./PhotoReviews";
+import ReviewModal from "./ReviewModal";
 import ReviewRating from "./ReviewRating";
 import ReviewCard from "./SimpleReviewCard";
 
-const photoData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const reviewMock = [0, 1, 2];
-
 export default function ProductReview() {
   const productId = useLocation().pathname.split("/")[2];
-  const [isPhotoDetail, setPhotoDetail] = useState(false);
-  const handlePhotoDetail = () => {
-    setPhotoDetail(true);
-  };
 
-  const { statics, selectedOption, setSelectedOption } = useProductReviews(
-    Number(productId),
-  );
+  const {
+    ref,
+    statics,
+    reviews,
+    photoReviews,
+    selectedOption,
+    setSelectedOption,
+    isPhotoDetail,
+    toggleIsPhotoDetail,
+  } = useProductReviews(Number(productId));
+
+  const { review, isModalOpen, openReviewModal, closeReviewModal } =
+    useReviewModal();
 
   return (
     <Container>
+      <ReviewModal
+        isModalOpen={isModalOpen}
+        review={review}
+        closeModal={closeReviewModal}
+      />
       {isPhotoDetail ? (
-        <PhotoReviews setPhotoDetail={setPhotoDetail} photoData={photoData} />
+        <PhotoReviews
+          setIsPhotoDetail={toggleIsPhotoDetail}
+          photoReviews={photoReviews}
+          tatalCount={statics.photoReviewCount}
+          openReviewModal={openReviewModal}
+        />
       ) : (
         <div>
           <ReviewStatics>
@@ -35,15 +49,20 @@ export default function ProductReview() {
             <ReviewRating statics={statics} />
           </ReviewStatics>
           <PhotoReviewHeader>
-            <h3>포토 리뷰 ({photoData.length})</h3>
-            <MorePhoto>
+            <h3>포토 리뷰 ({statics.photoReviewCount})</h3>
+            <MorePhoto onClick={toggleIsPhotoDetail}>
               <span>전체보기</span>
-              <IoIosArrowForward onClick={handlePhotoDetail} />
+              <IoIosArrowForward />
             </MorePhoto>
           </PhotoReviewHeader>
           <PhotoContainer>
-            {photoData.slice(0, 7).map((_, index) => (
-              <Photo src="" alt="reviewImage" key={index} />
+            {photoReviews.slice(0, 7).map((review) => (
+              <Photo
+                src={review.reviewImageUrl}
+                alt="PHOTO"
+                key={review.reviewId}
+                onClick={() => openReviewModal(review)}
+              />
             ))}
           </PhotoContainer>
           <div style={{ width: "fit-content", marginTop: "40px" }}>
@@ -53,11 +72,12 @@ export default function ProductReview() {
               setSelectedOption={setSelectedOption}
             />
           </div>
-          {reviewMock.map((_, i) => (
-            <ReviewCard key={i} />
+          {reviews.map((review) => (
+            <ReviewCard key={review.reviewId} review={review} />
           ))}
         </div>
       )}
+      <div ref={ref} />
     </Container>
   );
 }
@@ -92,10 +112,7 @@ const MorePhoto = styled.div`
   display: flex;
   align-items: center;
   gap: 3px;
-
-  svg {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
 
 const PhotoContainer = styled.div`
@@ -115,5 +132,7 @@ const Photo = styled.img`
   height: 100px;
   border-radius: 10px;
   flex-shrink: 0;
+  object-fit: cover;
+  cursor: pointer;
   background-color: ${({ theme }) => theme.colors["neutral"]["20"]};
 `;

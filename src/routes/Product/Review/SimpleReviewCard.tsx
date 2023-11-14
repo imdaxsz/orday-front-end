@@ -1,45 +1,66 @@
 import styled from "styled-components";
 
 import ReviewAction from "@/components/ReviewCard/Action";
+import { RATING_LABEL } from "@/constants";
 import Rating from "@/routes/Review/Rating";
 
-export default function SimpleReviewCard() {
+interface Props {
+  review: ReviewInfo;
+  type?: "default" | "modal";
+}
+
+export default function SimpleReviewCard({ review, type }: Props) {
   return (
-    <DetailReview>
-      <Header>
-        <Rating rating={5} text={"아주 좋아요"} />
-        <span>{"2023.10.13"}</span>
+    <DetailReview type={type}>
+      <Header type={type}>
+        <Rating rating={review.rating} text={RATING_LABEL[5 - review.rating]} />
+        <span>{review.createdAt.split("T")[0]}</span>
       </Header>
       <Info>
-        <img src="" alt="profile"></img>
+        <UserImage />
         <div>
-          <h3>김환경</h3>
+          <h3>{review.userName}</h3>
           <span>
-            <strong>Color </strong>
-            {"BROWN"}&nbsp;&nbsp;
-            <strong>Size </strong>
-            {"M"}
+            {Boolean(review.color) && (
+              <>
+                <strong>Color </strong>
+                {review.color}&nbsp;&nbsp;
+              </>
+            )}
+            {Boolean(review.size) && (
+              <>
+                <strong>Size </strong>
+                {review.size}
+              </>
+            )}
           </span>
         </div>
       </Info>
-      <Content>{"너무 좋아요"}</Content>
-      <Photo src="" alt="photo1" />
-      <ReviewAction />
+      <Content>{review.content}</Content>
+      {review.reviewImageUrl && (
+        <Photo src={review.reviewImageUrl} alt={review.reviewId.toString()} />
+      )}
+
+      <ReviewAction
+        reviewId={review.reviewId}
+        likeCount={review.reviewLikeCount}
+        isLiked={review.liked}
+      />
     </DetailReview>
   );
 }
 
-export const DetailReview = styled.div`
-  width: 722px;
+export const DetailReview = styled.div<Pick<Props, "type">>`
+  width: ${({ type = "default" }) => (type === "default" ? "722px" : "460px")};
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding-bottom: 8px;
 `;
 
-export const Header = styled.div`
-  width: 722px;
-  height: 76px;
+export const Header = styled.div<Pick<Props, "type">>`
+  width: 100%;
+  height: ${({ type = "default" }) => (type === "default" ? "76px" : "45px")};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -57,14 +78,6 @@ export const Info = styled.div`
   gap: 10px;
   align-items: center;
 
-  img {
-    width: 50px;
-    height: 50px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background-color: #b7d2f1;
-  }
-
   h3 {
     ${({ theme }) => theme.typo["body-2-m"]};
   }
@@ -73,6 +86,14 @@ export const Info = styled.div`
     ${({ theme }) => theme.typo["body-3-r"]};
     color: ${({ theme }) => theme.colors["neutral"]["50"]};
   }
+`;
+
+export const UserImage = styled.div`
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: #b7d2f1;
 `;
 
 export const Content = styled.div`
