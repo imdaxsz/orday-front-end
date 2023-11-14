@@ -20,11 +20,11 @@ export default function ProductQuantity({
 }: QuantityProps) {
   const [quantity, setQuantity] = useState(1);
 
-  const AddQuantity = () => {
+  const addProductQuantity = () => {
     setQuantity(quantity + 1);
   };
 
-  const ReduceQuantity = () => {
+  const reduceProductQuantity = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
     }
@@ -41,12 +41,12 @@ export default function ProductQuantity({
         <p>{selectedSize}</p>
         <Count>
           <ReduceBtn
-            onClick={ReduceQuantity}
+            onClick={reduceProductQuantity}
             style={{ cursor: "pointer", userSelect: "none" }}
           />
           {quantity}
           <AddBtn
-            onClick={AddQuantity}
+            onClick={addProductQuantity}
             style={{ cursor: "pointer", userSelect: "none" }}
           />
         </Count>
@@ -55,7 +55,7 @@ export default function ProductQuantity({
         </CancelBtn>
       </QuantityBox>
       <ProductTotalCost>
-        총 상품금액
+        상품금액
         <TotalCost>
           {(price * quantity).toLocaleString()}원 ({quantity}개)
         </TotalCost>
