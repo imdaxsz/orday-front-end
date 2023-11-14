@@ -62,7 +62,15 @@ function createColorObject(productData: ProductDetail) {
   return colorMap;
 }
 
-export default function DetailComponent() {
+const DetailInfoData = [
+  { id: 1, name: "상세정보", description: productData.description },
+  { id: 2, name: "배송안내", description: "배송안내2" },
+  { id: 3, name: "교환 및 반품안내", description: "교환 및 반품안내3" },
+  { id: 4, name: "품질 보증 및 A/S", description: "품질 보증 및 A/S4" },
+  { id: 5, name: "취급주의사항", description: "취급주의사항5" },
+];
+
+export default function Detail() {
   const navigate = useNavigate();
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [toggleDetailInfo, setToggleDetailInfo] = useState([0]);
@@ -78,14 +86,6 @@ export default function DetailComponent() {
     );
     setSelectedSizes(selectedColorOption.map((option) => option.size));
   }, [selectedColor, selectedOptions]);
-
-  const DetailInfoData = [
-    { key: "상세정보", value: productData.description },
-    { key: "배송안내", value: "배송안내2" },
-    { key: "교환 및 반품안내", value: "교환 및 반품안내3" },
-    { key: "품질 보증 및 A/S", value: "품질 보증 및 A/S4" },
-    { key: "취급주의사항", value: "취급주의사항5" },
-  ];
 
   const CustomButton = ({ ...props }) => (
     <Button {...props} style={{ width: "213px", height: "50px" }} />
@@ -112,11 +112,11 @@ export default function DetailComponent() {
     setSelectedSizes(selectedSizes.filter((size) => size !== sizeToCancel));
   };
 
-  const handleToggleDetailInfo = (index: number) => {
-    if (toggleDetailInfo.includes(index)) {
-      setToggleDetailInfo(toggleDetailInfo.filter((i) => i !== index));
+  const handleToggleDetailInfo = (infoId: number) => {
+    if (toggleDetailInfo.includes(infoId)) {
+      setToggleDetailInfo(toggleDetailInfo.filter((id) => id !== infoId));
     } else {
-      setToggleDetailInfo([...toggleDetailInfo, index]);
+      setToggleDetailInfo([...toggleDetailInfo, infoId]);
     }
   };
 
@@ -187,19 +187,19 @@ export default function DetailComponent() {
         </LikeButton>
       </ProductBtn>
       <ProductDetailInfo>
-        {DetailInfoData.map((info, index) => (
+        {DetailInfoData.map((info) => (
           <DetailInfoKey
-            key={index}
-            onClick={() => handleToggleDetailInfo(index)}
+            key={info.id}
+            onClick={() => handleToggleDetailInfo(info.id)}
           >
-            {toggleDetailInfo.includes(index) ? (
+            {toggleDetailInfo.includes(info.id) ? (
               <FaChevronUp />
             ) : (
               <FaChevronDown />
             )}
-            {info.key}
-            {toggleDetailInfo.includes(index) && (
-              <DetailInfoValue>{info.value}</DetailInfoValue>
+            {info.name}
+            {toggleDetailInfo.includes(info.id) && (
+              <DetailInfoValue>{info.description}</DetailInfoValue>
             )}
           </DetailInfoKey>
         ))}
