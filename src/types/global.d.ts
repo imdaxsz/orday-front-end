@@ -72,6 +72,17 @@ declare interface Product {
   liked: boolean;
 }
 
+declare interface ClothesInfo {
+  id: number;
+  color: string;
+  size: string;
+}
+
+declare interface ProductDetail extends Omit<Product, "score"> {
+  clothesInfo: ClothesInfo[];
+  discountPrice: number;
+}
+
 declare interface BrandCategory {
   categoryId: number;
   subCategoryId: number;
