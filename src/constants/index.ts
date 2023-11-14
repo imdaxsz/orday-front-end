@@ -97,3 +97,11 @@ export const RATING_LABEL = [
   "그냥 그래요",
   "별로예요",
 ];
+
+export const PRODUCT_DETAIL_INFO = [
+  { id: 1, name: "상세정보", description: "" },
+  { id: 2, name: "배송안내", description: "배송안내2" },
+  { id: 3, name: "교환 및 반품안내", description: "교환 및 반품안내3" },
+  { id: 4, name: "품질 보증 및 A/S", description: "품질 보증 및 A/S4" },
+  { id: 5, name: "취급주의사항", description: "취급주의사항5" },
+];
