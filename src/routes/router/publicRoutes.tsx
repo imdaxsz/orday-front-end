@@ -21,10 +21,6 @@ export const publicRoutes: RouteObject[] = [
     element: <Login />,
   },
   {
-    path: "/login/guestOrder",
-    element: <Login />,
-  },
-  {
     path: "/join",
     element: <Join />,
   },
