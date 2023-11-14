@@ -27,7 +27,7 @@ export default function RecentReviews() {
           {Array(4)
             .fill(0)
             .map((_, index) => (
-              <ReviewCard key={index} />
+              <ReviewCard i={index} key={index} />
             ))}
         </MainContent>
       ))}
