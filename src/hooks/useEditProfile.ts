@@ -19,6 +19,7 @@ export default function useEditProfile(option?: "join") {
   const { isModalOpen, openModal, closeModal } = useModal(); // 수정 완료 모달
 
   const {
+    isLoading: isUserInfoLoading,
     form,
     phone,
     updatedInfo,
@@ -29,6 +30,7 @@ export default function useEditProfile(option?: "join") {
   } = useForm<UserInfoForm>(DEFAULT_USER_INFO_DATA, option);
 
   const [error, setError] = useState<UserInfoFormError>(INIT_ERROR);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleConfirmPwChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -121,13 +123,22 @@ export default function useEditProfile(option?: "join") {
       const updatedUserInfoItems = updatedInfo();
       console.log(updatedUserInfoItems);
       // 기존 회원 정보에서 변경된 부분이 있는 경우에만 변경 요청
-      if (Object.keys(updatedUserInfoItems).length !== 0)
-        await updateUserInfo(updatedUserInfoItems);
-      openModal();
+      if (Object.keys(updatedUserInfoItems).length !== 0) {
+        setIsLoading(true);
+        try {
+          await updateUserInfo(updatedUserInfoItems);
+          openModal();
+        } catch (error) {
+          console.log("Error updating user info: ", error);
+        }
+        setIsLoading(false);
+      }
     }
   };
 
   return {
+    isUserInfoLoading,
+    isUserInfoUpdating: isLoading,
     form,
     phone,
     socialInfo,
