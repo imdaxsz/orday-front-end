@@ -39,18 +39,17 @@ export default function Header() {
         <Group>
           <Item onClick={() => setMenuIsVisible((prev) => !prev)}>SHOP</Item>
           <Item>
-            <Link to="/community">COMMUNITY</Link>
+            <Link to="/reviews">REVIEW</Link>
           </Item>
         </Group>
         <Link to="/">
           <Logo />
         </Link>
         <Group>
-          <Item>SEARCH</Item>
           <Item>
             <Link to="/cart">CART</Link>
           </Item>
-          <Item onClick={handleMyClick}>MY</Item>
+          <Item onClick={handleMyClick}>{isLoggedIn ? "MY" : "LOGIN"}</Item>
         </Group>
       </Content>
       {menuIsVisible && (

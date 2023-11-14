@@ -9,8 +9,7 @@ const BrandDetail = lazy(() => import("@/routes/Brand/Detail"));
 const BrandList = lazy(() => import("@/routes/Brand/List"));
 const Product = lazy(() => import("@/routes/Product"));
 const Category = lazy(() => import("@/routes/Category"));
-const Community = lazy(() => import("@/routes/Community"));
-const CommunityDetail = lazy(() => import("@/routes/Community/Detail"));
+const RecentReviews = lazy(() => import("@/routes/Review/RecentReviews"));
 const Join = lazy(() => import("@/routes/Join"));
 const Login = lazy(() => import("@/routes/Login"));
 const Logout = lazy(() => import("@/routes/Logout"));
@@ -66,19 +65,11 @@ export const publicRoutes: RouteObject[] = [
         element: <Product />,
       },
       {
-        path: "community",
-        element: <Community />,
+        path: "reviews",
+        element: <RecentReviews />,
       },
       {
-        path: "community/tips/:id",
-        element: <CommunityDetail />,
-      },
-      {
-        path: "community/reviews/:id",
-        element: <CommunityDetail />,
-      },
-      {
-        path: "/logout",
+        path: "logout",
         element: <Logout />,
       },
       {

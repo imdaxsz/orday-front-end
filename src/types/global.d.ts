@@ -114,7 +114,7 @@ declare interface ProductListRequestParams {
 /**
  * @description 좋아요 기능 적용 가능 대상
  */
-declare type LikeTarget = "product" | "brand" | "post";
+declare type LikeTarget = "product" | "brand" | "review";
 
 declare interface ProductListDto {
   cursorRequest: {
@@ -150,16 +150,6 @@ declare interface OrderInfo extends OrderForm {
 }
 
 declare type ReviewStatus = "WRITABLE" | "WRITTEN";
-
-declare interface CreateReviewDto {
-  productReviewRequest: {
-    orderId: number;
-    productId: number;
-    content: string;
-    rating: number;
-  };
-  image?: File;
-}
 
 interface ReviewProductBaseInfo {
   productId: number;

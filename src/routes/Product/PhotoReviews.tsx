@@ -7,40 +7,39 @@ interface PhotoDetailProps {
   photoData: number[];
 }
 
-export default function PhotoDetail({
+export default function PhotoReviews({
   setPhotoDetail,
   photoData,
 }: PhotoDetailProps) {
   return (
-    <>
-      <DetailHeader>
+    <div>
+      <Header>
         <ArrowBack onClick={() => setPhotoDetail(false)} />
-        <HeaderContainer>사진 ({photoData.length})</HeaderContainer>
-      </DetailHeader>
+        <h3>포토 리뷰 ({photoData.length})</h3>
+      </Header>
       <PhotoGrid>
         {photoData.map((_, index) => (
-          <PhotoBox key={index} />
+          <Photo src="" alt="reviewImage" key={index} />
         ))}
       </PhotoGrid>
-    </>
+    </div>
   );
 }
 
-const DetailHeader = styled.div`
+const Header = styled.div`
   width: 722px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  h3 {
+    ${({ theme }) => theme.typo["title-2-b"]};
+    width: 33.3%;
+    margin: 0 auto;
+    text-align: center;
+  }
   svg {
     cursor: pointer;
   }
-`;
-
-const HeaderContainer = styled.div`
-  width: 722px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const PhotoGrid = styled.div`
@@ -48,12 +47,13 @@ const PhotoGrid = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 16px;
   width: 722px;
-  margin-top: 30px;
+  margin-top: 60px;
 `;
 
-const PhotoBox = styled.div`
+const Photo = styled.img`
+  display: block;
   width: 234px;
   height: 234px;
   border-radius: 20px;
-  background-color: ${({ theme }) => theme.colors["neutral"]["40"]};
+  background-color: ${({ theme }) => theme.colors["neutral"]["20"]};
 `;

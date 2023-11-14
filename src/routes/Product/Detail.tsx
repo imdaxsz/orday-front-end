@@ -70,7 +70,7 @@ const DetailInfoData = [
   { id: 5, name: "취급주의사항", description: "취급주의사항5" },
 ];
 
-export default function Detail() {
+export default function DetailInfo() {
   const navigate = useNavigate();
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [toggleDetailInfo, setToggleDetailInfo] = useState([0]);

@@ -1,32 +1,35 @@
 import styled from "styled-components";
 
-import ProductComment from "./Comment/index";
-import DetailComponent from "./Detail";
+import DetailInfo from "./Detail";
+import ProductReview from "./Review/index";
 
 export default function Product() {
   return (
     <Container>
-      <ProductImg alt="productImage" />
-      <DetailComponent />
-      <ProductComment />
+      <ProductInfo>
+        <ProductImg alt="productImage" />
+        <DetailInfo />
+      </ProductInfo>
+      <ProductReview />
     </Container>
   );
 }
 
 const Container = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto auto 1fr;
-  align-items: flex-start;
-  padding: 20px;
-  margin-top: 75px;
-  gap: 60px;
+  padding: 60px 30px 100px;
+`;
+
+const ProductInfo = styled.div`
+  display: flex;
+  gap: 80px;
+  margin-bottom: 120px;
 `;
 
 const ProductImg = styled.img`
   width: 650px;
   height: 900px;
-  border-radius: 10px;
+  border-radius: 20px;
   background-color: ${({ theme }) => theme.colors["neutral"]["20"]};
   grid-row: 1 / 3;
+  margin-top: 55px;
 `;

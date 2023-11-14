@@ -26,6 +26,11 @@ export const Group = styled.ul`
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 33.3%;
+
+  &:last-of-type {
+    justify-content: flex-end;
+  }
 `;
 
 export const Item = styled.li`

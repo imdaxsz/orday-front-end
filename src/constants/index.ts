@@ -89,3 +89,11 @@ export const DEFAULT_USER_INFO_DATA: UserInfoForm = {
     addressDetail: "",
   },
 };
+
+export const RATING_LABEL = [
+  "아주 좋아요",
+  "맘에 들어요",
+  "보통이에요",
+  "그냥 그래요",
+  "별로예요",
+];

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { BiSolidComment } from "react-icons/bi";
+import { PiHeartFill } from "react-icons/pi";
 
-import { CommentButton, Reaction, LikeButton, LikeIcon } from "../style";
+import { Reaction, LikeButton } from "../style";
 
-export default function Action() {
+export default function ReviewAction() {
   const [isLike, setIsLike] = useState(false);
 
   const toggleLike = () => {
@@ -12,14 +12,10 @@ export default function Action() {
 
   return (
     <Reaction>
-      <LikeButton active={isLike} onClick={toggleLike}>
-        <LikeIcon active={isLike} />
-        좋아요
+      <LikeButton $active={isLike} onClick={toggleLike}>
+        <PiHeartFill size={16} />
+        {"0"}
       </LikeButton>
-      <CommentButton>
-        <BiSolidComment />
-        {2}
-      </CommentButton>
     </Reaction>
   );
 }

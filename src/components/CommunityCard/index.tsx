@@ -1,22 +1,19 @@
-import CommunityHeader from "./Review/Header";
-import ReviewContent from "./Review/ReviewContent";
-import TipContent from "./Review/TipContent";
+import ReviewAction from "./Review/Action";
+import ReviewContent from "./Review/Content";
+import ReviewHeader from "./Review/Header";
 import { ReviewComponent } from "./style";
 
-interface ReviewCardProps {
-  isMainTitle: boolean;
-}
-
-export default function ReviewCard({ isMainTitle }: ReviewCardProps) {
+export default function ReviewCard() {
   const info = {
-    name: isMainTitle ? "김환경" : "박나무",
-    update: isMainTitle ? "7 분전" : "좋아요 1위!",
+    name: "김환경",
+    text: "7 분전",
   };
 
   return (
     <ReviewComponent>
-      <CommunityHeader info={info} />
-      {isMainTitle ? <ReviewContent /> : <TipContent />}
+      <ReviewHeader info={info} />
+      <ReviewContent />
+      <ReviewAction />
     </ReviewComponent>
   );
 }
