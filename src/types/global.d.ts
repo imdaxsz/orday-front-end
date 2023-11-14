@@ -140,16 +140,6 @@ declare interface OrderInfo extends OrderForm {
 
 declare type ReviewStatus = "WRITABLE" | "WRITTEN";
 
-declare interface CreateReviewDto {
-  productReviewRequest: {
-    orderId: number;
-    productId: number;
-    content: string;
-    rating: number;
-  };
-  image?: File;
-}
-
 interface ReviewProductBaseInfo {
   productId: number;
   name: string;

@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { getReviewProductsInfo } from "@/api/ProductApi";
 import {
   createReview,
-  // getReviewDetail,
-  testGetEditReviewData,
-  testGetReviewProductInfo,
+  getReviewDetail,
   updateReview,
   updateReviewImage,
 } from "@/api/ReviewApi";
@@ -21,6 +20,8 @@ export default function useWriteReview({
   id: number;
   orderId: number;
 }) {
+  const [loading, setLoading] = useState(false);
+
   const [form, setForm] = useState<ReviewForm>({
     content: "",
     rating: 3,
@@ -56,8 +57,7 @@ export default function useWriteReview({
         name,
         color,
         size,
-      } = await testGetEditReviewData(id);
-      // getReviewDetail
+      } = await getReviewDetail(id);
       setForm((prev) => ({
         ...prev,
         content,
@@ -85,8 +85,7 @@ export default function useWriteReview({
   const fetchProductData = async (id: number) => {
     try {
       const [{ id: productId, imageUrl, name, color, size }] =
-        await testGetReviewProductInfo(id);
-      // getProductsInfo
+        await getReviewProductsInfo([id]);
       setProductInfo({ productId, name, color, size, imageUrl });
     } catch (error) {
       console.log("Error fetching product data: ", error);
@@ -148,18 +147,28 @@ export default function useWriteReview({
   };
 
   const requestCreateReview = async () => {
-    const dto: CreateReviewDto = {
-      productReviewRequest: {
-        orderId,
-        productId: productInfo.productId,
-        content: form.content,
-        rating: form.rating,
-      },
-    };
-    if (form.file) dto.image = form.file;
-    console.log(dto);
+    const formData = new FormData();
+    formData.append(
+      "productReviewRequest",
+      new Blob(
+        [
+          JSON.stringify({
+            orderId,
+            productId: productInfo.productId,
+            content: form.content,
+            rating: form.rating,
+          }),
+        ],
+        {
+          type: "application/json",
+        },
+      ),
+    );
+    if (form.file) {
+      formData.append("image", form.file);
+    }
     try {
-      await createReview(dto);
+      await createReview(formData);
       navigate("/myPage/reviews");
     } catch (error) {
       console.log("Error uploading review: ", error);
@@ -171,7 +180,6 @@ export default function useWriteReview({
     const dto: ReviewEditContent = {};
     if (form.content !== existingReview.content) dto.content = form.content;
     if (form.rating !== existingReview.rating) dto.rating = form.rating;
-    console.log(dto);
     if (Object.keys(dto).length === 0) return;
     try {
       await updateReview(id, dto);
@@ -186,6 +194,7 @@ export default function useWriteReview({
       if (file) await updateReviewImage(id, file);
       else if (form.fileUrl === "" && existingReview.fileUrl !== "")
         await updateReviewImage(id);
+      navigate("/myPage/reviews");
     } catch (error) {
       console.log("Error updating review image: ", error);
     }
@@ -193,19 +202,21 @@ export default function useWriteReview({
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (form.file) console.log(form.file);
     if (validateContent()) {
+      setLoading(true);
       if (mode === "new") {
         await requestCreateReview();
       } else if (mode === "edit") {
         await requestUpdateReview();
         await requestUpdateReviewImage(id, form.file);
       }
+      setLoading(false);
     }
   };
 
   return {
     isImageCompressing: isLoading,
+    isReviewUploading: loading,
     productInfo,
     form,
     handleContentChange,
