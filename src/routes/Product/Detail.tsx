@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Button from "@/components/Button";
 import SelectBox from "@/components/SelectBox";
 
-import ProductQuantity from "./Quantity";
+import OptionProductBox from "./OptionProduct";
 
 const productData: ProductDetail = {
   id: 100,
@@ -87,14 +87,6 @@ export default function DetailInfo() {
     setSelectedSizes(selectedColorOption.map((option) => option.size));
   }, [selectedColor, selectedOptions]);
 
-  const CustomButton = ({ ...props }) => (
-    <Button {...props} style={{ width: "213px", height: "50px" }} />
-  );
-
-  const LikeButton = ({ ...props }) => (
-    <Button {...props} style={{ width: "50px", height: "50px" }} />
-  );
-
   const handleSelection = (id: number, color: string, size: string) => {
     if (!selectedColor) return alert("색상을 선택해주세요");
     if (selectedSizes.includes(size)) {
@@ -159,7 +151,7 @@ export default function DetailInfo() {
       )}
       {selectedOptions.length > 0 &&
         selectedOptions.map((option) => (
-          <ProductQuantity
+          <OptionProductBox
             key={option.id}
             price={productData.price}
             selectedSize={option.size}
@@ -169,26 +161,27 @@ export default function DetailInfo() {
             }
           />
         ))}
-      <ProductBtn>
-        <CustomButton $variant="solid" color="primary">
+      <ButtonBox>
+        <Button $variant="solid" color="primary">
           구매하기
-        </CustomButton>
-        <CustomButton
+        </Button>
+        <Button
           $variant="outline"
           color="primary"
           onClick={() => navigate("/cart")}
         >
           장바구니
-        </CustomButton>
-        <LikeButton
+        </Button>
+        <Button
           $variant="outline"
           size="md"
           color="primary"
           onClick={() => navigate("/myPage")}
+          style={{ width: "50px", height: "50px" }}
         >
           <BsHeartFill />
-        </LikeButton>
-      </ProductBtn>
+        </Button>
+      </ButtonBox>
       <ProductDetailInfo>
         {DetailInfoData.map((info) => (
           <DetailInfoKey
@@ -266,12 +259,16 @@ export const SizeBox = styled.button<{ selected: boolean }>`
   cursor: pointer;
 `;
 
-export const ProductBtn = styled.div`
+export const ButtonBox = styled.div`
   display: flex;
   gap: 10px;
   width: 496px;
   height: 50px;
   margin-top: 20px;
+  button {
+    width: 213px;
+    height: 50px;
+  }
 `;
 
 export const ProductDetailInfo = styled.div`
