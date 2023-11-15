@@ -7,6 +7,7 @@ import { ApiError } from "@/libs/error";
 export default function useLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -41,6 +42,7 @@ export default function useLogin() {
     e.preventDefault();
     const isValidate = validateForm();
     if (isValidate) {
+      setIsLoading(true);
       try {
         await login(email, password);
         navigate("/");
@@ -49,10 +51,12 @@ export default function useLogin() {
           setLoginError((prev) => ({ ...prev, result: true }));
         console.log("Error login: ", error);
       }
+      setIsLoading(false);
     }
   };
 
   return {
+    isLoading,
     email,
     password,
     loginError,

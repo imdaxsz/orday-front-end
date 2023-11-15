@@ -5,6 +5,7 @@ import BackButton from "@/components/BackButton";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import Head from "@/components/Head";
+import Loader from "@/components/Loader";
 import Modal from "@/components/Modal";
 import useLeave from "@/hooks/useLeave";
 import useLogout from "@/hooks/useLogout";
@@ -13,6 +14,7 @@ import { useModal } from "@/hooks/useModal";
 export default function Leave() {
   const { isModalOpen, openModal, closeModal } = useModal();
   const {
+    isLoading,
     confirm,
     error,
     handleClickConfirm,
@@ -33,6 +35,7 @@ export default function Leave() {
     <Container>
       <Head title="회원 탈퇴 | Orday" />
       <BackButton pageTitle="회원 탈퇴" />
+      {isLoading && <Loader />}
       <Section>
         <h3>회원 탈퇴</h3>
         <Content>
