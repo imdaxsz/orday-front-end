@@ -4,6 +4,7 @@ import styled from "styled-components";
 import BackButton from "@/components/BackButton";
 import Button from "@/components/Button";
 import Head from "@/components/Head";
+import Loader from "@/components/Loader";
 import Modal from "@/components/Modal";
 import PostCodeModal from "@/components/PostCodeModal";
 import SelectBox from "@/components/SelectBox";
@@ -16,6 +17,8 @@ import { InputContainer, PostCode } from "@/routes/Join";
 export default function EditProfile() {
   const { isModalOpen, openModal, closeModal } = useModal();
   const {
+    isUserInfoLoading,
+    isUserInfoUpdating,
     form,
     phone,
     socialInfo,
@@ -43,6 +46,7 @@ export default function EditProfile() {
     <Container>
       <Head title="회원정보 수정 | Orday" />
       <BackButton pageTitle="회원정보 수정" />
+      {(isUserInfoLoading || isUserInfoUpdating) && <Loader />}
       <Form onSubmit={onSubmit}>
         <Item>
           <span>이름</span>

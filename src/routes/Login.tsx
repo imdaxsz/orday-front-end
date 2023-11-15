@@ -1,15 +1,17 @@
 import { RxDividerVertical } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import styled from "styled-components";
 
 import AuthHeader from "@/components/AuthHeader";
 import Button from "@/components/Button";
 import Head from "@/components/Head";
+import Loader from "@/components/Loader";
 import TextInput from "@/components/TextInput";
 import useLogin from "@/hooks/useLogin";
 
-export default function LoginForm() {
+export default function Login() {
   const {
+    isLoading,
     email,
     password,
     loginError: error,
@@ -17,10 +19,15 @@ export default function LoginForm() {
     onSubmit,
   } = useLogin();
 
+  // 이미 로그인 상태인 경우 redirect
+  const isLoggedIn = localStorage.getItem("token");
+  if (isLoggedIn) return <Navigate to="/" replace />;
+
   return (
     <Container>
       <Head title="로그인 | Orday" />
       <AuthHeader title="로그인" />
+      {isLoading && <Loader />}
       <Form onSubmit={onSubmit} noValidate>
         <TextInput
           id="email"

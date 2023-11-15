@@ -47,6 +47,7 @@ export default function useWriteReview({
 
   // 수정 모드일 경우, 수정할 리뷰 정보 요청
   const fetchReviewData = async (id: number) => {
+    setLoading(true);
     try {
       const {
         content,
@@ -79,10 +80,12 @@ export default function useWriteReview({
     } catch (error) {
       console.log("Error fetching review data: ", error);
     }
+    setLoading(false);
   };
 
   // 리뷰 작성일 경우 상품 정보 조회
   const fetchProductData = async (id: number) => {
+    setLoading(true);
     try {
       const [{ id: productId, imageUrl, name, color, size }] =
         await getReviewProductsInfo([id]);
@@ -90,6 +93,7 @@ export default function useWriteReview({
     } catch (error) {
       console.log("Error fetching product data: ", error);
     }
+    setLoading(false);
   };
 
   // 작성 mode에 따라 필요한 정보 fetch

@@ -5,18 +5,19 @@ import AuthHeader from "@/components/AuthHeader";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import Head from "@/components/Head";
+import Loader from "@/components/Loader";
 import PostCodeModal from "@/components/PostCodeModal";
 import BaseSelectBox from "@/components/SelectBox";
 import BaseInput from "@/components/TextInput";
 import { DATE, USER_INFO_FORM_ERROR_MESSAGE } from "@/constants";
 import useJoin from "@/hooks/useJoin";
 import { useModal } from "@/hooks/useModal";
-import { useAppSelector } from "@/store";
 
 export default function Join() {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const {
+    isLoading,
     form,
     phone,
     agree,
@@ -35,13 +36,14 @@ export default function Join() {
   };
 
   // 이미 로그인 상태인 경우 redirect
-  const isLoggedIn = useAppSelector((state) => state.auth.accessToken);
+  const isLoggedIn = localStorage.getItem("token");
   if (isLoggedIn) return <Navigate to="/" replace />;
 
   return (
     <Container>
       <Head title="회원가입 | Orday" />
       <AuthHeader title="회원가입" />
+      {isLoading && <Loader />}
       <Form onSubmit={handleSubmit} noValidate>
         <TextInput
           id="email"
