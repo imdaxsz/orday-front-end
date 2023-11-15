@@ -18,7 +18,7 @@ export const getCategoryProducts = async (
   paramsInfo: ProductListRequestParams,
 ) => {
   const params = { size: 12, ...paramsInfo };
-  return await get<ProductListDto>("product/get/category", {
+  return await get<CursorPage<Product>>("product/get/category", {
     params,
   });
 };
@@ -32,7 +32,7 @@ export const getNewOrSaleProducts = async (
   pathname: string,
 ) => {
   const params = { size: 12, ...paramsInfo };
-  return await get<ProductListDto>(`product/get/${pathname}`, {
+  return await get<CursorPage<Product>>(`product/get/${pathname}`, {
     params,
   });
 };
@@ -65,7 +65,7 @@ export const getBestCategoryProducts = async (
  */
 export const getLikedProducts = async (key: number | null) => {
   const params = { key, size: 12 };
-  return await get<ProductListDto>("product/like/get/all", {
+  return await get<CursorPage<Product>>("product/like/get/all", {
     params,
   });
 };
@@ -93,7 +93,7 @@ export const getBrandProducts = async (
     params.subCategoryId = subCategoryId;
     url = url + "/category";
   }
-  return get<ProductListDto>(url, {
+  return get<CursorPage<Product>>(url, {
     params,
   });
 };

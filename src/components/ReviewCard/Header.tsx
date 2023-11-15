@@ -1,4 +1,4 @@
-import { Profile, Image, Info, InfoName, InfoText } from "../style";
+import { Profile, Image, Info, InfoName, InfoText } from "./style";
 
 interface HeaderProps {
   info: {

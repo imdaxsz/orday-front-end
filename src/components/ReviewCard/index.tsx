@@ -1,9 +1,9 @@
-import ReviewAction from "./Review/Action";
-import ReviewContent from "./Review/Content";
-import ReviewHeader from "./Review/Header";
+import ReviewAction from "./Action";
+import ReviewContent from "./Content";
+import ReviewHeader from "./Header";
 import { ReviewComponent } from "./style";
 
-export default function ReviewCard() {
+export default function ReviewCard({ i }: { i: number }) {
   const info = {
     name: "김환경",
     text: "7 분전",
@@ -13,7 +13,7 @@ export default function ReviewCard() {
     <ReviewComponent>
       <ReviewHeader info={info} />
       <ReviewContent />
-      <ReviewAction />
+      <ReviewAction reviewId={1} likeCount={i} />
     </ReviewComponent>
   );
 }

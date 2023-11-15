@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 
 import { toggleLikeBrand } from "@/api/BrandApi";
 import { toggleLikeProducts } from "@/api/ProductApi";
+import { toggleLikeReview } from "@/api/ReviewApi";
 
 export default function useToggleLike(
   id: number,
   target: LikeTarget,
   isLiked?: boolean,
+  likeCount?: number,
 ) {
   const [like, setLike] = useState(isLiked ?? false);
+  const [count, setCount] = useState(likeCount ?? 0);
 
   useEffect(() => {
     if (isLiked) setLike(isLiked);
@@ -28,11 +31,15 @@ export default function useToggleLike(
     try {
       if (target === "brand") await toggleLikeBrand(id);
       if (target === "product") await toggleLikeProducts(id);
+      if (target === "review") {
+        await toggleLikeReview(id);
+        setCount((prev) => (isLiked ? prev - 1 : prev + 1));
+      }
       setLike((prev) => !prev);
     } catch (error) {
       console.log(error);
     }
   };
 
-  return { like, handleClick };
+  return { like, handleClick, count };
 }

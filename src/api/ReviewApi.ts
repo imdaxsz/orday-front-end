@@ -60,3 +60,42 @@ export const updateReviewImage = async (
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
+
+/**
+ @description 상품 리뷰 별점 통계
+ */
+export const getReviewStatics = async (productId: number) => {
+  return await get<ReviewStatics>(`product/get/review/${productId}`);
+};
+
+/**
+ @description 상품 리뷰 목록 조회
+  * @returns 상품 리뷰 목록
+ */
+export const getProductReviews = async (params: {
+  productId: number;
+  key?: number | null;
+  size: number;
+  sortId: number;
+}) => {
+  return await get<CursorPage<ReviewInfo>>(`product/get/review/list`, {
+    params,
+  });
+};
+
+export const getProductPhotoReviews = async (params: {
+  productId: number;
+  key?: number | null;
+  size: number;
+}) => {
+  return await get<CursorPage<ReviewInfo>>(`product/get/review/image/list`, {
+    params,
+  });
+};
+
+/**
+ @description 상품 리뷰 좋아요 추가 또는 삭제
+ */
+export const toggleLikeReview = async (productReviewId: number) => {
+  return await post(`product/like/review/${productReviewId}`);
+};
