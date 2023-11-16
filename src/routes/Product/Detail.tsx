@@ -1,9 +1,9 @@
-import { BsHeartFill } from "react-icons/bs";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Button from "@/components/Button";
+import LikeButton from "@/components/LikeButton";
 import SelectBox from "@/components/SelectBox";
 import { PRODUCT_DETAIL_INFO } from "@/constants";
 import useProductDetail from "@/hooks/useProductDetail";
@@ -133,7 +133,11 @@ export default function DetailInfo() {
               color="primary"
               style={{ width: "50px", height: "50px" }}
             >
-              <BsHeartFill />
+              <LikeButton
+                isLiked={productData.liked}
+                target="product"
+                id={productData.id}
+              />
             </Button>
           </ButtonBox>
         </>
@@ -224,6 +228,14 @@ export const ButtonBox = styled.div`
   button {
     width: 213px;
     height: 50px;
+    & > button {
+      all: unset;
+      svg {
+        color: ${({ theme }) => theme.colors["primary"][80]};
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 `;
 
