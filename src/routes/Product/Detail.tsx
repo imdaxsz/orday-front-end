@@ -7,24 +7,27 @@ import Button from "@/components/Button";
 import SelectBox from "@/components/SelectBox";
 import { PRODUCT_DETAIL_INFO } from "@/constants";
 import useProductDetail from "@/hooks/useProductDetail";
+import useProductInfo from "@/hooks/useProductInfo";
 
 import OptionProductBox from "./OptionProduct";
 
 export default function DetailInfo() {
   const navigate = useNavigate();
 
+  const { productData, options } = useProductDetail();
+
   const {
-    productData,
-    options,
     selectedColor,
     setSelectedColor,
     handleSelectOption,
     selectedSizes,
     selectedOptions,
+    addProductAmount,
+    reduceProductAmount,
     handleRemoveOption,
     toggleDetailInfo,
     handleToggleDetailInfo,
-  } = useProductDetail();
+  } = useProductInfo();
 
   return (
     <ProductDetail>
@@ -71,12 +74,11 @@ export default function DetailInfo() {
             selectedOptions.map((option) => (
               <OptionProductBox
                 key={option.id}
+                productOption={option}
                 price={productData.price}
-                selectedSize={option.size}
-                selectedColor={option.color}
-                handleRemoveOption={() =>
-                  handleRemoveOption(option.id, option.size)
-                }
+                addProductAmount={addProductAmount}
+                reduceProductAmount={reduceProductAmount}
+                handleRemoveOption={handleRemoveOption}
               />
             ))}
         </>

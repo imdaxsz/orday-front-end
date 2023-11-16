@@ -1,31 +1,57 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
+import { getProductDetail } from "@/api/ProductApi";
 import { PRODUCT_DETAIL_INFO } from "@/constants";
 
 const data: ProductDetail = {
-  id: 100,
   name: "파타고니아 레트로 x 양털 후리스 뽀글이 플리스 자켓",
   imageUrl: "string",
-  clothesInfo: [
+  clothesInfoList: [
     {
-      id: 101,
-      color: "BROWN",
+      id: 8,
+      color: "brown",
       size: "S",
     },
     {
-      id: 102,
-      color: "BROWN",
+      id: 1001,
+      color: "brown",
       size: "M",
     },
     {
-      id: 103,
-      color: "BROWN",
+      id: 1256,
+      color: "brown",
       size: "L",
     },
     {
-      id: 104,
-      color: "BLACK",
+      id: 1452,
+      color: "red",
+      size: "S",
+    },
+    {
+      id: 1767,
+      color: "red",
       size: "M",
+    },
+    {
+      id: 1963,
+      color: "red",
+      size: "L",
+    },
+    {
+      id: 2159,
+      color: "black",
+      size: "S",
+    },
+    {
+      id: 2355,
+      color: "black",
+      size: "M",
+    },
+    {
+      id: 2790,
+      color: "black",
+      size: "L",
     },
   ],
   description: "상세정보1",
@@ -39,18 +65,23 @@ const data: ProductDetail = {
 };
 
 export default function useProductDetail() {
-  const [productData, setProductData] = useState<ProductDetail>(data);
+  const { state } = useLocation();
+  const [productData, setProductData] = useState<ProductDetail>();
   const [options, setOptions] = useState<ColorOptionObject>();
-  const [toggleDetailInfo, setToggleDetailInfo] = useState([0]);
 
-  const [selectedColor, setSelectedColor] = useState<string | null>("");
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
-  const [selectedOptions, setSelectedOptions] = useState<ClothesInfo[]>([]);
+  const fetchProductDetail = async () => {
+    try {
+      const data = await getProductDetail(state.name);
+      setProductData(data);
+    } catch (error) {
+      console.log("Error fetching product: ", error);
+    }
+  };
 
   const createColorObject = (productData: ProductDetail) => {
     const colorMap: ColorOptionObject = {};
 
-    productData.clothesInfo.forEach((item: ClothesInfo) => {
+    productData.clothesInfoList.forEach((item: ClothesInfo) => {
       const { id, color, size } = item;
       if (!colorMap[color]) {
         colorMap[color] = [];
@@ -61,57 +92,22 @@ export default function useProductDetail() {
   };
 
   useEffect(() => {
-    // 상품상세 조회
-    setProductData(data);
+    setTimeout(() => {
+      setProductData(data);
+    }, 300);
+    // fetchProductDetail();
+  }, [state.name]);
+
+  useEffect(() => {
     if (productData) {
       const createdOptions = createColorObject(productData);
       setOptions(createdOptions);
       PRODUCT_DETAIL_INFO[0].description = data.description;
     }
-  }, []);
+  }, [productData]);
 
-  useEffect(() => {
-    const selectedColorOption = selectedOptions.filter(
-      (option) => option.color === selectedColor,
-    );
-    setSelectedSizes(selectedColorOption.map((option) => option.size));
-  }, [selectedColor, selectedOptions]);
-
-  const handleSelectOption = (id: number, color: string, size: string) => {
-    if (!selectedColor) return alert("색상을 선택해주세요");
-    if (selectedSizes.includes(size)) {
-      setSelectedSizes(selectedSizes.filter((size) => size !== size));
-      setSelectedOptions(selectedOptions.filter((option) => option.id !== id));
-    } else {
-      setSelectedSizes([...selectedSizes, size]);
-      setSelectedOptions((prev) => [...prev, { id, color, size }]);
-    }
-  };
-
-  const handleRemoveOption = (optionId: number, optionSize: string) => {
-    setSelectedSizes(selectedSizes.filter((size) => size !== optionSize));
-    setSelectedOptions(
-      selectedOptions.filter((options) => options.id !== optionId),
-    );
-  };
-
-  const handleToggleDetailInfo = (infoId: number) => {
-    if (toggleDetailInfo.includes(infoId)) {
-      setToggleDetailInfo(toggleDetailInfo.filter((id) => id !== infoId));
-    } else {
-      setToggleDetailInfo([...toggleDetailInfo, infoId]);
-    }
-  };
   return {
     productData,
     options,
-    selectedColor,
-    setSelectedColor,
-    handleSelectOption,
-    selectedSizes,
-    selectedOptions,
-    handleRemoveOption,
-    toggleDetailInfo,
-    handleToggleDetailInfo,
   };
 }

@@ -1,59 +1,50 @@
-import { useState } from "react";
 import { FaXmark } from "react-icons/fa6";
 import styled from "styled-components";
 
 import AddBtn from "@/assets/add_btn.svg?react";
 import ReduceBtn from "@/assets/reduce_btn.svg?react";
 
-interface QuantityProps {
-  selectedColor: string;
-  selectedSize: string;
+interface OptionProductBoxProps {
+  productOption: ProductOptionInfo;
   price: number;
-  handleRemoveOption: () => void;
+  addProductAmount: (id: number) => void;
+  reduceProductAmount: (id: number) => void;
+  handleRemoveOption: (id: number, size: string) => void;
 }
 
 export default function OptionProductBox({
-  selectedColor,
-  selectedSize,
+  productOption,
   price,
+  addProductAmount,
+  reduceProductAmount,
   handleRemoveOption,
-}: QuantityProps) {
-  const [quantity, setQuantity] = useState(1);
-
-  const addProductQuantity = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const reduceProductQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
+}: OptionProductBoxProps) {
+  const { id, color, size, amount } = productOption;
 
   return (
     <Container>
       <QuantityBox>
-        <p>{selectedColor}</p>
-        <p>{selectedSize}</p>
+        <p>{color}</p>
+        <p>{size}</p>
         <Count>
           <ReduceBtn
-            onClick={reduceProductQuantity}
+            onClick={() => reduceProductAmount(id)}
             style={{ cursor: "pointer", userSelect: "none" }}
           />
-          {quantity}
+          {amount}
           <AddBtn
-            onClick={addProductQuantity}
+            onClick={() => addProductAmount(id)}
             style={{ cursor: "pointer", userSelect: "none" }}
           />
         </Count>
-        <CancelBtn onClick={handleRemoveOption}>
+        <CancelBtn onClick={() => handleRemoveOption(id, size)}>
           <FaXmark />
         </CancelBtn>
       </QuantityBox>
       <ProductTotalCost>
         상품금액
         <TotalCost>
-          {(price * quantity).toLocaleString()}원 ({quantity}개)
+          {(price * amount).toLocaleString()}원 ({amount}개)
         </TotalCost>
       </ProductTotalCost>
     </Container>
