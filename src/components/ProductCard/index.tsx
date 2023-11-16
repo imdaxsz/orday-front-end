@@ -32,6 +32,7 @@ export default function ProductCard({
     <Container size={size}>
       <ImageContainer
         to={`/product/${info.id}`}
+        state={{ name: info.name }}
         size={size}
         $tag={$tag}
         $remove={$remove}
@@ -49,8 +50,14 @@ export default function ProductCard({
       </ImageContainer>
       <Info>
         <Brand to={`/brands/${info.brandInfo.id}`}>{info.brandInfo.name}</Brand>
-        <Name to={`/product/${info.id}`}>{info.name}</Name>
-        <Price to={`/product/${info.id}`} size={size}>
+        <Name to={`/product/${info.id}`} state={{ name: info.name }}>
+          {info.name}
+        </Name>
+        <Price
+          to={`/product/${info.id}`}
+          state={{ name: info.name }}
+          size={size}
+        >
           {info.price.toLocaleString()}원
         </Price>
       </Info>
