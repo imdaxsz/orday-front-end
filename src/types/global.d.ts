@@ -86,7 +86,7 @@ declare interface ColorOptionObject {
   [key: string]: { id: number; size: string }[];
 }
 
-declare interface ProductDetail extends Omit<Product, "id" | "score"> {
+declare interface ProductDetail extends Omit<Product, "score"> {
   clothesInfoList: ClothesInfo[];
   discountPrice: number;
 }

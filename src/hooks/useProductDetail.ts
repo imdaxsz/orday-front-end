@@ -5,6 +5,7 @@ import { getProductDetail } from "@/api/ProductApi";
 import { PRODUCT_DETAIL_INFO } from "@/constants";
 
 const data: ProductDetail = {
+  id: 8,
   name: "파타고니아 레트로 x 양털 후리스 뽀글이 플리스 자켓",
   imageUrl: "string",
   clothesInfoList: [
