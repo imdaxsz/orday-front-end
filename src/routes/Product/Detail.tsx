@@ -1,141 +1,121 @@
-import { useState } from "react";
 import { BsHeartFill } from "react-icons/bs";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 import Button from "@/components/Button";
+import SelectBox from "@/components/SelectBox";
+import { PRODUCT_DETAIL_INFO } from "@/constants";
+import useProductDetail from "@/hooks/useProductDetail";
 
-import {
-  ProductDetail,
-  ProductCode,
-  ProductInfo,
-  ProductPrice,
-  ProductSize,
-  SizeBox,
-  ProductBtn,
-  ProductDetailInfo,
-  DetailInfoKey,
-  DetailInfoValue,
-} from "./Detail.style";
-import ProductQuantity from "./Quantity";
-
-const ProductData = {
-  color: "BROWN",
-  name: "파타고니아 레트로 x 양털 후리스 뽀글이 플리스 자켓",
-  code: "23056-PEBG",
-  price: "198000",
-};
-
-const sizes = ["S", "M", "L"];
-
-const DetailInfoData = [
-  { key: "상세정보", value: "상세정보1" },
-  { key: "배송안내", value: "배송안내2" },
-  { key: "교환 및 반품안내", value: "교환 및 반품안내3" },
-  { key: "품질 보증 및 A/S", value: "품질 보증 및 A/S4" },
-  { key: "취급주의사항", value: "취급주의사항5" },
-];
+import OptionProductBox from "./OptionProduct";
 
 export default function DetailInfo() {
   const navigate = useNavigate();
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
-  const [selectedDetailInfo, setSelectedDetailInfo] = useState([0]);
 
-  const CustomButton = ({ ...props }) => (
-    <Button {...props} style={{ width: "213px", height: "50px" }} />
-  );
-
-  const LikeButton = ({ ...props }) => (
-    <Button {...props} style={{ width: "50px", height: "50px" }} />
-  );
-
-  const handleSelection = (selection: string) => {
-    if (selectedSizes.includes(selection)) {
-      setSelectedSizes(selectedSizes.filter((size) => size !== selection));
-    } else {
-      setSelectedSizes([...selectedSizes, selection]);
-    }
-  };
-
-  const handleCancel = (sizeToCancel: string) => {
-    setSelectedSizes(selectedSizes.filter((size) => size !== sizeToCancel));
-  };
-
-  const handleToggleDetailInfo = (index: number) => {
-    if (selectedDetailInfo.includes(index)) {
-      setSelectedDetailInfo(selectedDetailInfo.filter((i) => i !== index));
-    } else {
-      setSelectedDetailInfo([...selectedDetailInfo, index]);
-    }
-  };
+  const {
+    productData,
+    options,
+    selectedColor,
+    setSelectedColor,
+    handleSelectOption,
+    selectedSizes,
+    selectedOptions,
+    handleRemoveOption,
+    toggleDetailInfo,
+    handleToggleDetailInfo,
+  } = useProductDetail();
 
   return (
     <ProductDetail>
-      <ProductCode>PATAGONIA {ProductData.code}</ProductCode>
-      {Array(3)
-        .fill(null)
-        .map((_, index) => (
-          <ProductInfo key={index}>
-            {Object.values(ProductData)[index]}
-          </ProductInfo>
-        ))}
-      <ProductPrice>
-        ₩ {parseInt(ProductData.price).toLocaleString()}
-      </ProductPrice>
-      <ProductSize>
-        {sizes.map((size, index) => (
-          <SizeBox
-            key={index}
-            onClick={() => handleSelection(size)}
-            selected={selectedSizes.includes(size)}
+      {productData && (
+        <>
+          <ProductCode
+            onClick={() => navigate(`/brands/${productData.brandInfo.id}`)}
+            style={{ cursor: "pointer" }}
           >
-            {size}
-          </SizeBox>
-        ))}
-      </ProductSize>
-      {selectedSizes.length > 0 &&
-        selectedSizes.map((selectedSize) => (
-          <ProductQuantity
-            key={selectedSize}
-            price={ProductData.price}
-            selectedSize={selectedSize}
-            handleCancel={() => handleCancel(selectedSize)}
-          />
-        ))}
-      <ProductBtn>
-        <CustomButton $variant="solid" color="primary">
+            {productData.brandInfo.name}
+          </ProductCode>
+          <ProductInfo>{productData.name}</ProductInfo>
+
+          <ProductPrice>₩ {productData.price.toLocaleString()}</ProductPrice>
+          <ProductColor>
+            {options && (
+              <SelectBox
+                options={Object.keys(options)}
+                id="colors"
+                text="색상을 선택해주세요"
+                selected={selectedColor}
+                setSelected={setSelectedColor}
+                className="colorOption"
+              />
+            )}
+          </ProductColor>
+          {selectedColor && (
+            <ProductSize>
+              {options &&
+                options[selectedColor]?.map((option) => (
+                  <SizeBox
+                    key={option.id}
+                    onClick={() =>
+                      handleSelectOption(option.id, selectedColor, option.size)
+                    }
+                    selected={selectedSizes.includes(option.size)}
+                  >
+                    {option.size}
+                  </SizeBox>
+                ))}
+            </ProductSize>
+          )}
+          {selectedOptions.length > 0 &&
+            selectedOptions.map((option) => (
+              <OptionProductBox
+                key={option.id}
+                price={productData.price}
+                selectedSize={option.size}
+                selectedColor={option.color}
+                handleRemoveOption={() =>
+                  handleRemoveOption(option.id, option.size)
+                }
+              />
+            ))}
+        </>
+      )}
+      <ButtonBox>
+        <Button $variant="solid" color="primary">
           구매하기
-        </CustomButton>
-        <CustomButton
+        </Button>
+        <Button
           $variant="outline"
           color="primary"
           onClick={() => navigate("/cart")}
         >
           장바구니
-        </CustomButton>
-        <LikeButton
+        </Button>
+        <Button
           $variant="outline"
           size="md"
           color="primary"
           onClick={() => navigate("/myPage")}
+          style={{ width: "50px", height: "50px" }}
         >
           <BsHeartFill />
-        </LikeButton>
-      </ProductBtn>
+        </Button>
+      </ButtonBox>
       <ProductDetailInfo>
-        {DetailInfoData.map((info, index) => (
+        {PRODUCT_DETAIL_INFO.map((info) => (
           <DetailInfoKey
-            key={index}
-            onClick={() => handleToggleDetailInfo(index)}
+            key={info.id}
+            onClick={() => handleToggleDetailInfo(info.id)}
           >
-            {selectedDetailInfo.includes(index) ? (
+            {toggleDetailInfo.includes(info.id) ? (
               <FaChevronUp />
             ) : (
               <FaChevronDown />
             )}
-            {info.key}
-            {selectedDetailInfo.includes(index) && (
-              <DetailInfoValue>{info.value}</DetailInfoValue>
+            {info.name}
+            {toggleDetailInfo.includes(info.id) && (
+              <DetailInfoValue>{info.description}</DetailInfoValue>
             )}
           </DetailInfoKey>
         ))}
@@ -143,3 +123,95 @@ export default function DetailInfo() {
     </ProductDetail>
   );
 }
+
+export const ProductDetail = styled.div`
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  width: 490px;
+  margin-top: 30px;
+`;
+
+export const ProductCode = styled.div`
+  color: ${({ theme }) => theme.colors["neutral"]["40"]};
+  ${({ theme }) => theme.typo["body-2-r"]};
+  margin-bottom: 20px;
+`;
+
+export const ProductInfo = styled.div`
+  margin-top: 5px;
+  ${({ theme }) => theme.typo["body-1-r"]};
+`;
+
+export const ProductPrice = styled.div`
+  margin-top: 10px;
+  ${({ theme }) => theme.typo["body-1-b"]};
+`;
+
+export const ProductSize = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+`;
+
+export const ProductColor = styled.div`
+  margin-top: 40px;
+  margin-bottom: 20px;
+
+  .colorOption {
+    width: 100%;
+  }
+`;
+
+export const SizeBox = styled.button<{ selected: boolean }>`
+  width: 65px;
+  height: 60px;
+  border-radius: 10px;
+  border: none;
+  background-color: ${({ theme, selected }) =>
+    selected ? theme.colors["primary"]["80"] : theme.colors["neutral"]["20"]};
+  color: ${({ theme, selected }) =>
+    selected ? theme.colors["neutral"]["10"] : theme.colors["neutral"]["100"]};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+export const ButtonBox = styled.div`
+  display: flex;
+  gap: 10px;
+  width: 496px;
+  height: 50px;
+  margin-top: 20px;
+  button {
+    width: 213px;
+    height: 50px;
+  }
+`;
+
+export const ProductDetailInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 490px;
+  height: auto;
+  margin-top: 65px;
+  gap: 40px;
+  user-select: none;
+`;
+
+export const DetailInfoKey = styled.div`
+  ${({ theme }) => theme.typo["body-3-r"]};
+  cursor: pointer;
+  & svg {
+    margin-right: 10px;
+  }
+`;
+
+export const DetailInfoValue = styled.div`
+  margin-top: 10px;
+  margin-left: 24px;
+  ${({ theme }) => theme.typo["body-3-r"]};
+  color: ${({ theme }) => theme.colors["neutral"]["40"]};
+`;
