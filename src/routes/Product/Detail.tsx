@@ -8,11 +8,15 @@ import SelectBox from "@/components/SelectBox";
 import { PRODUCT_DETAIL_INFO } from "@/constants";
 import useProductDetail from "@/hooks/useProductDetail";
 import useProductInfo from "@/hooks/useProductInfo";
+import { useAppDispatch } from "@/store";
+import { addToCart } from "@/store/slices/cartSlice";
+import { addProducts } from "@/store/slices/productInfoSlice";
 
 import OptionProductBox from "./OptionProduct";
 
 export default function DetailInfo() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const { productData, options } = useProductDetail();
 
@@ -28,6 +32,36 @@ export default function DetailInfo() {
     toggleDetailInfo,
     handleToggleDetailInfo,
   } = useProductInfo();
+
+  const goOrderPage = () => {
+    if (!selectedOptions.length) {
+      alert("상품을 선택해주세요");
+      return;
+    }
+    if (productData && selectedOptions.length > 0) {
+      const products: CartItem[] = selectedOptions.map((item) => {
+        const { name, imageUrl, price, discountPrice } = productData;
+        return { name, imageUrl, price, discountPrice, ...item };
+      });
+      dispatch(addProducts(products));
+      navigate("/order");
+    }
+  };
+
+  const addProductToCart = () => {
+    if (!selectedOptions.length) {
+      alert("상품을 선택해주세요");
+      return;
+    }
+    if (productData && selectedOptions.length > 0) {
+      const productsInfo: ProductInfo[] = selectedOptions.map((item) => {
+        const { id, amount } = item;
+        return { id, amount };
+      });
+      dispatch(addToCart(productsInfo));
+      navigate("/cart");
+    }
+  };
 
   return (
     <ProductDetail>
@@ -81,29 +115,29 @@ export default function DetailInfo() {
                 handleRemoveOption={handleRemoveOption}
               />
             ))}
+
+          <ButtonBox>
+            <Button $variant="solid" color="primary" onClick={goOrderPage}>
+              구매하기
+            </Button>
+            <Button
+              $variant="outline"
+              color="primary"
+              onClick={addProductToCart}
+            >
+              장바구니
+            </Button>
+            <Button
+              $variant="outline"
+              size="md"
+              color="primary"
+              style={{ width: "50px", height: "50px" }}
+            >
+              <BsHeartFill />
+            </Button>
+          </ButtonBox>
         </>
       )}
-      <ButtonBox>
-        <Button $variant="solid" color="primary">
-          구매하기
-        </Button>
-        <Button
-          $variant="outline"
-          color="primary"
-          onClick={() => navigate("/cart")}
-        >
-          장바구니
-        </Button>
-        <Button
-          $variant="outline"
-          size="md"
-          color="primary"
-          onClick={() => navigate("/myPage")}
-          style={{ width: "50px", height: "50px" }}
-        >
-          <BsHeartFill />
-        </Button>
-      </ButtonBox>
       <ProductDetailInfo>
         {PRODUCT_DETAIL_INFO.map((info) => (
           <DetailInfoKey
