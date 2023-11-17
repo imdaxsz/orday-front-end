@@ -11,6 +11,8 @@ export const Container = styled.div`
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 `;
 
+// Header style
+
 export const Profile = styled.div`
   display: flex;
   gap: 10px;
@@ -45,6 +47,8 @@ export const CreatedAt = styled.div`
   font-weight: 300;
   color: #b7b7b7;
 `;
+
+// Content style
 
 export const ReviewImage = styled.img`
   display: block;
@@ -101,15 +105,13 @@ export const Content = styled.div`
   font-size: ${({ theme }) => theme.typo["body-4-r"]};
 `;
 
-export const Reaction = styled.div`
-  display: flex;
-  justify-content: flex-start;
+// Action style
+
+export const ActionContainer = styled.div`
   margin-top: 25px;
-  align-items: center;
   width: 310px;
   height: 30px;
   font-size: ${({ theme }) => theme.typo["body-4-r"]};
-  gap: 5px;
 `;
 
 export const LikeButton = styled.button<{ $active: boolean }>`
@@ -125,13 +127,4 @@ export const LikeButton = styled.button<{ $active: boolean }>`
   svg {
     margin-top: 1px;
   }
-`;
-
-export const CommentButton = styled.div`
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 3px;
-  color: ${({ theme }) => theme.colors["neutral"]["40"]};
 `;
