@@ -34,6 +34,7 @@ const Container = styled.div`
   align-items: center;
   margin-top: 52px;
   gap: 20px;
+  padding-bottom: 80px;
 
   h1 {
     font-size: 24px;
