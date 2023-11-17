@@ -214,3 +214,10 @@ declare type ReviewInfo = Omit<
   reviewLikeCount: number;
   liked: boolean;
 };
+
+declare type RecentReview = Omit<ReviewInfo, "color" | "size" | "rating"> & {
+  productId: number;
+  productName: string;
+  productImageUrl: string;
+  price: number;
+};

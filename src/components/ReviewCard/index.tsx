@@ -1,19 +1,18 @@
 import ReviewAction from "./Action";
 import ReviewContent from "./Content";
 import ReviewHeader from "./Header";
-import { ReviewComponent } from "./style";
+import { Container } from "./style";
 
-export default function ReviewCard({ i }: { i: number }) {
-  const info = {
-    name: "김환경",
-    text: "7 분전",
-  };
-
+export default function ReviewCard({ review }: { review: RecentReview }) {
   return (
-    <ReviewComponent>
-      <ReviewHeader info={info} />
-      <ReviewContent />
-      <ReviewAction reviewId={1} likeCount={i} />
-    </ReviewComponent>
+    <Container>
+      <ReviewHeader userName={review.userName} createdAt={review.createdAt} />
+      <ReviewContent {...review} />
+      <ReviewAction
+        reviewId={review.reviewId}
+        isLiked={review.liked}
+        likeCount={review.reviewLikeCount}
+      />
+    </Container>
   );
 }

@@ -1,36 +1,28 @@
-import { useState, useEffect } from "react";
-import { useInView } from "react-intersection-observer";
 import styled from "styled-components";
 
 import Head from "@/components/Head";
 import ReviewCard from "@/components/ReviewCard";
+import useRecentReviews from "@/hooks/useRecentReviews";
 
 export default function RecentReviews() {
-  const [mainContents, setMainContents] = useState<number[]>([]);
-  const [ref, inView] = useInView();
-
-  useEffect(() => {
-    if (inView) {
-      setMainContents((prevContents) => [
-        ...prevContents,
-        prevContents.length + 1,
-      ]);
-    }
-  }, [inView]);
+  const { ref, leftContents, rightContents } = useRecentReviews();
 
   return (
     <Container>
-      <Head title="최근 리뷰 | Orday" />
-      <h1>최근 리뷰</h1>
-      {mainContents.map((contentId) => (
-        <MainContent key={contentId}>
-          {Array(4)
-            .fill(0)
-            .map((_, index) => (
-              <ReviewCard i={index} key={index} />
-            ))}
-        </MainContent>
-      ))}
+      <Head title="최신 리뷰 | Orday" />
+      <h1>최신 리뷰</h1>
+      <ReviewContainer>
+        <Section>
+          {leftContents.map((review) => (
+            <ReviewCard review={review} key={review.reviewId} />
+          ))}
+        </Section>
+        <Section>
+          {rightContents.map((review) => (
+            <ReviewCard review={review} key={review.reviewId} />
+          ))}
+        </Section>
+      </ReviewContainer>
       <div ref={ref}></div>
     </Container>
   );
@@ -42,6 +34,7 @@ const Container = styled.div`
   align-items: center;
   margin-top: 52px;
   gap: 20px;
+  padding-bottom: 80px;
 
   h1 {
     font-size: 24px;
@@ -50,17 +43,20 @@ const Container = styled.div`
   }
 `;
 
-const MainContent = styled.div`
+const ReviewContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-top: 10px;
   gap: 24px;
   width: 722px;
   height: auto;
-  > :nth-child(2) {
+`;
+
+const Section = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  &:last-of-type {
     margin-top: 122px;
-  }
-  > :nth-child(3) {
-    margin-top: -122px;
   }
 `;

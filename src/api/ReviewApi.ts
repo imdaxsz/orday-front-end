@@ -99,3 +99,16 @@ export const getProductPhotoReviews = async (params: {
 export const toggleLikeReview = async (productReviewId: number) => {
   return await post(`product/like/review/${productReviewId}`);
 };
+
+/**
+ @description 최신 리뷰 목록 조회
+ @return 최신 리뷰 목록 ReviewInfo[ ]
+ */
+export const getRecentReviews = async (params: {
+  key?: number | null;
+  size: number;
+}) => {
+  return await get<CursorPage<RecentReview>>(`product/get/review/recent`, {
+    params,
+  });
+};
