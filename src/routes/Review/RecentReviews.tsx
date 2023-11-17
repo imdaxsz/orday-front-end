@@ -1,38 +1,25 @@
-import { useState, useEffect } from "react";
-import { useInView } from "react-intersection-observer";
 import styled from "styled-components";
 
 import Head from "@/components/Head";
 import ReviewCard from "@/components/ReviewCard";
+import useRecentReviews from "@/hooks/useRecentReviews";
 
 export default function RecentReviews() {
-  const [mainContents, setMainContents] = useState<number[]>([0, 1, 2, 3, 4]);
-  const [ref, inView] = useInView();
-  const leftContents = mainContents.filter((_, index) => index % 2 === 0);
-  const rightContents = mainContents.filter((_, index) => index % 2 === 1);
-
-  useEffect(() => {
-    if (inView) {
-      setMainContents((prevContents) => [
-        ...prevContents,
-        prevContents.length + 1,
-      ]);
-    }
-  }, [inView]);
+  const { ref, leftContents, rightContents } = useRecentReviews();
 
   return (
     <Container>
-      <Head title="최근 리뷰 | Orday" />
-      <h1>최근 리뷰</h1>
+      <Head title="최신 리뷰 | Orday" />
+      <h1>최신 리뷰</h1>
       <ReviewContainer>
         <Section>
-          {leftContents.map((contentId) => (
-            <ReviewCard key={contentId} />
+          {leftContents.map((review) => (
+            <ReviewCard review={review} key={review.reviewId} />
           ))}
         </Section>
         <Section>
-          {rightContents.map((contentId) => (
-            <ReviewCard key={contentId} />
+          {rightContents.map((review) => (
+            <ReviewCard review={review} key={review.reviewId} />
           ))}
         </Section>
       </ReviewContainer>
