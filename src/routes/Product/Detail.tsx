@@ -33,9 +33,15 @@ export default function DetailInfo() {
     handleToggleDetailInfo,
   } = useProductInfo();
 
+  const isLoggedIn = localStorage.getItem("token");
+
   const goOrderPage = () => {
     if (!selectedOptions.length) {
       alert("상품을 선택해주세요");
+      return;
+    }
+    if (!isLoggedIn) {
+      alert("로그인 해주세요");
       return;
     }
     if (productData && selectedOptions.length > 0) {
@@ -51,6 +57,10 @@ export default function DetailInfo() {
   const addProductToCart = () => {
     if (!selectedOptions.length) {
       alert("상품을 선택해주세요");
+      return;
+    }
+    if (!isLoggedIn) {
+      alert("로그인 해주세요");
       return;
     }
     if (productData && selectedOptions.length > 0) {
