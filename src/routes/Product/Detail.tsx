@@ -65,10 +65,10 @@ export default function DetailInfo() {
       return;
     }
     if (productData && selectedOptions.length > 0) {
-      const productsInfo: ProductInfo[] = selectedOptions.map((item) => {
-        const { id, amount } = item;
-        return { id, amount };
-      });
+      const productsInfo: ProductInfo[] = selectedOptions.map((item) => ({
+        id: item.id,
+        amount: item.amount,
+      }));
       dispatch(addToCart(productsInfo));
       navigate("/cart");
     }
