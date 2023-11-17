@@ -72,6 +72,21 @@ declare interface Product {
   liked: boolean;
 }
 
+declare interface ClothesInfo {
+  id: number;
+  color: string;
+  size: string;
+}
+
+declare interface ColorOptionObject {
+  [key: string]: { id: number; size: string }[];
+}
+
+declare interface ProductDetail extends Omit<Product, "score"> {
+  clothesInfo: ClothesInfo[];
+  discountPrice: number;
+}
+
 declare interface BrandCategory {
   categoryId: number;
   subCategoryId: number;
@@ -105,12 +120,12 @@ declare interface ProductListRequestParams {
  */
 declare type LikeTarget = "product" | "brand" | "review";
 
-declare interface ProductListDto {
+declare interface CursorPage<T> {
   cursorRequest: {
     key: number;
     size: number;
   };
-  body: Product[];
+  body: T[];
 }
 
 declare interface CartItem {
@@ -139,16 +154,6 @@ declare interface OrderInfo extends OrderForm {
 }
 
 declare type ReviewStatus = "WRITABLE" | "WRITTEN";
-
-declare interface CreateReviewDto {
-  productReviewRequest: {
-    orderId: number;
-    productId: number;
-    content: string;
-    rating: number;
-  };
-  image?: File;
-}
 
 interface ReviewProductBaseInfo {
   productId: number;
@@ -188,3 +193,20 @@ declare interface ReviewForm {
   file: File | null;
   fileUrl: string;
 }
+
+declare interface ReviewStatics {
+  totalCount: number;
+  photoReviewCount: number;
+  averageRating: number;
+  proportion: number[];
+}
+
+declare type ReviewInfo = Omit<
+  WrittenReview,
+  "imageUrl" | "name" | "productId" | "orderId"
+> & {
+  userName: string;
+  reviewImageUrl: string;
+  reviewLikeCount: number;
+  liked: boolean;
+};

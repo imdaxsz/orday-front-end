@@ -12,6 +12,7 @@ interface Agree {
 
 export default function useJoin() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     form,
@@ -115,21 +116,24 @@ export default function useJoin() {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const isValidate = validateForm();
-    console.log(isValidate);
     console.log(form);
-    // TODO: API 요청
+
     if (isValidate) {
+      setIsLoading(true);
       try {
         await join(form);
+        setIsLoading(false);
         window.alert("회원가입이 완료되었습니다.");
         navigate("/login");
       } catch (error) {
+        setIsLoading(false);
         console.log("Error join: ", error);
       }
     }
   };
 
   return {
+    isLoading,
     form,
     phone,
     agree,

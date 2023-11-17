@@ -32,7 +32,9 @@ export default function Dropdown({
     const option =
       type == "product"
         ? productOptions.find((option) => option.value === value)
-        : brandOptions.find((option) => option.value === value);
+        : type === "brand"
+        ? brandOptions.find((option) => option.value === value)
+        : reviewOptions.find((option) => option.value === value);
     if (value && option)
       setSelectedOption({ id: option.id, name: option.name, value });
   };
@@ -53,7 +55,6 @@ export default function Dropdown({
   const reviewOptions = [
     { id: 0, name: "최신순", value: "new" },
     { id: 1, name: "추천순", value: "like" },
-    { id: 2, name: "별점순", value: "rating" },
   ];
 
   return (

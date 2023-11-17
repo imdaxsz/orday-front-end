@@ -7,7 +7,7 @@ import {
   KeyWord,
   Product,
   Price,
-} from "../style";
+} from "./style";
 
 const ContentData = {
   product: "프라이탁 HWAII FIVE-O 화이트 메신저백",

@@ -7,7 +7,7 @@ export default function Product() {
   return (
     <Container>
       <ProductInfo>
-        <ProductImage />
+        <ProductImg alt="productImage" />
         <DetailInfo />
       </ProductInfo>
       <ProductReview />
@@ -25,10 +25,9 @@ const ProductInfo = styled.div`
   margin-bottom: 120px;
 `;
 
-const ProductImage = styled.div`
+const ProductImg = styled.img`
   width: 650px;
   height: 900px;
   border-radius: 20px;
   background-color: ${({ theme }) => theme.colors["neutral"]["20"]};
-  margin-top: 55px;
 `;

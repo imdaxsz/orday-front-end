@@ -3,23 +3,32 @@ import styled from "styled-components";
 import ArrowBack from "@/assets/arrow_back.svg?react";
 
 interface PhotoDetailProps {
-  setPhotoDetail: React.Dispatch<React.SetStateAction<boolean>>;
-  photoData: number[];
+  setIsPhotoDetail: () => void;
+  photoReviews: ReviewInfo[];
+  tatalCount: number;
+  openReviewModal: (review: ReviewInfo) => void;
 }
 
 export default function PhotoReviews({
-  setPhotoDetail,
-  photoData,
+  setIsPhotoDetail,
+  photoReviews,
+  tatalCount,
+  openReviewModal,
 }: PhotoDetailProps) {
   return (
     <div>
       <Header>
-        <ArrowBack onClick={() => setPhotoDetail(false)} />
-        <h3>포토 리뷰 ({photoData.length})</h3>
+        <ArrowBack onClick={setIsPhotoDetail} />
+        <h3>포토 리뷰 ({tatalCount})</h3>
       </Header>
       <PhotoGrid>
-        {photoData.map((_, index) => (
-          <Photo src="" alt="reviewImage" key={index} />
+        {photoReviews.map((review) => (
+          <Photo
+            src={review.reviewImageUrl}
+            alt="PHOTO"
+            key={review.reviewId}
+            onClick={() => openReviewModal(review)}
+          />
         ))}
       </PhotoGrid>
     </div>
@@ -55,5 +64,7 @@ const Photo = styled.img`
   width: 234px;
   height: 234px;
   border-radius: 20px;
+  object-fit: cover;
   background-color: ${({ theme }) => theme.colors["neutral"]["20"]};
+  cursor: pointer;
 `;

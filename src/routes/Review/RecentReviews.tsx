@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import styled from "styled-components";
 
-import ReviewCard from "@/components/CommunityCard";
 import Head from "@/components/Head";
+import ReviewCard from "@/components/ReviewCard";
 
 export default function RecentReviews() {
   const [mainContents, setMainContents] = useState<number[]>([0, 1, 2, 3, 4]);
