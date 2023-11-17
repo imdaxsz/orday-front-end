@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Button from "@/components/Button";
+import Head from "@/components/Head";
 import LikeButton from "@/components/LikeButton";
 import SelectBox from "@/components/SelectBox";
 import { PRODUCT_DETAIL_INFO } from "@/constants";
@@ -75,6 +76,9 @@ export default function DetailInfo() {
 
   return (
     <ProductDetail>
+      <Head
+        title={`[${productData?.brandInfo.name}] ${productData?.name} | Orday`}
+      />
       {productData && (
         <>
           <ProductCode
