@@ -76,11 +76,11 @@ export default function DetailInfo() {
 
   return (
     <ProductDetail>
-      <Head
-        title={`[${productData?.brandInfo.name}] ${productData?.name} | Orday`}
-      />
       {productData && (
         <>
+          <Head
+            title={`[${productData.brandInfo.name}] ${productData.name} | Orday`}
+          />
           <ProductCode
             onClick={() => navigate(`/brands/${productData.brandInfo.id}`)}
             style={{ cursor: "pointer" }}
