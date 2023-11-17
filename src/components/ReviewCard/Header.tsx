@@ -1,20 +1,18 @@
-import { Profile, Image, Info, InfoName, InfoText } from "./style";
+import { Profile, UserImage, UserInfo, UserName, CreatedAt } from "./style";
 
-interface HeaderProps {
-  info: {
-    name: string;
-    text: string;
-  };
+interface Props {
+  userName: string;
+  createdAt: string;
 }
 
-export default function ReviewHeader({ info }: HeaderProps) {
+export default function ReviewHeader({ userName, createdAt }: Props) {
   return (
     <Profile>
-      <Image />
-      <Info>
-        <InfoName>{info.name}</InfoName>
-        <InfoText>{info.text}</InfoText>
-      </Info>
+      <UserImage />
+      <UserInfo>
+        <UserName>{userName}</UserName>
+        <CreatedAt>{createdAt}</CreatedAt>
+      </UserInfo>
     </Profile>
   );
 }
