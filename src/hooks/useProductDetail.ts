@@ -94,10 +94,8 @@ export default function useProductDetail() {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setProductData(data);
-    }, 300);
-    // fetchProductDetail();
+    fetchProductDetail();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

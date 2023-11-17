@@ -63,7 +63,7 @@ export const getBestCategoryProducts = async (
  @description 상품 상세 조회 요청
  * @returns 상품 정보
  */
-export const getProductDetail = async (productName: string) => {
+export const getProductDetail = async (productName: string | null) => {
   return await get<ProductDetail>("product/detail/get", {
     params: { productName },
   });
