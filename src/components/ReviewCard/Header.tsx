@@ -1,20 +1,21 @@
-import { Profile, Image, Info, InfoName, InfoText } from "./style";
+import { getElapsedTime } from "@/utils";
 
-interface HeaderProps {
-  info: {
-    name: string;
-    text: string;
-  };
+import { Profile, UserImage, UserInfo, UserName, CreatedAt } from "./style";
+
+interface Props {
+  userName: string;
+  createdAt: string;
 }
 
-export default function ReviewHeader({ info }: HeaderProps) {
+export default function ReviewHeader({ userName, createdAt }: Props) {
+  const elapsedTime = getElapsedTime(createdAt);
   return (
     <Profile>
-      <Image />
-      <Info>
-        <InfoName>{info.name}</InfoName>
-        <InfoText>{info.text}</InfoText>
-      </Info>
+      <UserImage />
+      <UserInfo>
+        <UserName>{userName}</UserName>
+        <CreatedAt>{elapsedTime}</CreatedAt>
+      </UserInfo>
     </Profile>
   );
 }
