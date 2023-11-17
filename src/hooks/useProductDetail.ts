@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 import { getProductDetail } from "@/api/ProductApi";
 import { PRODUCT_DETAIL_INFO } from "@/constants";
@@ -66,13 +66,14 @@ const data: ProductDetail = {
 };
 
 export default function useProductDetail() {
-  const { state } = useLocation();
   const [productData, setProductData] = useState<ProductDetail>();
   const [options, setOptions] = useState<ColorOptionObject>();
+  const [searchParams] = useSearchParams();
+  const productName = searchParams.get("name");
 
   const fetchProductDetail = async () => {
     try {
-      const data = await getProductDetail(state.name);
+      const data = await getProductDetail(productName);
       setProductData(data);
     } catch (error) {
       console.log("Error fetching product: ", error);
@@ -97,7 +98,7 @@ export default function useProductDetail() {
       setProductData(data);
     }, 300);
     // fetchProductDetail();
-  }, [state.name]);
+  }, []);
 
   useEffect(() => {
     if (productData) {
