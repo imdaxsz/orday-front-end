@@ -1,0 +1,59 @@
+import BestTag from "@/assets/best.svg?react";
+import NewTag from "@/assets/new.svg?react";
+import LikeButton from "@/components/LikeButton";
+
+import RemoveButton from "./RemoveButton";
+import {
+  Brand,
+  Container,
+  Image,
+  ImageContainer,
+  Info,
+  Name,
+  Price,
+} from "./style";
+
+type Size = "sm" | "md" | "lg" | "xl";
+export type TagType = "NEW" | "BEST";
+
+export interface ProductCardProps {
+  size?: Size;
+  $tag?: TagType;
+  $remove?: boolean;
+  info: Product;
+}
+export default function ProductCard({
+  size,
+  $tag,
+  $remove,
+  info,
+}: ProductCardProps) {
+  return (
+    <Container size={size}>
+      <ImageContainer
+        to={`/product/${info.id}`}
+        size={size}
+        $tag={$tag}
+        $remove={$remove}
+      >
+        {!$remove ? (
+          <>
+            {$tag === "NEW" && <NewTag />}
+            {$tag === "BEST" && <BestTag />}
+            <LikeButton isLiked={info.liked} target="product" id={info.id} />
+          </>
+        ) : (
+          <RemoveButton />
+        )}
+        <Image src={info.imageUrl} alt={info.name} size={size} />
+      </ImageContainer>
+      <Info>
+        <Brand to={`/brands/${info.brandInfo.id}`}>{info.brandInfo.name}</Brand>
+        <Name to={`/product/${info.id}`}>{info.name}</Name>
+        <Price to={`/product/${info.id}`} size={size}>
+          {info.price.toLocaleString()}원
+        </Price>
+      </Info>
+    </Container>
+  );
+}
