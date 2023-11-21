@@ -8,6 +8,7 @@ import Head from "@/components/Head";
 import Loader from "@/components/Loader";
 import TextInput from "@/components/TextInput";
 import useLogin from "@/hooks/useLogin";
+// import { get } from "@/libs/api";
 
 export default function Login() {
   const {
@@ -22,6 +23,14 @@ export default function Login() {
   // 이미 로그인 상태인 경우 redirect
   const isLoggedIn = localStorage.getItem("token");
   if (isLoggedIn) return <Navigate to="/" replace />;
+
+  const googleLogin = () => {
+    // get("login/oauth2/code/google", {
+    //   baseURL: import.meta.env.VITE_GOOGLE_ROOT,
+    // });
+    const BASE_URL = import.meta.env.VITE_GOOGLE_ROOT;
+    window.location.href = `${BASE_URL}/login/oauth2/code/google`;
+  };
 
   return (
     <Container>
@@ -63,7 +72,7 @@ export default function Login() {
       <Link to="/join">
         <Button $variant="outline">회원가입</Button>
       </Link>
-      <Button>구글 로그인</Button>
+      <Button onClick={googleLogin}>구글 로그인</Button>
     </Container>
   );
 }
