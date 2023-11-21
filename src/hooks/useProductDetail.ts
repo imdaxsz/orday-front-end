@@ -4,67 +4,6 @@ import { useSearchParams } from "react-router-dom";
 import { getProductDetail } from "@/api/ProductApi";
 import { PRODUCT_DETAIL_INFO } from "@/constants";
 
-const data: ProductDetail = {
-  id: 8,
-  name: "파타고니아 레트로 x 양털 후리스 뽀글이 플리스 자켓",
-  imageUrl: "string",
-  clothesInfoList: [
-    {
-      id: 8,
-      color: "brown",
-      size: "S",
-    },
-    {
-      id: 1001,
-      color: "brown",
-      size: "M",
-    },
-    {
-      id: 1256,
-      color: "brown",
-      size: "L",
-    },
-    {
-      id: 1452,
-      color: "red",
-      size: "S",
-    },
-    {
-      id: 1767,
-      color: "red",
-      size: "M",
-    },
-    {
-      id: 1963,
-      color: "red",
-      size: "L",
-    },
-    {
-      id: 2159,
-      color: "black",
-      size: "S",
-    },
-    {
-      id: 2355,
-      color: "black",
-      size: "M",
-    },
-    {
-      id: 2790,
-      color: "black",
-      size: "L",
-    },
-  ],
-  description: "상세정보1",
-  brandInfo: {
-    name: "파타고니아",
-    id: 1,
-  },
-  liked: false,
-  price: 198000,
-  discountPrice: 0,
-};
-
 export default function useProductDetail() {
   const [productData, setProductData] = useState<ProductDetail>();
   const [options, setOptions] = useState<ColorOptionObject>();
@@ -73,8 +12,10 @@ export default function useProductDetail() {
 
   const fetchProductDetail = async () => {
     try {
-      const data = await getProductDetail(productName);
-      setProductData(data);
+      if (productName) {
+        const data = await getProductDetail(productName);
+        setProductData(data);
+      }
     } catch (error) {
       console.log("Error fetching product: ", error);
     }
@@ -102,7 +43,7 @@ export default function useProductDetail() {
     if (productData) {
       const createdOptions = createColorObject(productData);
       setOptions(createdOptions);
-      PRODUCT_DETAIL_INFO[0].description = data.description;
+      PRODUCT_DETAIL_INFO[0].description = productData.description;
     }
   }, [productData]);
 
