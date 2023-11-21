@@ -50,12 +50,17 @@ export default function ProductReview() {
           </ReviewStatics>
           <PhotoReviewHeader>
             <h3>포토 리뷰 ({statics.photoReviewCount})</h3>
-            <MorePhoto onClick={toggleIsPhotoDetail}>
-              <span>전체보기</span>
-              <IoIosArrowForward />
-            </MorePhoto>
+            {statics.photoReviewCount > 6 && (
+              <MorePhoto onClick={toggleIsPhotoDetail}>
+                <span>전체보기</span>
+                <IoIosArrowForward />
+              </MorePhoto>
+            )}
           </PhotoReviewHeader>
           <PhotoContainer>
+            {statics.photoReviewCount === 0 && (
+              <EmptyReview>작성된 포토 리뷰가 없습니다.</EmptyReview>
+            )}
             {photoReviews.slice(0, 7).map((review) => (
               <Photo
                 src={review.reviewImageUrl}
@@ -72,6 +77,11 @@ export default function ProductReview() {
               setSelectedOption={setSelectedOption}
             />
           </div>
+          {statics.totalCount === 0 && (
+            <EmptyReview style={{ height: "150px", lineHeight: "150px" }}>
+              작성된 리뷰가 없습니다.
+            </EmptyReview>
+          )}
           {reviews.map((review) => (
             <ReviewCard key={review.reviewId} review={review} />
           ))}
@@ -135,4 +145,11 @@ const Photo = styled.img`
   object-fit: cover;
   cursor: pointer;
   background-color: ${({ theme }) => theme.colors["neutral"]["20"]};
+`;
+
+const EmptyReview = styled.p`
+  width: 100%;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
 `;
