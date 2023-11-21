@@ -28,7 +28,7 @@ export default function ReviewContent({
   return (
     <>
       <ReviewImage src={reviewImageUrl} alt="PHOTO" />
-      <ProductInfo to={`/product/${productId}`}>
+      <ProductInfo to={`/product/${productId}?name=${productName}`}>
         <ProductImage src={productImageUrl} alt="PHOTO" />
         <ProductText>
           <ProductName>{productName}</ProductName>

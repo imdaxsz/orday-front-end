@@ -1,35 +1,88 @@
-import { BsHeartFill } from "react-icons/bs";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Button from "@/components/Button";
+import Head from "@/components/Head";
+import LikeButton from "@/components/LikeButton";
 import SelectBox from "@/components/SelectBox";
 import { PRODUCT_DETAIL_INFO } from "@/constants";
-import useProductDetail from "@/hooks/useProductDetail";
+import useProductInfo from "@/hooks/useProductInfo";
+import { useAppDispatch } from "@/store";
+import { addToCart } from "@/store/slices/cartSlice";
+import { addProducts } from "@/store/slices/productInfoSlice";
 
 import OptionProductBox from "./OptionProduct";
 
-export default function DetailInfo() {
+interface DetailInfoProps {
+  productData: ProductDetail;
+  options: ColorOptionObject;
+}
+
+export default function DetailInfo({ productData, options }: DetailInfoProps) {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const {
-    productData,
-    options,
     selectedColor,
     setSelectedColor,
     handleSelectOption,
     selectedSizes,
     selectedOptions,
+    addProductAmount,
+    reduceProductAmount,
     handleRemoveOption,
     toggleDetailInfo,
     handleToggleDetailInfo,
-  } = useProductDetail();
+  } = useProductInfo();
+
+  const isLoggedIn = localStorage.getItem("token");
+
+  const goOrderPage = () => {
+    if (!selectedOptions.length) {
+      alert("상품을 선택해주세요");
+      return;
+    }
+    if (!isLoggedIn) {
+      alert("로그인 해주세요");
+      return;
+    }
+    if (productData && selectedOptions.length > 0) {
+      const products: CartItem[] = selectedOptions.map((item) => {
+        const { name, imageUrl, price, discountPrice } = productData;
+        return { name, imageUrl, price, discountPrice, ...item };
+      });
+      dispatch(addProducts(products));
+      navigate("/order");
+    }
+  };
+
+  const addProductToCart = () => {
+    if (!selectedOptions.length) {
+      alert("상품을 선택해주세요");
+      return;
+    }
+    if (!isLoggedIn) {
+      alert("로그인 해주세요");
+      return;
+    }
+    if (productData && selectedOptions.length > 0) {
+      const productsInfo: ProductInfo[] = selectedOptions.map((item) => ({
+        id: item.id,
+        amount: item.amount,
+      }));
+      dispatch(addToCart(productsInfo));
+      navigate("/cart");
+    }
+  };
 
   return (
     <ProductDetail>
       {productData && (
         <>
+          <Head
+            title={`[${productData.brandInfo.name}] ${productData.name} | Orday`}
+          />
           <ProductCode
             onClick={() => navigate(`/brands/${productData.brandInfo.id}`)}
             style={{ cursor: "pointer" }}
@@ -71,37 +124,40 @@ export default function DetailInfo() {
             selectedOptions.map((option) => (
               <OptionProductBox
                 key={option.id}
+                productOption={option}
                 price={productData.price}
-                selectedSize={option.size}
-                selectedColor={option.color}
-                handleRemoveOption={() =>
-                  handleRemoveOption(option.id, option.size)
-                }
+                addProductAmount={addProductAmount}
+                reduceProductAmount={reduceProductAmount}
+                handleRemoveOption={handleRemoveOption}
               />
             ))}
+
+          <ButtonBox>
+            <Button $variant="solid" color="primary" onClick={goOrderPage}>
+              구매하기
+            </Button>
+            <Button
+              $variant="outline"
+              color="primary"
+              onClick={addProductToCart}
+            >
+              장바구니
+            </Button>
+            <Button
+              $variant="outline"
+              size="md"
+              color="primary"
+              style={{ width: "50px", height: "50px" }}
+            >
+              <LikeButton
+                isLiked={productData.liked}
+                target="product"
+                id={productData.id}
+              />
+            </Button>
+          </ButtonBox>
         </>
       )}
-      <ButtonBox>
-        <Button $variant="solid" color="primary">
-          구매하기
-        </Button>
-        <Button
-          $variant="outline"
-          color="primary"
-          onClick={() => navigate("/cart")}
-        >
-          장바구니
-        </Button>
-        <Button
-          $variant="outline"
-          size="md"
-          color="primary"
-          onClick={() => navigate("/myPage")}
-          style={{ width: "50px", height: "50px" }}
-        >
-          <BsHeartFill />
-        </Button>
-      </ButtonBox>
       <ProductDetailInfo>
         {PRODUCT_DETAIL_INFO.map((info) => (
           <DetailInfoKey
@@ -188,6 +244,14 @@ export const ButtonBox = styled.div`
   button {
     width: 213px;
     height: 50px;
+    & > button {
+      all: unset;
+      svg {
+        color: ${({ theme }) => theme.colors["primary"][80]};
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 `;
 
