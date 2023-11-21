@@ -1,16 +1,18 @@
 import styled from "styled-components";
 
+import Loader from "@/components/Loader";
 import useProductDetail from "@/hooks/useProductDetail";
 
 import DetailInfo from "./Detail";
 import ProductReview from "./Review/index";
 
 export default function Product() {
-  const { productData, options } = useProductDetail();
+  const { isLoading, productData, options } = useProductDetail();
 
   return (
     <Container>
-      {productData && options && (
+      {isLoading && <Loader />}
+      {!isLoading && productData && options && (
         <ProductInfo>
           <ProductImg alt="productImage" src={productData.imageUrl} />
           <DetailInfo productData={productData} options={options} />
