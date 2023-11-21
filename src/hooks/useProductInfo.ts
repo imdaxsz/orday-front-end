@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 
-export default function useProductInfo() {
+export default function useProductInfo(
+  productId: number,
+  isEmptyOptions: boolean,
+) {
   const [toggleDetailInfo, setToggleDetailInfo] = useState([1]);
-  const [selectedColor, setSelectedColor] = useState<string | null>("");
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedOptions, setSelectedOptions] = useState<ProductOptionInfo[]>(
     [],
@@ -13,7 +16,16 @@ export default function useProductInfo() {
       (option) => option.color === selectedColor,
     );
     setSelectedSizes(selectedColorOption.map((option) => option.size));
-  }, [selectedColor, selectedOptions]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedColor]);
+
+  useEffect(() => {
+    if (isEmptyOptions) {
+      setSelectedOptions([{ id: productId, color: "", size: "", amount: 1 }]);
+    } else {
+      setSelectedOptions([]);
+    }
+  }, [isEmptyOptions, productId]);
 
   const handleSelectOption = (id: number, color: string, size: string) => {
     if (!selectedColor) return alert("색상을 선택해주세요");
@@ -43,6 +55,7 @@ export default function useProductInfo() {
   };
 
   const handleRemoveOption = (optionId: number, optionSize: string) => {
+    if (isEmptyOptions) return;
     setSelectedSizes(selectedSizes.filter((size) => size !== optionSize));
     setSelectedOptions(
       selectedOptions.filter((options) => options.id !== optionId),
