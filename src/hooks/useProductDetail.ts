@@ -6,12 +6,14 @@ import { PRODUCT_DETAIL_INFO } from "@/constants";
 
 export default function useProductDetail() {
   const [productData, setProductData] = useState<ProductDetail>();
-  const [options, setOptions] = useState<ColorOptionObject>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState<ColorOptionObject>({});
   const [searchParams] = useSearchParams();
   const productName = searchParams.get("name");
 
   const fetchProductDetail = async () => {
     try {
+      setIsLoading(true);
       if (productName) {
         const data = await getProductDetail(productName);
         setProductData(data);
@@ -19,6 +21,7 @@ export default function useProductDetail() {
     } catch (error) {
       console.log("Error fetching product: ", error);
     }
+    setIsLoading(false);
   };
 
   const createColorObject = (productData: ProductDetail) => {
@@ -26,10 +29,12 @@ export default function useProductDetail() {
 
     productData.clothesInfoList.forEach((item: ClothesInfo) => {
       const { id, color, size } = item;
-      if (!colorMap[color]) {
-        colorMap[color] = [];
+      if (color) {
+        if (!colorMap[color]) {
+          colorMap[color] = [];
+        }
+        colorMap[color].push({ id, size });
       }
-      colorMap[color].push({ id, size });
     });
     return colorMap;
   };
@@ -48,6 +53,7 @@ export default function useProductDetail() {
   }, [productData]);
 
   return {
+    isLoading,
     productData,
     options,
   };

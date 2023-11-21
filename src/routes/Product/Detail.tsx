@@ -23,6 +23,9 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const isLoggedIn = localStorage.getItem("token");
+  const isEmptyOptions = !Object.keys(options).length;
+
   const {
     selectedColor,
     setSelectedColor,
@@ -34,12 +37,10 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
     handleRemoveOption,
     toggleDetailInfo,
     handleToggleDetailInfo,
-  } = useProductInfo();
-
-  const isLoggedIn = localStorage.getItem("token");
+  } = useProductInfo(productData.id, isEmptyOptions);
 
   const goOrderPage = () => {
-    if (!selectedOptions.length) {
+    if (!isEmptyOptions && !selectedOptions.length) {
       alert("상품을 선택해주세요");
       return;
     }
@@ -58,7 +59,7 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
   };
 
   const addProductToCart = () => {
-    if (!selectedOptions.length) {
+    if (!isEmptyOptions && !selectedOptions.length) {
       alert("상품을 선택해주세요");
       return;
     }
@@ -93,7 +94,7 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
 
           <ProductPrice>₩ {productData.price.toLocaleString()}</ProductPrice>
           <ProductColor>
-            {options && (
+            {!isEmptyOptions && options && (
               <SelectBox
                 options={Object.keys(options)}
                 id="colors"
