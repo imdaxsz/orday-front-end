@@ -7,7 +7,6 @@ import Head from "@/components/Head";
 import LikeButton from "@/components/LikeButton";
 import SelectBox from "@/components/SelectBox";
 import { PRODUCT_DETAIL_INFO } from "@/constants";
-import useProductDetail from "@/hooks/useProductDetail";
 import useProductInfo from "@/hooks/useProductInfo";
 import { useAppDispatch } from "@/store";
 import { addToCart } from "@/store/slices/cartSlice";
@@ -15,11 +14,14 @@ import { addProducts } from "@/store/slices/productInfoSlice";
 
 import OptionProductBox from "./OptionProduct";
 
-export default function DetailInfo() {
+interface DetailInfoProps {
+  productData: ProductDetail;
+  options: ColorOptionObject;
+}
+
+export default function DetailInfo({ productData, options }: DetailInfoProps) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const { productData, options } = useProductDetail();
 
   const {
     selectedColor,

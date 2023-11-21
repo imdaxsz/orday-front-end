@@ -1,15 +1,21 @@
 import styled from "styled-components";
 
+import useProductDetail from "@/hooks/useProductDetail";
+
 import DetailInfo from "./Detail";
 import ProductReview from "./Review/index";
 
 export default function Product() {
+  const { productData, options } = useProductDetail();
+
   return (
     <Container>
-      <ProductInfo>
-        <ProductImg alt="productImage" />
-        <DetailInfo />
-      </ProductInfo>
+      {productData && options && (
+        <ProductInfo>
+          <ProductImg alt="productImage" src={productData.imageUrl} />
+          <DetailInfo productData={productData} options={options} />
+        </ProductInfo>
+      )}
       <ProductReview />
     </Container>
   );
