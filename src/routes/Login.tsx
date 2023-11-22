@@ -8,7 +8,6 @@ import Head from "@/components/Head";
 import Loader from "@/components/Loader";
 import TextInput from "@/components/TextInput";
 import useLogin from "@/hooks/useLogin";
-// import { get } from "@/libs/api";
 
 export default function Login() {
   const {
@@ -25,11 +24,8 @@ export default function Login() {
   if (isLoggedIn) return <Navigate to="/" replace />;
 
   const googleLogin = () => {
-    // get("login/oauth2/code/google", {
-    //   baseURL: import.meta.env.VITE_GOOGLE_ROOT,
-    // });
-    const BASE_URL = import.meta.env.VITE_GOOGLE_ROOT;
-    window.location.href = `${BASE_URL}/login/oauth2/code/google`;
+    const BASE_URL = import.meta.env.VITE_API_ROOT;
+    window.location.href = `${BASE_URL}oauth2/authorization/google`;
   };
 
   return (
