@@ -8,7 +8,6 @@ import Head from "@/components/Head";
 import Loader from "@/components/Loader";
 import TextInput from "@/components/TextInput";
 import useLogin from "@/hooks/useLogin";
-// import { get } from "@/libs/api";
 
 export default function Login() {
   const {
