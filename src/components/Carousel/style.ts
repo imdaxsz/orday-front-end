@@ -23,7 +23,6 @@ export const SlideContainer = styled.div`
   flex-direction: column;
   align-items: center;
   svg {
-    color: ${({ theme }) => theme.colors["neutral"]["90"]};
     transform: scale(0.9);
   }
 `;
