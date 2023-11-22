@@ -1,5 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+/**
+ * @deprecated access token localStorage 저장으로 인해 더 이상 사용되지 않음
+ */
+
 interface AuthState {
   accessToken: string | null;
 }
