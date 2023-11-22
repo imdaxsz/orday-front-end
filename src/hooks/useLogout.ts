@@ -1,18 +1,20 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useAppDispatch } from "@/store";
-import { signout } from "@/store/slices/authSlice";
+import { logout as request } from "@/api/AuthApi";
 
 export default function useLogout() {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const logout = useCallback(() => {
-    dispatch(signout());
-    localStorage.removeItem("token");
+  const logout = useCallback(async () => {
+    try {
+      await request();
+      localStorage.removeItem("token");
+    } catch (error) {
+      console.log("Logout Error", error);
+    }
     navigate("/", { replace: true });
-  }, [dispatch, navigate]);
+  }, [navigate]);
 
   return { logout };
 }
