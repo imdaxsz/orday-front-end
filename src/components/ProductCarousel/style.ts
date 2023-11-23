@@ -11,7 +11,6 @@ export const Container = styled.div`
   }
 
   & > button > svg {
-    color: ${({ theme }) => theme.colors["neutral"]["90"]};
     transform: scale(0.9);
   }
 `;
