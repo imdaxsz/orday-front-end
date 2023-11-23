@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 import { getOrderList } from "@/api/OrderApi";
 
-import OrderListBox from "./OrderList/OrderListBox";
+import OrderListBox from "./OrderListBox";
 
 // const mockData: CursorPage<OrderListInfo> = {
 //   cursorRequest: {
