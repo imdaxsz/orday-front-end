@@ -12,6 +12,7 @@ const Category = lazy(() => import("@/routes/Category"));
 const RecentReviews = lazy(() => import("@/routes/Review/RecentReviews"));
 const Join = lazy(() => import("@/routes/Join"));
 const Login = lazy(() => import("@/routes/Login"));
+const OAuthCallback = lazy(() => import("@/routes/Login/OAuthCallback"));
 const Logout = lazy(() => import("@/routes/Logout"));
 const NotFound = lazy(() => import("@/routes/NotFound"));
 
@@ -19,6 +20,10 @@ export const publicRoutes: RouteObject[] = [
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/oauth2/callback",
+    element: <OAuthCallback />,
   },
   {
     path: "/join",
