@@ -55,6 +55,13 @@ export const ArrowIconButton = styled(Button)`
     width: 30px;
     height: 30px;
     cursor: pointer;
+    color: rgba(255, 255, 255, 0.6);
+    filter: drop-shadow(rgba(0, 0, 0, 0.5) 0px 0px 0.18em);
+    transition: color 0.2s;
+
+    &:hover {
+      color: white;
+    }
   }
 `;
 
