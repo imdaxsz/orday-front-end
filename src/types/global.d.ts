@@ -138,6 +138,20 @@ declare interface OrderInfo extends OrderForm {
   productsInfo: ProductInfo[];
 }
 
+declare interface OrderListInfo {
+  orderId: number;
+  productId: number;
+  productName: string;
+  imageUrl: string;
+  color: string;
+  size: string;
+  price: number;
+  amount: number;
+  discountPrice: number;
+  status: string;
+  createdAt: string;
+}
+
 declare type ReviewStatus = "WRITABLE" | "WRITTEN";
 
 interface ReviewProductBaseInfo {
