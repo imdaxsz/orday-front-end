@@ -2,7 +2,7 @@ import { PiHeartFill } from "react-icons/pi";
 
 import useToggleLike from "@/hooks/useToggleLike";
 
-import { Reaction, LikeButton } from "./style";
+import { ActionContainer, LikeButton } from "./style";
 
 interface Props {
   reviewId: number;
@@ -19,11 +19,11 @@ export default function ReviewAction({ reviewId, isLiked, likeCount }: Props) {
   );
 
   return (
-    <Reaction>
+    <ActionContainer>
       <LikeButton $active={like || false} onClick={handleClick}>
         <PiHeartFill size={16} />
         {count}
       </LikeButton>
-    </Reaction>
+    </ActionContainer>
   );
 }

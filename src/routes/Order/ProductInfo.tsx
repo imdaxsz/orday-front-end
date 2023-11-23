@@ -55,7 +55,7 @@ export default function ProductInfo({ form }: ProductInfoProps) {
 
   const products = {
     price: productItems
-      .map((item) => Number(item.price))
+      .map((item) => Number(item.price) * item.amount)
       .reduce((acc, cur) => acc + cur),
     sale: productItems.length
       ? productItems

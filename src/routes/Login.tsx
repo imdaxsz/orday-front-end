@@ -23,6 +23,11 @@ export default function Login() {
   const isLoggedIn = localStorage.getItem("token");
   if (isLoggedIn) return <Navigate to="/" replace />;
 
+  const googleLogin = () => {
+    const BASE_URL = import.meta.env.VITE_API_ROOT;
+    window.location.href = `${BASE_URL}oauth2/authorization/google`;
+  };
+
   return (
     <Container>
       <Head title="로그인 | Orday" />
@@ -63,7 +68,7 @@ export default function Login() {
       <Link to="/join">
         <Button $variant="outline">회원가입</Button>
       </Link>
-      <Button>구글 로그인</Button>
+      <Button onClick={googleLogin}>구글 로그인</Button>
     </Container>
   );
 }

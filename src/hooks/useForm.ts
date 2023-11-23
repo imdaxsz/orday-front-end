@@ -8,7 +8,7 @@ import { getUserInfo as requestGetUserInfo } from "@/api/AuthApi";
 //   id: 2,
 //   email: "test@naver.com",
 //   name: "홍길동",
-//   phoneNumber: "-",
+//   phoneNumber: "010-0000-0000",
 //   birthDate: {
 //     year: "",
 //     month: "",
@@ -49,7 +49,8 @@ export default function useForm<T extends { addressInfo?: Address }>(
     try {
       const { socialType, infoSet, id, birthDate, ...formData } =
         await requestGetUserInfo();
-      // const { socialType, infoSet, ...formData } = GOOGLE_USER_MOCK_DATA;
+      // const { socialType, infoSet, id, birthDate, ...formData } =
+      //   GOOGLE_USER_MOCK_DATA;
       if ("id" in form || "birthDate" in form) {
         setForm((prev) => ({ ...prev, id, birthDate, ...formData }));
         setCurrentUserInfo((prev) => ({ ...prev, id, birthDate, ...formData }));
@@ -62,8 +63,10 @@ export default function useForm<T extends { addressInfo?: Address }>(
         second: formData.phoneNumber.split("-")[1] || "",
         third: formData.phoneNumber.split("-")[2] || "",
       };
-      setPhone(phoneData);
-      setCurrentPhone(phoneData);
+      if (infoSet) {
+        setPhone(phoneData);
+        setCurrentPhone(phoneData);
+      }
     } catch (error) {
       console.log("Error fetching user info: ", error);
     }
