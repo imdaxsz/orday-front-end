@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import Head from "@/components/Head";
 
-import OrderInfo from "./OrderInfo";
+import OrderInfo from "./OrderList/OrderInfo";
 import SideBarComponent from "./SideBar";
 import UserInfo from "./UserInfo";
 
@@ -14,7 +14,7 @@ export default function MyPage() {
         <UserInfo />
         <SideBarComponent />
       </PageLeft>
-      <OrderInfo showIcon={true} />
+      <OrderInfo />
     </Container>
   );
 }
