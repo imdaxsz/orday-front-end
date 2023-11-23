@@ -7,7 +7,7 @@ const Cart = lazy(() => import("@/routes/Cart"));
 const Order = lazy(() => import("@/routes/Order"));
 const OrderConfirm = lazy(() => import("@/routes/Order/OrderConfirm"));
 const MyPage = lazy(() => import("@/routes/MyPage"));
-const MyOrder = lazy(() => import("@/routes/MyOrder"));
+const OrderList = lazy(() => import("@/routes/MyPage/OrderList"));
 const EditProfile = lazy(() => import("@/routes/MyPage/EditProfile"));
 const MyReviewList = lazy(() => import("@/routes/Review/List"));
 const WriteReview = lazy(() => import("@/routes/Review/Write"));
@@ -47,7 +47,7 @@ export const privateRoutes: RouteObject[] = [
       },
       {
         path: "myPage/order",
-        element: <MyOrder />,
+        element: <OrderList />,
       },
       {
         path: "myPage/editProfile",
