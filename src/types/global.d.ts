@@ -166,6 +166,12 @@ declare interface OrderStatus {
   exchangeReturnCount: number;
 }
 
+interface OrderStatusCount {
+  id: number;
+  name: string;
+  value: keyof OrderStatus;
+}
+
 declare interface OrderListInfo {
   orderId: number;
   productId: number;
