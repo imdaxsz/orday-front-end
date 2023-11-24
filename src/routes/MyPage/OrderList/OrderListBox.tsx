@@ -81,13 +81,6 @@ const Content = styled.div`
   p {
     color: ${({ theme }) => theme.colors["neutral"]["40"]};
     font-size: ${({ theme }) => theme.typo["body-2-m"]};
-    &:first-child {
-      color: ${({ theme }) => theme.colors["primary"]["80"]};
-    }
-    &:nth-of-type(2) {
-      font-size: ${({ theme }) => theme.typo["body-2-m"]};
-      color: ${({ theme }) => theme.colors["neutral"]["70"]};
-    }
   }
 `;
 
@@ -112,4 +105,13 @@ const HistoryDetail = styled.div`
   list-style-type: none;
   padding: 0;
   margin: 0;
+  p {
+    &:first-of-type {
+      color: ${({ theme }) => theme.colors["primary"]["80"]};
+    }
+    &:nth-of-type(2) {
+      font-size: ${({ theme }) => theme.typo["body-2-m"]};
+      color: ${({ theme }) => theme.colors["neutral"]["70"]};
+    }
+  }
 `;
