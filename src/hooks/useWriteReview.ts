@@ -131,7 +131,10 @@ export default function useWriteReview({
             ...prev,
             fileUrl,
           }));
-        } else console.log("변환 실패");
+        } else {
+          console.log("변환 실패");
+          alert("변환 실패! 다시 시도해 주세요.");
+        }
       };
     }
     e.target.value = ""; // reset
@@ -176,6 +179,7 @@ export default function useWriteReview({
       navigate("/myPage/reviews");
     } catch (error) {
       console.log("Error uploading review: ", error);
+      alert("오류가 발생했어요. 잠시 후 다시 시도해 주세요.");
     }
   };
 
@@ -190,6 +194,7 @@ export default function useWriteReview({
       navigate("/myPage/reviews");
     } catch (error) {
       console.log("Error updating review: ", error);
+      alert("오류가 발생했어요. 잠시 후 다시 시도해 주세요.");
     }
   };
 
@@ -201,6 +206,7 @@ export default function useWriteReview({
       navigate("/myPage/reviews");
     } catch (error) {
       console.log("Error updating review image: ", error);
+      alert("오류가 발생했어요. 잠시 후 다시 시도해 주세요.");
     }
   };
 
