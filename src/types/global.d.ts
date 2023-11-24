@@ -157,6 +157,15 @@ declare interface OrderInfo extends OrderForm {
   productsInfo: ProductInfo[];
 }
 
+declare interface OrderStatus {
+  totalOrdersCount: number;
+  paymentPendingCount: number;
+  shippingInCount: number;
+  deliveredCount: number;
+  confirmedPurchaseCount: number;
+  exchangeReturnCount: number;
+}
+
 declare interface OrderListInfo {
   orderId: number;
   productId: number;
