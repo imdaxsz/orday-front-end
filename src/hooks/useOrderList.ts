@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useLocation } from "react-router-dom";
 
-import { getOrderList } from "@/api/OrderApi";
+import { getOrderList, getOrderStatus } from "@/api/OrderApi";
 
 export default function useOrderList() {
   const location = useLocation();
@@ -10,8 +10,18 @@ export default function useOrderList() {
   const isOrderListPage = pathname.includes("/order");
 
   const [ref, inView] = useInView();
+  const [orderStatus, setOrderStatus] = useState<OrderStatus>();
   const [orderList, setOrderList] = useState<OrderListInfo[]>([]);
   const [nextKey, setNextKey] = useState<number | null>(null);
+
+  const fetchOrderStatus = async () => {
+    try {
+      const data = await getOrderStatus();
+      setOrderStatus(data);
+    } catch (error) {
+      console.log("Error fetching order status: ", error);
+    }
+  };
 
   const fetchOrderList = async () => {
     const {
@@ -24,6 +34,7 @@ export default function useOrderList() {
     setNextKey(key);
   };
   useEffect(() => {
+    fetchOrderStatus();
     fetchOrderList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -32,5 +43,5 @@ export default function useOrderList() {
     if (inView && nextKey !== -1) fetchOrderList();
   }, [inView]);
 
-  return { ref, isOrderListPage, orderList };
+  return { ref, isOrderListPage, orderStatus, orderList };
 }

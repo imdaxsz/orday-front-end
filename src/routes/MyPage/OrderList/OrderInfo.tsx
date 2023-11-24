@@ -41,19 +41,19 @@ import OrderListBox from "./OrderListBox";
 //   ],
 // };
 
-const orderStatus = [
-  { id: 1, name: "전체", count: 0 },
-  { id: 2, name: "입금/결제", count: 0 },
-  { id: 3, name: "배송중", count: 0 },
-  { id: 4, name: "배송완료", count: 0 },
-  { id: 5, name: "구매확정", count: 0 },
-  { id: 6, name: "교환/반품", count: 0 },
+const orderStatusCount: OrderStatusCount[] = [
+  { id: 1, name: "전체", value: "totalOrdersCount" },
+  { id: 2, name: "입금/결제", value: "paymentPendingCount" },
+  { id: 3, name: "배송중", value: "shippingInCount" },
+  { id: 4, name: "배송완료", value: "deliveredCount" },
+  { id: 5, name: "구매확정", value: "confirmedPurchaseCount" },
+  { id: 6, name: "교환/반품", value: "exchangeReturnCount" },
 ];
 
 export default function OrderInfo() {
   // const [orderList, setOrderList] = useState<OrderListInfo[]>(mockData.body);
 
-  const { ref, isOrderListPage, orderList } = useOrderList();
+  const { ref, isOrderListPage, orderStatus, orderList } = useOrderList();
 
   return (
     <>
@@ -61,12 +61,13 @@ export default function OrderInfo() {
         <Title>최근 주문 현황</Title>
         <StatusBox>
           <List>
-            {orderStatus.map((status) => (
-              <ListBox key={status.id}>
-                <ListName>{status.name}</ListName>
-                <ListCount>{status.count}</ListCount>
-              </ListBox>
-            ))}
+            {orderStatus &&
+              orderStatusCount.map((count) => (
+                <ListBox key={count.id}>
+                  <ListName>{count.name}</ListName>
+                  <ListCount>{orderStatus[count.value]}</ListCount>
+                </ListBox>
+              ))}
           </List>
         </StatusBox>
         <OrderList>
