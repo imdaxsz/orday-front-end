@@ -43,9 +43,8 @@ instance.interceptors.response.use(
     }
 
     if (error.response?.data) {
-      return Promise.reject(
-        new ApiError(error.response.data, error.response.status),
-      );
+      const { message, code, status } = error.response.data;
+      return Promise.reject(new ApiError(message, code, status));
     }
 
     if (error.message.startsWith("timeout")) {
