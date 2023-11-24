@@ -72,6 +72,25 @@ declare interface Product {
   liked: boolean;
 }
 
+declare interface ClothesInfo {
+  id: number;
+  color: string;
+  size: string;
+}
+
+declare interface ProductOptionInfo extends ClothesInfo {
+  amount: number;
+}
+
+declare interface ColorOptionObject {
+  [key: string]: { id: number; size: string }[];
+}
+
+declare interface ProductDetail extends Omit<Product, "score"> {
+  clothesInfoList: ClothesInfo[];
+  discountPrice: number;
+}
+
 declare interface BrandCategory {
   categoryId: number;
   subCategoryId: number;
@@ -194,4 +213,11 @@ declare type ReviewInfo = Omit<
   reviewImageUrl: string;
   reviewLikeCount: number;
   liked: boolean;
+};
+
+declare type RecentReview = Omit<ReviewInfo, "color" | "size" | "rating"> & {
+  productId: number;
+  productName: string;
+  productImageUrl: string;
+  price: number;
 };

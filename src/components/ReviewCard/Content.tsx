@@ -1,33 +1,41 @@
 import {
-  BodyContainer,
-  Ad,
-  AdImage,
-  Comment,
-  AdText,
-  KeyWord,
-  Product,
+  ReviewImage,
+  ProductInfo,
+  ProductImage,
+  Content,
+  ProductText,
+  ProductName,
   Price,
 } from "./style";
 
-const ContentData = {
-  product: "프라이탁 HWAII FIVE-O 화이트 메신저백",
-  price: "248,000",
-};
+interface Props {
+  productId: number;
+  productName: string;
+  productImageUrl: string;
+  reviewImageUrl: string;
+  price: number;
+  content: string;
+}
 
-export default function ReviewContent() {
+export default function ReviewContent({
+  productId,
+  productName,
+  productImageUrl,
+  reviewImageUrl,
+  price,
+  content,
+}: Props) {
   return (
     <>
-      <BodyContainer />
-      <Ad>
-        <AdImage />
-        <AdText>
-          <KeyWord>
-            <Product>{ContentData.product}</Product>
-          </KeyWord>
-          <Price>{ContentData.price}원</Price>
-        </AdText>
-      </Ad>
-      <Comment>리뷰 내용입니다.</Comment>
+      <ReviewImage src={reviewImageUrl} alt="PHOTO" />
+      <ProductInfo to={`/product/${productId}?name=${productName}`}>
+        <ProductImage src={productImageUrl} alt="PHOTO" />
+        <ProductText>
+          <ProductName>{productName}</ProductName>
+          <Price>{price.toLocaleString()}원</Price>
+        </ProductText>
+      </ProductInfo>
+      <Content>{content}</Content>
     </>
   );
 }

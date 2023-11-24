@@ -43,7 +43,7 @@ export default function BrandDetail() {
       </Menu>
       <Items>
         {products.map((product) => (
-          <ProductCard key={product.id} size="md" $tag="NEW" info={product} />
+          <ProductCard key={product.id} size="md" info={product} />
         ))}
       </Items>
       <div ref={ref} />
