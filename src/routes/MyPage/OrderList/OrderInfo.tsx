@@ -86,9 +86,9 @@ export default function OrderInfo() {
               {orderList.map((item) => (
                 <OrderListBox key={item.orderId} item={item} />
               ))}
+              {isOrderListPage && <div ref={ref}></div>}
             </>
           )}
-          {isOrderListPage && <div ref={ref}></div>}
         </OrderList>
       </Container>
     </>

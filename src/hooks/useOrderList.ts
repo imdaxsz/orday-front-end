@@ -19,7 +19,7 @@ export default function useOrderList() {
       body: data,
     } = await getOrderList(nextKey, 5);
     !isOrderListPage
-      ? setOrderList(data.splice(0, 4))
+      ? setOrderList(data.splice(0, 2))
       : setOrderList((prev) => [...prev, ...data]);
     setNextKey(key);
   };
