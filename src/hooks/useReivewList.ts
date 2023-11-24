@@ -6,8 +6,11 @@ export default function useReviewList(status: number) {
     [],
   );
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const fetchData = useCallback(async () => {
     let data: WritableReview[] | WrittenReview[] = [];
+    setIsLoading(true);
     try {
       if (status === 1) data = await getWritableReivews();
       else data = await getWrittenReivews();
@@ -15,11 +18,12 @@ export default function useReviewList(status: number) {
     } catch (error) {
       console.log("Error fetching review list: ", error);
     }
+    setIsLoading(false);
   }, [status]);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-  return { reviews };
+  return { isLoading, reviews };
 }

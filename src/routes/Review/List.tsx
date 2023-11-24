@@ -3,13 +3,14 @@ import styled from "styled-components";
 
 import BackButton from "@/components/BackButton";
 import Head from "@/components/Head";
+import Loader from "@/components/Loader";
 import Tabs, { Tab } from "@/components/Tabs";
 import useReviewList from "@/hooks/useReivewList";
 import ReviewItem from "@/routes/Review/ReviewItem";
 
 export default function MyReviewList() {
   const [selectedTab, setSelectedTab] = useState(1);
-  const { reviews } = useReviewList(selectedTab);
+  const { isLoading, reviews } = useReviewList(selectedTab);
 
   const handleTabClick = (i: number) => {
     setSelectedTab(i);
@@ -27,19 +28,24 @@ export default function MyReviewList() {
         />
         <Tab value={2} label="작성한 리뷰" onClick={() => handleTabClick(2)} />
       </LikeTabs>
-      {reviews.length === 0 && (
-        <Empty>{`작성${
-          selectedTab === 1 ? " 가능한 " : "한 "
-        }리뷰가 없습니다.`}</Empty>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <>
+          {reviews.length === 0 && (
+            <Empty>{`작성${
+              selectedTab === 1 ? " 가능한 " : "한 "
+            }리뷰가 없습니다.`}</Empty>
+          )}
+          {reviews.length !== 0 &&
+            reviews.map((review, i) => (
+              <ReviewItem
+                key={i}
+                status={selectedTab === 1 ? "WRITABLE" : "WRITTEN"}
+                review={review}
+              />
+            ))}
+        </>
       )}
-      {reviews.length !== 0 &&
-        reviews.map((review, i) => (
-          <ReviewItem
-            key={i}
-            status={selectedTab === 1 ? "WRITABLE" : "WRITTEN"}
-            review={review}
-          />
-        ))}
     </Container>
   );
 }

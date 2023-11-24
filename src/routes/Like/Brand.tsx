@@ -4,12 +4,14 @@ import BackButton from "@/components/BackButton";
 import Dropdown from "@/components/Dropdown";
 import Head from "@/components/Head";
 import LikeButton from "@/components/LikeButton";
+import Loader from "@/components/Loader";
 import useBrandList from "@/hooks/useBrandList";
 
 import { Brands, Container, Content, Brand as BaseBrand } from "../Brand/List";
 
 export default function LikeBrandList() {
-  const { brands, selectedOption, setSelectedOption } = useBrandList();
+  const { isLoading, brands, selectedOption, setSelectedOption } =
+    useBrandList();
   return (
     <Container>
       <Head title="관심 브랜드 | Orday" />
@@ -20,16 +22,21 @@ export default function LikeBrandList() {
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
         />
-        {brands.length === 0 && <Empty>관심 브랜드가 없습니다.</Empty>}
-        {brands.length !== 0 && (
-          <Brands>
-            {brands.map((brand) => (
-              <Brand to={`/brands/${brand.id}`} key={brand.id}>
-                <LikeButton isLiked target="brand" id={brand.id} />
-                <img src={brand.imageUrl} alt={brand.name} />
-              </Brand>
-            ))}
-          </Brands>
+        {isLoading && <Loader />}
+        {!isLoading && (
+          <>
+            {brands.length === 0 && <Empty>관심 브랜드가 없습니다.</Empty>}
+            {brands.length !== 0 && (
+              <Brands>
+                {brands.map((brand) => (
+                  <Brand to={`/brands/${brand.id}`} key={brand.id}>
+                    <LikeButton isLiked target="brand" id={brand.id} />
+                    <img src={brand.imageUrl} alt={brand.name} />
+                  </Brand>
+                ))}
+              </Brands>
+            )}
+          </>
         )}
       </Content>
     </Container>

@@ -4,10 +4,12 @@ import styled from "styled-components";
 import BackButton from "@/components/BackButton";
 import Dropdown from "@/components/Dropdown";
 import Head from "@/components/Head";
+import Loader from "@/components/Loader";
 import useBrandList from "@/hooks/useBrandList";
 
 export default function BrandList() {
-  const { brands, selectedOption, setSelectedOption } = useBrandList();
+  const { isLoading, brands, selectedOption, setSelectedOption } =
+    useBrandList();
   return (
     <Container>
       <Head title="브랜드 | Orday" />
@@ -19,11 +21,13 @@ export default function BrandList() {
           setSelectedOption={setSelectedOption}
         />
         <Brands>
-          {brands.map((brand, i) => (
-            <Brand to={`/brands/${brand.id}`} key={i}>
-              <img src={brand.imageUrl} alt={brand.name} />
-            </Brand>
-          ))}
+          {isLoading && <Loader />}
+          {!isLoading &&
+            brands.map((brand, i) => (
+              <Brand to={`/brands/${brand.id}`} key={i}>
+                <img src={brand.imageUrl} alt={brand.name} />
+              </Brand>
+            ))}
         </Brands>
       </Content>
     </Container>
