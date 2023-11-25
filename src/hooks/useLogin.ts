@@ -53,7 +53,7 @@ export default function useLogin() {
             setLoginError((prev) => ({ ...prev, result: 2 }));
           // 해당되는 사용자 정보가 없는 경우
           else setLoginError((prev) => ({ ...prev, result: 1 }));
-        }
+        } else alert("오류가 발생했어요. 다시 시도해 주세요");
         console.log("Error login: ", error);
       }
       setIsLoading(false);

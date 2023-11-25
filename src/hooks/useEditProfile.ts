@@ -129,6 +129,7 @@ export default function useEditProfile(option?: "join") {
           await updateUserInfo(updatedUserInfoItems);
           openModal();
         } catch (error) {
+          alert("오류가 발생했어요. 다시 시도해 주세요");
           console.log("Error updating user info: ", error);
         }
         setIsLoading(false);

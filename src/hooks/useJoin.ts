@@ -134,7 +134,7 @@ export default function useJoin() {
             setJoinError((prev) => ({ ...prev, result: 1 }));
           // 소셜 연동 가입 회원인 경우
           else setJoinError((prev) => ({ ...prev, result: 2 }));
-        }
+        } else alert("오류가 발생했어요. 다시 시도해 주세요");
         setIsLoading(false);
         console.log("Error join: ", error);
       }
