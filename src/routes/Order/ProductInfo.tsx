@@ -28,7 +28,8 @@ export default function ProductInfo({ form }: ProductInfoProps) {
       alert("주문할 상품이 없습니다");
       navigate("/");
     }
-  }, [productItems, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!productItems.length) {
     return null;
@@ -46,8 +47,8 @@ export default function ProductInfo({ form }: ProductInfoProps) {
       productsInfo: productItems.map(({ id, amount }) => ({ id, amount })),
     };
     try {
-      await createOrderProduct(orderInfo);
-      navigate("/order/confirm", { replace: true });
+      const data = await createOrderProduct(orderInfo);
+      navigate("/order/confirm", { state: data, replace: true });
       dispatch(resetProducts());
     } catch (error) {
       console.log("Error creating order: ", error);
