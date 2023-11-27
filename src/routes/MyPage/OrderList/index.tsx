@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 import BackButton from "@/components/BackButton";
 
-import OrderInfo from "./MyPage/OrderInfo";
+import OrderInfo from "./OrderInfo";
 
-export default function MyOrder() {
+export default function OrderList() {
   return (
     <>
       <BackButton pageTitle="회원 정보" />
       <Container>
-        <OrderInfo showIcon={false} />
+        <OrderInfo />
       </Container>
     </>
   );
