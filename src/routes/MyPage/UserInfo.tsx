@@ -1,45 +1,48 @@
-import { BiSolidPencil } from "react-icons/bi";
-import { IoWaterSharp } from "react-icons/io5";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
 
-import {
-  InfoUser,
-  Image,
-  InfoText,
-  InfoUp,
-  InfoName,
-  InfoGrade,
-  InfoFollow,
-  ImageIcon,
-} from "./UserInfo.style";
-
-const userData = {
-  username: "홍길동 님",
-  grade: "물방울 등급",
-  followers: 0,
-  following: 1,
-};
+import { getUserName } from "@/api/AuthApi";
 
 export default function UserInfo() {
+  const [userName, setUserName] = useState("");
+  const fetchUserName = async () => {
+    try {
+      const name = await getUserName();
+      setUserName(name);
+    } catch (error) {
+      console.log("Error fetching username: ", error);
+    }
+  };
+  useEffect(() => {
+    fetchUserName();
+  }, []);
+
   return (
     <>
       <InfoUser>
-        <Image>
-          <ImageIcon>
-            <BiSolidPencil />
-          </ImageIcon>
-        </Image>
-        <InfoText>
-          <InfoUp>
-            <InfoName>{userData.username}</InfoName>
-            <InfoGrade>
-              {userData.grade} <IoWaterSharp />
-            </InfoGrade>
-          </InfoUp>
-          <InfoFollow>
-            팔로워 {userData.followers} | 팔로잉 {userData.following}
-          </InfoFollow>
-        </InfoText>
+        <InfoImg alt="infoImg" />
+        <InfoName>{userName} 님</InfoName>
       </InfoUser>
     </>
   );
 }
+
+const InfoUser = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 273px;
+  height: 86px;
+  gap: 20px;
+`;
+
+const InfoImg = styled.img`
+  width: 86px;
+  height: 86px;
+  border-radius: 43px;
+  background-color: #b7d2f1;
+`;
+
+const InfoName = styled.div`
+  font-size: ${({ theme }) => theme.typo["title-2-b"]};
+`;
