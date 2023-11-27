@@ -19,7 +19,8 @@ export default function ProductInfo({ form }: ProductInfoProps) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isModalOpen, openModal, closeModal } = useModal();
-  const { modalMessage, validateForm, handleCheckChange } = useFormCheck(form);
+  const { modalMessage, validateForm, checkedListById, handleCheckChange } =
+    useFormCheck(form);
   const productItems = useAppSelector((state) => state.productInfo.items);
 
   useEffect(() => {
@@ -122,11 +123,13 @@ export default function ProductInfo({ form }: ProductInfoProps) {
           id="check1"
           text="주문정보 동의"
           onChange={() => handleCheckChange(1)}
+          checked={checkedListById.includes(1)}
         />
         <CheckBox
           id="check2"
           text="제 3자 제공 동의"
           onChange={() => handleCheckChange(2)}
+          checked={checkedListById.includes(2)}
         />
       </CheckAgreement>
       <Button style={{ width: "100%" }} onClick={openCheckedModal}>
