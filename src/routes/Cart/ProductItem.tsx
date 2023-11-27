@@ -32,9 +32,9 @@ export default function ProductItem({
       <ProductImage src={item.imageUrl} />
       <ItemName>
         <Name>{item.name}</Name>
-        <Color>{item.color}</Color>
+        <Color>{item.color && item.color}</Color>
       </ItemName>
-      <ItemSize>사이즈 {item.size}</ItemSize>
+      <ItemSize>{item.size && `사이즈 ${item.size}`}</ItemSize>
       <ItemAmount>
         <p>수량</p>
         <Count>
