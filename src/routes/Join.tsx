@@ -21,7 +21,7 @@ export default function Join() {
     form,
     phone,
     agree,
-    error,
+    joinError: error,
     handleInputChange,
     handleConfirmPwChange,
     handleSelectChange,
@@ -220,6 +220,10 @@ export default function Join() {
           </li>
         </Terms>
         {error.terms && <span>필수 약관에 동의해 주세요.</span>}
+        {error.result === 1 && <span>이미 존재하는 이메일입니다.</span>}
+        {error.result === 2 && (
+          <span>소셜 연동 가입 회원입니다. 소셜 로그인을 이용해 주세요.</span>
+        )}
         <Button type="submit">회원 가입</Button>
       </Form>
     </Container>

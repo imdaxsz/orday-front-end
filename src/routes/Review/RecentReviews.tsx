@@ -1,16 +1,18 @@
 import styled from "styled-components";
 
 import Head from "@/components/Head";
+import Loader from "@/components/Loader";
 import ReviewCard from "@/components/ReviewCard";
 import useRecentReviews from "@/hooks/useRecentReviews";
 
 export default function RecentReviews() {
-  const { ref, leftContents, rightContents } = useRecentReviews();
+  const { isLoading, ref, leftContents, rightContents } = useRecentReviews();
 
   return (
     <Container>
       <Head title="최신 리뷰 | Orday" />
       <h1>최신 리뷰</h1>
+      {isLoading && <Loader />}
       <ReviewContainer>
         <Section>
           {leftContents.map((review) => (

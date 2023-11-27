@@ -60,8 +60,11 @@ export default function Login() {
             <Link to="/">비밀번호 찾기</Link>
           </Find>
         </UserActions>
-        {error.result && (
+        {error.result === 1 && (
           <span>이메일 또는 비밀번호를 다시 확인해 주세요.</span>
+        )}
+        {error.result === 2 && (
+          <span>소셜 연동 가입 회원입니다. 소셜 로그인을 이용해 주세요.</span>
         )}
         <Button type="submit">로그인</Button>
       </Form>

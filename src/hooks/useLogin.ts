@@ -14,7 +14,7 @@ export default function useLogin() {
   const INIT_ERROR = {
     email: false,
     password: false,
-    result: false,
+    result: 0,
   };
   const [loginError, setLoginError] = useState(INIT_ERROR);
 
@@ -47,8 +47,13 @@ export default function useLogin() {
         await login(email, password);
         navigate("/");
       } catch (error) {
-        if (error instanceof ApiError && error.status === 400)
-          setLoginError((prev) => ({ ...prev, result: true }));
+        if (error instanceof ApiError && error.status === 400) {
+          // 소셜 연동 가입 회원인 경우
+          if (error.code === "U004")
+            setLoginError((prev) => ({ ...prev, result: 2 }));
+          // 해당되는 사용자 정보가 없는 경우
+          else setLoginError((prev) => ({ ...prev, result: 1 }));
+        } else alert("오류가 발생했어요. 다시 시도해 주세요");
         console.log("Error login: ", error);
       }
       setIsLoading(false);

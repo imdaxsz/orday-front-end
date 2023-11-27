@@ -52,6 +52,7 @@ declare interface UserInfoFormError {
 declare interface JoinFormError extends UserInfoFormError {
   email: number;
   terms: boolean;
+  result: number;
 }
 
 declare interface Category {
