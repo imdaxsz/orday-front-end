@@ -157,6 +157,8 @@ declare interface OrderInfo extends OrderForm {
   productsInfo: ProductInfo[];
 }
 
+declare type OrderConfirm = Pick<OrderListInfo, "orderId", "createdAt">;
+
 declare interface OrderStatus {
   totalOrdersCount: number;
   paymentPendingCount: number;
