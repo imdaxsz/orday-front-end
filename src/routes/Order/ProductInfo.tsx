@@ -81,8 +81,8 @@ export default function ProductInfo({ form }: ProductInfoProps) {
               <div>
                 <h4>{item.name}</h4>
                 <ul>
-                  <li>{item.color}</li>
-                  <li>사이즈 {item.size}</li>
+                  <li>{item.color && item.color}</li>
+                  <li>{item.size && `사이즈 ${item.size}`}</li>
                   <li>수량 {item.amount}개</li>
                 </ul>
               </div>
