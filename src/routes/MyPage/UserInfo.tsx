@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
-import useUserName from "@/hooks/useUserName";
+interface UserInfoProps {
+  userName: string;
+}
 
-export default function UserInfo() {
-  const { userName } = useUserName();
+export default function UserInfo({ userName }: UserInfoProps) {
   return (
     <>
       <InfoUser>
