@@ -1,22 +1,9 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { getUserName } from "@/api/AuthApi";
+import useUserName from "@/hooks/useUserName";
 
 export default function UserInfo() {
-  const [userName, setUserName] = useState("");
-  const fetchUserName = async () => {
-    try {
-      const name = await getUserName();
-      setUserName(name);
-    } catch (error) {
-      console.log("Error fetching username: ", error);
-    }
-  };
-  useEffect(() => {
-    fetchUserName();
-  }, []);
-
+  const { userName } = useUserName();
   return (
     <>
       <InfoUser>
