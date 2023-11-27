@@ -58,9 +58,12 @@ export default function ProductItem({
 }
 const Container = styled.li`
   margin: 30px auto;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
   align-items: center;
   justify-content: space-between;
+  gap: 100px;
+  text-align: right;
 `;
 
 const ProductImage = styled.img`
@@ -89,6 +92,7 @@ const ItemSize = styled.p`
 `;
 
 const ItemAmount = styled.div`
+  width: 125px;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -112,6 +116,7 @@ const Count = styled.div`
 `;
 
 const ItemPrice = styled.p`
+  width: 80px;
   font-size: 16px;
   font-weight: bold;
 `;
