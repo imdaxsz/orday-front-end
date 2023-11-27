@@ -19,7 +19,8 @@ export default function ProductInfo({ form }: ProductInfoProps) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isModalOpen, openModal, closeModal } = useModal();
-  const { modalMessage, validateForm, handleCheckChange } = useFormCheck(form);
+  const { modalMessage, validateForm, checkedListById, handleCheckChange } =
+    useFormCheck(form);
   const productItems = useAppSelector((state) => state.productInfo.items);
 
   useEffect(() => {
@@ -27,7 +28,8 @@ export default function ProductInfo({ form }: ProductInfoProps) {
       alert("주문할 상품이 없습니다");
       navigate("/");
     }
-  }, [productItems, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!productItems.length) {
     return null;
@@ -45,8 +47,8 @@ export default function ProductInfo({ form }: ProductInfoProps) {
       productsInfo: productItems.map(({ id, amount }) => ({ id, amount })),
     };
     try {
-      await createOrderProduct(orderInfo);
-      navigate("/order/confirm", { replace: true });
+      const data = await createOrderProduct(orderInfo);
+      navigate("/order/confirm", { state: data, replace: true });
       dispatch(resetProducts());
     } catch (error) {
       console.log("Error creating order: ", error);
@@ -81,8 +83,8 @@ export default function ProductInfo({ form }: ProductInfoProps) {
               <div>
                 <h4>{item.name}</h4>
                 <ul>
-                  <li>{item.color}</li>
-                  <li>사이즈 {item.size}</li>
+                  <li>{item.color && item.color}</li>
+                  <li>{item.size && `사이즈 ${item.size}`}</li>
                   <li>수량 {item.amount}개</li>
                 </ul>
               </div>
@@ -122,11 +124,13 @@ export default function ProductInfo({ form }: ProductInfoProps) {
           id="check1"
           text="주문정보 동의"
           onChange={() => handleCheckChange(1)}
+          checked={checkedListById.includes(1)}
         />
         <CheckBox
           id="check2"
           text="제 3자 제공 동의"
           onChange={() => handleCheckChange(2)}
+          checked={checkedListById.includes(2)}
         />
       </CheckAgreement>
       <Button style={{ width: "100%" }} onClick={openCheckedModal}>

@@ -2,14 +2,15 @@ import styled from "styled-components";
 
 interface OrderListBoxProps {
   item: OrderListInfo;
+  orderStatus?: OrderStatusCount;
 }
 
-export default function OrderListBox({ item }: OrderListBoxProps) {
+export default function OrderListBox({ item, orderStatus }: OrderListBoxProps) {
   return (
     <HistoryBox key={item.orderId}>
       <OrderStatus>
         <StatusCode>
-          <ItemStatus>{item.status}</ItemStatus>
+          <ItemStatus>{orderStatus?.name}</ItemStatus>
           <ItemId>{item.orderId}</ItemId>
         </StatusCode>
         <HistoryDate>{item.createdAt.split("T")[0]}</HistoryDate>
@@ -18,10 +19,10 @@ export default function OrderListBox({ item }: OrderListBoxProps) {
         <ProductInfo>
           <HistoryImage src={item.imageUrl} alt="productImg" />
           <HistoryDetail>
-            <p>{item.status}</p>
+            <p>{orderStatus?.id === 5 ? orderStatus.name : ""}</p>
             <p>{item.productName}</p>
-            <p>{item.color}</p>
-            <p>사이즈 {item.size}</p>
+            <p>{item.color && item.color}</p>
+            <p>{item.size && `사이즈 ${item.size}`}</p>
             <p>수량 {item.amount}개</p>
           </HistoryDetail>
         </ProductInfo>
