@@ -38,14 +38,13 @@ instance.interceptors.response.use(
       console.log(error, "unauthorized");
       // access token 제거
       localStorage.removeItem("token");
-      window.alert("로그인 해주세요!");
+      alert("로그인 해주세요!");
       window.location.href = "/login";
     }
-    // TODO: 서버 응답 오류 예외 처리
+
     if (error.response?.data) {
-      return Promise.reject(
-        new ApiError(error.response.data, error.response.status),
-      );
+      const { message, code, status } = error.response.data;
+      return Promise.reject(new ApiError(message, code, status));
     }
 
     if (error.message.startsWith("timeout")) {

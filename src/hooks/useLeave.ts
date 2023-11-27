@@ -20,6 +20,7 @@ export default function useLeave() {
         openModal();
       } catch (error) {
         console.log("Error leave: ", error);
+        alert("오류가 발생했어요. 다시 시도해 주세요");
       }
       setIsLoading(false);
     }

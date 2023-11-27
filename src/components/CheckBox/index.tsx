@@ -1,6 +1,14 @@
 import { InputHTMLAttributes } from "react";
 
-import { CheckboxContainer, CheckboxInput, CheckboxText } from "./style";
+import CheckIcon from "@/assets/check_icon.svg?react";
+
+import {
+  CheckboxContainer,
+  CheckboxBtn,
+  CheckboxInput,
+  CheckboxText,
+  CheckboxIcon,
+} from "./style";
 
 interface CheckBoxProps extends InputHTMLAttributes<HTMLInputElement> {
   text?: string;
@@ -18,14 +26,21 @@ export default function CheckBox({
 }: CheckBoxProps) {
   return (
     <CheckboxContainer>
-      <CheckboxInput
-        type="checkbox"
-        id={id}
-        name={name}
-        onChange={onChange}
-        $isCircle={type === "circle"}
-        checked={checked}
-      />
+      <CheckboxBtn>
+        <CheckboxInput
+          type="checkbox"
+          id={id}
+          name={name}
+          onChange={onChange}
+          $isCircle={type === "circle"}
+          checked={checked}
+        />
+        {checked && (
+          <CheckboxIcon>
+            <CheckIcon />
+          </CheckboxIcon>
+        )}
+      </CheckboxBtn>
       <CheckboxText htmlFor={id}>{text}</CheckboxText>
     </CheckboxContainer>
   );

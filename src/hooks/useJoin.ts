@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { join } from "@/api/AuthApi";
+import { ApiError } from "@/libs/error";
 
 import useEditProfile from "./useEditProfile";
 
@@ -30,12 +31,13 @@ export default function useJoin() {
     ...formError,
     email: 0,
     terms: false,
+    result: 0,
   };
 
-  const [error, setError] = useState<JoinFormError>(INIT_ERROR);
+  const [joinError, setJoinError] = useState<JoinFormError>(INIT_ERROR);
 
   useEffect(() => {
-    setError((prev) => ({ ...prev, ...formError }));
+    setJoinError((prev) => ({ ...prev, ...formError }));
   }, [formError]);
 
   const [agree, setAgree] = useState<Agree[]>([
@@ -82,7 +84,7 @@ export default function useJoin() {
   // 폼 유효성 검사
   const validateForm = () => {
     let isValidate = true;
-    setError(INIT_ERROR);
+    setJoinError(INIT_ERROR);
 
     // 이메일, 비밀번호 제외 form 유효성 검사
     isValidate = validateFormData();
@@ -90,23 +92,23 @@ export default function useJoin() {
     // 이메일 패턴 및 빈 문자열 검사
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(form.email)) {
-      setError((prev) => ({ ...prev, email: 2 }));
+      setJoinError((prev) => ({ ...prev, email: 2 }));
       isValidate = false;
     }
     if (form.email.trim().length === 0)
-      setError((prev) => ({ ...prev, email: 1 }));
+      setJoinError((prev) => ({ ...prev, email: 1 }));
 
     // 비밀번호 패턴 검사
     isValidate = validatePassword();
     if (form.password.trim().length === 0)
-      setError((prev) => ({ ...prev, password: 1 }));
+      setJoinError((prev) => ({ ...prev, password: 1 }));
 
     // 필수 약관 동의 여부 확인
     const hasDisagree = agree.find(
       (item) => item.mandatory && !item.userAgreed,
     );
     if (hasDisagree) {
-      setError((prev) => ({ ...prev, terms: true }));
+      setJoinError((prev) => ({ ...prev, terms: true }));
       isValidate = false;
     }
 
@@ -123,9 +125,16 @@ export default function useJoin() {
       try {
         await join(form);
         setIsLoading(false);
-        window.alert("회원가입이 완료되었습니다.");
+        alert("회원가입이 완료되었습니다.");
         navigate("/login");
       } catch (error) {
+        if (error instanceof ApiError && error.status === 409) {
+          // DB에 이미 존재하는 이메일인 경우
+          if (error.code === "U001")
+            setJoinError((prev) => ({ ...prev, result: 1 }));
+          // 소셜 연동 가입 회원인 경우
+          else setJoinError((prev) => ({ ...prev, result: 2 }));
+        } else alert("오류가 발생했어요. 다시 시도해 주세요");
         setIsLoading(false);
         console.log("Error join: ", error);
       }
@@ -137,7 +146,7 @@ export default function useJoin() {
     form,
     phone,
     agree,
-    error,
+    joinError,
     handleAddressChange,
     handleInputChange,
     handleConfirmPwChange,

@@ -73,7 +73,7 @@ export default function Home() {
     <Container>
       <Head />
       <VisualSection items={visualSectionMockData} />
-      {bestProducts.length !== 0 && (
+      {bestProducts && bestProducts.length !== 0 && (
         <ProductSection>
           <Title>Orday BEST</Title>
           <MoreLink to="/best">
@@ -96,7 +96,7 @@ export default function Home() {
           />
         </EventContent>
       </EventSection>
-      {newProducts.length !== 0 && (
+      {newProducts && newProducts.length !== 0 && (
         <ProductSection>
           <Title>Orday NEW</Title>
           <MoreLink to="/new">

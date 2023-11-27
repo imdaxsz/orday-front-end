@@ -6,6 +6,7 @@ import { getRecentReviews } from "@/api/ReviewApi";
 export default function useRecentReviews() {
   const [reviews, setReviews] = useState<RecentReview[]>([]);
   const [nextKey, setNextKey] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const leftContents = reviews.filter((_, index) => index % 2 === 0);
   const rightContents = reviews.filter((_, index) => index % 2 === 1);
@@ -13,6 +14,7 @@ export default function useRecentReviews() {
   const [ref, inView] = useInView();
 
   const fetchData = async () => {
+    setIsLoading(true);
     try {
       const {
         cursorRequest: { key },
@@ -23,6 +25,7 @@ export default function useRecentReviews() {
     } catch (error) {
       console.log("Error fetching recent reviews: ", error);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -30,5 +33,5 @@ export default function useRecentReviews() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
 
-  return { leftContents, rightContents, ref };
+  return { isLoading, leftContents, rightContents, ref };
 }
