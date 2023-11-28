@@ -1,4 +1,5 @@
 import { IoMdClose } from "react-icons/io";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import AddBtn from "@/assets/add_btn.svg?react";
@@ -29,11 +30,13 @@ export default function ProductItem({
         onChange={() => handleCheckChange(item.id)}
         checked={checkedListById.includes(item.id)}
       />
-      <ProductImage src={item.imageUrl} />
-      <ItemName>
-        <Name>{item.name}</Name>
-        <Color>{item.color && item.color}</Color>
-      </ItemName>
+      <CartListItem to={`/product/${item.id}?name=${item.name}`}>
+        <ProductImage src={item.imageUrl} />
+        <ItemName>
+          <Name>{item.name}</Name>
+          <Color>{item.color && item.color}</Color>
+        </ItemName>
+      </CartListItem>
       <ItemSize>{item.size && `사이즈 ${item.size}`}</ItemSize>
       <ItemAmount>
         <p>수량</p>
@@ -59,11 +62,18 @@ export default function ProductItem({
 const Container = styled.li`
   margin: 30px auto;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   align-items: center;
   justify-content: space-between;
   gap: 100px;
-  text-align: right;
+`;
+
+const CartListItem = styled(Link)`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
 `;
 
 const ProductImage = styled.img`
@@ -74,7 +84,9 @@ const ProductImage = styled.img`
   border-radius: 15px;
 `;
 
-const ItemName = styled.div``;
+const ItemName = styled.div`
+  width: 180px;
+`;
 
 const Name = styled.p`
   color: #5b5b5b;
@@ -123,5 +135,6 @@ const ItemPrice = styled.p`
 
 const DeleteBtn = styled.span`
   font-size: 20px;
+  text-align: right;
   cursor: pointer;
 `;
