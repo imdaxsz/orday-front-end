@@ -25,7 +25,6 @@ export default function Cart() {
   const {
     isModalOpen,
     closeModal,
-    checkedNum,
     openRemoveModal,
     removeCheckedItems,
     goOrderPage,
@@ -60,7 +59,9 @@ export default function Cart() {
           id="allCheck"
           text="전체선택"
           onChange={handleAllCheck}
-          checked={cartItems.length > 0 && checkedNum === cartItems.length}
+          checked={
+            cartItems.length > 0 && checkedListById.length === cartItems.length
+          }
         />
         <RemoveBasket onClick={openRemoveModal}>선택상품 삭제</RemoveBasket>
       </Box>

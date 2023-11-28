@@ -52,7 +52,6 @@ export default function useCartList(
   return {
     isModalOpen,
     closeModal,
-    checkedNum,
     openRemoveModal,
     removeCheckedItems,
     goOrderPage,
