@@ -5,6 +5,8 @@ import styled from "styled-components";
 import AddBtn from "@/assets/add_btn.svg?react";
 import ReduceBtn from "@/assets/reduce_btn.svg?react";
 import CheckBox from "@/components/CheckBox";
+import Modal from "@/components/Modal";
+import { useModal } from "@/hooks/useModal";
 import { useAppDispatch } from "@/store";
 import {
   decreaseCartItemQuantity,
@@ -24,6 +26,13 @@ export default function ProductItem({
   checkedListById,
 }: ProductItemProps) {
   const dispatch = useAppDispatch();
+  const { isModalOpen, openModal, closeModal } = useModal();
+
+  const removeCheckedItem = () => {
+    dispatch(removeCartItem([item.id]));
+    closeModal();
+  };
+
   return (
     <Container>
       <CheckBox
@@ -53,9 +62,17 @@ export default function ProductItem({
         </Count>
       </ItemAmount>
       <ItemPrice>{(item.price * item.amount).toLocaleString()}원</ItemPrice>
-      <DeleteBtn onClick={() => dispatch(removeCartItem([item.id]))}>
+      <DeleteBtn onClick={openModal}>
         <IoMdClose />
       </DeleteBtn>
+      <Modal
+        isOpen={isModalOpen}
+        onSubmit={removeCheckedItem}
+        onClose={closeModal}
+        title={"확인 안내"}
+        type={"confirm"}
+        detail={"상품을 장바구니에서 삭제하시겠습니까?"}
+      />
     </Container>
   );
 }
