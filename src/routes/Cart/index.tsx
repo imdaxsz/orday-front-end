@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import BackButton from "@/components/BackButton";
@@ -7,22 +6,14 @@ import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import Head from "@/components/Head";
 import Modal from "@/components/Modal";
+import useCartList from "@/hooks/useCartList";
 import useCheckBox from "@/hooks/useCheckBox";
-import { useModal } from "@/hooks/useModal";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { fetchCartItems, removeCartItem } from "@/store/slices/cartSlice";
-import { addProducts } from "@/store/slices/productInfoSlice";
+import { useAppSelector } from "@/store";
 
 import ProductItem from "./ProductItem";
 
 export default function Cart() {
   const cartItems = useAppSelector((state) => state.cart.items);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(fetchCartItems());
-  }, [dispatch]);
 
   const {
     checkedListById,
@@ -31,35 +22,14 @@ export default function Cart() {
     handleAllCheck,
   } = useCheckBox<CartItem>(cartItems);
 
-  const { isModalOpen, openModal, closeModal } = useModal();
-
-  const checkedNum = checkedListById.length;
-
-  const openRemoveModal = () => {
-    if (!checkedNum) {
-      alert("삭제할 상품을 선택해주세요");
-      return;
-    }
-    openModal();
-  };
-
-  const removeCheckedItems = () => {
-    dispatch(removeCartItem(checkedListById));
-    resetCheckedList();
-    closeModal();
-  };
-
-  const goOrderPage = () => {
-    if (!checkedListById.length) {
-      alert("상품을 선택해주세요");
-      return;
-    }
-    const products = cartItems.filter((item) =>
-      checkedListById.includes(item.id),
-    );
-    dispatch(addProducts(products));
-    navigate("/order");
-  };
+  const {
+    isModalOpen,
+    closeModal,
+    checkedNum,
+    openRemoveModal,
+    removeCheckedItems,
+    goOrderPage,
+  } = useCartList(cartItems, checkedListById, resetCheckedList);
 
   const price = {
     product: cartItems.length
