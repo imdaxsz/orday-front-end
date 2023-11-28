@@ -6,7 +6,9 @@ import BackButton from "@/components/BackButton";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import Head from "@/components/Head";
+import Modal from "@/components/Modal";
 import useCheckBox from "@/hooks/useCheckBox";
+import { useModal } from "@/hooks/useModal";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { fetchCartItems, removeCartItem } from "@/store/slices/cartSlice";
 import { addProducts } from "@/store/slices/productInfoSlice";
@@ -29,14 +31,22 @@ export default function Cart() {
     handleAllCheck,
   } = useCheckBox<CartItem>(cartItems);
 
+  const { isModalOpen, openModal, closeModal } = useModal();
+
   const checkedNum = checkedListById.length;
-  const removeCheckedItems = (checkedIds: number[]) => {
-    if (!checkedIds.length) {
+
+  const openRemoveModal = () => {
+    if (!checkedNum) {
       alert("삭제할 상품을 선택해주세요");
       return;
     }
-    dispatch(removeCartItem(checkedIds));
+    openModal();
+  };
+
+  const removeCheckedItems = () => {
+    dispatch(removeCartItem(checkedListById));
     resetCheckedList();
+    closeModal();
   };
 
   const goOrderPage = () => {
@@ -82,10 +92,16 @@ export default function Cart() {
           onChange={handleAllCheck}
           checked={cartItems.length > 0 && checkedNum === cartItems.length}
         />
-        <RemoveBasket onClick={() => removeCheckedItems(checkedListById)}>
-          선택상품 삭제
-        </RemoveBasket>
+        <RemoveBasket onClick={openRemoveModal}>선택상품 삭제</RemoveBasket>
       </Box>
+      <Modal
+        isOpen={isModalOpen}
+        onSubmit={removeCheckedItems}
+        onClose={closeModal}
+        title={"확인 안내"}
+        type={"confirm"}
+        detail={"선택한 상품을 삭제하시겠습니까?"}
+      />
       <ProductList>
         {!cartItems.length ? (
           <Empty>장바구니가 비어있습니다.</Empty>
