@@ -83,6 +83,7 @@ const Container = styled.li`
   align-items: center;
   justify-content: space-between;
   gap: 100px;
+  color: #5b5b5b;
 `;
 
 const CartListItem = styled(Link)`
@@ -106,17 +107,14 @@ const ItemName = styled.div`
 `;
 
 const Name = styled.p`
-  color: #5b5b5b;
   font-size: 12px;
   font-weight: bold;
 `;
 const Color = styled.p`
-  color: #5b5b5b;
   font-size: 12px;
 `;
 
 const ItemSize = styled.p`
-  color: #5b5b5b;
   font-size: 12px;
 `;
 
@@ -126,7 +124,6 @@ const ItemAmount = styled.div`
   align-items: center;
   gap: 14px;
   p {
-    color: #5b5b5b;
     font-size: 12px;
   }
 `;
@@ -150,8 +147,13 @@ const ItemPrice = styled.p`
   font-weight: bold;
 `;
 
-const DeleteBtn = styled.span`
+const DeleteBtn = styled.button`
+  background-color: transparent;
+  width: 24px;
+  height: 24px;
+  border: none;
+  padding: 0;
   font-size: 20px;
-  text-align: right;
+  justify-self: end;
   cursor: pointer;
 `;
