@@ -2,11 +2,13 @@ import { styled } from "styled-components";
 
 import CategoryNav from "@/components/CategoryNav";
 import Dropdown from "@/components/Dropdown";
+import Loader from "@/components/Loader";
 import ProductCard from "@/components/ProductCard";
 import useProductList from "@/hooks/useProductList";
 
 export default function Category() {
   const {
+    isLoading,
     ref,
     products,
     selectedOption,
@@ -17,6 +19,8 @@ export default function Category() {
 
   return (
     <Container>
+      {isLoading && pathname === "best" && <Loader />}
+      {isLoading && pathname !== "best" && <Loader />}
       <CategoryNav />
       {categoryBestItems && categoryBestItems.length > 0 ? (
         <CategoryBestList>
