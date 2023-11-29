@@ -6,41 +6,6 @@ import useOrderList from "@/hooks/useOrderList";
 
 import OrderListBox from "./OrderListBox";
 
-// const mockData: CursorPage<OrderListInfo> = {
-//   cursorRequest: {
-//     key: 0,
-//     size: 0,
-//   },
-//   body: [
-//     {
-//       orderId: 10001,
-//       productId: 1,
-//       productName: "상품명",
-//       color: "컬러",
-//       size: "S",
-//       price: 10000,
-//       discountPrice: 0,
-//       amount: 2,
-//       status: "confirmation",
-//       imageUrl: "string",
-//       createdAt: "2023-11-20T10:11:15.264Z",
-//     },
-//     {
-//       orderId: 10002,
-//       productId: 2,
-//       productName: "상품명",
-//       color: "컬러",
-//       size: "XL",
-//       price: 20000,
-//       discountPrice: 0,
-//       amount: 1,
-//       status: "confirmation",
-//       imageUrl: "string",
-//       createdAt: "2023-11-20T10:11:15.264Z",
-//     },
-//   ],
-// };
-
 const orderStatusCount: OrderStatusCount[] = [
   { id: 1, name: "전체", value: "totalOrdersCount" },
   { id: 2, name: "입금/결제", value: "paymentPendingCount" },
@@ -51,8 +16,6 @@ const orderStatusCount: OrderStatusCount[] = [
 ];
 
 export default function OrderInfo() {
-  // const [orderList, setOrderList] = useState<OrderListInfo[]>(mockData.body);
-
   const { ref, isOrderListPage, orderStatus, orderList } = useOrderList();
 
   return (
@@ -85,7 +48,13 @@ export default function OrderInfo() {
           ) : (
             <>
               {orderList.map((item) => (
-                <OrderListBox key={item.orderId} item={item} />
+                <OrderListBox
+                  key={item.orderId}
+                  item={item}
+                  orderStatus={orderStatusCount.find((status) =>
+                    status.value.includes(item.status),
+                  )}
+                />
               ))}
               {isOrderListPage && <div ref={ref}></div>}
             </>

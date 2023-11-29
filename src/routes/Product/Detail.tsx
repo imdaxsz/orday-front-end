@@ -29,7 +29,7 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
   const {
     selectedColor,
     setSelectedColor,
-    handleSelectOption,
+    handleOptionChange,
     selectedSizes,
     selectedOptions,
     addProductAmount,
@@ -112,7 +112,7 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
                   <SizeBox
                     key={option.id}
                     onClick={() =>
-                      handleSelectOption(option.id, selectedColor, option.size)
+                      handleOptionChange(option.id, selectedColor, option.size)
                     }
                     selected={selectedSizes.includes(option.size)}
                   >
