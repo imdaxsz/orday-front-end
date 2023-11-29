@@ -66,6 +66,7 @@ declare interface Product {
   id: number;
   name: string;
   price: number;
+  discountPrice: number;
   score: number;
   description: string;
   imageUrl: string;
