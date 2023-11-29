@@ -25,5 +25,5 @@ export default function useReviewList(status: number) {
     fetchData();
   }, [fetchData]);
 
-  return { isLoading, reviews };
+  return { isLoading, reviews, fetchData };
 }
