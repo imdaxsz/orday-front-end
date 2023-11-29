@@ -13,7 +13,7 @@ export const getCartList = async () => {
  * @returns 장바구니 리스트
  */
 export const addCartItems = async (productInfo: ProductInfo[]) => {
-  return await post<CartItem[]>("cart/product", productInfo);
+  return await post<CartItem[]>("cart/product/add", productInfo);
 };
 
 /**
@@ -36,7 +36,7 @@ export const increaseCartProduct = async (productId: number) => {
  * @returns productIds
  */
 export const deleteCartItems = async (productIds: number[]) => {
-  return await del<number[]>("cart/product", {
+  return await del<number[]>("cart/product/delete", {
     params: { productIds: productIds.join(",") },
   });
 };
