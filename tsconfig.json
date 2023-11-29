@@ -8,7 +8,11 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vite-plugin-svgr/client"],
+    "types": [
+      "vite-plugin-svgr/client",
+      "vitest/importMeta",
+      "@testing-library/jest-dom"
+    ],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -20,7 +24,7 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
