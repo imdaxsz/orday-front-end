@@ -14,7 +14,7 @@ export const createReview = async (review: FormData) => {
  @description 회원의 작성 가능한 리뷰 목록 조회
  * @returns WritableReview Array
  */
-export const getWritableReivews = async () => {
+export const getWritableReviews = async () => {
   return await get<WritableReview[]>("product/review/writeable/list");
 };
 
@@ -22,7 +22,7 @@ export const getWritableReivews = async () => {
  @description 회원의 작성한 리뷰 목록 조회
  * @returns WrittenReivew Array
  */
-export const getWrittenReivews = async () => {
+export const getWrittenReviews = async () => {
   return await get<WrittenReview[]>("product/review/written/list");
 };
 
