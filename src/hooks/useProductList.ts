@@ -14,6 +14,8 @@ export default function useProductList(brandId?: number) {
   const [ref, inView] = useInView();
 
   const [searchParams] = useSearchParams();
+
+  const [isLoading, setIsLoading] = useState(false);
   /**
    * 전체 카테고리일 경우 = 0
    */
@@ -49,15 +51,18 @@ export default function useProductList(brandId?: number) {
   }
 
   const fetchBestCategoryProducts = async () => {
+    setIsLoading(true);
     try {
       const data = await getBestCategoryProducts(categoryId, subCategoryId);
       setCategoryBestItems(data);
     } catch (error) {
       console.log("Error fetching products: ", error);
     }
+    setIsLoading(false);
   };
 
   const fetchData = useCallback(async () => {
+    setIsLoading(true);
     try {
       // NEW, SALE 상품 목록 조회
       if (pathname === "new" || pathname == "sale") {
@@ -94,6 +99,7 @@ export default function useProductList(brandId?: number) {
     } catch (error) {
       console.log("Error fetching products: ", error);
     }
+    setIsLoading(false);
   }, [params, pathname, brandId]);
 
   // 무한 스크롤 조회
@@ -115,6 +121,7 @@ export default function useProductList(brandId?: number) {
   }, [categoryId, subCategoryId, selectedOption.id, pathname]);
 
   return {
+    isLoading,
     ref,
     products,
     selectedOption,
