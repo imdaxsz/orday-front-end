@@ -92,7 +92,22 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
           </ProductCode>
           <ProductInfo>{productData.name}</ProductInfo>
 
-          <ProductPrice>₩ {productData.price.toLocaleString()}</ProductPrice>
+          {productData.discountPrice > 0 && (
+            <div>
+              <ProductPrice $discount={!!productData.discountPrice}>
+                ₩ {productData.price.toLocaleString()}
+              </ProductPrice>
+              <ProductPrice>
+                ₩{" "}
+                {(
+                  productData.price - productData.discountPrice
+                ).toLocaleString()}
+              </ProductPrice>
+            </div>
+          )}
+          {productData.discountPrice === 0 && (
+            <ProductPrice>₩ {productData.price.toLocaleString()}</ProductPrice>
+          )}
           <ProductColor>
             {!isEmptyOptions && options && (
               <SelectBox
@@ -126,7 +141,11 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
               <OptionProductBox
                 key={option.id}
                 productOption={option}
-                price={productData.price}
+                price={
+                  !productData.discountPrice
+                    ? productData.price
+                    : productData.price - productData.discountPrice
+                }
                 addProductAmount={addProductAmount}
                 reduceProductAmount={reduceProductAmount}
                 handleRemoveOption={handleRemoveOption}
@@ -201,9 +220,13 @@ export const ProductInfo = styled.div`
   ${({ theme }) => theme.typo["body-1-r"]};
 `;
 
-export const ProductPrice = styled.div`
+export const ProductPrice = styled.div<{ $discount?: boolean }>`
   margin-top: 10px;
-  ${({ theme }) => theme.typo["body-1-b"]};
+  color: ${({ theme, $discount = false }) =>
+    $discount && theme.colors["neutral"]["40"]};
+  font-weight: ${({ theme, $discount }) =>
+    $discount ? theme.typo["body-1-m"] : theme.typo["body-1-b"]};
+  text-decoration: ${({ $discount }) => $discount && "line-through"};
 `;
 
 export const ProductSize = styled.div`

@@ -11,6 +11,7 @@ import {
   Info,
   Name,
   Price,
+  PriceBox,
 } from "./style";
 
 type Size = "sm" | "md" | "lg" | "xl";
@@ -50,9 +51,25 @@ export default function ProductCard({
       <Info>
         <Brand to={`/brands/${info.brandInfo.id}`}>{info.brandInfo.name}</Brand>
         <Name to={`/product/${info.id}?name=${info.name}`}>{info.name}</Name>
-        <Price to={`/product/${info.id}?name=${info.name}`} size={size}>
-          {info.price.toLocaleString()}원
-        </Price>
+        {info.discountPrice > 0 && (
+          <PriceBox>
+            <Price
+              to={`/product/${info.id}?name=${info.name}`}
+              size={size}
+              $discount={!!info.discountPrice}
+            >
+              {info.price.toLocaleString()}원
+            </Price>
+            <Price to={`/product/${info.id}?name=${info.name}`} size={size}>
+              {(info.price - info.discountPrice).toLocaleString()} 원
+            </Price>
+          </PriceBox>
+        )}
+        {info.discountPrice === 0 && (
+          <Price to={`/product/${info.id}?name=${info.name}`} size={size}>
+            {info.price.toLocaleString()}원
+          </Price>
+        )}
       </Info>
     </Container>
   );

@@ -89,7 +89,19 @@ export default function ProductInfo({ form }: ProductInfoProps) {
                 </ul>
               </div>
               <div>
-                <p>₩ {item.price.toLocaleString()}</p>
+                {item.discountPrice > 0 && (
+                  <div>
+                    <ItemPrice $discount={!!item.discountPrice}>
+                      ₩ {item.price.toLocaleString()}
+                    </ItemPrice>
+                    <ItemPrice>
+                      ₩ {(item.price - item.discountPrice).toLocaleString()}
+                    </ItemPrice>
+                  </div>
+                )}
+                {item.discountPrice === 0 && (
+                  <p>₩ {item.price.toLocaleString()}</p>
+                )}
               </div>
             </ItemInfo>
           </ProductItem>
@@ -212,12 +224,16 @@ const ItemInfo = styled.div`
     margin: 1.5px 0;
   }
   p {
-    margin-top: 28px;
     font-size: 14px;
-    font-weight: bold;
     color: ${({ theme }) => theme.colors.neutral["40"]};
     text-align: right;
   }
+`;
+
+const ItemPrice = styled.p<{ $discount?: boolean }>`
+  margin: 10px 0;
+  font-weight: ${({ $discount }) => ($discount ? "500" : "600")};
+  text-decoration: ${({ $discount }) => $discount && "line-through"};
 `;
 
 const PriceList = styled.ul`

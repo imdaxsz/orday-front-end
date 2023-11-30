@@ -61,7 +61,19 @@ export default function ProductItem({
           />
         </Count>
       </ItemAmount>
-      <ItemPrice>{(item.price * item.amount).toLocaleString()}원</ItemPrice>
+      {item.discountPrice > 0 && (
+        <div>
+          <ItemPrice $discount={!!item.discountPrice}>
+            {item.price.toLocaleString()}원
+          </ItemPrice>
+          <ItemPrice>
+            {(item.price - item.discountPrice).toLocaleString()}원
+          </ItemPrice>
+        </div>
+      )}
+      {item.discountPrice === 0 && (
+        <ItemPrice>{item.price.toLocaleString()}원</ItemPrice>
+      )}
       <DeleteBtn onClick={openModal}>
         <IoMdClose />
       </DeleteBtn>
@@ -141,10 +153,14 @@ const Count = styled.div`
   }
 `;
 
-const ItemPrice = styled.p`
+const ItemPrice = styled.p<{ $discount?: boolean }>`
   width: 80px;
-  font-size: 16px;
-  font-weight: bold;
+  margin: 10px 0;
+  color: ${({ theme, $discount = false }) =>
+    $discount && theme.colors["neutral"]["40"]};
+  font-weight: ${({ theme, $discount }) =>
+    $discount ? theme.typo["body-2-m"] : theme.typo["body-2-b"]};
+  text-decoration: ${({ $discount }) => $discount && "line-through"};
 `;
 
 const DeleteBtn = styled.button`

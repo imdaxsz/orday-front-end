@@ -118,17 +118,27 @@ export const Name = styled(Link)`
   letter-spacing: -0.5px;
 `;
 
-export const Price = styled(Link)<Pick<ProductCardProps, "size">>`
-  color: ${({ theme }) => theme.colors["neutral"]["100"]};
-  ${({ theme }) => theme.typo["body-1-b"]};
+export const PriceBox = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+export const Price = styled(Link)<
+  Pick<ProductCardProps, "size"> & { $discount?: boolean }
+>`
+  color: ${({ theme, $discount = false }) =>
+    $discount ? theme.colors["neutral"]["40"] : theme.colors["neutral"]["100"]};
+  font-weight: ${({ theme, $discount }) =>
+    $discount ? theme.typo["body-1-m"] : theme.typo["body-1-b"]};
+  text-decoration: ${({ $discount }) => $discount && "line-through"};
   line-height: 170%;
 
-  ${({ size = "sm" }) =>
+  ${({ size = "sm", $discount = false }) =>
     size === "xl" &&
     css`
       position: absolute;
       bottom: 0;
-      right: 0;
+      right: ${$discount ? "92px" : "0"};
       line-height: normal;
     `}
 `;
