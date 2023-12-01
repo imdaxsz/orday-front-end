@@ -12,6 +12,7 @@ export default function useLogout() {
       localStorage.removeItem("token");
     } catch (error) {
       console.log("Logout Error", error);
+      alert("오류가 발생했어요. 다시 시도해 주세요");
     }
     navigate("/", { replace: true });
   }, [navigate]);

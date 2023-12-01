@@ -7,12 +7,13 @@ const Cart = lazy(() => import("@/routes/Cart"));
 const Order = lazy(() => import("@/routes/Order"));
 const OrderConfirm = lazy(() => import("@/routes/Order/OrderConfirm"));
 const MyPage = lazy(() => import("@/routes/MyPage"));
-const MyOrder = lazy(() => import("@/routes/MyOrder"));
+const OrderList = lazy(() => import("@/routes/MyPage/OrderList"));
 const EditProfile = lazy(() => import("@/routes/MyPage/EditProfile"));
 const MyReviewList = lazy(() => import("@/routes/Review/List"));
 const WriteReview = lazy(() => import("@/routes/Review/Write"));
+const Logout = lazy(() => import("@/routes/Logout"));
 const Leave = lazy(() => import("@/routes/MyPage/Leave"));
-const LikeList = lazy(() => import("@/routes/Like"));
+const LikeProductList = lazy(() => import("@/routes/Like/Products"));
 const LikeBrandList = lazy(() => import("@/routes/Like/Brand"));
 
 function PrivateRoute({ children }: PropsWithChildren) {
@@ -47,7 +48,7 @@ export const privateRoutes: RouteObject[] = [
       },
       {
         path: "myPage/order",
-        element: <MyOrder />,
+        element: <OrderList />,
       },
       {
         path: "myPage/editProfile",
@@ -62,16 +63,16 @@ export const privateRoutes: RouteObject[] = [
         element: <WriteReview />,
       },
       {
+        path: "logout",
+        element: <Logout />,
+      },
+      {
         path: "myPage/leave",
         element: <Leave />,
       },
       {
         path: "like/products",
-        element: <LikeList />,
-      },
-      {
-        path: "like/posts",
-        element: <LikeList />,
+        element: <LikeProductList />,
       },
       {
         path: "like/brands",

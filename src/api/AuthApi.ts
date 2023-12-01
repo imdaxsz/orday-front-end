@@ -20,6 +20,11 @@ export const getUserInfo = async () => {
   return await get<UserInfoDto>("user/get/info");
 };
 
+/**@description 회원 이름 조회 요청 */
+export const getUserName = async () => {
+  return await get<string>("user/get/name");
+};
+
 /**@description 회원정보 수정 요청 */
 export const updateUserInfo = async (
   form: Partial<UserInfoForm>,

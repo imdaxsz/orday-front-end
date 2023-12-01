@@ -27,14 +27,21 @@ export default function useProductInfo(
     }
   }, [isEmptyOptions, productId]);
 
-  const handleSelectOption = (id: number, color: string, size: string) => {
+  const handleOptionChange = (
+    id: number,
+    optionColor: string,
+    optionSize: string,
+  ) => {
     if (!selectedColor) return alert("색상을 선택해주세요");
-    if (selectedSizes.includes(size)) {
-      setSelectedSizes(selectedSizes.filter((size) => size !== size));
+    if (selectedSizes.includes(optionSize)) {
+      setSelectedSizes(selectedSizes.filter((size) => size !== optionSize));
       setSelectedOptions(selectedOptions.filter((option) => option.id !== id));
     } else {
-      setSelectedSizes([...selectedSizes, size]);
-      setSelectedOptions((prev) => [...prev, { id, color, size, amount: 1 }]);
+      setSelectedSizes([...selectedSizes, optionSize]);
+      setSelectedOptions((prev) => [
+        ...prev,
+        { id, color: optionColor, size: optionSize, amount: 1 },
+      ]);
     }
   };
 
@@ -73,7 +80,7 @@ export default function useProductInfo(
   return {
     selectedColor,
     setSelectedColor,
-    handleSelectOption,
+    handleOptionChange,
     selectedSizes,
     selectedOptions,
     addProductAmount,

@@ -13,12 +13,14 @@ export default function Product() {
     <Container>
       {isLoading && <Loader />}
       {!isLoading && productData && options && (
-        <ProductInfo>
-          <ProductImg alt="productImage" src={productData.imageUrl} />
-          <DetailInfo productData={productData} options={options} />
-        </ProductInfo>
+        <>
+          <ProductInfo>
+            <ProductImg alt="productImage" src={productData.imageUrl} />
+            <DetailInfo productData={productData} options={options} />
+          </ProductInfo>
+          <ProductReview />
+        </>
       )}
-      <ProductReview />
     </Container>
   );
 }

@@ -24,6 +24,7 @@ export default function useImageCompress() {
     } catch (error) {
       setIsLoading(false);
       console.log(error);
+      alert("이미지 압축 실패! 다시 시도해 주세요.");
     }
   };
 

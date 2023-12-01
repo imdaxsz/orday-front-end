@@ -10,34 +10,12 @@ import {
 
 interface CartState {
   items: CartItem[];
-  loading: "idle" | "pending" | "succeeded" | "failed";
+  loading: boolean;
 }
 
 const initialState: CartState = {
-  items: [
-    // 임시데이터
-    {
-      id: 1,
-      name: "파타고니아 레트로 x 양털 후리스 뽀글이 플리스 자켓",
-      color: "BROWN",
-      size: "L",
-      amount: 1,
-      price: 100000,
-      imageUrl: "",
-      discountPrice: 10000,
-    },
-    {
-      id: 2,
-      name: "파타고니아 레트로 x 양털 후리스 뽀글이 플리스 자켓",
-      color: "BROWN",
-      size: "L",
-      amount: 1,
-      price: 50000,
-      imageUrl: "",
-      discountPrice: 0,
-    },
-  ],
-  loading: "idle",
+  items: [],
+  loading: false,
 };
 
 export const fetchCartItems = createAsyncThunk(
@@ -103,54 +81,62 @@ export const removeCartItem = createAsyncThunk(
 const cartSlice = createSlice({
   name: "cart",
   initialState,
-  reducers: {
-    // addToCart: (state, action) => {
-    //   state.items.push(action.payload);
-    // },
-    // removeFromCart: (state, action) => {
-    //   state.items = state.items.filter((item) => item.id !== action.payload);
-    // },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchCartItems.pending, (state) => {
-        state.loading = "pending";
+        state.loading = true;
       })
       .addCase(fetchCartItems.fulfilled, (state, action) => {
-        state.loading = "succeeded";
+        state.loading = false;
         state.items = action.payload;
       })
       .addCase(fetchCartItems.rejected, (state) => {
-        state.loading = "failed";
+        state.loading = false;
+      })
+
+      .addCase(addToCart.pending, (state) => {
+        state.loading = true;
       })
       .addCase(addToCart.fulfilled, (state, action) => {
-        state.loading = "succeeded";
+        state.loading = false;
         state.items = action.payload;
       })
+      .addCase(addToCart.rejected, (state) => {
+        state.loading = false;
+      })
+
       .addCase(increaseCartItemQuantity.fulfilled, (state, action) => {
-        state.loading = "succeeded";
+        state.loading = false;
         state.items = state.items.map((item) =>
           item.id === action.payload
             ? { ...item, amount: item.amount + 1 }
             : item,
         );
       })
+
       .addCase(decreaseCartItemQuantity.fulfilled, (state, action) => {
-        state.loading = "succeeded";
+        state.loading = false;
         state.items = state.items.map((item) =>
           item.id === action.payload
             ? { ...item, amount: item.amount - 1 }
             : item,
         );
       })
+
+      .addCase(removeCartItem.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(removeCartItem.fulfilled, (state, action) => {
-        state.loading = "succeeded";
+        state.loading = false;
         state.items = state.items.filter(
           (item) => !action.payload.includes(item.id),
         );
+      })
+      .addCase(removeCartItem.rejected, (state) => {
+        state.loading = false;
       });
   },
 });
 
-// export const { addToCart, removeFromCart } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -13,7 +13,6 @@ const RecentReviews = lazy(() => import("@/routes/Review/RecentReviews"));
 const Join = lazy(() => import("@/routes/Join"));
 const Login = lazy(() => import("@/routes/Login"));
 const OAuthCallback = lazy(() => import("@/routes/Login/OAuthCallback"));
-const Logout = lazy(() => import("@/routes/Logout"));
 const NotFound = lazy(() => import("@/routes/NotFound"));
 
 export const publicRoutes: RouteObject[] = [
@@ -68,10 +67,6 @@ export const publicRoutes: RouteObject[] = [
       {
         path: "reviews",
         element: <RecentReviews />,
-      },
-      {
-        path: "logout",
-        element: <Logout />,
       },
       {
         path: "*",

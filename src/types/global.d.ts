@@ -52,6 +52,7 @@ declare interface UserInfoFormError {
 declare interface JoinFormError extends UserInfoFormError {
   email: number;
   terms: boolean;
+  result: number;
 }
 
 declare interface Category {
@@ -65,6 +66,7 @@ declare interface Product {
   id: number;
   name: string;
   price: number;
+  discountPrice: number;
   score: number;
   description: string;
   imageUrl: string;
@@ -155,6 +157,37 @@ declare interface OrderForm {
 
 declare interface OrderInfo extends OrderForm {
   productsInfo: ProductInfo[];
+}
+
+declare type OrderConfirm = Pick<OrderListInfo, "orderId", "createdAt">;
+
+declare interface OrderStatus {
+  totalOrdersCount: number;
+  paymentPendingCount: number;
+  shippingInCount: number;
+  deliveredCount: number;
+  confirmedPurchaseCount: number;
+  exchangeReturnCount: number;
+}
+
+interface OrderStatusCount {
+  id: number;
+  name: string;
+  value: keyof OrderStatus;
+}
+
+declare interface OrderListInfo {
+  orderId: number;
+  productId: number;
+  productName: string;
+  imageUrl: string;
+  color: string;
+  size: string;
+  price: number;
+  amount: number;
+  discountPrice: number;
+  status: string;
+  createdAt: string;
 }
 
 declare type ReviewStatus = "WRITABLE" | "WRITTEN";

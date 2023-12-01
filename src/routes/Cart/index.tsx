@@ -1,26 +1,21 @@
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import BackButton from "@/components/BackButton";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import Head from "@/components/Head";
+import Loader from "@/components/Loader";
+import Modal from "@/components/Modal";
+import useCartList from "@/hooks/useCartList";
 import useCheckBox from "@/hooks/useCheckBox";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { fetchCartItems, removeCartItem } from "@/store/slices/cartSlice";
-import { addProducts } from "@/store/slices/productInfoSlice";
+import { useAppSelector } from "@/store";
 
 import ProductItem from "./ProductItem";
 
 export default function Cart() {
   const cartItems = useAppSelector((state) => state.cart.items);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(fetchCartItems());
-  }, [dispatch]);
+  const isLoading = useAppSelector((state) => state.cart.loading);
 
   const {
     checkedListById,
@@ -29,27 +24,13 @@ export default function Cart() {
     handleAllCheck,
   } = useCheckBox<CartItem>(cartItems);
 
-  const checkedNum = checkedListById.length;
-  const removeCheckedItems = (checkedIds: number[]) => {
-    if (!checkedIds.length) {
-      alert("삭제할 상품을 선택해주세요");
-      return;
-    }
-    dispatch(removeCartItem(checkedIds));
-    resetCheckedList();
-  };
-
-  const goOrderPage = () => {
-    if (!checkedListById.length) {
-      alert("상품을 선택해주세요");
-      return;
-    }
-    const products = cartItems.filter((item) =>
-      checkedListById.includes(item.id),
-    );
-    dispatch(addProducts(products));
-    navigate("/order");
-  };
+  const {
+    isModalOpen,
+    closeModal,
+    openRemoveModal,
+    removeCheckedItems,
+    goOrderPage,
+  } = useCartList(cartItems, checkedListById, resetCheckedList);
 
   const price = {
     product: cartItems.length
@@ -68,66 +49,84 @@ export default function Cart() {
   const totalPrice = price.product - price.sale + price.shipping;
 
   return (
-    <Container>
-      <Head title="장바구니 | Orday" />
-      <BackButton pageTitle="장바구니" />
-      <InfoTitle>
-        주문상품
-        <span>{cartItems.length ? cartItems.length : 0}</span>
-      </InfoTitle>
-      <Box>
-        <CheckBox
-          id="allCheck"
-          text="전체선택"
-          onChange={handleAllCheck}
-          checked={cartItems.length > 0 && checkedNum === cartItems.length}
-        />
-        <RemoveBasket onClick={() => removeCheckedItems(checkedListById)}>
-          선택상품 삭제
-        </RemoveBasket>
-      </Box>
-      <ProductList>
-        {!cartItems.length ? (
-          <Empty>장바구니가 비어있습니다.</Empty>
-        ) : (
-          <>
-            {cartItems.map((item) => (
-              <ProductItem
-                key={item.id}
-                item={item}
-                handleCheckChange={handleCheckChange}
-                checkedListById={checkedListById}
-              />
-            ))}
-          </>
-        )}
-      </ProductList>
-      <Line />
-      <PriceList>
-        <li>
-          <p>총 상품금액</p>
-          <p>{price.product.toLocaleString()}원</p>
-        </li>
-        <li>
-          <p>상품할인</p>
-          <p>{price.sale.toLocaleString()}원</p>
-        </li>
-        <li>
-          <p>배송비</p>
-          <p>{price.shipping.toLocaleString()}원</p>
-        </li>
-        <TotalPrice style={{ margin: "24px 0" }}>
-          <p>총 주문금액</p>
-          <p>{totalPrice.toLocaleString()}원</p>
-        </TotalPrice>
-      </PriceList>
-      <ButtonBox>
-        <Button type="submit" style={{ width: "390px" }} onClick={goOrderPage}>
-          주문하기
-        </Button>
-        <LinkBtn to={"/"}>계속 쇼핑하기</LinkBtn>
-      </ButtonBox>
-    </Container>
+    <>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <Container>
+          <Head title="장바구니 | Orday" />
+          <BackButton pageTitle="장바구니" />
+          <InfoTitle>
+            주문상품
+            <span>{cartItems.length ? cartItems.length : 0}</span>
+          </InfoTitle>
+          <Box>
+            <CheckBox
+              id="allCheck"
+              text="전체선택"
+              onChange={handleAllCheck}
+              checked={
+                cartItems.length > 0 &&
+                checkedListById.length === cartItems.length
+              }
+            />
+            <RemoveBasket onClick={openRemoveModal}>선택상품 삭제</RemoveBasket>
+          </Box>
+          <Modal
+            isOpen={isModalOpen}
+            onSubmit={removeCheckedItems}
+            onClose={closeModal}
+            title={"확인 안내"}
+            type={"confirm"}
+            detail={"선택한 상품을 삭제하시겠습니까?"}
+          />
+          <ProductList>
+            {!cartItems.length ? (
+              <Empty>장바구니가 비어있습니다.</Empty>
+            ) : (
+              <>
+                {cartItems.map((item) => (
+                  <ProductItem
+                    key={item.id}
+                    item={item}
+                    handleCheckChange={handleCheckChange}
+                    checkedListById={checkedListById}
+                  />
+                ))}
+              </>
+            )}
+          </ProductList>
+          <Line />
+          <PriceList>
+            <li>
+              <p>총 상품금액</p>
+              <p>{price.product.toLocaleString()}원</p>
+            </li>
+            <li>
+              <p>상품할인</p>
+              <p>{price.sale.toLocaleString()}원</p>
+            </li>
+            <li>
+              <p>배송비</p>
+              <p>{price.shipping.toLocaleString()}원</p>
+            </li>
+            <TotalPrice style={{ margin: "24px 0" }}>
+              <p>총 주문금액</p>
+              <p>{totalPrice.toLocaleString()}원</p>
+            </TotalPrice>
+          </PriceList>
+          <ButtonBox>
+            <Button
+              type="submit"
+              style={{ width: "390px" }}
+              onClick={goOrderPage}
+            >
+              주문하기
+            </Button>
+            <LinkBtn to={"/"}>계속 쇼핑하기</LinkBtn>
+          </ButtonBox>
+        </Container>
+      )}
+    </>
   );
 }
 

@@ -1,24 +1,42 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 import Button from "@/components/Button";
 
 export default function OrderConfirm() {
+  const { state } = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!state) {
+      alert("주문한 상품이 없습니다");
+      navigate("/");
+    }
+  }, [state, navigate]);
+
   return (
     <Container>
-      <Title>주문이 완료되었습니다.</Title>
-      <Detail>
-        주문내역 및 배송에 관한 안내는{" "}
-        <DetailLink to="/myPage">마이페이지</DetailLink>를 통하여 확인
-        가능합니다.
-      </Detail>
-      <DetailList>
-        <p>주문번호 : 00000000000</p>
-        <p>주문일자 : 2023-10-30 15:54:50</p>
-      </DetailList>
-      <Button>
-        <Link to="/myPage">주문내역 확인</Link>
-      </Button>
+      {state && (
+        <>
+          <Title>주문이 완료되었습니다.</Title>
+          <Detail>
+            주문내역 및 배송에 관한 안내는
+            <DetailLink to="/myPage">마이페이지</DetailLink>를 통하여 확인
+            가능합니다.
+          </Detail>
+          <DetailList>
+            <p>주문번호 : {state.orderId}</p>
+            <p>
+              주문일자 : {state.createdAt.split(/[T,.]/)[0]}{" "}
+              {state.createdAt.split(/[T,.]/)[1]}
+            </p>
+          </DetailList>
+          <Button>
+            <Link to="/myPage">주문내역 확인</Link>
+          </Button>
+        </>
+      )}
     </Container>
   );
 }
