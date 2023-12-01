@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 interface OrderListBoxProps {
@@ -15,7 +16,7 @@ export default function OrderListBox({ item, orderStatus }: OrderListBoxProps) {
         </StatusCode>
         <HistoryDate>{item.createdAt.split("T")[0]}</HistoryDate>
       </OrderStatus>
-      <Content>
+      <OrderListItem to={`/product/${item.productId}?name=${item.productName}`}>
         <ProductInfo>
           <HistoryImage src={item.imageUrl} alt="productImg" />
           <HistoryDetail>
@@ -29,7 +30,7 @@ export default function OrderListBox({ item, orderStatus }: OrderListBoxProps) {
         <p>
           ₩ {item.discountPrice ? item.price - item.discountPrice : item.price}
         </p>
-      </Content>
+      </OrderListItem>
     </HistoryBox>
   );
 }
@@ -72,7 +73,7 @@ const HistoryDate = styled.p`
   font-size: ${({ theme }) => theme.typo["body-2-r"]};
 `;
 
-const Content = styled.div`
+const OrderListItem = styled(Link)`
   padding: 20px 0;
   display: flex;
   align-items: flex-end;
