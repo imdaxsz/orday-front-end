@@ -9,6 +9,7 @@ export default function useOrderList() {
   const pathname = location.pathname.replace("/", "");
   const isOrderListPage = pathname.includes("/order");
 
+  const [isLoading, setIsLoading] = useState(false);
   const [ref, inView] = useInView();
   const [orderStatus, setOrderStatus] = useState<OrderStatus>();
   const [orderList, setOrderList] = useState<OrderListInfo[]>([]);
@@ -24,14 +25,20 @@ export default function useOrderList() {
   };
 
   const fetchOrderList = async () => {
-    const {
-      cursorRequest: { key },
-      body: data,
-    } = await getOrderList(nextKey, 5);
-    !isOrderListPage
-      ? setOrderList(data.splice(0, 2))
-      : setOrderList((prev) => [...prev, ...data]);
-    setNextKey(key);
+    setIsLoading(true);
+    try {
+      const {
+        cursorRequest: { key },
+        body: data,
+      } = await getOrderList(nextKey, 5);
+      !isOrderListPage
+        ? setOrderList(data.splice(0, 2))
+        : setOrderList((prev) => [...prev, ...data]);
+      setNextKey(key);
+    } catch (error) {
+      console.log("Error fetching order list: ", error);
+    }
+    setIsLoading(false);
   };
   useEffect(() => {
     fetchOrderStatus();
@@ -41,7 +48,14 @@ export default function useOrderList() {
 
   useEffect(() => {
     if (inView && nextKey !== -1) fetchOrderList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
 
-  return { ref, isOrderListPage, orderStatus, orderList };
+  return {
+    isLoading,
+    ref,
+    isOrderListPage,
+    orderStatus,
+    orderList,
+  };
 }
