@@ -19,8 +19,7 @@ export default function Category() {
 
   return (
     <Container>
-      {isLoading && pathname === "best" && <Loader />}
-      {isLoading && pathname !== "best" && <Loader />}
+      {isLoading && <Loader />}
       <CategoryNav />
       {categoryBestItems && categoryBestItems.length > 0 ? (
         <CategoryBestList>
