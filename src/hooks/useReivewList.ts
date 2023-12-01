@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-import { getWritableReivews, getWrittenReivews } from "@/api/ReviewApi";
+import { getWritableReviews, getWrittenReviews } from "@/api/ReviewApi";
 export default function useReviewList(status: number) {
   const [reviews, setReviews] = useState<WritableReview[] | WrittenReview[]>(
     [],
@@ -12,8 +12,8 @@ export default function useReviewList(status: number) {
     let data: WritableReview[] | WrittenReview[] = [];
     setIsLoading(true);
     try {
-      if (status === 1) data = await getWritableReivews();
-      else data = await getWrittenReivews();
+      if (status === 1) data = await getWritableReviews();
+      else data = await getWrittenReviews();
       setReviews(data);
     } catch (error) {
       console.log("Error fetching review list: ", error);
@@ -25,5 +25,5 @@ export default function useReviewList(status: number) {
     fetchData();
   }, [fetchData]);
 
-  return { isLoading, reviews };
+  return { isLoading, reviews, fetchData };
 }
