@@ -2,6 +2,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import Loader from "@/components/Loader";
 import useOrderList from "@/hooks/useOrderList";
 
 import OrderListBox from "./OrderListBox";
@@ -16,12 +17,14 @@ const orderStatusCount: OrderStatusCount[] = [
 ];
 
 export default function OrderInfo() {
-  const { ref, isOrderListPage, orderStatus, orderList } = useOrderList();
+  const { isLoading, ref, isOrderListPage, orderStatus, orderList } =
+    useOrderList();
 
   return (
     <>
       <Container>
         <Title>최근 주문 현황</Title>
+        {isLoading && <Loader />}
         <StatusBox>
           <List>
             {orderStatus &&
@@ -44,7 +47,7 @@ export default function OrderInfo() {
             )}
           </HistoryHeader>
           {!orderList.length ? (
-            <Empty>주문 내역이 없습니다.</Empty>
+            <>{!isLoading && <Empty>주문 내역이 없습니다.</Empty>}</>
           ) : (
             <>
               {orderList.map((item) => (

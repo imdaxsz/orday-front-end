@@ -2,27 +2,31 @@ import { styled } from "styled-components";
 
 import BackButton from "@/components/BackButton";
 import Head from "@/components/Head";
+import Loader from "@/components/Loader";
 import ProductCard from "@/components/ProductCard";
 import useLikedList from "@/hooks/useLikedList";
 
 export default function LikeProductList() {
-  const { products } = useLikedList();
+  const { isLoading, products } = useLikedList();
 
   return (
     <Container>
       <BackButton pageTitle="관심상품" />
       <Head title="관심 상품 | Orday" />
-      <ProductList>
-        {!products.length ? (
-          <Empty>관심 상품이 없습니다.</Empty>
-        ) : (
-          <>
-            {products.map((item) => (
-              <ProductCard key={item.id} info={item} size="lg" />
-            ))}
-          </>
-        )}
-      </ProductList>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <ProductList>
+          {!products.length ? (
+            <Empty>관심 상품이 없습니다.</Empty>
+          ) : (
+            <>
+              {products.map((item) => (
+                <ProductCard key={item.id} info={item} size="lg" />
+              ))}
+            </>
+          )}
+        </ProductList>
+      )}
     </Container>
   );
 }
