@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 
 import BackButton from "@/components/BackButton";
+import Head from "@/components/Head";
 import ProductCard from "@/components/ProductCard";
 import useLikedList from "@/hooks/useLikedList";
 
@@ -10,6 +11,7 @@ export default function LikeProductList() {
   return (
     <Container>
       <BackButton pageTitle="관심상품" />
+      <Head title="관심 상품 | Orday" />
       <ProductList>
         {!products.length ? (
           <Empty>관심 상품이 없습니다.</Empty>
