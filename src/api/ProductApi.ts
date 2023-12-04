@@ -5,7 +5,7 @@ import { get, post } from "@/libs/api";
  * @returns 상품 리스트
  */
 export const getReviewProductsInfo = async (idList: number[]) => {
-  return get<CartItem[]>("product/get", {
+  return get<CartItem[]>("product/get/list", {
     params: { productIds: idList.join(",") },
   });
 };
