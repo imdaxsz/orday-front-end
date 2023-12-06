@@ -42,6 +42,7 @@ export default function ProductInfo({ form }: ProductInfoProps) {
 
   const onSubmit = async () => {
     if (!validateForm()) return;
+    closeModal();
     const orderInfo: OrderInfo = {
       ...form,
       productsInfo: productItems.map(({ id, amount }) => ({ id, amount })),
