@@ -39,16 +39,20 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
     handleToggleDetailInfo,
   } = useProductInfo(productData.id, isEmptyOptions);
 
-  const goOrderPage = () => {
+  const handleChecks = () => {
     if (!isEmptyOptions && !selectedOptions.length) {
       alert("상품을 선택해주세요");
-      return;
+      return false;
     }
     if (!isLoggedIn) {
       alert("로그인 해주세요");
-      return;
+      return false;
     }
-    if (productData && selectedOptions.length > 0) {
+    return true;
+  };
+
+  const goOrderPage = () => {
+    if (handleChecks() && productData && selectedOptions.length > 0) {
       const products: CartItem[] = selectedOptions.map((item) => {
         const { name, imageUrl, price, discountPrice } = productData;
         return { name, imageUrl, price, discountPrice, ...item };
@@ -59,15 +63,7 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
   };
 
   const addProductToCart = () => {
-    if (!isEmptyOptions && !selectedOptions.length) {
-      alert("상품을 선택해주세요");
-      return;
-    }
-    if (!isLoggedIn) {
-      alert("로그인 해주세요");
-      return;
-    }
-    if (productData && selectedOptions.length > 0) {
+    if (handleChecks() && productData && selectedOptions.length > 0) {
       const productsInfo: ProductInfo[] = selectedOptions.map((item) => ({
         id: item.id,
         amount: item.amount,
