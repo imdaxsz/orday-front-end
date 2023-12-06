@@ -40,7 +40,7 @@ export default function ProductInfo({ form }: ProductInfoProps) {
     openModal();
   };
 
-  const onSubmit = async () => {
+  const onSubmitOrderForm = async () => {
     if (!validateForm()) return;
     closeModal();
     const orderInfo: OrderInfo = {
@@ -151,7 +151,7 @@ export default function ProductInfo({ form }: ProductInfoProps) {
       </Button>
       <Modal
         isOpen={isModalOpen}
-        onSubmit={modalMessage ? undefined : onSubmit}
+        onSubmit={modalMessage ? undefined : onSubmitOrderForm}
         onClose={closeModal}
         title={modalMessage ? "입력확인" : "확인 안내"}
         type={modalMessage ? "alert" : "confirm"}
