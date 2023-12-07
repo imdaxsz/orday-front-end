@@ -15,7 +15,7 @@ export default function Product() {
       {!isLoading && productData && options && (
         <>
           <ProductInfo>
-            <ProductImg alt="productImage" src={productData.imageUrl} />
+            <ProductImg alt={productData.name} src={productData.imageUrl} />
             <DetailInfo productData={productData} options={options} />
           </ProductInfo>
           <ProductReview />
