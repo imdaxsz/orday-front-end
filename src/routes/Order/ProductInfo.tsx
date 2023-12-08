@@ -2,14 +2,13 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
-import { createOrderProduct } from "@/api/OrderApi";
 import Button from "@/components/Button";
 import CheckBox from "@/components/CheckBox";
 import Modal from "@/components/Modal";
 import useFormCheck from "@/hooks/useFormCheck";
-import { useModal } from "@/hooks/useModal";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { resetProducts } from "@/store/slices/productInfoSlice";
+import useOrderForm from "@/hooks/useOrderForm";
+import { useAppSelector } from "@/store";
+import { calculateItemValues } from "@/utils";
 
 interface ProductInfoProps {
   form: OrderForm;
@@ -17,11 +16,15 @@ interface ProductInfoProps {
 
 export default function ProductInfo({ form }: ProductInfoProps) {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { isModalOpen, openModal, closeModal } = useModal();
+  const productItems = useAppSelector((state) => state.productInfo.items);
   const { modalMessage, validateForm, checkedListById, handleCheckChange } =
     useFormCheck(form);
-  const productItems = useAppSelector((state) => state.productInfo.items);
+
+  const { isModalOpen, closeModal, openCheckedModal, onSubmitOrderForm } =
+    useOrderForm(form, productItems, validateForm);
+
+  const products = calculateItemValues(productItems);
+  const totalPrice = products.price - products.sale + products.shipping;
 
   useEffect(() => {
     if (!productItems.length) {
@@ -34,39 +37,6 @@ export default function ProductInfo({ form }: ProductInfoProps) {
   if (!productItems.length) {
     return null;
   }
-
-  const openCheckedModal = () => {
-    validateForm();
-    openModal();
-  };
-
-  const onSubmit = async () => {
-    if (!validateForm()) return;
-    const orderInfo: OrderInfo = {
-      ...form,
-      productsInfo: productItems.map(({ id, amount }) => ({ id, amount })),
-    };
-    try {
-      const data = await createOrderProduct(orderInfo);
-      navigate("/order/confirm", { state: data, replace: true });
-      dispatch(resetProducts());
-    } catch (error) {
-      console.log("Error creating order: ", error);
-    }
-  };
-
-  const products = {
-    price: productItems
-      .map((item) => Number(item.price) * item.amount)
-      .reduce((acc, cur) => acc + cur),
-    sale: productItems.length
-      ? productItems
-          .map((item) => Number(item.discountPrice) * item.amount)
-          .reduce((acc, cur) => acc + cur)
-      : 0,
-    shipping: 0,
-  };
-  const totalPrice = products.price - products.sale + products.shipping;
 
   return (
     <Container>
@@ -150,7 +120,7 @@ export default function ProductInfo({ form }: ProductInfoProps) {
       </Button>
       <Modal
         isOpen={isModalOpen}
-        onSubmit={modalMessage ? undefined : onSubmit}
+        onSubmit={modalMessage ? undefined : onSubmitOrderForm}
         onClose={closeModal}
         title={modalMessage ? "입력확인" : "확인 안내"}
         type={modalMessage ? "alert" : "confirm"}

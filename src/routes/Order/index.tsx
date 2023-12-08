@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 
 import BackButton from "@/components/BackButton";
+import { DEFAULT_ORDER_FORM_DATA } from "@/constants";
 import useForm from "@/hooks/useForm";
 
 import DeliveryInfo from "./DeliveryInfo";
@@ -9,20 +10,9 @@ import ProductInfo from "./ProductInfo";
 import UserInfo from "./UserInfo";
 
 export default function Order() {
-  const initialState: OrderForm = {
-    name: "",
-    phoneNumber: "010-",
-    addressInfo: {
-      postcode: "",
-      address: "",
-      addressDetail: "",
-    },
-    deliveryRequest: "",
-    selectedMethod: null,
-  };
-
-  const { form, phone, handleInputChange, updateForm } =
-    useForm<OrderForm>(initialState);
+  const { form, phone, handleInputChange, updateForm } = useForm<OrderForm>(
+    DEFAULT_ORDER_FORM_DATA,
+  );
 
   return (
     <Container>
