@@ -7,10 +7,8 @@ import Head from "@/components/Head";
 import LikeButton from "@/components/LikeButton";
 import SelectBox from "@/components/SelectBox";
 import { PRODUCT_DETAIL_INFO } from "@/constants";
+import useProductAction from "@/hooks/useProductAction";
 import useProductInfo from "@/hooks/useProductInfo";
-import { useAppDispatch } from "@/store";
-import { addToCart } from "@/store/slices/cartSlice";
-import { addProducts } from "@/store/slices/productInfoSlice";
 
 import OptionProductBox from "./OptionProduct";
 
@@ -21,9 +19,6 @@ interface DetailInfoProps {
 
 export default function DetailInfo({ productData, options }: DetailInfoProps) {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  const isLoggedIn = localStorage.getItem("token");
   const isEmptyOptions = !Object.keys(options).length;
 
   const {
@@ -39,43 +34,11 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
     handleToggleDetailInfo,
   } = useProductInfo(productData.id, isEmptyOptions);
 
-  const goOrderPage = () => {
-    if (!isEmptyOptions && !selectedOptions.length) {
-      alert("상품을 선택해주세요");
-      return;
-    }
-    if (!isLoggedIn) {
-      alert("로그인 해주세요");
-      return;
-    }
-    if (productData && selectedOptions.length > 0) {
-      const products: CartItem[] = selectedOptions.map((item) => {
-        const { name, imageUrl, price, discountPrice } = productData;
-        return { name, imageUrl, price, discountPrice, ...item };
-      });
-      dispatch(addProducts(products));
-      navigate("/order");
-    }
-  };
-
-  const addProductToCart = () => {
-    if (!isEmptyOptions && !selectedOptions.length) {
-      alert("상품을 선택해주세요");
-      return;
-    }
-    if (!isLoggedIn) {
-      alert("로그인 해주세요");
-      return;
-    }
-    if (productData && selectedOptions.length > 0) {
-      const productsInfo: ProductInfo[] = selectedOptions.map((item) => ({
-        id: item.id,
-        amount: item.amount,
-      }));
-      dispatch(addToCart(productsInfo));
-      navigate("/cart");
-    }
-  };
+  const { goOrderPage, addProductToCart } = useProductAction(
+    isEmptyOptions,
+    productData,
+    selectedOptions,
+  );
 
   return (
     <ProductDetail>
