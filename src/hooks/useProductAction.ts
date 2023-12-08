@@ -26,6 +26,7 @@ export default function useProductAction(
     return true;
   };
 
+  // 상품 주문페이지로 이동
   const goOrderPage = () => {
     if (handleChecks() && productData && selectedOptions.length > 0) {
       const products: CartItem[] = selectedOptions.map((item) => {
@@ -37,6 +38,7 @@ export default function useProductAction(
     }
   };
 
+  // 장바구니에 상품 추가
   const addProductToCart = () => {
     if (handleChecks() && productData && selectedOptions.length > 0) {
       const productsInfo: ProductInfo[] = selectedOptions.map((item) => ({
