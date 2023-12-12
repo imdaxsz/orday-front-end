@@ -10,6 +10,7 @@ import Modal from "@/components/Modal";
 import useCartList from "@/hooks/useCartList";
 import useCheckBox from "@/hooks/useCheckBox";
 import { useAppSelector } from "@/store";
+import { calculateItemValues } from "@/utils";
 
 import ProductItem from "./ProductItem";
 
@@ -32,21 +33,9 @@ export default function Cart() {
     goOrderPage,
   } = useCartList(cartItems, checkedListById, resetCheckedList);
 
-  const price = {
-    product: cartItems.length
-      ? cartItems
-          .map((item) => Number(item.price) * item.amount)
-          .reduce((acc, cur) => acc + cur)
-      : 0,
-    sale: cartItems.length
-      ? cartItems
-          .map((item) => Number(item.discountPrice) * item.amount)
-          .reduce((acc, cur) => acc + cur)
-      : 0,
-    shipping: 0,
-  };
+  const products = calculateItemValues(cartItems);
 
-  const totalPrice = price.product - price.sale + price.shipping;
+  const totalPrice = products.price - products.sale + products.shipping;
 
   return (
     <>
@@ -99,15 +88,15 @@ export default function Cart() {
           <PriceList>
             <li>
               <p>총 상품금액</p>
-              <p>{price.product.toLocaleString()}원</p>
+              <p>{products.price.toLocaleString()}원</p>
             </li>
             <li>
               <p>상품할인</p>
-              <p>{price.sale.toLocaleString()}원</p>
+              <p>{products.sale.toLocaleString()}원</p>
             </li>
             <li>
               <p>배송비</p>
-              <p>{price.shipping.toLocaleString()}원</p>
+              <p>{products.shipping.toLocaleString()}원</p>
             </li>
             <TotalPrice style={{ margin: "24px 0" }}>
               <p>총 주문금액</p>
