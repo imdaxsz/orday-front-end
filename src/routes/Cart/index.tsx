@@ -45,7 +45,7 @@ export default function Cart() {
           <Head title="장바구니 | Orday" />
           <BackButton pageTitle="장바구니" />
           <InfoTitle>
-            주문상품
+            장바구니
             <span>{cartItems.length ? cartItems.length : 0}</span>
           </InfoTitle>
           <Box>
@@ -125,7 +125,8 @@ const Container = styled.div`
 `;
 
 const InfoTitle = styled.h3`
-  margin-bottom: 1rem;
+  margin-top: 40px;
+  margin-bottom: 30px;
   font-size: 1rem;
   span {
     display: inline-flex;
