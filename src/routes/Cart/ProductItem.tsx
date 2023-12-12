@@ -52,7 +52,9 @@ export default function ProductItem({
         <Count>
           <ReduceBtn
             style={{ cursor: "pointer" }}
-            onClick={() => dispatch(decreaseCartItemQuantity(item.id))}
+            onClick={() =>
+              item.amount > 1 && dispatch(decreaseCartItemQuantity(item.id))
+            }
           />
           <p>{item.amount}</p>
           <AddBtn
