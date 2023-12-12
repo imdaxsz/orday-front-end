@@ -142,9 +142,11 @@ const ItemAmount = styled.div`
 
 const Count = styled.div`
   padding: 8px;
+  width: 82px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: space-between;
+  gap: 10px;
   border-radius: 7px;
   background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
   p {
