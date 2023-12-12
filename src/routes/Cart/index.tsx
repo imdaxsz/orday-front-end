@@ -33,7 +33,10 @@ export default function Cart() {
     goOrderPage,
   } = useCartList(cartItems, checkedListById, resetCheckedList);
 
-  const products = calculateItemValues(cartItems);
+  const checkedItems = cartItems.filter((item) =>
+    checkedListById.includes(item.id),
+  );
+  const products = calculateItemValues(checkedItems);
 
   const totalPrice = products.price - products.sale + products.shipping;
 
