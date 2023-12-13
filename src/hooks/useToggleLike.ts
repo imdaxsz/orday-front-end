@@ -33,7 +33,7 @@ export default function useToggleLike(
       if (target === "product") await toggleLikeProducts(id);
       if (target === "review") {
         await toggleLikeReview(id);
-        setCount((prev) => (isLiked ? prev - 1 : prev + 1));
+        setCount((prev) => (like ? prev - 1 : prev + 1));
       }
       setLike((prev) => !prev);
     } catch (error) {
