@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 
 import BackButton from "@/components/BackButton";
+import Head from "@/components/Head";
 import { DEFAULT_ORDER_FORM_DATA } from "@/constants";
 import useForm from "@/hooks/useForm";
 
@@ -16,6 +17,7 @@ export default function Order() {
 
   return (
     <Container>
+      <Head title="상품 주문 | Orday" />
       <BackButton pageTitle="주문/결제" />
       <InfoContainer>
         <div>
