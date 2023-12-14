@@ -4,6 +4,8 @@ import { useAppDispatch } from "@/store";
 import { addToCart } from "@/store/slices/cartSlice";
 import { addProducts } from "@/store/slices/productInfoSlice";
 
+import { useModal } from "./useModal";
+
 export default function useProductAction(
   isEmptyOptions: boolean,
   productData: ProductDetail,
@@ -11,6 +13,8 @@ export default function useProductAction(
 ) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const isLoggedIn = localStorage.getItem("token");
 
@@ -46,11 +50,13 @@ export default function useProductAction(
         amount: item.amount,
       }));
       dispatch(addToCart(productsInfo));
-      navigate("/cart");
+      openModal();
     }
   };
 
   return {
+    isModalOpen,
+    closeModal,
     goOrderPage,
     addProductToCart,
   };

@@ -1,10 +1,12 @@
 import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
+import { IoMdClose } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Button from "@/components/Button";
 import Head from "@/components/Head";
 import LikeButton from "@/components/LikeButton";
+import Modal from "@/components/Modal";
 import SelectBox from "@/components/SelectBox";
 import { PRODUCT_DETAIL_INFO } from "@/constants";
 import useProductAction from "@/hooks/useProductAction";
@@ -34,11 +36,8 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
     handleToggleDetailInfo,
   } = useProductInfo(productData.id, isEmptyOptions);
 
-  const { goOrderPage, addProductToCart } = useProductAction(
-    isEmptyOptions,
-    productData,
-    selectedOptions,
-  );
+  const { isModalOpen, closeModal, goOrderPage, addProductToCart } =
+    useProductAction(isEmptyOptions, productData, selectedOptions);
 
   return (
     <ProductDetail>
@@ -114,6 +113,19 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
                 handleRemoveOption={handleRemoveOption}
               />
             ))}
+
+          <Modal isOpen={isModalOpen}>
+            <ModalCloseBtn onClick={closeModal}>
+              <IoMdClose />
+            </ModalCloseBtn>
+            <ModalText>상품이 장바구니에 추가되었습니다.</ModalText>
+            <ModalButton>
+              <Button color="neutral" onClick={closeModal}>
+                쇼핑 계속하기
+              </Button>
+              <Button onClick={() => navigate("/cart")}>장바구니 확인</Button>
+            </ModalButton>
+          </Modal>
 
           <ButtonBox>
             <Button $variant="solid" color="primary" onClick={goOrderPage}>
@@ -220,6 +232,31 @@ export const SizeBox = styled.button<{ selected: boolean }>`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+`;
+
+export const ModalCloseBtn = styled.div`
+  margin-bottom: 24px;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: right;
+`;
+
+export const ModalText = styled.p`
+  font-size: 18px;
+  text-align: center;
+`;
+
+export const ModalButton = styled.div`
+  margin: 28px 0;
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  & > button {
+    width: 148px;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 16px;
+  }
 `;
 
 export const ButtonBox = styled.div`
