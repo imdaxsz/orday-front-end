@@ -7,6 +7,7 @@ import CategoryNav from "@/components/CategoryNav";
 import Dropdown from "@/components/Dropdown";
 import Head from "@/components/Head";
 import LikeButton from "@/components/LikeButton";
+import Loader from "@/components/Loader";
 import ProductCard from "@/components/ProductCard";
 import useBrandDetail from "@/hooks/useBrandDetail";
 import useProductList from "@/hooks/useProductList";
@@ -15,7 +16,7 @@ export default function BrandDetail() {
   const navigate = useNavigate();
   const { info } = useBrandDetail();
   const brandId = Number(useLocation().pathname.split("/")[2]);
-  const { ref, products, selectedOption, setSelectedOption } =
+  const { isLoading, ref, products, selectedOption, setSelectedOption } =
     useProductList(brandId);
 
   return (
@@ -41,6 +42,7 @@ export default function BrandDetail() {
           setSelectedOption={setSelectedOption}
         />
       </Menu>
+      {isLoading && <Loader />}
       <Items>
         {products.map((product) => (
           <ProductCard key={product.id} size="md" info={product} />
