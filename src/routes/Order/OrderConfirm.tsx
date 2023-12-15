@@ -23,7 +23,7 @@ export default function OrderConfirm() {
         <>
           <Title>주문이 완료되었습니다.</Title>
           <Detail>
-            주문내역 및 배송에 관한 안내는
+            주문내역 및 배송에 관한 안내는&nbsp;
             <DetailLink to="/myPage">마이페이지</DetailLink>를 통하여 확인
             가능합니다.
           </Detail>
