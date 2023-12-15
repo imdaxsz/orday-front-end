@@ -46,13 +46,13 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
           <Head
             title={`[${productData.brandInfo.name}] ${productData.name} | Orday`}
           />
-          <ProductCode
+          <ProductBrand
             onClick={() => navigate(`/brands/${productData.brandInfo.id}`)}
             style={{ cursor: "pointer" }}
           >
             {productData.brandInfo.name}
-          </ProductCode>
-          <ProductInfo>{productData.name}</ProductInfo>
+          </ProductBrand>
+          <ProductName>{productData.name}</ProductName>
 
           {productData.discountPrice > 0 && (
             <div>
@@ -179,13 +179,13 @@ export const ProductDetail = styled.div`
   margin-top: 30px;
 `;
 
-export const ProductCode = styled.div`
+export const ProductBrand = styled.div`
   color: ${({ theme }) => theme.colors["neutral"]["40"]};
   ${({ theme }) => theme.typo["body-2-r"]};
   margin-bottom: 20px;
 `;
 
-export const ProductInfo = styled.div`
+export const ProductName = styled.div`
   margin-top: 5px;
   ${({ theme }) => theme.typo["body-1-r"]};
 `;
