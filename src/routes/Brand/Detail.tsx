@@ -99,7 +99,7 @@ const Items = styled.div`
   height: fit-content;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 50px 20px;
   margin: 20px auto;
 `;
 
