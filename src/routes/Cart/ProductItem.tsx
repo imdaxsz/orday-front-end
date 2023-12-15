@@ -76,7 +76,7 @@ export default function ProductItem({
       {item.discountPrice === 0 && (
         <ItemPrice>{item.price.toLocaleString()}원</ItemPrice>
       )}
-      <DeleteBtn onClick={openModal}>
+      <DeleteBtn onClick={openModal} aria-label="상품삭제 버튼">
         <IoMdClose />
       </DeleteBtn>
       <Modal

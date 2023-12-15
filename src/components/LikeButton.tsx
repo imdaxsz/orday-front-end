@@ -13,7 +13,7 @@ export default function LikeButton({ id, target, isLiked }: LikeButtonProps) {
   const { like, handleClick } = useToggleLike(id, target, isLiked);
 
   return (
-    <Container onClick={handleClick}>
+    <Container onClick={handleClick} aria-label="관심상품 버튼">
       {like ? <PiHeartFill /> : <PiHeartBold />}
     </Container>
   );
