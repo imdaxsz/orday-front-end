@@ -40,7 +40,7 @@ export default function ProductItem({
         checked={checkedListById.includes(item.id)}
       />
       <CartListItem to={`/product/${item.id}?name=${item.name}`}>
-        <ProductImage src={item.imageUrl} />
+        <ProductImage src={item.imageUrl} alt={item.name} />
         <ItemName>
           <Name>{item.name}</Name>
           <Color>{item.color && item.color}</Color>
