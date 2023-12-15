@@ -20,7 +20,11 @@ export default function ReviewAction({ reviewId, isLiked, likeCount }: Props) {
 
   return (
     <ActionContainer>
-      <LikeButton $active={like || false} onClick={handleClick}>
+      <LikeButton
+        aria-label="리뷰 좋아요 버튼"
+        $active={like || false}
+        onClick={handleClick}
+      >
         <PiHeartFill size={16} />
         {count}
       </LikeButton>
