@@ -96,6 +96,7 @@ const ProductInfo = styled.div`
 const HistoryImage = styled.img`
   width: 140px;
   height: 160px;
+  object-fit: cover;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors["neutral"]["40"]};
 `;
