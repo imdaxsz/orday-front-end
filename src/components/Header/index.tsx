@@ -41,7 +41,7 @@ export default function Header() {
             <Link to="/reviews">REVIEW</Link>
           </Item>
         </Group>
-        <Link to="/">
+        <Link to="/" aria-label="Orday 메인 로고">
           <Logo />
         </Link>
         <Group>

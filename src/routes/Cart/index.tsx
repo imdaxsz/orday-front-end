@@ -49,7 +49,7 @@ export default function Cart() {
           <BackButton pageTitle="장바구니" />
           <InfoTitle>
             장바구니
-            <span>{cartItems.length ? cartItems.length : 0}</span>
+            <span>{cartItems.length}</span>
           </InfoTitle>
           <Box>
             <CheckBox
