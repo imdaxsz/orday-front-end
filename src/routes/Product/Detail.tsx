@@ -138,18 +138,13 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
             >
               장바구니
             </Button>
-            <Button
-              $variant="outline"
-              size="md"
-              color="primary"
-              style={{ width: "50px", height: "50px" }}
-            >
+            <div>
               <LikeButton
                 isLiked={productData.liked}
                 target="product"
                 id={productData.id}
               />
-            </Button>
+            </div>
           </ButtonBox>
         </>
       )}
@@ -265,16 +260,24 @@ export const ButtonBox = styled.div`
   width: 496px;
   height: 50px;
   margin-top: 20px;
-  button {
+  & > button {
     width: 213px;
     height: 50px;
-    & > button {
-      all: unset;
-      svg {
-        color: ${({ theme }) => theme.colors["primary"][80]};
-        width: 20px;
-        height: 20px;
-      }
+  }
+  & > div {
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid ${({ theme }) => theme.colors["primary"][80]};
+      border-radius: 10px;
+      width: 50px;
+      height: 50px;
+    }
+    svg {
+      color: ${({ theme }) => theme.colors["primary"][80]};
+      width: 20px;
+      height: 20px;
     }
   }
 `;
