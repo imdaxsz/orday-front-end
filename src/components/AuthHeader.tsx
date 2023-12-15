@@ -11,10 +11,14 @@ export default function AuthHeader({ title }: { title: string }) {
   return (
     <Container>
       <Icons>
-        <Button iconOnly onClick={() => navigate(-1)}>
+        <Button
+          iconOnly
+          onClick={() => navigate(-1)}
+          aria-label="이전 페이지 이동"
+        >
           <IoIosArrowBack size={24} />
         </Button>
-        <Link to="/">
+        <Link to="/" aria-label="홈">
           <HomeIcon />
         </Link>
       </Icons>
