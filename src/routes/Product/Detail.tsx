@@ -1,16 +1,16 @@
 import { FaChevronUp, FaChevronDown } from "react-icons/fa6";
+import { IoMdClose } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import Button from "@/components/Button";
 import Head from "@/components/Head";
 import LikeButton from "@/components/LikeButton";
+import Modal from "@/components/Modal";
 import SelectBox from "@/components/SelectBox";
 import { PRODUCT_DETAIL_INFO } from "@/constants";
+import useProductAction from "@/hooks/useProductAction";
 import useProductInfo from "@/hooks/useProductInfo";
-import { useAppDispatch } from "@/store";
-import { addToCart } from "@/store/slices/cartSlice";
-import { addProducts } from "@/store/slices/productInfoSlice";
 
 import OptionProductBox from "./OptionProduct";
 
@@ -21,9 +21,6 @@ interface DetailInfoProps {
 
 export default function DetailInfo({ productData, options }: DetailInfoProps) {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  const isLoggedIn = localStorage.getItem("token");
   const isEmptyOptions = !Object.keys(options).length;
 
   const {
@@ -39,43 +36,8 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
     handleToggleDetailInfo,
   } = useProductInfo(productData.id, isEmptyOptions);
 
-  const goOrderPage = () => {
-    if (!isEmptyOptions && !selectedOptions.length) {
-      alert("상품을 선택해주세요");
-      return;
-    }
-    if (!isLoggedIn) {
-      alert("로그인 해주세요");
-      return;
-    }
-    if (productData && selectedOptions.length > 0) {
-      const products: CartItem[] = selectedOptions.map((item) => {
-        const { name, imageUrl, price, discountPrice } = productData;
-        return { name, imageUrl, price, discountPrice, ...item };
-      });
-      dispatch(addProducts(products));
-      navigate("/order");
-    }
-  };
-
-  const addProductToCart = () => {
-    if (!isEmptyOptions && !selectedOptions.length) {
-      alert("상품을 선택해주세요");
-      return;
-    }
-    if (!isLoggedIn) {
-      alert("로그인 해주세요");
-      return;
-    }
-    if (productData && selectedOptions.length > 0) {
-      const productsInfo: ProductInfo[] = selectedOptions.map((item) => ({
-        id: item.id,
-        amount: item.amount,
-      }));
-      dispatch(addToCart(productsInfo));
-      navigate("/cart");
-    }
-  };
+  const { isModalOpen, closeModal, goOrderPage, addProductToCart } =
+    useProductAction(isEmptyOptions, productData, selectedOptions);
 
   return (
     <ProductDetail>
@@ -84,13 +46,13 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
           <Head
             title={`[${productData.brandInfo.name}] ${productData.name} | Orday`}
           />
-          <ProductCode
+          <ProductBrand
             onClick={() => navigate(`/brands/${productData.brandInfo.id}`)}
             style={{ cursor: "pointer" }}
           >
             {productData.brandInfo.name}
-          </ProductCode>
-          <ProductInfo>{productData.name}</ProductInfo>
+          </ProductBrand>
+          <ProductName>{productData.name}</ProductName>
 
           {productData.discountPrice > 0 && (
             <div>
@@ -152,6 +114,19 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
               />
             ))}
 
+          <Modal isOpen={isModalOpen}>
+            <ModalCloseBtn onClick={closeModal}>
+              <IoMdClose />
+            </ModalCloseBtn>
+            <ModalText>상품이 장바구니에 추가되었습니다.</ModalText>
+            <ModalButton>
+              <Button color="neutral" onClick={closeModal}>
+                쇼핑 계속하기
+              </Button>
+              <Button onClick={() => navigate("/cart")}>장바구니 확인</Button>
+            </ModalButton>
+          </Modal>
+
           <ButtonBox>
             <Button $variant="solid" color="primary" onClick={goOrderPage}>
               구매하기
@@ -163,18 +138,13 @@ export default function DetailInfo({ productData, options }: DetailInfoProps) {
             >
               장바구니
             </Button>
-            <Button
-              $variant="outline"
-              size="md"
-              color="primary"
-              style={{ width: "50px", height: "50px" }}
-            >
+            <div>
               <LikeButton
                 isLiked={productData.liked}
                 target="product"
                 id={productData.id}
               />
-            </Button>
+            </div>
           </ButtonBox>
         </>
       )}
@@ -209,13 +179,13 @@ export const ProductDetail = styled.div`
   margin-top: 30px;
 `;
 
-export const ProductCode = styled.div`
+export const ProductBrand = styled.div`
   color: ${({ theme }) => theme.colors["neutral"]["40"]};
   ${({ theme }) => theme.typo["body-2-r"]};
   margin-bottom: 20px;
 `;
 
-export const ProductInfo = styled.div`
+export const ProductName = styled.div`
   margin-top: 5px;
   ${({ theme }) => theme.typo["body-1-r"]};
 `;
@@ -259,22 +229,55 @@ export const SizeBox = styled.button<{ selected: boolean }>`
   cursor: pointer;
 `;
 
+export const ModalCloseBtn = styled.div`
+  margin-bottom: 24px;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: right;
+`;
+
+export const ModalText = styled.p`
+  font-size: 18px;
+  text-align: center;
+`;
+
+export const ModalButton = styled.div`
+  margin: 28px 0;
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  & > button {
+    width: 148px;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+`;
+
 export const ButtonBox = styled.div`
   display: flex;
   gap: 10px;
   width: 496px;
   height: 50px;
   margin-top: 20px;
-  button {
+  & > button {
     width: 213px;
     height: 50px;
-    & > button {
-      all: unset;
-      svg {
-        color: ${({ theme }) => theme.colors["primary"][80]};
-        width: 20px;
-        height: 20px;
-      }
+  }
+  & > div {
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid ${({ theme }) => theme.colors["primary"][80]};
+      border-radius: 10px;
+      width: 50px;
+      height: 50px;
+    }
+    svg {
+      color: ${({ theme }) => theme.colors["primary"][80]};
+      width: 20px;
+      height: 20px;
     }
   }
 `;

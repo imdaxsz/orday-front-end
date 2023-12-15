@@ -61,7 +61,6 @@ declare interface Category {
   subCategory?: Category[];
 }
 
-// 임시
 declare interface Product {
   id: number;
   name: string;

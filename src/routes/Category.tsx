@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 
 import CategoryNav from "@/components/CategoryNav";
 import Dropdown from "@/components/Dropdown";
+import Head from "@/components/Head";
 import Loader from "@/components/Loader";
 import ProductCard from "@/components/ProductCard";
 import useProductList from "@/hooks/useProductList";
@@ -19,6 +20,7 @@ export default function Category() {
 
   return (
     <Container>
+      <Head title="카테고리 | Orday" />
       {isLoading && <Loader />}
       <CategoryNav />
       {categoryBestItems && categoryBestItems.length > 0 ? (

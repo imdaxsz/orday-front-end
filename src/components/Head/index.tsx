@@ -5,12 +5,15 @@ interface HeadProps {
   description?: string;
 }
 
-export default function Head({ title = "Orday", description = "" }: HeadProps) {
+export default function Head({ title = "Orday", description }: HeadProps) {
   return (
     <Helmet>
       {/* HTML meta tag list */}
       <title>{title}</title>
-      <meta name="description" content={description} />
+      <meta
+        name="description"
+        content={description ? description : "Orday shopping mall"}
+      />
     </Helmet>
   );
 }

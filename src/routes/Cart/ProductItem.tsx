@@ -40,7 +40,7 @@ export default function ProductItem({
         checked={checkedListById.includes(item.id)}
       />
       <CartListItem to={`/product/${item.id}?name=${item.name}`}>
-        <ProductImage src={item.imageUrl} />
+        <ProductImage src={item.imageUrl} alt={item.name} />
         <ItemName>
           <Name>{item.name}</Name>
           <Color>{item.color && item.color}</Color>
@@ -52,7 +52,9 @@ export default function ProductItem({
         <Count>
           <ReduceBtn
             style={{ cursor: "pointer" }}
-            onClick={() => dispatch(decreaseCartItemQuantity(item.id))}
+            onClick={() =>
+              item.amount > 1 && dispatch(decreaseCartItemQuantity(item.id))
+            }
           />
           <p>{item.amount}</p>
           <AddBtn
@@ -74,7 +76,7 @@ export default function ProductItem({
       {item.discountPrice === 0 && (
         <ItemPrice>{item.price.toLocaleString()}원</ItemPrice>
       )}
-      <DeleteBtn onClick={openModal}>
+      <DeleteBtn onClick={openModal} aria-label="상품삭제 버튼">
         <IoMdClose />
       </DeleteBtn>
       <Modal
@@ -142,9 +144,11 @@ const ItemAmount = styled.div`
 
 const Count = styled.div`
   padding: 8px;
+  width: 82px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: space-between;
+  gap: 10px;
   border-radius: 7px;
   background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
   p {

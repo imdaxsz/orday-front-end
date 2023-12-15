@@ -27,7 +27,7 @@ export default function ReviewContent({
 }: Props) {
   return (
     <>
-      <ReviewImage src={reviewImageUrl} alt="PHOTO" />
+      {reviewImageUrl && <ReviewImage src={reviewImageUrl} alt="PHOTO" />}
       <ProductInfo to={`/product/${productId}?name=${productName}`}>
         <ProductImage src={productImageUrl} alt="PHOTO" />
         <ProductText>

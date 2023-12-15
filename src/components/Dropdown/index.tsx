@@ -27,7 +27,6 @@ export default function Dropdown({
   const handleSelectChange = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent>,
   ) => {
-    console.log(e.target);
     const value = e.currentTarget.getAttribute("value");
     const option =
       type == "product"

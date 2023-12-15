@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import PostCodeModal from "@/components/PostCodeModal";
 import SelectBox from "@/components/SelectBox";
 import TextInput from "@/components/TextInput";
+import { DELIVERY_OPTIONS } from "@/constants";
 import { useModal } from "@/hooks/useModal";
 
 interface DeliveryInfoProps {
@@ -34,12 +35,6 @@ export default function DeliveryInfo({
     closeModal();
   };
 
-  const DELIVERY_OPTIONS = [
-    "직접 입력",
-    "빠른배송 바랍니다",
-    "부재시 경비실에 맡겨주세요",
-    "배송 전에 연락주세요",
-  ];
   const [require, setRequire] = useState<string | null>("");
   const [requireInput, setRequireInput] = useState("");
 
@@ -49,6 +44,7 @@ export default function DeliveryInfo({
     } else {
       updateForm({ deliveryRequest: requireInput });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [require, requireInput]);
 
   return (

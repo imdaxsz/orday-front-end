@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 import Button from "@/components/Button";
+import Head from "@/components/Head";
 
 export default function OrderConfirm() {
   const { state } = useLocation();
@@ -17,6 +18,7 @@ export default function OrderConfirm() {
 
   return (
     <Container>
+      <Head title="상품 주문확인 | Orday" />
       {state && (
         <>
           <Title>주문이 완료되었습니다.</Title>

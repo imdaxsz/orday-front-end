@@ -15,7 +15,7 @@ export default function Product() {
       {!isLoading && productData && options && (
         <>
           <ProductInfo>
-            <ProductImg alt="productImage" src={productData.imageUrl} />
+            <ProductImg alt={productData.name} src={productData.imageUrl} />
             <DetailInfo productData={productData} options={options} />
           </ProductInfo>
           <ProductReview />
@@ -38,6 +38,7 @@ const ProductInfo = styled.div`
 const ProductImg = styled.img`
   width: 650px;
   height: 900px;
+  object-fit: cover;
   border-radius: 20px;
   background-color: ${({ theme }) => theme.colors["neutral"]["20"]};
 `;

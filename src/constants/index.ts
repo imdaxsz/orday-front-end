@@ -90,6 +90,25 @@ export const DEFAULT_USER_INFO_DATA: UserInfoForm = {
   },
 };
 
+export const DEFAULT_ORDER_FORM_DATA: OrderForm = {
+  name: "",
+  phoneNumber: "",
+  addressInfo: {
+    postcode: "",
+    address: "",
+    addressDetail: "",
+  },
+  deliveryRequest: "",
+  selectedMethod: null,
+};
+
+export const DELIVERY_OPTIONS = [
+  "직접 입력",
+  "빠른배송 바랍니다",
+  "부재시 경비실에 맡겨주세요",
+  "배송 전에 연락주세요",
+];
+
 export const RATING_LABEL = [
   "아주 좋아요",
   "맘에 들어요",

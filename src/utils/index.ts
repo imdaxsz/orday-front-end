@@ -17,3 +17,21 @@ export const getElapsedTime = (createdAt: string) => {
   else result = createdAt.split("T")[0];
   return result;
 };
+
+export const calculateItemValues = (productItems: CartItem[]) => {
+  const price =
+    productItems.length > 0
+      ? productItems
+          .map((item) => Number(item.price) * item.amount)
+          .reduce((acc, cur) => acc + cur)
+      : 0;
+  const sale =
+    productItems.length > 0
+      ? productItems
+          .map((item) => Number(item.discountPrice) * item.amount)
+          .reduce((acc, cur) => acc + cur)
+      : 0;
+  const shipping = 0;
+
+  return { price, sale, shipping };
+};

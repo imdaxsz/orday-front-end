@@ -2,27 +2,6 @@ import { useEffect, useState, useCallback } from "react";
 
 import { getUserInfo as requestGetUserInfo } from "@/api/AuthApi";
 
-// TODO: MOCK_DATA 제거
-
-// const GOOGLE_USER_MOCK_DATA = {
-//   id: 2,
-//   email: "test@naver.com",
-//   name: "홍길동",
-//   phoneNumber: "010-0000-0000",
-//   birthDate: {
-//     year: "",
-//     month: "",
-//     day: "",
-//   },
-//   addressInfo: {
-//     postcode: "",
-//     address: "",
-//     addressDetail: "",
-//   },
-//   socialType: "GOOGLE",
-//   infoSet: false,
-// };
-
 export default function useForm<T extends { addressInfo?: Address }>(
   initialState: T,
   option?: "join",
@@ -49,8 +28,7 @@ export default function useForm<T extends { addressInfo?: Address }>(
     try {
       const { socialType, infoSet, id, birthDate, ...formData } =
         await requestGetUserInfo();
-      // const { socialType, infoSet, id, birthDate, ...formData } =
-      //   GOOGLE_USER_MOCK_DATA;
+
       if ("id" in form || "birthDate" in form) {
         setForm((prev) => ({ ...prev, id, birthDate, ...formData }));
         setCurrentUserInfo((prev) => ({ ...prev, id, birthDate, ...formData }));
