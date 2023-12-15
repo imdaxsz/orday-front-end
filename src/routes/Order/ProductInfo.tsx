@@ -48,7 +48,7 @@ export default function ProductInfo({ form }: ProductInfoProps) {
       {productItems.map((item) => (
         <div key={item.id}>
           <ProductItem>
-            <ProductImage src={item.imageUrl} />
+            <ProductImage src={item.imageUrl} alt={item.name} />
             <ItemInfo>
               <div>
                 <h4>{item.name}</h4>

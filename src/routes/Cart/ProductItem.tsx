@@ -40,7 +40,7 @@ export default function ProductItem({
         checked={checkedListById.includes(item.id)}
       />
       <CartListItem to={`/product/${item.id}?name=${item.name}`}>
-        <ProductImage src={item.imageUrl} />
+        <ProductImage src={item.imageUrl} alt={item.name} />
         <ItemName>
           <Name>{item.name}</Name>
           <Color>{item.color && item.color}</Color>
@@ -76,7 +76,7 @@ export default function ProductItem({
       {item.discountPrice === 0 && (
         <ItemPrice>{item.price.toLocaleString()}원</ItemPrice>
       )}
-      <DeleteBtn onClick={openModal}>
+      <DeleteBtn onClick={openModal} aria-label="상품삭제 버튼">
         <IoMdClose />
       </DeleteBtn>
       <Modal

@@ -34,6 +34,7 @@ export default function CheckBox({
           onChange={onChange}
           $isCircle={type === "circle"}
           checked={checked}
+          aria-label="체크박스"
         />
         {checked && (
           <CheckboxIcon>

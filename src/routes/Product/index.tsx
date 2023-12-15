@@ -38,6 +38,7 @@ const ProductInfo = styled.div`
 const ProductImg = styled.img`
   width: 650px;
   height: 900px;
+  object-fit: cover;
   border-radius: 20px;
   background-color: ${({ theme }) => theme.colors["neutral"]["20"]};
 `;
