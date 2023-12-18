@@ -23,13 +23,13 @@ export default function Category() {
       <Head title="카테고리 | Orday" />
       {isLoading && <Loader />}
       <CategoryNav />
-      {categoryBestItems && categoryBestItems.length > 0 ? (
+      {categoryBestItems && categoryBestItems.length > 0 && (
         <CategoryBestList>
           {categoryBestItems.map((item) => (
             <ProductCard key={item.id} info={item} size="xl" $tag="BEST" />
           ))}
         </CategoryBestList>
-      ) : null}
+      )}
 
       <CategoryItems>
         {pathname === "best" ? (
@@ -41,6 +41,7 @@ export default function Category() {
             </ItemList>
           </>
         ) : (
+          // best상품목록이 아닌 카테고리 상품목록일때
           <>
             <Dropdown
               type="product"
