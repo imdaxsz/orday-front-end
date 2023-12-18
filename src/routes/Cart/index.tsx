@@ -71,7 +71,7 @@ export default function Cart() {
             type={"confirm"}
             detail={"선택한 상품을 삭제하시겠습니까?"}
           />
-          <ProductList>
+          <ul>
             {!cartItems.length ? (
               <Empty>장바구니가 비어있습니다.</Empty>
             ) : (
@@ -86,7 +86,7 @@ export default function Cart() {
                 ))}
               </>
             )}
-          </ProductList>
+          </ul>
           <Line />
           <PriceList>
             <li>
@@ -159,8 +159,6 @@ const Box = styled.div`
 const RemoveBasket = styled.p`
   cursor: pointer;
 `;
-
-const ProductList = styled.ul``;
 
 const Empty = styled.p`
   margin: 150px auto;
