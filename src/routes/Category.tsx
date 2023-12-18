@@ -41,7 +41,6 @@ export default function Category() {
             </ItemList>
           </>
         ) : (
-          // best상품목록이 아닌 카테고리 상품목록일때
           <>
             <Dropdown
               type="product"
