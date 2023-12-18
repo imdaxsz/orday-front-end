@@ -9,7 +9,7 @@ interface OptionProductBoxProps {
   price: number;
   addProductAmount: (id: number) => void;
   reduceProductAmount: (id: number) => void;
-  handleRemoveOption: (id: number, size: string) => void;
+  handleRemoveOption: (id: number, color: string, size: string) => void;
 }
 
 export default function OptionProductBox({
@@ -37,7 +37,7 @@ export default function OptionProductBox({
             style={{ cursor: "pointer", userSelect: "none" }}
           />
         </Count>
-        <CancelBtn onClick={() => handleRemoveOption(id, size)}>
+        <CancelBtn onClick={() => handleRemoveOption(id, color, size)}>
           <FaXmark />
         </CancelBtn>
       </QuantityBox>

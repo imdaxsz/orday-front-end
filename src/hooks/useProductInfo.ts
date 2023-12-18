@@ -61,9 +61,14 @@ export default function useProductInfo(
     setSelectedOptions(changedProductOption);
   };
 
-  const handleRemoveOption = (optionId: number, optionSize: string) => {
+  const handleRemoveOption = (
+    optionId: number,
+    optionColor: string,
+    optionSize: string,
+  ) => {
     if (isEmptyOptions) return;
-    setSelectedSizes(selectedSizes.filter((size) => size !== optionSize));
+    optionColor === selectedColor &&
+      setSelectedSizes(selectedSizes.filter((size) => size !== optionSize));
     setSelectedOptions(
       selectedOptions.filter((options) => options.id !== optionId),
     );
