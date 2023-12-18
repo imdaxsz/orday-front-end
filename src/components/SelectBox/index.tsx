@@ -14,7 +14,7 @@ export interface SelectStyleProps {
 
 interface SelectBoxProps {
   label?: string;
-  id?: string;
+  id: string;
   text?: string;
   options: string[] | number[];
   selected: string | null;
@@ -42,20 +42,20 @@ export default function SelectBox({
   const handleOptionClick = (e: React.MouseEvent<HTMLLIElement>) => {
     const target = e.target as HTMLLIElement;
     const value = target.innerText;
-    const { id } = target;
+    const { dataset } = target;
     if (setSelected) setSelected(value);
-    if (onChange) onChange(id, value);
+    if (onChange) onChange(dataset.id ?? "", value);
   };
 
   return (
     <SelectContainer
-      id="select-box"
+      id={id}
       $hasLabel={Boolean(label)}
       onClick={() => !disabled && setIsVisible((prev) => !prev)}
       height={height}
       className={className}
     >
-      {label && <label htmlFor="select-box">{label}</label>}
+      {label && <label htmlFor={id}>{label}</label>}
       <Selected disabled={disabled} height={height}>
         {selected ? selected : text}
         {isVisible ? <DropupIcon /> : <DropdownIcon />}
@@ -66,7 +66,7 @@ export default function SelectBox({
         height={height}
       >
         {options.map((option, i) => (
-          <Option key={i} id={id} onClick={(e) => handleOptionClick(e)}>
+          <Option key={i} data-id={id} onClick={(e) => handleOptionClick(e)}>
             {option}
           </Option>
         ))}

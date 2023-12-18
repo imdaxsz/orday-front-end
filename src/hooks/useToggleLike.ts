@@ -37,7 +37,7 @@ export default function useToggleLike(
       }
       setLike((prev) => !prev);
     } catch (error) {
-      console.log(error);
+      console.log("Error updating like:", error);
       alert("오류가 발생했어요. 잠시 후 다시 시도해 주세요.");
     }
   };

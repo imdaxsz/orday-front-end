@@ -118,7 +118,6 @@ export default function useJoin() {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const isValidate = validateForm();
-    console.log(form);
 
     if (isValidate) {
       setIsLoading(true);

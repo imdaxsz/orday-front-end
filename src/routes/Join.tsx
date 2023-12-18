@@ -91,18 +91,21 @@ export default function Join() {
               value={phone.first || ""}
               onChange={(e) => handleInputChange(e, "first")}
               label="연락처"
+              aria-label="연락처 시작 부분"
             />
             <TextInput
               id="phoneSecond"
               value={phone.second || ""}
               onChange={(e) => handleInputChange(e, "second")}
               type="text"
+              aria-label="연락처 중간 부분"
             />
             <TextInput
               id="phoneThird"
               value={phone.third || ""}
               onChange={(e) => handleInputChange(e, "third")}
               type="text"
+              aria-label="연락처 마지막 부분"
             />
           </InputContainer>
           {Boolean(error.phoneNumber) && (
@@ -113,32 +116,36 @@ export default function Join() {
           <InputContainer>
             <SelectBox
               label="생년월일"
-              options={DATE.year}
               id="year"
+              aria-label="연도"
+              options={DATE.year}
               text="연도"
               selected={form.birthDate.year}
               onChange={handleSelectChange}
             />
             <SelectBox
-              text="월"
               id="month"
+              aria-label="월"
               options={DATE.month}
+              text="월"
               selected={form.birthDate.month}
               onChange={handleSelectChange}
             />
             <SelectBox
-              text="일"
               id="day"
+              aria-label="일"
               options={DATE.day}
+              text="일"
               selected={form.birthDate.day}
               onChange={handleSelectChange}
             />
           </InputContainer>
           {error.birthDate && <span>생년월일을 입력해 주세요.</span>}
         </div>
-        <PostCode>
+        <Postcode>
           <TextInput
-            id="postCode"
+            id="postcode"
+            aria-label="우편번호"
             value={form.addressInfo.postcode}
             disabled
             label="우편번호"
@@ -146,7 +153,7 @@ export default function Join() {
           <Button type="button" onClick={openModal}>
             검색
           </Button>
-        </PostCode>
+        </Postcode>
         <PostCodeModal
           isModalOpen={isModalOpen}
           closeModal={closeModal}
@@ -155,6 +162,7 @@ export default function Join() {
         <div>
           <TextInput
             id="address"
+            aria-label="주소"
             type="text"
             value={form.addressInfo.address}
             disabled
@@ -162,6 +170,7 @@ export default function Join() {
           />
           <TextInput
             id="addressDetail"
+            aria-label="상세 주소"
             type="text"
             value={form.addressInfo.addressDetail}
             onChange={handleInputChange}
@@ -268,7 +277,7 @@ export const InputContainer = styled.div`
   align-items: flex-end;
 `;
 
-export const PostCode = styled.div`
+export const Postcode = styled.div`
   display: flex;
   gap: 24px;
   align-items: flex-end;
