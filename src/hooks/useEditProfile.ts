@@ -121,7 +121,7 @@ export default function useEditProfile(option?: "join") {
     if (form.password !== "") isPasswordValidate = validatePassword();
     if (isFormDataValidate && isPasswordValidate) {
       const updatedUserInfoItems = updatedInfo();
-      console.log(updatedUserInfoItems);
+
       // 기존 회원 정보에서 변경된 부분이 있는 경우에만 변경 요청
       if (Object.keys(updatedUserInfoItems).length !== 0) {
         setIsLoading(true);

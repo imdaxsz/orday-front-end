@@ -12,7 +12,7 @@ import BaseInput from "@/components/TextInput";
 import { DATE, USER_INFO_FORM_ERROR_MESSAGE } from "@/constants";
 import useEditProfile from "@/hooks/useEditProfile";
 import { useModal } from "@/hooks/useModal";
-import { InputContainer, PostCode } from "@/routes/Join";
+import { InputContainer, Postcode } from "@/routes/Join";
 
 export default function EditProfile() {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -52,6 +52,7 @@ export default function EditProfile() {
           <span>이름</span>
           <TextInput
             id="name"
+            aria-label="이름"
             value={form.name}
             onChange={handleInputChange}
             message="이름을 입력해 주세요."
@@ -60,7 +61,13 @@ export default function EditProfile() {
         </Item>
         <Item>
           <span>이메일</span>
-          <TextInput id="email" value={form.email} disabled readOnly />
+          <TextInput
+            id="email"
+            aria-label="이메일"
+            value={form.email}
+            disabled
+            readOnly
+          />
         </Item>
         {socialInfo.socialType === "WEB" && (
           <>
@@ -68,6 +75,7 @@ export default function EditProfile() {
               <span>비밀번호</span>
               <TextInput
                 id="password"
+                aria-label="비밀번호"
                 type="password"
                 value={form.password}
                 autoComplete="off"
@@ -80,6 +88,7 @@ export default function EditProfile() {
               <span>비밀번호 확인</span>
               <TextInput
                 id="confirmPassword"
+                aria-label="비밀번호 확인"
                 type="password"
                 value={form.confirmPassword}
                 autoComplete="off"
@@ -95,16 +104,19 @@ export default function EditProfile() {
           <InputContainer>
             <TextInput
               id="phoneFirst"
+              aria-label="연락처 시작 부분"
               value={phone.first || ""}
               onChange={(e) => handleInputChange(e, "first")}
             />
             <TextInput
               id="phoneSecond"
+              aria-label="연락처 중간 부분"
               value={phone.second || ""}
               onChange={(e) => handleInputChange(e, "second")}
             />
             <TextInput
               id="phoneThird"
+              aria-label="연락처 마지막 부분"
               value={phone.third || ""}
               onChange={(e) => handleInputChange(e, "third")}
             />
@@ -121,6 +133,7 @@ export default function EditProfile() {
             <SelectBox
               options={DATE.year}
               id="year"
+              aria-label="연도"
               text="연도"
               selected={form.birthDate?.year}
               onChange={handleSelectChange}
@@ -128,6 +141,7 @@ export default function EditProfile() {
             <SelectBox
               text="월"
               id="month"
+              aria-label="월"
               options={DATE.month}
               selected={form.birthDate?.month}
               onChange={handleSelectChange}
@@ -135,6 +149,7 @@ export default function EditProfile() {
             <SelectBox
               text="일"
               id="day"
+              aria-label="일"
               options={DATE.day}
               selected={form.birthDate?.day}
               onChange={handleSelectChange}
@@ -146,16 +161,17 @@ export default function EditProfile() {
         )}
         <Item>
           <span>우편번호</span>
-          <PostCode>
+          <Postcode>
             <TextInput
               id="postcode"
+              aria-label="우편번호"
               value={form.addressInfo.postcode}
               disabled
             />
             <Button type="button" onClick={openModal}>
               검색
             </Button>
-          </PostCode>
+          </Postcode>
           <PostCodeModal
             isModalOpen={isModalOpen}
             closeModal={closeModal}
@@ -167,12 +183,14 @@ export default function EditProfile() {
           <div style={{ width: "100%" }}>
             <TextInput
               id="address"
+              aria-label="주소"
               type="text"
               value={form.addressInfo.address}
               disabled
             />
             <TextInput
               id="addressDetail"
+              aria-label="상세 주소"
               type="text"
               value={form.addressInfo.addressDetail}
               placeholder="상세 주소"

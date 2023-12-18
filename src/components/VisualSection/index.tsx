@@ -47,10 +47,14 @@ export default function VisualSection({ items }: Props) {
 
   return (
     <Container>
-      <ArrowIconButton onClick={handlePrevClick}>
+      <ArrowIconButton onClick={handlePrevClick} aria-label="이전">
         <IoIosArrowBack />
       </ArrowIconButton>
-      <ArrowIconButton onClick={handleNextClick} style={{ right: 0 }}>
+      <ArrowIconButton
+        onClick={handleNextClick}
+        style={{ right: 0 }}
+        aria-label="다음"
+      >
         <IoIosArrowForward />
       </ArrowIconButton>
       <Gradient />

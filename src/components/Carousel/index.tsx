@@ -69,19 +69,28 @@ export default function Carousel({ items }: { items: CarouselItem[] }) {
   return (
     <Container>
       <SlideContainer>
-        <ArrowIconButton onClick={handlePrevClick} style={{ left: "310px" }}>
+        <ArrowIconButton
+          onClick={handlePrevClick}
+          style={{ left: "310px" }}
+          aria-label="이전"
+        >
           <IoIosArrowBack />
         </ArrowIconButton>
-        <ArrowIconButton onClick={handleNextClick} style={{ right: "310px" }}>
+        <ArrowIconButton
+          onClick={handleNextClick}
+          style={{ right: "310px" }}
+          aria-label="다음"
+        >
           <IoIosArrowForward />
         </ArrowIconButton>
         <Slider $translateX={translateX} $transition={transition}>
           {carouselItems.map((item, i) => (
-            <Link to={item.url} key={i}>
+            <Link to={item.url} key={i} aria-label={item.info.title}>
               <Card
                 src={item.image}
                 $active={i === currentIndex}
                 $transition={transition}
+                alt={item.info.title}
               />
             </Link>
           ))}

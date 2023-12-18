@@ -111,4 +111,5 @@ export const Photo = styled.img`
   width: 130px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.colors["neutral"]["20"]};
+  object-fit: cover;
 `;
