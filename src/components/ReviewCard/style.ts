@@ -56,6 +56,7 @@ export const ReviewImage = styled.img`
   height: 250px;
   border-radius: 15px;
   background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
+  object-fit: cover;
 `;
 
 export const ProductInfo = styled(Link)`

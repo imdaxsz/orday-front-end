@@ -111,6 +111,7 @@ const Content = styled.div`
     border-radius: 10px;
     border: 1px solid #aeaeae;
     background-color: ${({ theme }) => theme.colors["neutral"]["10"]};
+    object-fit: cover;
   }
 `;
 

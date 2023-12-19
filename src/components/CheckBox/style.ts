@@ -14,6 +14,8 @@ export const CheckboxText = styled.label`
 
 export const CheckboxBtn = styled.div`
   position: relative;
+  display: grid;
+  align-items: center;
 `;
 
 export const CheckboxInput = styled.input<{ $isCircle: boolean }>`

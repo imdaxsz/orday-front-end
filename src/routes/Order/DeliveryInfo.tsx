@@ -91,6 +91,7 @@ export default function DeliveryInfo({
       </AddressForm>
 
       <SelectBox
+        id="deliveryRequire"
         height="40px"
         label="배송시 요청사항"
         text="배송시 요청사항을 선택해주세요"

@@ -39,6 +39,7 @@ export default function Login() {
           type="text"
           value={email}
           placeholder="이메일"
+          title="이메일"
           warn={error.email}
           message="이메일을 입력하세요."
           onChange={(e) => handleInputChange(e, "email")}
@@ -48,6 +49,7 @@ export default function Login() {
           type="password"
           value={password}
           placeholder="비밀번호"
+          title="비밀번호"
           warn={error.password}
           message="비밀번호를 입력하세요."
           autoComplete="on"
@@ -55,7 +57,7 @@ export default function Login() {
         />
         <UserActions>
           <Find>
-            <Link to="/">아이디 찾기</Link>
+            <Link to="/">이메일 찾기</Link>
             <RxDividerVertical size={14} />
             <Link to="/">비밀번호 찾기</Link>
           </Find>

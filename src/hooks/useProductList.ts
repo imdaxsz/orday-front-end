@@ -108,7 +108,14 @@ export default function useProductList(brandId?: number) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
 
-  // 카테고리 또는 정렬 옵션이 바뀌면 상품 리스트 초기화
+  // 정렬 옵션이 바뀌면 상품 리스트 초기화
+  useEffect(() => {
+    setProducts([]);
+    setNextKey(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedOption.id]);
+
+  // 카테고리가 바뀌면 상품 리스트 초기화
   useEffect(() => {
     setProducts([]);
     setCategoryBestItems([]);
@@ -118,7 +125,7 @@ export default function useProductList(brandId?: number) {
       fetchBestCategoryProducts();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categoryId, subCategoryId, selectedOption.id, pathname]);
+  }, [categoryId, subCategoryId, pathname]);
 
   return {
     isLoading,

@@ -23,8 +23,8 @@ export default function BrandList() {
         <Brands>
           {isLoading && <Loader />}
           {!isLoading &&
-            brands.map((brand, i) => (
-              <Brand to={`/brands/${brand.id}`} key={i}>
+            brands.map((brand) => (
+              <Brand to={`/brands/${brand.id}`} key={brand.id}>
                 <img src={brand.imageUrl} alt={brand.name} />
               </Brand>
             ))}
