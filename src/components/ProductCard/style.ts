@@ -53,20 +53,10 @@ export const ImageContainer = styled(Link)<Omit<ProductCardProps, "info">>`
 
   & > button {
     position: absolute;
-    ${({ size = "sm", $remove = false }) => {
-      if (!$remove)
-        // like button
-        return size === "sm" || size === "md"
-          ? likeIconStyle["sm"]
-          : likeIconStyle["lg"];
-      // remove button
-      else
-        return css`
-          top: 20px;
-          right: 20px;
-          height: 20px;
-        `;
-    }}
+    ${({ size = "sm" }) =>
+      size === "sm" || size === "md"
+        ? likeIconStyle["sm"]
+        : likeIconStyle["lg"]}
   }
   // tag style
   & > svg:first-of-type {
