@@ -2,7 +2,6 @@ import BestTag from "@/assets/best.svg?react";
 import NewTag from "@/assets/new.svg?react";
 import LikeButton from "@/components/LikeButton";
 
-import RemoveButton from "./RemoveButton";
 import {
   Brand,
   Container,
@@ -20,32 +19,19 @@ export type TagType = "NEW" | "BEST";
 export interface ProductCardProps {
   size?: Size;
   $tag?: TagType;
-  $remove?: boolean;
   info: Product;
 }
-export default function ProductCard({
-  size,
-  $tag,
-  $remove,
-  info,
-}: ProductCardProps) {
+export default function ProductCard({ size, $tag, info }: ProductCardProps) {
   return (
     <Container size={size}>
       <ImageContainer
         to={`/product/${info.id}?name=${info.name}`}
         size={size}
         $tag={$tag}
-        $remove={$remove}
       >
-        {!$remove ? (
-          <>
-            {$tag === "NEW" && <NewTag />}
-            {$tag === "BEST" && <BestTag />}
-            <LikeButton isLiked={info.liked} target="product" id={info.id} />
-          </>
-        ) : (
-          <RemoveButton />
-        )}
+        {$tag === "NEW" && <NewTag />}
+        {$tag === "BEST" && <BestTag />}
+        <LikeButton isLiked={info.liked} target="product" id={info.id} />
         <Image src={info.imageUrl} alt={info.name} size={size} />
       </ImageContainer>
       <Info>
